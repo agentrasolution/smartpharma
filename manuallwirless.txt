@@ -1,0 +1,154 @@
+====================================================================
+        FARAZ PHARMACY - WIRELESS / SAME-WIFI SETUP MANUAL
+   How to connect CLIENT machines to the SERVER over the same WiFi
+====================================================================
+
+This manual explains how to connect the Faraz Pharmacy software
+using a normal WiFi network (no cables needed):
+
+    - The SERVER machine (holds database + API) connects to WiFi
+    - The CLIENT machines (POS screens) connect to the SAME WiFi
+    - They talk to each other through the router
+
+     [WiFi Router]  <-- all devices connect here
+          |
+   -------|---------------------------------------------
+   |      |              |              |
+Server  Client 1      Client 2       Client 3
+
+--------------------------------------------------------------------
+CONTENTS
+--------------------------------------------------------------------
+  1. Before you start (requirements)
+  2. Connect the SERVER to WiFi
+  3. Give the server a FIXED IP (important)
+  4. Allow WiFi connections through the Windows firewall
+  5. Connect each CLIENT to the same WiFi
+  6. Point the clients to the server IP
+  7. Test the connection
+  8. Problem solving
+
+====================================================================
+1. BEFORE YOU START (requirements)
+====================================================================
+   - One WiFi router that all machines can join.
+   - Every machine (server + clients) must have WiFi (or an adapter).
+   - The server is already installed and running (see manuallfile.txt).
+   - Write down the WiFi name (SSID) and password before starting.
+
+  NOTE: WiFi is slower than a cable. It is fine for normal pharmacy
+  work, but if the network is very busy or far away the app may be
+  slow. Keep machines close to the router if possible.
+
+====================================================================
+2. CONNECT THE SERVER TO WIFI
+====================================================================
+   On the SERVER machine:
+     1. Click the WiFi icon in the bottom-right corner (taskbar).
+     2. Pick your pharmacy WiFi name, type the password, connect.
+     3. It shows "Connected, secured" when done.
+
+====================================================================
+3. GIVE THE SERVER A FIXED IP (VERY IMPORTANT)
+====================================================================
+   The server IP must NEVER change, or clients lose connection.
+   If you skip this, the server may get a new IP later and all
+   clients stop working until you reconnect them.
+
+   Step A - Find the current IP:
+     Open Command Prompt and type:
+        ipconfig
+     Look for "Wireless LAN adapter Wi-Fi" and write down the line:
+        IPv4 Address . . . . . : 192.168.1.100
+     (write it down, clients will need it)
+
+   Step B - Reserve that IP on the router (BEST way):
+     1. Open a browser and go to your router page
+        (usually http://192.168.1.1 - see the router sticker).
+     2. Login (user/password on the router sticker).
+     3. Find "DHCP Reservation" / "Address Reservation"
+        (often under DHCP or LAN settings).
+     4. Find the server machine in the connected devices list,
+        add it, and reserve the IPv4 you wrote down.
+     5. Save. Now the server always keeps that IP.
+
+   Step C - OR set the IP manually on Windows:
+     1. Settings > Network & Internet > Wi-Fi > your network
+     2. Scroll to "IP assignment" > Edit > Manual > IPv4 = ON
+     3. Fill in:
+           IP address:     192.168.1.100   (example)
+           Subnet prefix length: 24
+           Gateway:        192.168.1.1     (your router IP)
+           Preferred DNS:  192.168.1.1
+     4. Save. Reconnect to WiFi.
+
+   WRITE THIS IP NUMBER DOWN. Clients will need it.
+
+====================================================================
+4. ALLOW WIFI CONNECTIONS THROUGH THE WINDOWS FIREWALL
+====================================================================
+   On the SERVER machine, open Command Prompt as ADMINISTRATOR and run:
+
+        New-NetFirewallRule -DisplayName "Faraz API WiFi" -Direction Inbound -Protocol TCP -LocalPort 3001 -Action Allow -Profile Private
+
+   This lets other machines on your WiFi reach the server on port 3001.
+
+   TIP: If Windows asks "This app is from an unknown publisher" the
+   first time a client connects, just allow it.
+
+====================================================================
+5. CONNECT EACH CLIENT TO THE SAME WIFI
+====================================================================
+   On EVERY client machine (billing/POS computers):
+     1. Click the WiFi icon in the taskbar.
+     2. Choose the SAME WiFi name (SSID) as the server.
+     3. Type the same password and connect.
+
+   IMPORTANT: Client and server MUST be on the same WiFi / same
+   router. They cannot talk to each other if one is on WiFi and the
+   other is on a different network.
+
+====================================================================
+6. POINT THE CLIENTS TO THE SERVER IP
+====================================================================
+   Open the Faraz Pharmacy POS app on each client. The first time
+   it starts you will see a setup screen:
+
+     1. Click  "Client Machine"
+     2. Type the server's IP address from step 3, e.g.  192.168.1.100
+     3. Click  "Connect"
+     4. Login with  admin / admin123
+
+   If the app was already configured, ask the pharmacist/admin to
+   change the server address in the settings to the new IP.
+
+====================================================================
+7. TEST THE CONNECTION
+====================================================================
+   From ANY client machine:
+     1. Open a normal web browser (Chrome/Edge).
+     2. Type:   http://192.168.1.100:3001/api/health
+        (use YOUR server IP from step 3)
+     3. You must see:  {"status":"ok","timestamp":"..."}
+
+   If you see this, the client is connected to the server over WiFi.
+
+   Also test on the server itself:
+     http://localhost:3001/api/health  -> must also show status ok
+
+====================================================================
+8. PROBLEM SOLVING
+====================================================================
+
+| PROBLEM | FIX |
+|---------|-----|
+| Browser shows nothing on http://IP:3001/api/health | Check the firewall rule (step 4); make sure pm2 is running on the server (pm2 status) |
+| Client says "Cannot connect" | Both machines on the SAME WiFi? Server IP typed correctly? Server powered on? |
+| Server IP changed after restart | Set the reservation (step 3) - do not skip it |
+| App is slow over WiFi | Move machines closer to the router; restart the router |
+| WiFi icon / connection drops | Keep the pharmacy WiFi password safe; ask the router admin not to change the network |
+| Client on WiFi, server on cable | That is fine as long as they are on the SAME router/network |
+
+====================================================================
+END OF WIRELESS MANUAL
+====================================================================

@@ -1,0 +1,424 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// AI Inventory Intelligence Layer (additive)
+// Does NOT modify any existing POS models.
+// ============================================================
+
+model InventoryConfig {
+  id                      String   @id @default(uuid())
+  defaultSafetyStockDays  Int      @default(2) @map("default_safety_stock_days")
+  defaultTargetStockDays  Int      @default(14) @map("default_target_stock_days")
+  defaultAnalysisDays     Int      @default(30) @map("default_analysis_days")
+  lowStockThreshold       Int      @default(10) @map("low_stock_threshold")
+  overstockCoverageDays   Int      @default(90) @map("overstock_coverage_days")
+  trendThresholdPercent   Float    @default(15) @map("trend_threshold_percent")
+  createdAt               DateTime @default(now()) @map("created_at")
+  updatedAt               DateTime @updatedAt @map("updated_at")
+
+  @@map("inventory_config")
+}
+
+model DistributorInventoryConfig {
+  id                  String      @id @default(uuid())
+  distributorId       String      @unique @map("distributor_id")
+  defaultLeadTimeDays Int         @default(3) @map("default_lead_time_days")
+  minimumOrderValue   Float       @default(0) @map("minimum_order_value")
+  active              Int         @default(1)
+  distributor         Distributor @relation(fields: [distributorId], references: [id], onDelete: Cascade)
+
+  @@map("distributor_inventory_config")
+}
+
+model ProductDistributorConfig {
+  id               String      @id @default(uuid())
+  productId        String      @map("product_id")
+  distributorId    String      @map("distributor_id")
+  leadTimeDays     Int?        @map("lead_time_days")
+  minimumOrderQty  Int?        @map("minimum_order_qty")
+  purchasePrice    Float?      @map("purchase_price")
+  preferred        Int         @default(0)
+  product          Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  distributor      Distributor @relation(fields: [distributorId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, distributorId])
+  @@map("product_distributor_config")
+}
+
+model PurchaseOrder {
+  id               String             @id @default(uuid())
+  orderNumber      String             @unique @map("order_number")
+  distributorId    String             @map("distributor_id")
+  companyId        String?            @map("company_id")
+  status           String             @default("DRAFT")
+  subtotal         Float              @default(0)
+  total            Float              @default(0)
+  notes            String             @default("")
+  createdBy        String?            @map("created_by")
+  approvedBy       String?            @map("approved_by")
+  approvedAt       DateTime?          @map("approved_at")
+  rejectedBy       String?            @map("rejected_by")
+  rejectedAt       DateTime?          @map("rejected_at")
+  rejectionReason  String?            @map("rejection_reason")
+  idempotencyKey   String?            @unique @map("idempotency_key")
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedAt        DateTime           @updatedAt @map("updated_at")
+  distributor      Distributor        @relation(fields: [distributorId], references: [id])
+  company          Company?           @relation(fields: [companyId], references: [id])
+  items            PurchaseOrderItem[]
+
+  @@index([distributorId])
+  @@map("purchase_orders")
+}
+
+model PurchaseOrderItem {
+  id              String        @id @default(uuid())
+  purchaseOrderId String        @map("purchase_order_id")
+  productId       String        @map("product_id")
+  quantity        Int
+  unitPrice       Float         @default(0) @map("unit_price")
+  total           Float         @default(0)
+  purchaseOrder   PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  product         Product       @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+  @@map("purchase_order_items")
+}
+
+model AIInventoryRecommendation {
+  id                    String    @id @default(uuid())
+  productId             String    @map("product_id")
+  distributorId         String?   @map("distributor_id")
+  riskLevel             String    @map("risk_level")
+  currentStock          Int       @default(0) @map("current_stock")
+  averageDailySales     Float     @default(0) @map("average_daily_sales")
+  stockCoverageDays     Float?    @map("stock_coverage_days")
+  estimatedStockoutDays Float?    @map("estimated_stockout_days")
+  leadTimeDays          Int?      @map("lead_time_days")
+  reorderPoint          Float?    @map("reorder_point")
+  recommendedQuantity   Int       @default(0) @map("recommended_quantity")
+  reason                String    @default("")
+  status                String    @default("NEW")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  expiresAt             DateTime? @map("expires_at")
+  product               Product   @relation(fields: [productId], references: [id])
+
+  @@index([status])
+  @@index([riskLevel])
+  @@index([createdAt])
+  @@map("ai_inventory_recommendations")
+}
+
+model AIAuditLog {
+  id                String    @id @default(uuid())
+  userId            String?   @map("user_id")
+  agentName         String    @map("agent_name")
+  conversationId    String?   @map("conversation_id")
+  toolName          String?   @map("tool_name")
+  action            String
+  inputJson         Json?     @map("input_json")
+  outputJson        Json?     @map("output_json")
+  status            String
+  approvalRequired  Boolean   @default(false) @map("approval_required")
+  approvalStatus    String?   @map("approval_status")
+  approvedBy        String?   @map("approved_by")
+  errorMessage      String?   @map("error_message")
+  createdAt         DateTime  @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@index([userId])
+  @@map("ai_audit_logs")
+}
+
+model AIConversation {
+  id        String       @id @default(uuid())
+  userId    String?      @map("user_id")
+  title     String?
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+  messages  AIMessage[]
+
+  @@map("ai_conversations")
+}
+
+model AIMessage {
+  id             String         @id @default(uuid())
+  conversationId String         @map("conversation_id")
+  role           String
+  content        String
+  toolName       String?        @map("tool_name")
+  toolCallId     String?        @map("tool_call_id")
+  thoughtSignature String?      @map("thought_signature")
+  toolCalls      Json?          @map("tool_calls")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  conversation   AIConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@map("ai_messages")
+}
+
+model User {
+  id           String       @id @default(uuid())
+  username     String       @unique
+  passwordHash String       @map("password_hash")
+  role         String       @default("admin")
+  createdAt    DateTime     @default(now()) @map("created_at")
+  authTokens   AuthToken[]
+
+  @@map("users")
+}
+
+model AuthToken {
+  id               String   @id @default(uuid())
+  userId           String   @map("user_id")
+  accessToken      String   @unique @map("access_token")
+  refreshToken     String   @unique @map("refresh_token")
+  csrfToken        String   @map("csrf_token")
+  accessExpiresAt  DateTime @map("access_expires_at")
+  refreshExpiresAt DateTime @map("refresh_expires_at")
+  createdAt        DateTime @default(now()) @map("created_at")
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("auth_tokens")
+}
+
+model RecoveryKey {
+  id        String    @id @default(uuid())
+  keyHash   String    @map("key_hash")
+  createdAt DateTime  @default(now()) @map("created_at")
+  usedAt    DateTime? @map("used_at")
+
+  @@map("recovery_keys")
+}
+
+model Product {
+  id             String           @id @default(uuid())
+  barcode        String           @unique
+  name           String
+  company        String           @default("")
+  category       String           @default("")
+  location       String           @default("")
+  distributorId  String?          @map("distributor_id")
+  salePrice      Float            @default(0) @map("sale_price")
+  purchasePrice  Float            @default(0) @map("purchase_price")
+  markupPercent  Float            @default(20) @map("markup_percent")
+  stockQty       Int              @default(0) @map("stock_qty")
+  expiry         String?
+  packSize       Int              @default(1) @map("pack_size")
+  active         Int              @default(1)
+  createdAt      DateTime         @default(now()) @map("created_at")
+  distributor    Distributor?     @relation(fields: [distributorId], references: [id])
+  saleItems      SaleItem[]
+  stockPurchases StockPurchase[]
+  returnItems    ReturnItem[]
+  prices         ProductPrice[]
+  barcodeLink    Barcode?
+  distributorConfigs ProductDistributorConfig[]
+  purchaseOrderItems PurchaseOrderItem[]
+  recommendations    AIInventoryRecommendation[]
+
+  @@map("products")
+}
+
+model Barcode {
+  id        String    @id @default(uuid())
+  code      String    @unique
+  productId String?   @unique @map("product_id")
+  product   Product?  @relation(fields: [productId], references: [id], onDelete: SetNull)
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  @@map("barcodes")
+}
+
+model ProductPrice {
+  id            String   @id @default(uuid())
+  productId     String   @map("product_id")
+  label         String   @default("Standard")
+  purchasePrice Float    @default(0) @map("purchase_price")
+  salePrice     Float    @default(0) @map("sale_price")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_prices")
+}
+
+model Distributor {
+  id         String    @id @default(uuid())
+  name       String
+  contact    String    @default("")
+  phone      String    @default("")
+  address    String    @default("")
+  companyId  String?   @map("company_id")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  company    Company?  @relation(fields: [companyId], references: [id])
+  products   Product[]
+  stockPurchases StockPurchase[]
+  inventoryConfig DistributorInventoryConfig?
+  productConfigs ProductDistributorConfig[]
+  purchaseOrders PurchaseOrder[]
+
+  @@map("distributors")
+}
+
+model Company {
+  id            String        @id @default(uuid())
+  name          String
+  contact       String        @default("")
+  phone         String        @default("")
+  secondNumber  String        @default("") @map("second_number")
+  address       String        @default("")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  distributors  Distributor[]
+  stockPurchases StockPurchase[]
+  purchaseOrders PurchaseOrder[]
+
+  @@map("companies")
+}
+
+model Customer {
+  id         String    @id @default(uuid())
+  name       String
+  phone      String    @default("")
+  address    String    @default("")
+  fatherName String    @default("") @map("father_name")
+  fatherPhone String   @default("") @map("father_phone")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  sales      Sale[]
+  arrears    Arrear[]
+
+  @@map("customers")
+}
+
+model Sale {
+  id         String     @id
+  customerId String?    @map("customer_id")
+  subtotal   Float      @default(0)
+  discount   Float      @default(0)
+  total      Float      @default(0)
+  amountPaid Float      @default(0) @map("amount_paid")
+  change     Float      @default(0)
+  status     String     @default("paid")
+  createdAt  DateTime   @default(now()) @map("created_at")
+  customer   Customer?  @relation(fields: [customerId], references: [id])
+  items      SaleItem[]
+  returns    ReturnEntry[]
+  arrears    Arrear[]
+
+  @@map("sales")
+}
+
+model SaleItem {
+  id          String  @id @default(uuid())
+  saleId      String  @map("sale_id")
+  productId   String  @map("product_id")
+  productName String  @map("product_name")
+  barcode     String
+  quantity    Int     @default(1)
+  unitPrice   Float   @default(0) @map("unit_price")
+  subtotal    Float   @default(0)
+  sale        Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  product     Product @relation(fields: [productId], references: [id])
+
+  @@map("sale_items")
+}
+
+model Arrear {
+  id         String          @id @default(uuid())
+  saleId     String?         @map("sale_id")
+  customerId String          @map("customer_id")
+  totalBill  Float           @default(0) @map("total_bill")
+  amountPaid Float           @default(0) @map("amount_paid")
+  balanceDue Float           @default(0) @map("balance_due")
+  status     String          @default("pending")
+  createdAt  DateTime        @default(now()) @map("created_at")
+  sale       Sale?           @relation(fields: [saleId], references: [id])
+  customer   Customer        @relation(fields: [customerId], references: [id])
+  payments   ArrearPayment[]
+
+  @@map("arrears")
+}
+
+model ArrearPayment {
+  id            String   @id @default(uuid())
+  arrearId      String   @map("arrear_id")
+  amount        Float    @default(0)
+  paymentSaleId String?  @map("payment_sale_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+  arrear        Arrear   @relation(fields: [arrearId], references: [id], onDelete: Cascade)
+
+  @@map("arrear_payments")
+}
+
+model StockPurchase {
+  id             String       @id @default(uuid())
+  productId      String       @map("product_id")
+  distributorId  String?      @map("distributor_id")
+  companyId      String?      @map("company_id")
+  invoiceNumber  String       @default("") @map("invoice_number")
+  quantity       Int          @default(0)
+  purchasePrice  Float        @default(0) @map("purchase_price")
+  salePrice      Float        @default(0) @map("sale_price")
+  expiry         String?
+  totalValue     Float        @default(0) @map("total_value")
+  active         Int          @default(1)
+  createdAt      DateTime     @default(now()) @map("created_at")
+  product        Product      @relation(fields: [productId], references: [id])
+  distributor    Distributor? @relation(fields: [distributorId], references: [id])
+  company        Company?     @relation(fields: [companyId], references: [id])
+
+  @@map("stock_purchases")
+}
+
+model ReturnEntry {
+  id           String       @id @default(uuid())
+  saleId       String       @map("sale_id")
+  refundAmount Float        @default(0) @map("refund_amount")
+  reason       String       @default("")
+  createdAt    DateTime     @default(now()) @map("created_at")
+  sale         Sale         @relation(fields: [saleId], references: [id])
+  items        ReturnItem[]
+
+  @@map("returns")
+}
+
+model ReturnItem {
+  id           String       @id @default(uuid())
+  returnId     String       @map("return_id")
+  productId    String       @map("product_id")
+  productName  String       @map("product_name")
+  quantity     Int          @default(0)
+  refundAmount Float        @default(0) @map("refund_amount")
+  returnEntry  ReturnEntry  @relation(fields: [returnId], references: [id], onDelete: Cascade)
+  product      Product      @relation(fields: [productId], references: [id])
+
+  @@map("return_items")
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  @@map("categories")
+}
+
+model Expense {
+  id        String   @id @default(uuid())
+  title     String
+  category  String
+  amount    Float    @default(0)
+  notes     String   @default("")
+  date      String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("expenses")
+}

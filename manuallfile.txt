@@ -1,0 +1,339 @@
+====================================================================
+        FARAZ PHARMACY - COMPLETE DEPLOYMENT MANUAL
+        (Server + Client) for ANY NEW Pharmacy
+====================================================================
+
+This manual explains step by step how to install and connect the
+Faraz Pharmacy software on:
+    1.  The SERVER machine  (holds database + API)
+    2.  The CLIENT machines (POS screens used by cashiers)
+using a USB drive copied from the DEVELOPMENT computer.
+
+--------------------------------------------------------------------
+CONTENTS
+--------------------------------------------------------------------
+  A. What is what (architecture)
+  B. On the DEVELOPMENT computer: build the installers
+  C. On the SERVER machine: install everything
+  D. On each CLIENT machine: install the POS app
+  E. How SERVER and CLIENT connect (very important)
+  F. Testing everything
+  G. Daily backups
+  H. Updating the software later
+  I. Problem solving (common errors)
+
+====================================================================
+A. WHAT IS WHAT (ARCHITECTURE)
+====================================================================
+
+                    SERVER MACHINE (main computer)
+   ------------------------------------------------------
+   |  PostgreSQL (database)              |
+   |  Node.js API (port 3001)            |  <-- API
+   |  PM2 (keeps API always running)     |
+   ------------------------------------------------------
+                        |
+                        |  (Ethernet cable / WiFi, same LAN)
+                        |
+        ----------------|----------------
+        |               |               |
+   Client 1         Client 2        Client 3
+   (POS app)        (POS app)       (POS app)
+
+- The SERVER machine is the only one that has the database.
+  If it is off, no client can work.
+- CLIENT machines only connect to the server to save/read data.
+- The server machine may ALSO run a POS client if you want to
+  use it as a billing counter too.
+
+--------------------------------------------------------------------
+B. ON THE DEVELOPMENT COMPUTER: BUILD THE INSTALLERS
+--------------------------------------------------------------------
+(Do this ONCE on the computer that has the full code - this is
+ where the software is "dumped"/built.)
+
+B1. Build the SERVER package
+--------------------------------
+  1. Put the whole project on a USB drive, or zip it:
+     Folder: faraz-pharmacy\
+     Inside: server\  and  desktop-app\
+
+B2. Build the CLIENT installer
+--------------------------------
+  Open Command Prompt / PowerShell inside desktop-app\ and run:
+
+     npm install
+     npm run build
+
+  This creates the installer inside  desktop-app\dist-electron\
+  On Windows the file is named like:  Faraz Pharmacy Setup 1.0.1.exe
+  (copy that installer to the USB drive)
+
+B3. Copy to USB drive
+--------------------------------
+  Copy these to a USB stick (or share over network):
+     - server\               (whole server folder)
+     - Faraz Pharmacy Setup *.exe    (client installer)
+     - PostgreSQL setup file (from postgresql.org, optional)
+
+  Now take the USB to the pharmacy.
+
+====================================================================
+C. ON THE SERVER MACHINE: INSTALL EVERYTHING
+====================================================================
+This is the main computer of the pharmacy. Do these steps ONE time.
+
+C1. Install PostgreSQL (the database)
+--------------------------------
+  1. Download PostgreSQL 16+ from https://www.postgresql.org
+  2. Install it. During installation you choose:
+        Username : postgres
+        Password : <write it down, you will need it>
+        Port     : 5432
+  3. After install, open "SQL Shell (psql)" and create the database:
+
+        CREATE DATABASE "faraz-pharmacy";
+
+  Check it was created:
+        \l
+        (you should see faraz-pharmacy in the list, type \q to exit)
+
+C2. Install Node.js
+--------------------------------
+  1. Download Node.js 22 LTS from https://nodejs.org
+  2. Install it (next, next, finish).
+  3. Verify - open Command Prompt and type:
+        node --version
+     It must print something like  v22.x.x
+
+C3. Copy the server folder
+--------------------------------
+  Copy the server\ folder from the USB to a stable location, e.g.:
+        C:\FarazPharmacy\server
+  Never move it again after this.
+
+C4. Configure the .env file
+--------------------------------
+  In  C:\FarazPharmacy\server\  open the file named  .env
+  (Use Notepad. If you cannot see it, in Notepad's Save dialog
+   set "File type" to "All files".)
+
+  Make sure it looks like this (change YOUR_PASSWORD):
+
+        DATABASE_URL="postgresql://postgres:YOUR_PASSWORD@localhost:5432/faraz-pharmacy"
+        JWT_SECRET="make-up-a-long-secret-text-here-32-chars-minimum"
+        PORT=3001
+        NODE_ENV=production
+
+  IMPORTANT:
+     - Use the password you set in step C1
+     - Use port 5432 (or 5433 if you installed with 5433)
+     - Keep JWT_SECRET a long random text
+
+C5. Install server dependencies and build
+--------------------------------
+  Open Command Prompt in the server folder:
+
+     cd C:\FarazPharmacy\server
+     npm install
+     npx prisma generate
+     npx prisma db push
+     npm run build
+     npm run db:seed
+
+  What this does:
+     npm install      -> installs required packages
+     prisma generate  -> prepares the database client
+     prisma db push   -> creates all the tables in the database
+     npm run build    -> compiles the server code
+     db:seed          -> creates the admin login:
+                              Username : admin
+                              Password : admin123
+     (Change admin password after first login in the app!)
+
+C6. Keep the server running with PM2
+--------------------------------
+  PM2 is a tool that keeps your server alive forever and restarts
+  it automatically if the computer restarts or the server crashes.
+
+  1. Install PM2 (once):
+
+        npm install -g pm2
+
+  2. Start the server:
+
+        cd C:\FarazPharmacy\server
+        pm2 start ecosystem.config.cjs
+
+  3. Tell PM2 to remember it:
+
+        pm2 save
+
+  4. Make it start automatically when the computer boots:
+
+        pm2 startup
+        -> PM2 will print a command. Copy it, open Command Prompt
+           as Administrator, and run that printed command.
+
+  Useful commands:
+        pm2 status            -> see if it is running (online)
+        pm2 logs faraz-pharmacy-api   -> see the server messages
+        pm2 restart faraz-pharmacy-api -> restart the server
+
+C7. Allow clients to reach the server (Windows firewall)
+--------------------------------
+  Clients connect to port 3001. Open Command Prompt as
+  ADMINISTRATOR and run:
+
+        New-NetFirewallRule -DisplayName "Faraz API" -Direction Inbound -Protocol TCP -LocalPort 3001 -Action Allow
+
+C8. Give the server a FIXED IP address
+--------------------------------
+  Very important! The server must ALWAYS have the same IP, e.g.
+  192.168.1.100. If the IP changes, clients lose connection.
+
+  Easiest way: login to your router and set a "DHCP Reservation"
+  for the server machine (assign a fixed IP to its MAC address).
+
+  OR set it manually on Windows:
+     Settings > Network & Internet > Ethernet
+     > IP assignment > Edit > Manual > turn on IPv4
+     IP address: 192.168.1.100
+     Subnet prefix length: 24
+     Gateway: 192.168.1.1 (your router IP)
+     DNS: 192.168.1.1
+
+  WRITE THIS IP NUMBER DOWN. Clients will need it.
+
+====================================================================
+D. ON EACH CLIENT MACHINE: INSTALL THE POS APP
+====================================================================
+Repeat these steps on every cashier/billing computer.
+
+D1. Install the client program
+--------------------------------
+  1. Copy  "Faraz Pharmacy Setup *.exe"  from the USB to the client.
+  2. Double-click it and install (Next, Next, Finish).
+  3. A shortcut "Faraz Pharmacy" appears on the desktop. Open it.
+
+D2. First launch - connect to the server
+--------------------------------
+  The first time you open it you will see a setup screen:
+
+  1. Click  "Client Machine"
+  2. Type the server's IP address that you wrote down, e.g.  192.168.1.100
+  3. Click  "Connect"
+  4. Login with  admin / admin123  (from step C5)
+
+  That is it. The client is connected to the server.
+
+D3. If the server machine also works as a billing counter
+--------------------------------
+  On the SERVER machine's own POS app, at first launch click
+  "Server Machine" instead of Client Machine. It connects to
+  itself automatically (http://localhost:3001).
+
+====================================================================
+E. HOW SERVER AND CLIENT CONNECT (understand this)
+====================================================================
+
+- All computers must be on the SAME network (same router/WiFi).
+- The client opens a browser window inside the app and asks the
+  server at:  http://SERVER_IP:3001
+  Example:     http://192.168.1.100:3001
+- The server replies with data (products, sales, customers...).
+- If the server is off, clients show "Cannot connect".
+
+Test the connection from any client:
+  1. On the client, open a normal browser
+  2. Type:  http://192.168.1.100:3001/api/health
+  3. You must see:  {"status":"ok","timestamp":"..."}
+  If you see this, everything is connected correctly.
+
+--------------------------------------------------------------------
+F. TESTING EVERYTHING (before giving it to the pharmacy)
+--------------------------------------------------------------------
+On the SERVER machine:
+   [ ] pm2 status  -> shows faraz-pharmacy-api online
+   [ ] browser: http://localhost:3001/api/health -> status ok
+On EVERY CLIENT machine:
+   [ ] POS app opens without error
+   [ ] Login with admin/admin123 works
+   [ ] Products list loads (comes from server)
+   [ ] Do a test sale and print the receipt (test the printer!)
+   [ ] Check that if you add a product on one client it appears
+       on the other clients too.
+
+====================================================================
+G. DAILY BACKUPS (VERY IMPORTANT - do not skip)
+====================================================================
+If the computer breaks, the database must be safe. Do a backup
+every day to a USB drive.
+
+G1. Create the backup folder
+--------------------------------
+     C:\FarazPharmacy\backups
+
+G2. Create the backup script
+--------------------------------
+  Open Notepad, paste this (change postgres password if needed),
+  save as:  C:\FarazPharmacy\backups\backup.bat
+
+        @echo off
+        set BACKUP_DIR=C:\FarazPharmacy\backups
+        set FILENAME=faraz-%DATE:~10,4%-%DATE:~4,2%-%DATE:~7,2%.sql
+        "C:\Program Files\PostgreSQL\16\bin\pg_dump" -U postgres -d faraz-pharmacy > "%BACKUP_DIR%\%FILENAME%"
+        echo Backup done: %FILENAME%
+
+  (If pg_dump is not in that path, search where PostgreSQL was
+   installed - the file pg_dump.exe is in the bin folder.)
+
+G3. Schedule it daily
+--------------------------------
+  1. Open Windows "Task Scheduler"
+  2. Create Task -> name: Faraz Backup
+  3. Trigger: Daily, time 2:00 AM
+  4. Action: Start program -> browse to backup.bat
+  5. Check "Run whether user is logged on or not"
+
+====================================================================
+H. UPDATING THE SOFTWARE LATER
+====================================================================
+H1. Update the SERVER
+--------------------------------
+  1. Back up the database first (see section G)
+  2. Replace the old server folder files with the new ones (USB)
+     (but DO NOT overwrite the .env file)
+  3. In Command Prompt:
+
+        cd C:\FarazPharmacy\server
+        npm install
+        npx prisma generate
+        npx prisma db push
+        npm run build
+        pm2 restart faraz-pharmacy-api
+
+  4. Check health: http://localhost:3001/api/health
+
+H2. Update the CLIENTS
+--------------------------------
+  Copy the new installer from USB and install over the old one on
+  every client machine. Settings and connection are kept.
+
+====================================================================
+I. PROBLEM SOLVING (common errors)
+====================================================================
+
+| PROBLEM                                          | FIX |
+|--------------------------------------------------|-----|
+| "pm2 status" shows errored                       | pm2 logs faraz-pharmacy-api -> read the error |
+| Port 3001 already in use                         | pm2 delete all, then pm2 start ecosystem.config.cjs again |
+| Client says "Cannot connect"                     | Server off? Same network? Correct IP? Check firewall (section C7) |
+| Browser test http://IP:3001/api/health shows nothing | Fix firewall rule; check pm2 status |
+| Forgot admin password                            | On server: npm run db:seed creates admin/admin123 again |
+| Database connection error at start               | Check DATABASE_URL in .env (password / port) |
+| Server was moved / IP changed                    | Clients must be re-connected with the new IP (section D2) |
+
+====================================================================
+END OF MANUAL
+====================================================================

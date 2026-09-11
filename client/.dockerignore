@@ -1,0 +1,8 @@
+node_modules/
+dist/
+dist-electron/
+src/
+public/
+.git/
+.gitignore
+*.md
