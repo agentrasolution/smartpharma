@@ -10,6 +10,8 @@ export interface ToolContext {
   conversationId?: string | null;
   agentName: string;
   requestId: string;
+  pharmacyId?: string | null;
+  branchId?: string | null;
 }
 
 export interface ToolResult<T = unknown> {

@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { arrearsService } from "./arrears.service";
+import { branchScope } from "../../middleware/auth";
 
 function normalizeArrear(a: Record<string, unknown>): Record<string, unknown> {
   return {
@@ -24,36 +25,41 @@ function normalizeArrear(a: Record<string, unknown>): Record<string, unknown> {
 export const arrearsController = {
   async list(req: Request, res: Response, next: NextFunction) {
     try {
+      const scope = branchScope(req);
       const status = req.query.status as string | undefined;
-      const arrears = await arrearsService.list(status);
+      const arrears = await arrearsService.list(scope, status);
       res.json(arrears.map(normalizeArrear));
     } catch (err) { next(err); }
   },
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const arrear = await arrearsService.create(req.body);
+      const scope = branchScope(req);
+      const arrear = await arrearsService.create(scope, req.body);
       res.json(normalizeArrear(arrear));
     } catch (err) { next(err); }
   },
 
   async recordPayment(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await arrearsService.recordPayment(req.params.id, req.body.amount, req.body.password);
+      const scope = branchScope(req);
+      const result = await arrearsService.recordPayment(scope, req.params.id, req.body.amount, req.body.password);
       res.json({ ...result, arrear: normalizeArrear(result.arrear) });
     } catch (err) { next(err); }
   },
 
   async settle(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await arrearsService.settle(req.params.id, req.body.password);
+      const scope = branchScope(req);
+      const result = await arrearsService.settle(scope, req.params.id, req.body.password);
       res.json({ ...result, arrear: normalizeArrear(result.arrear) });
     } catch (err) { next(err); }
   },
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await arrearsService.delete(req.params.id);
+      const scope = branchScope(req);
+      const result = await arrearsService.delete(scope, req.params.id);
       res.json(result);
     } catch (err) { next(err); }
   },

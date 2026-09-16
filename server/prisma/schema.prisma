@@ -8,6 +8,58 @@ datasource db {
 }
 
 // ============================================================
+// Multi-tenant core
+// ============================================================
+
+model Pharmacy {
+  id           String        @id @default(uuid())
+  name         String        @unique
+  slug         String        @unique
+  contact      String        @default("")
+  phone        String        @default("")
+  email        String        @default("")
+  address      String        @default("")
+  isActive     Boolean       @default(true) @map("is_active")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  subscription Subscription?
+  users        User[]
+  branches     Branch[]
+  roles        Role[]
+  products     Product[]
+  categories   Category[]
+  distributors Distributor[]
+  companies    Company[]
+  barcodes     Barcode[]
+  recoveryKeys RecoveryKey[]
+  customers    Customer[]
+  sales        Sale[]
+  stockPurchases StockPurchase[]
+  returns      ReturnEntry[]
+  arrears      Arrear[]
+  expenses     Expense[]
+  purchaseOrders PurchaseOrder[]
+
+  @@map("pharmacies")
+}
+
+model Subscription {
+  id          String    @id @default(uuid())
+  pharmacyId  String    @unique @map("pharmacy_id")
+  plan        String    @default("monthly")
+  price       Float     @default(0)
+  status      String    @default("trial")
+  startedAt   DateTime  @default(now()) @map("started_at")
+  renewsAt    DateTime  @map("renews_at")
+  cancelledAt DateTime? @map("cancelled_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  pharmacy    Pharmacy  @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+// ============================================================
 // AI Inventory Intelligence Layer (additive)
 // Does NOT modify any existing POS models.
 // ============================================================
@@ -55,6 +107,8 @@ model ProductDistributorConfig {
 model PurchaseOrder {
   id               String             @id @default(uuid())
   orderNumber      String             @unique @map("order_number")
+  pharmacyId       String             @map("pharmacy_id")
+  branchId         String             @map("branch_id")
   distributorId    String             @map("distributor_id")
   companyId        String?            @map("company_id")
   status           String             @default("DRAFT")
@@ -70,10 +124,14 @@ model PurchaseOrder {
   idempotencyKey   String?            @unique @map("idempotency_key")
   createdAt        DateTime           @default(now()) @map("created_at")
   updatedAt        DateTime           @updatedAt @map("updated_at")
+  pharmacy         Pharmacy           @relation(fields: [pharmacyId], references: [id])
+  branch           Branch             @relation(fields: [branchId], references: [id])
   distributor      Distributor        @relation(fields: [distributorId], references: [id])
   company          Company?           @relation(fields: [companyId], references: [id])
   items            PurchaseOrderItem[]
 
+  @@index([pharmacyId])
+  @@index([branchId])
   @@index([distributorId])
   @@map("purchase_orders")
 }
@@ -165,14 +223,57 @@ model AIMessage {
 }
 
 model User {
-  id           String       @id @default(uuid())
-  username     String       @unique
-  passwordHash String       @map("password_hash")
-  role         String       @default("admin")
-  createdAt    DateTime     @default(now()) @map("created_at")
-  authTokens   AuthToken[]
+  id                  String      @id @default(uuid())
+  pharmacyId          String      @map("pharmacy_id")
+  username            String      @unique
+  passwordHash        String      @map("password_hash")
+  name                String      @default("") @map("name")
+  phone               String      @default("")
+  email               String      @default("")
+  role                String      @default("admin")
+  roleId              String?     @map("role_id")
+  branchId            String?     @map("branch_id")
+  jobRole             String      @default("") @map("job_role")
+  isActive            Boolean     @default(true) @map("is_active")
+  mustChangePassword  Boolean     @default(true) @map("must_change_password")
+  passwordChangedAt   DateTime?   @map("password_changed_at")
+  lastLoginAt         DateTime?   @map("last_login_at")
+  createdAt           DateTime    @default(now()) @map("created_at")
+  updatedAt           DateTime    @updatedAt @map("updated_at")
+  pharmacy            Pharmacy    @relation(fields: [pharmacyId], references: [id])
+  roleRef             Role?       @relation(fields: [roleId], references: [id])
+  branch              Branch?     @relation(fields: [branchId], references: [id])
+  authTokens          AuthToken[]
 
+  @@index([pharmacyId])
+  @@index([roleId])
+  @@index([branchId])
+  @@index([isActive])
   @@map("users")
+}
+
+model Branch {
+  id         String    @id @default(uuid())
+  pharmacyId String    @map("pharmacy_id")
+  name       String
+  address    String    @default("") @map("address")
+  phone      String    @default("") @map("phone")
+  isActive   Boolean   @default(true) @map("is_active")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  pharmacy   Pharmacy  @relation(fields: [pharmacyId], references: [id])
+  users      User[]
+  products   Product[]
+  customers  Customer[]
+  sales      Sale[]
+  stockPurchases StockPurchase[]
+  returns    ReturnEntry[]
+  arrears    Arrear[]
+  expenses   Expense[]
+  purchaseOrders PurchaseOrder[]
+
+  @@index([pharmacyId])
+  @@map("branches")
 }
 
 model AuthToken {
@@ -190,17 +291,56 @@ model AuthToken {
 }
 
 model RecoveryKey {
-  id        String    @id @default(uuid())
-  keyHash   String    @map("key_hash")
-  createdAt DateTime  @default(now()) @map("created_at")
-  usedAt    DateTime? @map("used_at")
+  id          String    @id @default(uuid())
+  pharmacyId  String?   @map("pharmacy_id")
+  keyHash     String    @map("key_hash")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  usedAt      DateTime? @map("used_at")
+  pharmacy    Pharmacy? @relation(fields: [pharmacyId], references: [id])
 
   @@map("recovery_keys")
 }
 
+model Role {
+  id          String            @id @default(uuid())
+  pharmacyId  String            @map("pharmacy_id")
+  name        String
+  description String?
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+  pharmacy    Pharmacy          @relation(fields: [pharmacyId], references: [id])
+  users       User[]
+  permissions RolePermission[]
+
+  @@unique([pharmacyId, name])
+  @@index([pharmacyId])
+  @@map("roles")
+}
+
+model Permission {
+  id          String            @id @default(uuid())
+  name        String            @unique
+  description String?
+  roles       RolePermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       String     @map("role_id")
+  permissionId String     @map("permission_id")
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
 model Product {
   id             String           @id @default(uuid())
-  barcode        String           @unique
+  pharmacyId     String           @map("pharmacy_id")
+  branchId       String           @map("branch_id")
+  barcode        String
   name           String
   company        String           @default("")
   category       String           @default("")
@@ -214,6 +354,8 @@ model Product {
   packSize       Int              @default(1) @map("pack_size")
   active         Int              @default(1)
   createdAt      DateTime         @default(now()) @map("created_at")
+  pharmacy       Pharmacy         @relation(fields: [pharmacyId], references: [id])
+  branch         Branch           @relation(fields: [branchId], references: [id])
   distributor    Distributor?     @relation(fields: [distributorId], references: [id])
   saleItems      SaleItem[]
   stockPurchases StockPurchase[]
@@ -224,16 +366,22 @@ model Product {
   purchaseOrderItems PurchaseOrderItem[]
   recommendations    AIInventoryRecommendation[]
 
+  @@unique([branchId, barcode])
+  @@index([pharmacyId])
+  @@index([branchId])
   @@map("products")
 }
 
 model Barcode {
-  id        String    @id @default(uuid())
-  code      String    @unique
-  productId String?   @unique @map("product_id")
-  product   Product?  @relation(fields: [productId], references: [id], onDelete: SetNull)
-  createdAt DateTime  @default(now()) @map("created_at")
+  id         String    @id @default(uuid())
+  pharmacyId String    @map("pharmacy_id")
+  code       String    @unique
+  productId  String?   @unique @map("product_id")
+  product    Product?  @relation(fields: [productId], references: [id], onDelete: SetNull)
+  pharmacy   Pharmacy  @relation(fields: [pharmacyId], references: [id])
+  createdAt  DateTime  @default(now()) @map("created_at")
 
+  @@index([pharmacyId])
   @@map("barcodes")
 }
 
@@ -252,12 +400,14 @@ model ProductPrice {
 
 model Distributor {
   id         String    @id @default(uuid())
+  pharmacyId String    @map("pharmacy_id")
   name       String
   contact    String    @default("")
   phone      String    @default("")
   address    String    @default("")
   companyId  String?   @map("company_id")
   createdAt  DateTime  @default(now()) @map("created_at")
+  pharmacy   Pharmacy  @relation(fields: [pharmacyId], references: [id])
   company    Company?  @relation(fields: [companyId], references: [id])
   products   Product[]
   stockPurchases StockPurchase[]
@@ -265,40 +415,54 @@ model Distributor {
   productConfigs ProductDistributorConfig[]
   purchaseOrders PurchaseOrder[]
 
+  @@unique([pharmacyId, name])
+  @@index([pharmacyId])
   @@map("distributors")
 }
 
 model Company {
   id            String        @id @default(uuid())
+  pharmacyId    String        @map("pharmacy_id")
   name          String
   contact       String        @default("")
   phone         String        @default("")
   secondNumber  String        @default("") @map("second_number")
   address       String        @default("")
   createdAt     DateTime      @default(now()) @map("created_at")
+  pharmacy      Pharmacy      @relation(fields: [pharmacyId], references: [id])
   distributors  Distributor[]
   stockPurchases StockPurchase[]
   purchaseOrders PurchaseOrder[]
 
+  @@unique([pharmacyId, name])
+  @@index([pharmacyId])
   @@map("companies")
 }
 
 model Customer {
   id         String    @id @default(uuid())
+  pharmacyId String    @map("pharmacy_id")
+  branchId   String    @map("branch_id")
   name       String
   phone      String    @default("")
   address    String    @default("")
   fatherName String    @default("") @map("father_name")
   fatherPhone String   @default("") @map("father_phone")
   createdAt  DateTime  @default(now()) @map("created_at")
+  pharmacy   Pharmacy  @relation(fields: [pharmacyId], references: [id])
+  branch     Branch    @relation(fields: [branchId], references: [id])
   sales      Sale[]
   arrears    Arrear[]
 
+  @@index([pharmacyId])
+  @@index([branchId])
   @@map("customers")
 }
 
 model Sale {
   id         String     @id
+  pharmacyId String     @map("pharmacy_id")
+  branchId   String     @map("branch_id")
   customerId String?    @map("customer_id")
   subtotal   Float      @default(0)
   discount   Float      @default(0)
@@ -307,11 +471,15 @@ model Sale {
   change     Float      @default(0)
   status     String     @default("paid")
   createdAt  DateTime   @default(now()) @map("created_at")
+  pharmacy   Pharmacy   @relation(fields: [pharmacyId], references: [id])
+  branch     Branch     @relation(fields: [branchId], references: [id])
   customer   Customer?  @relation(fields: [customerId], references: [id])
   items      SaleItem[]
   returns    ReturnEntry[]
   arrears    Arrear[]
 
+  @@index([pharmacyId])
+  @@index([branchId])
   @@map("sales")
 }
 
@@ -332,6 +500,8 @@ model SaleItem {
 
 model Arrear {
   id         String          @id @default(uuid())
+  pharmacyId String          @map("pharmacy_id")
+  branchId   String          @map("branch_id")
   saleId     String?         @map("sale_id")
   customerId String          @map("customer_id")
   totalBill  Float           @default(0) @map("total_bill")
@@ -339,10 +509,14 @@ model Arrear {
   balanceDue Float           @default(0) @map("balance_due")
   status     String          @default("pending")
   createdAt  DateTime        @default(now()) @map("created_at")
+  pharmacy   Pharmacy        @relation(fields: [pharmacyId], references: [id])
+  branch     Branch          @relation(fields: [branchId], references: [id])
   sale       Sale?           @relation(fields: [saleId], references: [id])
   customer   Customer        @relation(fields: [customerId], references: [id])
   payments   ArrearPayment[]
 
+  @@index([pharmacyId])
+  @@index([branchId])
   @@map("arrears")
 }
 
@@ -359,6 +533,8 @@ model ArrearPayment {
 
 model StockPurchase {
   id             String       @id @default(uuid())
+  pharmacyId     String       @map("pharmacy_id")
+  branchId       String       @map("branch_id")
   productId      String       @map("product_id")
   distributorId  String?      @map("distributor_id")
   companyId      String?      @map("company_id")
@@ -370,22 +546,32 @@ model StockPurchase {
   totalValue     Float        @default(0) @map("total_value")
   active         Int          @default(1)
   createdAt      DateTime     @default(now()) @map("created_at")
+  pharmacy       Pharmacy     @relation(fields: [pharmacyId], references: [id])
+  branch         Branch       @relation(fields: [branchId], references: [id])
   product        Product      @relation(fields: [productId], references: [id])
   distributor    Distributor? @relation(fields: [distributorId], references: [id])
   company        Company?     @relation(fields: [companyId], references: [id])
 
+  @@index([pharmacyId])
+  @@index([branchId])
   @@map("stock_purchases")
 }
 
 model ReturnEntry {
   id           String       @id @default(uuid())
+  pharmacyId   String       @map("pharmacy_id")
+  branchId     String       @map("branch_id")
   saleId       String       @map("sale_id")
   refundAmount Float        @default(0) @map("refund_amount")
   reason       String       @default("")
   createdAt    DateTime     @default(now()) @map("created_at")
+  pharmacy     Pharmacy     @relation(fields: [pharmacyId], references: [id])
+  branch       Branch       @relation(fields: [branchId], references: [id])
   sale         Sale         @relation(fields: [saleId], references: [id])
   items        ReturnItem[]
 
+  @@index([pharmacyId])
+  @@index([branchId])
   @@map("returns")
 }
 
@@ -403,22 +589,32 @@ model ReturnItem {
 }
 
 model Category {
-  id        String    @id @default(uuid())
-  name      String    @unique
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
+  id         String    @id @default(uuid())
+  pharmacyId String    @map("pharmacy_id")
+  name       String
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  pharmacy   Pharmacy  @relation(fields: [pharmacyId], references: [id])
 
+  @@unique([pharmacyId, name])
+  @@index([pharmacyId])
   @@map("categories")
 }
 
 model Expense {
-  id        String   @id @default(uuid())
-  title     String
-  category  String
-  amount    Float    @default(0)
-  notes     String   @default("")
-  date      String
-  createdAt DateTime @default(now()) @map("created_at")
+  id         String   @id @default(uuid())
+  pharmacyId String   @map("pharmacy_id")
+  branchId   String   @map("branch_id")
+  title      String
+  category   String
+  amount     Float    @default(0)
+  notes      String   @default("")
+  date       String
+  createdAt  DateTime @default(now()) @map("created_at")
+  pharmacy   Pharmacy @relation(fields: [pharmacyId], references: [id])
+  branch     Branch   @relation(fields: [branchId], references: [id])
 
+  @@index([pharmacyId])
+  @@index([branchId])
   @@map("expenses")
 }

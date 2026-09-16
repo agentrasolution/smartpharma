@@ -26,6 +26,7 @@ export type AggregateDistributor = {
 
 export type DistributorMinAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
   name: string | null
   contact: string | null
   phone: string | null
@@ -36,6 +37,7 @@ export type DistributorMinAggregateOutputType = {
 
 export type DistributorMaxAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
   name: string | null
   contact: string | null
   phone: string | null
@@ -46,6 +48,7 @@ export type DistributorMaxAggregateOutputType = {
 
 export type DistributorCountAggregateOutputType = {
   id: number
+  pharmacyId: number
   name: number
   contact: number
   phone: number
@@ -58,6 +61,7 @@ export type DistributorCountAggregateOutputType = {
 
 export type DistributorMinAggregateInputType = {
   id?: true
+  pharmacyId?: true
   name?: true
   contact?: true
   phone?: true
@@ -68,6 +72,7 @@ export type DistributorMinAggregateInputType = {
 
 export type DistributorMaxAggregateInputType = {
   id?: true
+  pharmacyId?: true
   name?: true
   contact?: true
   phone?: true
@@ -78,6 +83,7 @@ export type DistributorMaxAggregateInputType = {
 
 export type DistributorCountAggregateInputType = {
   id?: true
+  pharmacyId?: true
   name?: true
   contact?: true
   phone?: true
@@ -161,6 +167,7 @@ export type DistributorGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type DistributorGroupByOutputType = {
   id: string
+  pharmacyId: string
   name: string
   contact: string
   phone: string
@@ -192,12 +199,14 @@ export type DistributorWhereInput = {
   OR?: Prisma.DistributorWhereInput[]
   NOT?: Prisma.DistributorWhereInput | Prisma.DistributorWhereInput[]
   id?: Prisma.StringFilter<"Distributor"> | string
+  pharmacyId?: Prisma.StringFilter<"Distributor"> | string
   name?: Prisma.StringFilter<"Distributor"> | string
   contact?: Prisma.StringFilter<"Distributor"> | string
   phone?: Prisma.StringFilter<"Distributor"> | string
   address?: Prisma.StringFilter<"Distributor"> | string
   companyId?: Prisma.StringNullableFilter<"Distributor"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Distributor"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
   company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   products?: Prisma.ProductListRelationFilter
   stockPurchases?: Prisma.StockPurchaseListRelationFilter
@@ -208,12 +217,14 @@ export type DistributorWhereInput = {
 
 export type DistributorOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   address?: Prisma.SortOrder
   companyId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  pharmacy?: Prisma.PharmacyOrderByWithRelationInput
   company?: Prisma.CompanyOrderByWithRelationInput
   products?: Prisma.ProductOrderByRelationAggregateInput
   stockPurchases?: Prisma.StockPurchaseOrderByRelationAggregateInput
@@ -224,25 +235,29 @@ export type DistributorOrderByWithRelationInput = {
 
 export type DistributorWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  pharmacyId_name?: Prisma.DistributorPharmacyIdNameCompoundUniqueInput
   AND?: Prisma.DistributorWhereInput | Prisma.DistributorWhereInput[]
   OR?: Prisma.DistributorWhereInput[]
   NOT?: Prisma.DistributorWhereInput | Prisma.DistributorWhereInput[]
+  pharmacyId?: Prisma.StringFilter<"Distributor"> | string
   name?: Prisma.StringFilter<"Distributor"> | string
   contact?: Prisma.StringFilter<"Distributor"> | string
   phone?: Prisma.StringFilter<"Distributor"> | string
   address?: Prisma.StringFilter<"Distributor"> | string
   companyId?: Prisma.StringNullableFilter<"Distributor"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Distributor"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
   company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   products?: Prisma.ProductListRelationFilter
   stockPurchases?: Prisma.StockPurchaseListRelationFilter
   inventoryConfig?: Prisma.XOR<Prisma.DistributorInventoryConfigNullableScalarRelationFilter, Prisma.DistributorInventoryConfigWhereInput> | null
   productConfigs?: Prisma.ProductDistributorConfigListRelationFilter
   purchaseOrders?: Prisma.PurchaseOrderListRelationFilter
-}, "id">
+}, "id" | "pharmacyId_name">
 
 export type DistributorOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -259,6 +274,7 @@ export type DistributorScalarWhereWithAggregatesInput = {
   OR?: Prisma.DistributorScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DistributorScalarWhereWithAggregatesInput | Prisma.DistributorScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Distributor"> | string
+  pharmacyId?: Prisma.StringWithAggregatesFilter<"Distributor"> | string
   name?: Prisma.StringWithAggregatesFilter<"Distributor"> | string
   contact?: Prisma.StringWithAggregatesFilter<"Distributor"> | string
   phone?: Prisma.StringWithAggregatesFilter<"Distributor"> | string
@@ -274,6 +290,7 @@ export type DistributorCreateInput = {
   phone?: string
   address?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutDistributorsInput
   company?: Prisma.CompanyCreateNestedOneWithoutDistributorsInput
   products?: Prisma.ProductCreateNestedManyWithoutDistributorInput
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
@@ -284,6 +301,7 @@ export type DistributorCreateInput = {
 
 export type DistributorUncheckedCreateInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -304,6 +322,7 @@ export type DistributorUpdateInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutDistributorsNestedInput
   company?: Prisma.CompanyUpdateOneWithoutDistributorsNestedInput
   products?: Prisma.ProductUpdateManyWithoutDistributorNestedInput
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
@@ -314,6 +333,7 @@ export type DistributorUpdateInput = {
 
 export type DistributorUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -329,6 +349,7 @@ export type DistributorUncheckedUpdateInput = {
 
 export type DistributorCreateManyInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -348,12 +369,23 @@ export type DistributorUpdateManyMutationInput = {
 
 export type DistributorUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type DistributorListRelationFilter = {
+  every?: Prisma.DistributorWhereInput
+  some?: Prisma.DistributorWhereInput
+  none?: Prisma.DistributorWhereInput
+}
+
+export type DistributorOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type DistributorScalarRelationFilter = {
@@ -366,8 +398,14 @@ export type DistributorNullableScalarRelationFilter = {
   isNot?: Prisma.DistributorWhereInput | null
 }
 
+export type DistributorPharmacyIdNameCompoundUniqueInput = {
+  pharmacyId: string
+  name: string
+}
+
 export type DistributorCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -378,6 +416,7 @@ export type DistributorCountOrderByAggregateInput = {
 
 export type DistributorMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -388,6 +427,7 @@ export type DistributorMaxOrderByAggregateInput = {
 
 export type DistributorMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -396,14 +436,46 @@ export type DistributorMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
 }
 
-export type DistributorListRelationFilter = {
-  every?: Prisma.DistributorWhereInput
-  some?: Prisma.DistributorWhereInput
-  none?: Prisma.DistributorWhereInput
+export type DistributorCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.DistributorCreateWithoutPharmacyInput, Prisma.DistributorUncheckedCreateWithoutPharmacyInput> | Prisma.DistributorCreateWithoutPharmacyInput[] | Prisma.DistributorUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.DistributorCreateOrConnectWithoutPharmacyInput | Prisma.DistributorCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.DistributorCreateManyPharmacyInputEnvelope
+  connect?: Prisma.DistributorWhereUniqueInput | Prisma.DistributorWhereUniqueInput[]
 }
 
-export type DistributorOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type DistributorUncheckedCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.DistributorCreateWithoutPharmacyInput, Prisma.DistributorUncheckedCreateWithoutPharmacyInput> | Prisma.DistributorCreateWithoutPharmacyInput[] | Prisma.DistributorUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.DistributorCreateOrConnectWithoutPharmacyInput | Prisma.DistributorCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.DistributorCreateManyPharmacyInputEnvelope
+  connect?: Prisma.DistributorWhereUniqueInput | Prisma.DistributorWhereUniqueInput[]
+}
+
+export type DistributorUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.DistributorCreateWithoutPharmacyInput, Prisma.DistributorUncheckedCreateWithoutPharmacyInput> | Prisma.DistributorCreateWithoutPharmacyInput[] | Prisma.DistributorUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.DistributorCreateOrConnectWithoutPharmacyInput | Prisma.DistributorCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.DistributorUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.DistributorUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.DistributorCreateManyPharmacyInputEnvelope
+  set?: Prisma.DistributorWhereUniqueInput | Prisma.DistributorWhereUniqueInput[]
+  disconnect?: Prisma.DistributorWhereUniqueInput | Prisma.DistributorWhereUniqueInput[]
+  delete?: Prisma.DistributorWhereUniqueInput | Prisma.DistributorWhereUniqueInput[]
+  connect?: Prisma.DistributorWhereUniqueInput | Prisma.DistributorWhereUniqueInput[]
+  update?: Prisma.DistributorUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.DistributorUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.DistributorUpdateManyWithWhereWithoutPharmacyInput | Prisma.DistributorUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.DistributorScalarWhereInput | Prisma.DistributorScalarWhereInput[]
+}
+
+export type DistributorUncheckedUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.DistributorCreateWithoutPharmacyInput, Prisma.DistributorUncheckedCreateWithoutPharmacyInput> | Prisma.DistributorCreateWithoutPharmacyInput[] | Prisma.DistributorUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.DistributorCreateOrConnectWithoutPharmacyInput | Prisma.DistributorCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.DistributorUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.DistributorUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.DistributorCreateManyPharmacyInputEnvelope
+  set?: Prisma.DistributorWhereUniqueInput | Prisma.DistributorWhereUniqueInput[]
+  disconnect?: Prisma.DistributorWhereUniqueInput | Prisma.DistributorWhereUniqueInput[]
+  delete?: Prisma.DistributorWhereUniqueInput | Prisma.DistributorWhereUniqueInput[]
+  connect?: Prisma.DistributorWhereUniqueInput | Prisma.DistributorWhereUniqueInput[]
+  update?: Prisma.DistributorUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.DistributorUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.DistributorUpdateManyWithWhereWithoutPharmacyInput | Prisma.DistributorUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.DistributorScalarWhereInput | Prisma.DistributorScalarWhereInput[]
 }
 
 export type DistributorCreateNestedOneWithoutInventoryConfigInput = {
@@ -522,7 +594,7 @@ export type DistributorUpdateOneWithoutStockPurchasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DistributorUpdateToOneWithWhereWithoutStockPurchasesInput, Prisma.DistributorUpdateWithoutStockPurchasesInput>, Prisma.DistributorUncheckedUpdateWithoutStockPurchasesInput>
 }
 
-export type DistributorCreateWithoutInventoryConfigInput = {
+export type DistributorCreateWithoutPharmacyInput = {
   id?: string
   name: string
   contact?: string
@@ -532,12 +604,84 @@ export type DistributorCreateWithoutInventoryConfigInput = {
   company?: Prisma.CompanyCreateNestedOneWithoutDistributorsInput
   products?: Prisma.ProductCreateNestedManyWithoutDistributorInput
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
+  productConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutDistributorInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutDistributorInput
+}
+
+export type DistributorUncheckedCreateWithoutPharmacyInput = {
+  id?: string
+  name: string
+  contact?: string
+  phone?: string
+  address?: string
+  companyId?: string | null
+  createdAt?: Date | string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutDistributorInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutDistributorInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedCreateNestedOneWithoutDistributorInput
+  productConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutDistributorInput
+}
+
+export type DistributorCreateOrConnectWithoutPharmacyInput = {
+  where: Prisma.DistributorWhereUniqueInput
+  create: Prisma.XOR<Prisma.DistributorCreateWithoutPharmacyInput, Prisma.DistributorUncheckedCreateWithoutPharmacyInput>
+}
+
+export type DistributorCreateManyPharmacyInputEnvelope = {
+  data: Prisma.DistributorCreateManyPharmacyInput | Prisma.DistributorCreateManyPharmacyInput[]
+  skipDuplicates?: boolean
+}
+
+export type DistributorUpsertWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.DistributorWhereUniqueInput
+  update: Prisma.XOR<Prisma.DistributorUpdateWithoutPharmacyInput, Prisma.DistributorUncheckedUpdateWithoutPharmacyInput>
+  create: Prisma.XOR<Prisma.DistributorCreateWithoutPharmacyInput, Prisma.DistributorUncheckedCreateWithoutPharmacyInput>
+}
+
+export type DistributorUpdateWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.DistributorWhereUniqueInput
+  data: Prisma.XOR<Prisma.DistributorUpdateWithoutPharmacyInput, Prisma.DistributorUncheckedUpdateWithoutPharmacyInput>
+}
+
+export type DistributorUpdateManyWithWhereWithoutPharmacyInput = {
+  where: Prisma.DistributorScalarWhereInput
+  data: Prisma.XOR<Prisma.DistributorUpdateManyMutationInput, Prisma.DistributorUncheckedUpdateManyWithoutPharmacyInput>
+}
+
+export type DistributorScalarWhereInput = {
+  AND?: Prisma.DistributorScalarWhereInput | Prisma.DistributorScalarWhereInput[]
+  OR?: Prisma.DistributorScalarWhereInput[]
+  NOT?: Prisma.DistributorScalarWhereInput | Prisma.DistributorScalarWhereInput[]
+  id?: Prisma.StringFilter<"Distributor"> | string
+  pharmacyId?: Prisma.StringFilter<"Distributor"> | string
+  name?: Prisma.StringFilter<"Distributor"> | string
+  contact?: Prisma.StringFilter<"Distributor"> | string
+  phone?: Prisma.StringFilter<"Distributor"> | string
+  address?: Prisma.StringFilter<"Distributor"> | string
+  companyId?: Prisma.StringNullableFilter<"Distributor"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Distributor"> | Date | string
+}
+
+export type DistributorCreateWithoutInventoryConfigInput = {
+  id?: string
+  name: string
+  contact?: string
+  phone?: string
+  address?: string
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutDistributorsInput
+  company?: Prisma.CompanyCreateNestedOneWithoutDistributorsInput
+  products?: Prisma.ProductCreateNestedManyWithoutDistributorInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorUncheckedCreateWithoutInventoryConfigInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -573,6 +717,7 @@ export type DistributorUpdateWithoutInventoryConfigInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutDistributorsNestedInput
   company?: Prisma.CompanyUpdateOneWithoutDistributorsNestedInput
   products?: Prisma.ProductUpdateManyWithoutDistributorNestedInput
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
@@ -582,6 +727,7 @@ export type DistributorUpdateWithoutInventoryConfigInput = {
 
 export type DistributorUncheckedUpdateWithoutInventoryConfigInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -601,6 +747,7 @@ export type DistributorCreateWithoutProductConfigsInput = {
   phone?: string
   address?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutDistributorsInput
   company?: Prisma.CompanyCreateNestedOneWithoutDistributorsInput
   products?: Prisma.ProductCreateNestedManyWithoutDistributorInput
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
@@ -610,6 +757,7 @@ export type DistributorCreateWithoutProductConfigsInput = {
 
 export type DistributorUncheckedCreateWithoutProductConfigsInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -645,6 +793,7 @@ export type DistributorUpdateWithoutProductConfigsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutDistributorsNestedInput
   company?: Prisma.CompanyUpdateOneWithoutDistributorsNestedInput
   products?: Prisma.ProductUpdateManyWithoutDistributorNestedInput
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
@@ -654,6 +803,7 @@ export type DistributorUpdateWithoutProductConfigsInput = {
 
 export type DistributorUncheckedUpdateWithoutProductConfigsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -673,6 +823,7 @@ export type DistributorCreateWithoutPurchaseOrdersInput = {
   phone?: string
   address?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutDistributorsInput
   company?: Prisma.CompanyCreateNestedOneWithoutDistributorsInput
   products?: Prisma.ProductCreateNestedManyWithoutDistributorInput
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
@@ -682,6 +833,7 @@ export type DistributorCreateWithoutPurchaseOrdersInput = {
 
 export type DistributorUncheckedCreateWithoutPurchaseOrdersInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -717,6 +869,7 @@ export type DistributorUpdateWithoutPurchaseOrdersInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutDistributorsNestedInput
   company?: Prisma.CompanyUpdateOneWithoutDistributorsNestedInput
   products?: Prisma.ProductUpdateManyWithoutDistributorNestedInput
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
@@ -726,6 +879,7 @@ export type DistributorUpdateWithoutPurchaseOrdersInput = {
 
 export type DistributorUncheckedUpdateWithoutPurchaseOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -745,6 +899,7 @@ export type DistributorCreateWithoutProductsInput = {
   phone?: string
   address?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutDistributorsInput
   company?: Prisma.CompanyCreateNestedOneWithoutDistributorsInput
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
   inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
@@ -754,6 +909,7 @@ export type DistributorCreateWithoutProductsInput = {
 
 export type DistributorUncheckedCreateWithoutProductsInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -789,6 +945,7 @@ export type DistributorUpdateWithoutProductsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutDistributorsNestedInput
   company?: Prisma.CompanyUpdateOneWithoutDistributorsNestedInput
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
   inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
@@ -798,6 +955,7 @@ export type DistributorUpdateWithoutProductsInput = {
 
 export type DistributorUncheckedUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -817,6 +975,7 @@ export type DistributorCreateWithoutCompanyInput = {
   phone?: string
   address?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutDistributorsInput
   products?: Prisma.ProductCreateNestedManyWithoutDistributorInput
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
   inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
@@ -826,6 +985,7 @@ export type DistributorCreateWithoutCompanyInput = {
 
 export type DistributorUncheckedCreateWithoutCompanyInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -864,19 +1024,6 @@ export type DistributorUpdateManyWithWhereWithoutCompanyInput = {
   data: Prisma.XOR<Prisma.DistributorUpdateManyMutationInput, Prisma.DistributorUncheckedUpdateManyWithoutCompanyInput>
 }
 
-export type DistributorScalarWhereInput = {
-  AND?: Prisma.DistributorScalarWhereInput | Prisma.DistributorScalarWhereInput[]
-  OR?: Prisma.DistributorScalarWhereInput[]
-  NOT?: Prisma.DistributorScalarWhereInput | Prisma.DistributorScalarWhereInput[]
-  id?: Prisma.StringFilter<"Distributor"> | string
-  name?: Prisma.StringFilter<"Distributor"> | string
-  contact?: Prisma.StringFilter<"Distributor"> | string
-  phone?: Prisma.StringFilter<"Distributor"> | string
-  address?: Prisma.StringFilter<"Distributor"> | string
-  companyId?: Prisma.StringNullableFilter<"Distributor"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Distributor"> | Date | string
-}
-
 export type DistributorCreateWithoutStockPurchasesInput = {
   id?: string
   name: string
@@ -884,6 +1031,7 @@ export type DistributorCreateWithoutStockPurchasesInput = {
   phone?: string
   address?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutDistributorsInput
   company?: Prisma.CompanyCreateNestedOneWithoutDistributorsInput
   products?: Prisma.ProductCreateNestedManyWithoutDistributorInput
   inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
@@ -893,6 +1041,7 @@ export type DistributorCreateWithoutStockPurchasesInput = {
 
 export type DistributorUncheckedCreateWithoutStockPurchasesInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -928,6 +1077,7 @@ export type DistributorUpdateWithoutStockPurchasesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutDistributorsNestedInput
   company?: Prisma.CompanyUpdateOneWithoutDistributorsNestedInput
   products?: Prisma.ProductUpdateManyWithoutDistributorNestedInput
   inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
@@ -937,6 +1087,7 @@ export type DistributorUpdateWithoutStockPurchasesInput = {
 
 export type DistributorUncheckedUpdateWithoutStockPurchasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -949,8 +1100,59 @@ export type DistributorUncheckedUpdateWithoutStockPurchasesInput = {
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorNestedInput
 }
 
+export type DistributorCreateManyPharmacyInput = {
+  id?: string
+  name: string
+  contact?: string
+  phone?: string
+  address?: string
+  companyId?: string | null
+  createdAt?: Date | string
+}
+
+export type DistributorUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneWithoutDistributorsNestedInput
+  products?: Prisma.ProductUpdateManyWithoutDistributorNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
+  productConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutDistributorNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutDistributorNestedInput
+}
+
+export type DistributorUncheckedUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutDistributorNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutDistributorNestedInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedUpdateOneWithoutDistributorNestedInput
+  productConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorNestedInput
+}
+
+export type DistributorUncheckedUpdateManyWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type DistributorCreateManyCompanyInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -965,6 +1167,7 @@ export type DistributorUpdateWithoutCompanyInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutDistributorsNestedInput
   products?: Prisma.ProductUpdateManyWithoutDistributorNestedInput
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
   inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
@@ -974,6 +1177,7 @@ export type DistributorUpdateWithoutCompanyInput = {
 
 export type DistributorUncheckedUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -988,6 +1192,7 @@ export type DistributorUncheckedUpdateWithoutCompanyInput = {
 
 export type DistributorUncheckedUpdateManyWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1055,12 +1260,14 @@ export type DistributorCountOutputTypeCountPurchaseOrdersArgs<ExtArgs extends ru
 
 export type DistributorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   name?: boolean
   contact?: boolean
   phone?: boolean
   address?: boolean
   companyId?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   company?: boolean | Prisma.Distributor$companyArgs<ExtArgs>
   products?: boolean | Prisma.Distributor$productsArgs<ExtArgs>
   stockPurchases?: boolean | Prisma.Distributor$stockPurchasesArgs<ExtArgs>
@@ -1072,28 +1279,33 @@ export type DistributorSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type DistributorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   name?: boolean
   contact?: boolean
   phone?: boolean
   address?: boolean
   companyId?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   company?: boolean | Prisma.Distributor$companyArgs<ExtArgs>
 }, ExtArgs["result"]["distributor"]>
 
 export type DistributorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   name?: boolean
   contact?: boolean
   phone?: boolean
   address?: boolean
   companyId?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   company?: boolean | Prisma.Distributor$companyArgs<ExtArgs>
 }, ExtArgs["result"]["distributor"]>
 
 export type DistributorSelectScalar = {
   id?: boolean
+  pharmacyId?: boolean
   name?: boolean
   contact?: boolean
   phone?: boolean
@@ -1102,8 +1314,9 @@ export type DistributorSelectScalar = {
   createdAt?: boolean
 }
 
-export type DistributorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "contact" | "phone" | "address" | "companyId" | "createdAt", ExtArgs["result"]["distributor"]>
+export type DistributorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "name" | "contact" | "phone" | "address" | "companyId" | "createdAt", ExtArgs["result"]["distributor"]>
 export type DistributorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   company?: boolean | Prisma.Distributor$companyArgs<ExtArgs>
   products?: boolean | Prisma.Distributor$productsArgs<ExtArgs>
   stockPurchases?: boolean | Prisma.Distributor$stockPurchasesArgs<ExtArgs>
@@ -1113,15 +1326,18 @@ export type DistributorInclude<ExtArgs extends runtime.Types.Extensions.Internal
   _count?: boolean | Prisma.DistributorCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DistributorIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   company?: boolean | Prisma.Distributor$companyArgs<ExtArgs>
 }
 export type DistributorIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   company?: boolean | Prisma.Distributor$companyArgs<ExtArgs>
 }
 
 export type $DistributorPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Distributor"
   objects: {
+    pharmacy: Prisma.$PharmacyPayload<ExtArgs>
     company: Prisma.$CompanyPayload<ExtArgs> | null
     products: Prisma.$ProductPayload<ExtArgs>[]
     stockPurchases: Prisma.$StockPurchasePayload<ExtArgs>[]
@@ -1131,6 +1347,7 @@ export type $DistributorPayload<ExtArgs extends runtime.Types.Extensions.Interna
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    pharmacyId: string
     name: string
     contact: string
     phone: string
@@ -1531,6 +1748,7 @@ readonly fields: DistributorFieldRefs;
  */
 export interface Prisma__DistributorClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  pharmacy<T extends Prisma.PharmacyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PharmacyDefaultArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   company<T extends Prisma.Distributor$companyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Distributor$companyArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   products<T extends Prisma.Distributor$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Distributor$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   stockPurchases<T extends Prisma.Distributor$stockPurchasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Distributor$stockPurchasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockPurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1567,6 +1785,7 @@ export interface Prisma__DistributorClient<T, Null = never, ExtArgs extends runt
  */
 export interface DistributorFieldRefs {
   readonly id: Prisma.FieldRef<"Distributor", 'String'>
+  readonly pharmacyId: Prisma.FieldRef<"Distributor", 'String'>
   readonly name: Prisma.FieldRef<"Distributor", 'String'>
   readonly contact: Prisma.FieldRef<"Distributor", 'String'>
   readonly phone: Prisma.FieldRef<"Distributor", 'String'>

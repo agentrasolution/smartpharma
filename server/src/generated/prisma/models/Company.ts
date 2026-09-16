@@ -26,6 +26,7 @@ export type AggregateCompany = {
 
 export type CompanyMinAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
   name: string | null
   contact: string | null
   phone: string | null
@@ -36,6 +37,7 @@ export type CompanyMinAggregateOutputType = {
 
 export type CompanyMaxAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
   name: string | null
   contact: string | null
   phone: string | null
@@ -46,6 +48,7 @@ export type CompanyMaxAggregateOutputType = {
 
 export type CompanyCountAggregateOutputType = {
   id: number
+  pharmacyId: number
   name: number
   contact: number
   phone: number
@@ -58,6 +61,7 @@ export type CompanyCountAggregateOutputType = {
 
 export type CompanyMinAggregateInputType = {
   id?: true
+  pharmacyId?: true
   name?: true
   contact?: true
   phone?: true
@@ -68,6 +72,7 @@ export type CompanyMinAggregateInputType = {
 
 export type CompanyMaxAggregateInputType = {
   id?: true
+  pharmacyId?: true
   name?: true
   contact?: true
   phone?: true
@@ -78,6 +83,7 @@ export type CompanyMaxAggregateInputType = {
 
 export type CompanyCountAggregateInputType = {
   id?: true
+  pharmacyId?: true
   name?: true
   contact?: true
   phone?: true
@@ -161,6 +167,7 @@ export type CompanyGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type CompanyGroupByOutputType = {
   id: string
+  pharmacyId: string
   name: string
   contact: string
   phone: string
@@ -192,12 +199,14 @@ export type CompanyWhereInput = {
   OR?: Prisma.CompanyWhereInput[]
   NOT?: Prisma.CompanyWhereInput | Prisma.CompanyWhereInput[]
   id?: Prisma.StringFilter<"Company"> | string
+  pharmacyId?: Prisma.StringFilter<"Company"> | string
   name?: Prisma.StringFilter<"Company"> | string
   contact?: Prisma.StringFilter<"Company"> | string
   phone?: Prisma.StringFilter<"Company"> | string
   secondNumber?: Prisma.StringFilter<"Company"> | string
   address?: Prisma.StringFilter<"Company"> | string
   createdAt?: Prisma.DateTimeFilter<"Company"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
   distributors?: Prisma.DistributorListRelationFilter
   stockPurchases?: Prisma.StockPurchaseListRelationFilter
   purchaseOrders?: Prisma.PurchaseOrderListRelationFilter
@@ -205,12 +214,14 @@ export type CompanyWhereInput = {
 
 export type CompanyOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   secondNumber?: Prisma.SortOrder
   address?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  pharmacy?: Prisma.PharmacyOrderByWithRelationInput
   distributors?: Prisma.DistributorOrderByRelationAggregateInput
   stockPurchases?: Prisma.StockPurchaseOrderByRelationAggregateInput
   purchaseOrders?: Prisma.PurchaseOrderOrderByRelationAggregateInput
@@ -218,22 +229,26 @@ export type CompanyOrderByWithRelationInput = {
 
 export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  pharmacyId_name?: Prisma.CompanyPharmacyIdNameCompoundUniqueInput
   AND?: Prisma.CompanyWhereInput | Prisma.CompanyWhereInput[]
   OR?: Prisma.CompanyWhereInput[]
   NOT?: Prisma.CompanyWhereInput | Prisma.CompanyWhereInput[]
+  pharmacyId?: Prisma.StringFilter<"Company"> | string
   name?: Prisma.StringFilter<"Company"> | string
   contact?: Prisma.StringFilter<"Company"> | string
   phone?: Prisma.StringFilter<"Company"> | string
   secondNumber?: Prisma.StringFilter<"Company"> | string
   address?: Prisma.StringFilter<"Company"> | string
   createdAt?: Prisma.DateTimeFilter<"Company"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
   distributors?: Prisma.DistributorListRelationFilter
   stockPurchases?: Prisma.StockPurchaseListRelationFilter
   purchaseOrders?: Prisma.PurchaseOrderListRelationFilter
-}, "id">
+}, "id" | "pharmacyId_name">
 
 export type CompanyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -250,6 +265,7 @@ export type CompanyScalarWhereWithAggregatesInput = {
   OR?: Prisma.CompanyScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CompanyScalarWhereWithAggregatesInput | Prisma.CompanyScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Company"> | string
+  pharmacyId?: Prisma.StringWithAggregatesFilter<"Company"> | string
   name?: Prisma.StringWithAggregatesFilter<"Company"> | string
   contact?: Prisma.StringWithAggregatesFilter<"Company"> | string
   phone?: Prisma.StringWithAggregatesFilter<"Company"> | string
@@ -266,6 +282,7 @@ export type CompanyCreateInput = {
   secondNumber?: string
   address?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutCompaniesInput
   distributors?: Prisma.DistributorCreateNestedManyWithoutCompanyInput
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutCompanyInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutCompanyInput
@@ -273,6 +290,7 @@ export type CompanyCreateInput = {
 
 export type CompanyUncheckedCreateInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -292,6 +310,7 @@ export type CompanyUpdateInput = {
   secondNumber?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutCompaniesNestedInput
   distributors?: Prisma.DistributorUpdateManyWithoutCompanyNestedInput
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutCompanyNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutCompanyNestedInput
@@ -299,6 +318,7 @@ export type CompanyUpdateInput = {
 
 export type CompanyUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -312,6 +332,7 @@ export type CompanyUncheckedUpdateInput = {
 
 export type CompanyCreateManyInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -332,6 +353,7 @@ export type CompanyUpdateManyMutationInput = {
 
 export type CompanyUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -340,13 +362,29 @@ export type CompanyUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type CompanyListRelationFilter = {
+  every?: Prisma.CompanyWhereInput
+  some?: Prisma.CompanyWhereInput
+  none?: Prisma.CompanyWhereInput
+}
+
+export type CompanyOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type CompanyNullableScalarRelationFilter = {
   is?: Prisma.CompanyWhereInput | null
   isNot?: Prisma.CompanyWhereInput | null
 }
 
+export type CompanyPharmacyIdNameCompoundUniqueInput = {
+  pharmacyId: string
+  name: string
+}
+
 export type CompanyCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -357,6 +395,7 @@ export type CompanyCountOrderByAggregateInput = {
 
 export type CompanyMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -367,12 +406,55 @@ export type CompanyMaxOrderByAggregateInput = {
 
 export type CompanyMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   secondNumber?: Prisma.SortOrder
   address?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type CompanyCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutPharmacyInput, Prisma.CompanyUncheckedCreateWithoutPharmacyInput> | Prisma.CompanyCreateWithoutPharmacyInput[] | Prisma.CompanyUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutPharmacyInput | Prisma.CompanyCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.CompanyCreateManyPharmacyInputEnvelope
+  connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+}
+
+export type CompanyUncheckedCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutPharmacyInput, Prisma.CompanyUncheckedCreateWithoutPharmacyInput> | Prisma.CompanyCreateWithoutPharmacyInput[] | Prisma.CompanyUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutPharmacyInput | Prisma.CompanyCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.CompanyCreateManyPharmacyInputEnvelope
+  connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+}
+
+export type CompanyUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutPharmacyInput, Prisma.CompanyUncheckedCreateWithoutPharmacyInput> | Prisma.CompanyCreateWithoutPharmacyInput[] | Prisma.CompanyUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutPharmacyInput | Prisma.CompanyCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.CompanyUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.CompanyUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.CompanyCreateManyPharmacyInputEnvelope
+  set?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  disconnect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  delete?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  update?: Prisma.CompanyUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.CompanyUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.CompanyUpdateManyWithWhereWithoutPharmacyInput | Prisma.CompanyUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
+}
+
+export type CompanyUncheckedUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutPharmacyInput, Prisma.CompanyUncheckedCreateWithoutPharmacyInput> | Prisma.CompanyCreateWithoutPharmacyInput[] | Prisma.CompanyUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutPharmacyInput | Prisma.CompanyCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.CompanyUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.CompanyUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.CompanyCreateManyPharmacyInputEnvelope
+  set?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  disconnect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  delete?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  connect?: Prisma.CompanyWhereUniqueInput | Prisma.CompanyWhereUniqueInput[]
+  update?: Prisma.CompanyUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.CompanyUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.CompanyUpdateManyWithWhereWithoutPharmacyInput | Prisma.CompanyUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
 }
 
 export type CompanyCreateNestedOneWithoutPurchaseOrdersInput = {
@@ -423,7 +505,7 @@ export type CompanyUpdateOneWithoutStockPurchasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutStockPurchasesInput, Prisma.CompanyUpdateWithoutStockPurchasesInput>, Prisma.CompanyUncheckedUpdateWithoutStockPurchasesInput>
 }
 
-export type CompanyCreateWithoutPurchaseOrdersInput = {
+export type CompanyCreateWithoutPharmacyInput = {
   id?: string
   name: string
   contact?: string
@@ -433,10 +515,78 @@ export type CompanyCreateWithoutPurchaseOrdersInput = {
   createdAt?: Date | string
   distributors?: Prisma.DistributorCreateNestedManyWithoutCompanyInput
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutCompanyInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutPharmacyInput = {
+  id?: string
+  name: string
+  contact?: string
+  phone?: string
+  secondNumber?: string
+  address?: string
+  createdAt?: Date | string
+  distributors?: Prisma.DistributorUncheckedCreateNestedManyWithoutCompanyInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutCompanyInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutPharmacyInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutPharmacyInput, Prisma.CompanyUncheckedCreateWithoutPharmacyInput>
+}
+
+export type CompanyCreateManyPharmacyInputEnvelope = {
+  data: Prisma.CompanyCreateManyPharmacyInput | Prisma.CompanyCreateManyPharmacyInput[]
+  skipDuplicates?: boolean
+}
+
+export type CompanyUpsertWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutPharmacyInput, Prisma.CompanyUncheckedUpdateWithoutPharmacyInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutPharmacyInput, Prisma.CompanyUncheckedCreateWithoutPharmacyInput>
+}
+
+export type CompanyUpdateWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutPharmacyInput, Prisma.CompanyUncheckedUpdateWithoutPharmacyInput>
+}
+
+export type CompanyUpdateManyWithWhereWithoutPharmacyInput = {
+  where: Prisma.CompanyScalarWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateManyMutationInput, Prisma.CompanyUncheckedUpdateManyWithoutPharmacyInput>
+}
+
+export type CompanyScalarWhereInput = {
+  AND?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
+  OR?: Prisma.CompanyScalarWhereInput[]
+  NOT?: Prisma.CompanyScalarWhereInput | Prisma.CompanyScalarWhereInput[]
+  id?: Prisma.StringFilter<"Company"> | string
+  pharmacyId?: Prisma.StringFilter<"Company"> | string
+  name?: Prisma.StringFilter<"Company"> | string
+  contact?: Prisma.StringFilter<"Company"> | string
+  phone?: Prisma.StringFilter<"Company"> | string
+  secondNumber?: Prisma.StringFilter<"Company"> | string
+  address?: Prisma.StringFilter<"Company"> | string
+  createdAt?: Prisma.DateTimeFilter<"Company"> | Date | string
+}
+
+export type CompanyCreateWithoutPurchaseOrdersInput = {
+  id?: string
+  name: string
+  contact?: string
+  phone?: string
+  secondNumber?: string
+  address?: string
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutCompaniesInput
+  distributors?: Prisma.DistributorCreateNestedManyWithoutCompanyInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutPurchaseOrdersInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -471,12 +621,14 @@ export type CompanyUpdateWithoutPurchaseOrdersInput = {
   secondNumber?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutCompaniesNestedInput
   distributors?: Prisma.DistributorUpdateManyWithoutCompanyNestedInput
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutPurchaseOrdersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -495,12 +647,14 @@ export type CompanyCreateWithoutDistributorsInput = {
   secondNumber?: string
   address?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutCompaniesInput
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutCompanyInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutDistributorsInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -535,12 +689,14 @@ export type CompanyUpdateWithoutDistributorsInput = {
   secondNumber?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutCompaniesNestedInput
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutCompanyNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutDistributorsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -559,12 +715,14 @@ export type CompanyCreateWithoutStockPurchasesInput = {
   secondNumber?: string
   address?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutCompaniesInput
   distributors?: Prisma.DistributorCreateNestedManyWithoutCompanyInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutStockPurchasesInput = {
   id?: string
+  pharmacyId: string
   name: string
   contact?: string
   phone?: string
@@ -599,12 +757,14 @@ export type CompanyUpdateWithoutStockPurchasesInput = {
   secondNumber?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutCompaniesNestedInput
   distributors?: Prisma.DistributorUpdateManyWithoutCompanyNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutStockPurchasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   contact?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -613,6 +773,52 @@ export type CompanyUncheckedUpdateWithoutStockPurchasesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   distributors?: Prisma.DistributorUncheckedUpdateManyWithoutCompanyNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateManyPharmacyInput = {
+  id?: string
+  name: string
+  contact?: string
+  phone?: string
+  secondNumber?: string
+  address?: string
+  createdAt?: Date | string
+}
+
+export type CompanyUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  secondNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  distributors?: Prisma.DistributorUpdateManyWithoutCompanyNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutCompanyNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  secondNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  distributors?: Prisma.DistributorUncheckedUpdateManyWithoutCompanyNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutCompanyNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateManyWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  secondNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -666,12 +872,14 @@ export type CompanyCountOutputTypeCountPurchaseOrdersArgs<ExtArgs extends runtim
 
 export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   name?: boolean
   contact?: boolean
   phone?: boolean
   secondNumber?: boolean
   address?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   distributors?: boolean | Prisma.Company$distributorsArgs<ExtArgs>
   stockPurchases?: boolean | Prisma.Company$stockPurchasesArgs<ExtArgs>
   purchaseOrders?: boolean | Prisma.Company$purchaseOrdersArgs<ExtArgs>
@@ -680,26 +888,31 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 
 export type CompanySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   name?: boolean
   contact?: boolean
   phone?: boolean
   secondNumber?: boolean
   address?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["company"]>
 
 export type CompanySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   name?: boolean
   contact?: boolean
   phone?: boolean
   secondNumber?: boolean
   address?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["company"]>
 
 export type CompanySelectScalar = {
   id?: boolean
+  pharmacyId?: boolean
   name?: boolean
   contact?: boolean
   phone?: boolean
@@ -708,25 +921,32 @@ export type CompanySelectScalar = {
   createdAt?: boolean
 }
 
-export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "contact" | "phone" | "secondNumber" | "address" | "createdAt", ExtArgs["result"]["company"]>
+export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "name" | "contact" | "phone" | "secondNumber" | "address" | "createdAt", ExtArgs["result"]["company"]>
 export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   distributors?: boolean | Prisma.Company$distributorsArgs<ExtArgs>
   stockPurchases?: boolean | Prisma.Company$stockPurchasesArgs<ExtArgs>
   purchaseOrders?: boolean | Prisma.Company$purchaseOrdersArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type CompanyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type CompanyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type CompanyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+}
+export type CompanyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+}
 
 export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Company"
   objects: {
+    pharmacy: Prisma.$PharmacyPayload<ExtArgs>
     distributors: Prisma.$DistributorPayload<ExtArgs>[]
     stockPurchases: Prisma.$StockPurchasePayload<ExtArgs>[]
     purchaseOrders: Prisma.$PurchaseOrderPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    pharmacyId: string
     name: string
     contact: string
     phone: string
@@ -1127,6 +1347,7 @@ readonly fields: CompanyFieldRefs;
  */
 export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  pharmacy<T extends Prisma.PharmacyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PharmacyDefaultArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   distributors<T extends Prisma.Company$distributorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$distributorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DistributorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   stockPurchases<T extends Prisma.Company$stockPurchasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$stockPurchasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockPurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseOrders<T extends Prisma.Company$purchaseOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$purchaseOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1160,6 +1381,7 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface CompanyFieldRefs {
   readonly id: Prisma.FieldRef<"Company", 'String'>
+  readonly pharmacyId: Prisma.FieldRef<"Company", 'String'>
   readonly name: Prisma.FieldRef<"Company", 'String'>
   readonly contact: Prisma.FieldRef<"Company", 'String'>
   readonly phone: Prisma.FieldRef<"Company", 'String'>
@@ -1420,6 +1642,10 @@ export type CompanyCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    */
   data: Prisma.CompanyCreateManyInput | Prisma.CompanyCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompanyIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1490,6 +1716,10 @@ export type CompanyUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many Companies to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompanyIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

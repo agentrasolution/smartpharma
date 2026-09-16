@@ -7,6 +7,8 @@ export function normalizeProduct(product: any): any {
     company: product.company,
     category: product.category,
     location: product.location,
+    pharmacy_id: product.pharmacyId ?? null,
+    branch_id: product.branchId ?? null,
     distributor_id: product.distributorId ?? null,
     sale_price: product.salePrice ?? 0,
     purchase_price: product.purchasePrice ?? 0,

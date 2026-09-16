@@ -18,6 +18,16 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
+ * Model Pharmacy
+ * 
+ */
+export type Pharmacy = Prisma.PharmacyModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel
+/**
  * Model InventoryConfig
  * 
  */
@@ -68,6 +78,11 @@ export type AIMessage = Prisma.AIMessageModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model Branch
+ * 
+ */
+export type Branch = Prisma.BranchModel
+/**
  * Model AuthToken
  * 
  */
@@ -77,6 +92,21 @@ export type AuthToken = Prisma.AuthTokenModel
  * 
  */
 export type RecoveryKey = Prisma.RecoveryKeyModel
+/**
+ * Model Role
+ * 
+ */
+export type Role = Prisma.RoleModel
+/**
+ * Model Permission
+ * 
+ */
+export type Permission = Prisma.PermissionModel
+/**
+ * Model RolePermission
+ * 
+ */
+export type RolePermission = Prisma.RolePermissionModel
 /**
  * Model Product
  * 

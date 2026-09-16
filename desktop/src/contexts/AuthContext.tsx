@@ -1,22 +1,21 @@
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import { api } from "@/lib/api";
-
-interface User {
-  id: string;
-  username: string;
-  role: string;
-}
+import type { AuthUser, RegisterInput } from "@/types";
 
 interface AuthState {
-  user: User | null;
+  user: AuthUser | null;
   accessToken: string | null;
   refreshToken: string | null;
 }
 
 interface AuthContextType extends AuthState {
   login: (username: string, password: string) => Promise<string | null>;
+  register: (input: RegisterInput) => Promise<string | null>;
   logout: () => Promise<void>;
+  refreshUser: () => Promise<void>;
   isAuthenticated: boolean;
+  subscriptionBlocked: boolean;
+  clearSubscriptionBlocked: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -41,6 +40,11 @@ function clearTokens() {
   localStorage.removeItem("faraz_user");
 }
 
+function saveUser(user: AuthUser | null) {
+  if (user) localStorage.setItem("faraz_user", JSON.stringify(user));
+  else localStorage.removeItem("faraz_user");
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AuthState>(() => {
     const tokens = loadTokens();
@@ -48,6 +52,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const user = userStr ? JSON.parse(userStr) : null;
     return { user, ...tokens };
   });
+  const [subscriptionBlocked, setSubscriptionBlocked] = useState(false);
+
+  const applyAuth = useCallback((user: AuthUser, accessToken: string, refreshToken: string) => {
+    saveTokens(accessToken, refreshToken);
+    saveUser(user);
+    setState({ user, accessToken, refreshToken });
+  }, []);
 
   const refreshAccessToken = useCallback(async () => {
     const stored = loadTokens().refreshToken;
@@ -55,16 +66,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     try {
       const res = await api.auth.refresh(stored);
-      saveTokens(res.accessToken, res.refreshToken);
-      localStorage.setItem("faraz_user", JSON.stringify(res.user));
-      setState({ user: res.user, accessToken: res.accessToken, refreshToken: res.refreshToken });
+      applyAuth(res.user, res.accessToken, res.refreshToken);
       return true;
     } catch {
       clearTokens();
       setState({ user: null, accessToken: null, refreshToken: null });
       return false;
     }
-  }, []);
+  }, [applyAuth]);
 
   useEffect(() => {
     if (state.refreshToken) return;
@@ -78,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const res = await api.auth.refresh(state.refreshToken!);
         saveTokens(res.accessToken, res.refreshToken);
-        localStorage.setItem("faraz_user", JSON.stringify(res.user));
+        saveUser(res.user);
         setState((prev) => ({ ...prev, accessToken: res.accessToken }));
       } catch {
         clearTokens();
@@ -89,16 +98,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => clearInterval(interval);
   }, [state.refreshToken]);
 
+  useEffect(() => {
+    const onBlocked = () => setSubscriptionBlocked(true);
+    window.addEventListener("subscription:blocked", onBlocked);
+    return () => window.removeEventListener("subscription:blocked", onBlocked);
+  }, []);
+
   const login = async (username: string, password: string): Promise<string | null> => {
     try {
       const res = await api.auth.login(username, password);
-      saveTokens(res.accessToken, res.refreshToken);
-      localStorage.setItem("faraz_user", JSON.stringify(res.user));
-      setState({ user: res.user, accessToken: res.accessToken, refreshToken: res.refreshToken });
+      applyAuth(res.user, res.accessToken, res.refreshToken);
+      setSubscriptionBlocked(false);
       return null;
     } catch (err) {
       return err instanceof Error ? err.message : "Login failed";
     }
+  };
+
+  const register = async (input: RegisterInput): Promise<string | null> => {
+    try {
+      const res = await api.auth.register(input);
+      applyAuth(res.user, res.accessToken, res.refreshToken);
+      setSubscriptionBlocked(false);
+      return null;
+    } catch (err) {
+      return err instanceof Error ? err.message : "Registration failed";
+    }
+  };
+
+  const refreshUser = async () => {
+    if (!state.accessToken) return;
+    try {
+      const user = await api.auth.me();
+      saveUser(user);
+      setState((prev) => ({ ...prev, user }));
+    } catch {}
   };
 
   const logout = async () => {
@@ -109,10 +143,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch {}
     clearTokens();
     setState({ user: null, accessToken: null, refreshToken: null });
+    setSubscriptionBlocked(false);
   };
 
   return (
-    <AuthContext.Provider value={{ ...state, login, logout, isAuthenticated: !!state.user }}>
+    <AuthContext.Provider
+      value={{
+        ...state,
+        login,
+        register,
+        logout,
+        refreshUser,
+        isAuthenticated: !!state.user,
+        subscriptionBlocked,
+        clearSubscriptionBlocked: () => setSubscriptionBlocked(false),
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

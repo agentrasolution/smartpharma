@@ -3,6 +3,7 @@ import { InventoryAnalysisService } from "./analytics.service";
 import { analyzeExpiry, expiryBucketedCounts, type ExpiryInfo } from "./expiry.service";
 import { classifyTrend } from "./trend.service";
 import type { RiskLevel } from "./math";
+import type { BranchScope } from "../middleware/auth";
 
 const VALID_SALE_STATUSES = ["paid"];
 
@@ -56,21 +57,21 @@ export class InventoryIntelligenceService {
   }
 
   /** Analyze a single product (Tool: analyze_product_inventory). */
-  async analyzeProduct(productId: string, days = 30): Promise<ProductAnalysis | null> {
-    const product = await repo.getProduct(productId);
+  async analyzeProduct(scope: BranchScope, productId: string, days = 30): Promise<ProductAnalysis | null> {
+    const product = await repo.getProduct(productId, scope);
     if (!product || product.active !== 1) return null;
 
     const effectiveDays = days > 0 ? days : 30;
     const since = new Date(Date.now() - effectiveDays * 86400000);
     const distributorPromise = product.distributorId
-      ? repo.getDistributor(product.distributorId).then((d) => ({
+      ? repo.getDistributor(product.distributorId, scope).then((d) => ({
           id: d?.id ?? "",
           name: d?.name ?? "",
           leadTimeDays: d?.leadTimeDays ?? 3,
         }))
       : Promise.resolve(null);
     const [sales, leadTimeDays, distributor] = await Promise.all([
-      repo.getNetSalesStatForProduct(productId, since, VALID_SALE_STATUSES),
+      repo.getNetSalesStatForProduct(productId, since, VALID_SALE_STATUSES, scope),
       repo.getEffectiveLeadTime(productId, product.distributorId),
       distributorPromise,
     ]);
@@ -117,14 +118,14 @@ export class InventoryIntelligenceService {
   }
 
   /** Analyze many products efficiently (single aggregated sales pass). */
-  async analyzeMany(productIds: string[] | null, days = 30): Promise<ProductAnalysis[]> {
+  async analyzeMany(scope: BranchScope, productIds: string[] | null, days = 30): Promise<ProductAnalysis[]> {
     const products = productIds && productIds.length > 0
-      ? await repo.getProductsByIds(productIds)
-      : await repo.getActiveProducts();
+      ? await repo.getProductsByIds(productIds, scope)
+      : await repo.getActiveProducts(scope);
 
     const effectiveDays = days > 0 ? days : 30;
     const since = new Date(Date.now() - effectiveDays * 86400000);
-    const stats = await repo.getNetSalesStats(since, VALID_SALE_STATUSES);
+    const stats = await repo.getNetSalesStats(since, VALID_SALE_STATUSES, scope);
     const statMap = new Map(stats.map((s) => [s.productId, s]));
     const cfg = await repo.getConfig();
     const svc = new InventoryAnalysisService({
@@ -133,7 +134,7 @@ export class InventoryIntelligenceService {
       lowStockThreshold: cfg.lowStockThreshold,
       overstockCoverageDays: cfg.overstockCoverageDays,
     });
-    const distributors = await repo.getDistributors();
+    const distributors = await repo.getDistributors(scope);
     const distMap = new Map(distributors.map((d) => [d.id, d]));
 
     // Every active product that has a distributor -> resolve lead times in bulk.
@@ -191,7 +192,7 @@ export class InventoryIntelligenceService {
   }
 
   /** Inventory summary (Tool: get_inventory_summary). */
-  async getSummary(days = 30): Promise<{
+  async getSummary(scope: BranchScope, days = 30): Promise<{
     totalProducts: number;
     critical: number;
     high: number;
@@ -199,7 +200,7 @@ export class InventoryIntelligenceService {
     healthy: number;
     overstock: number;
   }> {
-    const analyses = await this.analyzeMany(null, days);
+    const analyses = await this.analyzeMany(scope, null, days);
     const summary = { totalProducts: analyses.length, critical: 0, high: 0, medium: 0, healthy: 0, overstock: 0 };
     for (const a of analyses) {
       if (a.riskLevel === "CRITICAL") summary.critical++;
@@ -212,14 +213,14 @@ export class InventoryIntelligenceService {
   }
 
   /** Products filtered by risk level (Tool: get_inventory_products). */
-  async getProductsByRisk(riskLevel: RiskLevel, limit = 20, days = 30): Promise<ProductAnalysis[]> {
-    const analyses = await this.analyzeMany(null, days);
+  async getProductsByRisk(scope: BranchScope, riskLevel: RiskLevel, limit = 20, days = 30): Promise<ProductAnalysis[]> {
+    const analyses = await this.analyzeMany(scope, null, days);
     return analyses.filter((a) => a.riskLevel === riskLevel).slice(0, limit);
   }
 
   /** Products at or below reorder point, or stockout before lead time. */
-  async getReorderCandidates(days = 30): Promise<ProductAnalysis[]> {
-    const analyses = await this.analyzeMany(null, days);
+  async getReorderCandidates(scope: BranchScope, days = 30): Promise<ProductAnalysis[]> {
+    const analyses = await this.analyzeMany(scope, null, days);
     return analyses
       .filter((a) => {
         if (a.riskLevel === "CRITICAL" || a.riskLevel === "HIGH") return true;
@@ -231,8 +232,8 @@ export class InventoryIntelligenceService {
   }
 
   /** Slow-moving products: very low daily sales with significant stock. */
-  async getSlowMoving(lowDailySales = 1, highCoverageDays = 90, limit = 50, days = 30): Promise<ProductAnalysis[]> {
-    const analyses = await this.analyzeMany(null, days);
+  async getSlowMoving(scope: BranchScope, lowDailySales = 1, highCoverageDays = 90, limit = 50, days = 30): Promise<ProductAnalysis[]> {
+    const analyses = await this.analyzeMany(scope, null, days);
     return analyses
       .filter((a) => {
         if (a.averageDailySales <= 0) return false;
@@ -244,20 +245,20 @@ export class InventoryIntelligenceService {
   }
 
   /** Overstock products: coverage exceeds threshold. */
-  async getOverstock(limit = 50, days = 30): Promise<ProductAnalysis[]> {
-    const analyses = await this.analyzeMany(null, days);
+  async getOverstock(scope: BranchScope, limit = 50, days = 30): Promise<ProductAnalysis[]> {
+    const analyses = await this.analyzeMany(scope, null, days);
     return analyses.filter((a) => a.riskLevel === "OVERSTOCK").slice(0, limit);
   }
 
   /** Expiry analysis across all active products. */
-  async getExpiryAnalysis(): Promise<{
+  async getExpiryAnalysis(scope: BranchScope): Promise<{
     counts: ReturnType<typeof expiryBucketedCounts>;
     expired: ProductAnalysis[];
     expiresIn30Days: ProductAnalysis[];
     expiresIn60Days: ProductAnalysis[];
     expiresIn90Days: ProductAnalysis[];
   }> {
-    const analyses = await this.analyzeMany(null, 30);
+    const analyses = await this.analyzeMany(scope, null, 30);
     const expired = analyses.filter((a) => a.expiryInfo.bucket === "EXPIRED");
     const expiresIn30Days = analyses.filter((a) => a.expiryInfo.bucket === "EXPIRES_IN_30_DAYS");
     const expiresIn60Days = analyses.filter((a) => a.expiryInfo.bucket === "EXPIRES_IN_60_DAYS");
@@ -267,20 +268,20 @@ export class InventoryIntelligenceService {
   }
 
   /** Trend for a single product (recent 7 vs previous 7 days). */
-  async getTrend(productId: string, thresholdPercent = 15): Promise<"INCREASING" | "STABLE" | "DECREASING" | null> {
+  async getTrend(scope: BranchScope, productId: string, thresholdPercent = 15): Promise<"INCREASING" | "STABLE" | "DECREASING" | null> {
     const now = Date.now();
     const recentSince = new Date(now - 7 * 86400000);
     const previousSince = new Date(now - 14 * 86400000);
     const [recent, previous] = await Promise.all([
-      repo.getNetSalesStatForProduct(productId, recentSince, VALID_SALE_STATUSES),
-      repo.getNetSalesStatForProduct(productId, previousSince, VALID_SALE_STATUSES),
+      repo.getNetSalesStatForProduct(productId, recentSince, VALID_SALE_STATUSES, scope),
+      repo.getNetSalesStatForProduct(productId, previousSince, VALID_SALE_STATUSES, scope),
     ]);
     const trend = classifyTrend(recent.net, previous.net, thresholdPercent);
     return trend.direction;
   }
 
   /** Data-quality issues across active products. */
-  async getDataQuality(days = 30): Promise<{
+  async getDataQuality(scope: BranchScope, days = 30): Promise<{
     negativeStock: number;
     zeroPrice: number;
     missingDistributor: number;
@@ -289,9 +290,9 @@ export class InventoryIntelligenceService {
     inactiveProducts: number;
     activeProducts: number;
   }> {
-    const products = await repo.getActiveProducts();
-    const totalProducts = await repo.getTotalProductCount();
-    const analyses = await this.analyzeMany(null, days);
+    const products = await repo.getActiveProducts(scope);
+    const totalProducts = await repo.getTotalProductCount(scope);
+    const analyses = await this.analyzeMany(scope, null, days);
     const activeIds = new Set(products.map((p) => p.id));
     let negativeStock = 0;
     let zeroPrice = 0;

@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Eye, EyeOff, Lock, Sun, Moon } from "lucide-react";
+import { Eye, EyeOff, Lock, Sun, Moon, Building2, Store } from "lucide-react";
 import { api } from "@/lib/api";
 import logoSrc from "@/asset/image/logo.png";
 
 export default function Login() {
-  const { login } = useAuth();
+  const { login, register } = useAuth();
+  const [mode, setMode] = useState<"login" | "register">("login");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -24,6 +25,16 @@ export default function Login() {
   const [recoverySuccess, setRecoverySuccess] = useState(false);
   const [recovering, setRecovering] = useState(false);
   const [dark, setDark] = useState(document.documentElement.classList.contains("dark"));
+
+  const [regPharmacyName, setRegPharmacyName] = useState("");
+  const [regBranchName, setRegBranchName] = useState("Main Branch");
+  const [regName, setRegName] = useState("");
+  const [regUsername, setRegUsername] = useState("");
+  const [regPassword, setRegPassword] = useState("");
+  const [regConfirm, setRegConfirm] = useState("");
+  const [regEmail, setRegEmail] = useState("");
+  const [regPhone, setRegPhone] = useState("");
+  const [regContact, setRegContact] = useState("");
 
   function toggleDark() {
     const next = !dark;
@@ -42,21 +53,56 @@ export default function Login() {
     setLoading(false);
   }
 
+  function switchMode(next: "login" | "register") {
+    setMode(next);
+    setError("");
+  }
+
+  async function handleRegister(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    if (!regPharmacyName.trim() || !regName.trim() || !regUsername.trim() || !regPassword) return;
+    if (regPassword.length < 8) {
+      setError("Password must be at least 8 characters");
+      return;
+    }
+    if (regPassword !== regConfirm) {
+      setError("Passwords do not match");
+      return;
+    }
+    setLoading(true);
+    const err = await register({
+      pharmacyName: regPharmacyName.trim(),
+      branchName: regBranchName.trim() || undefined,
+      name: regName.trim(),
+      username: regUsername.trim(),
+      password: regPassword,
+      email: regEmail.trim() || undefined,
+      phone: regPhone.trim() || undefined,
+      contact: regContact.trim() || undefined,
+    });
+    if (err) setError(err);
+    setLoading(false);
+  }
+
   async function handleRecoverySubmit(e: React.FormEvent) {
     e.preventDefault();
     setRecoveryError("");
-    if (!recoveryPhrase || !newPassword || !confirmPassword) return;
+    if (!username || !recoveryPhrase || !newPassword || !confirmPassword) {
+      setRecoveryError("Username, recovery key and new password are required");
+      return;
+    }
     if (newPassword !== confirmPassword) {
       setRecoveryError("Passwords do not match");
       return;
     }
-    if (newPassword.length < 4) {
-      setRecoveryError("Password must be at least 4 characters");
+    if (newPassword.length < 8) {
+      setRecoveryError("Password must be at least 8 characters");
       return;
     }
     setRecovering(true);
     try {
-      const res = await api.auth.recoverPassword(recoveryPhrase.trim(), newPassword);
+      const res = await api.auth.recoverPassword(recoveryPhrase.trim(), newPassword, username.trim());
       if (res.error) {
         setRecoveryError(res.error);
       } else {
@@ -104,37 +150,99 @@ export default function Login() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-1.5">
-              <Label htmlFor="username" className="text-xs font-medium text-text-primary">Username</Label>
-              <Input
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter username"
-                autoFocus
-              />
-            </div>
-            <div className="space-y-1.5">
-              <Label htmlFor="password" className="text-xs font-medium text-text-primary">Password</Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password"
-                  className="pr-9"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-2.5 text-text-secondary hover:text-text-primary transition-colors"
-                >
-                  {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
-                </button>
-              </div>
-            </div>
+          <form onSubmit={mode === "login" ? handleSubmit : handleRegister} className="space-y-4">
+            {mode === "register" ? (
+              <>
+                <div className="space-y-1.5">
+                  <Label htmlFor="reg-pharmacy" className="text-xs font-medium text-text-primary flex items-center gap-1.5">
+                    <Building2 className="h-3 w-3" /> Pharmacy Name
+                  </Label>
+                  <Input
+                    id="reg-pharmacy"
+                    value={regPharmacyName}
+                    onChange={(e) => setRegPharmacyName(e.target.value)}
+                    placeholder="e.g. Green Cross Pharmacy"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="reg-branch" className="text-xs font-medium text-text-primary flex items-center gap-1.5">
+                    <Store className="h-3 w-3" /> Branch Name (optional)
+                  </Label>
+                  <Input
+                    id="reg-branch"
+                    value={regBranchName}
+                    onChange={(e) => setRegBranchName(e.target.value)}
+                    placeholder="e.g. Main Branch"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="reg-name" className="text-xs font-medium text-text-primary">Your Name</Label>
+                    <Input id="reg-name" value={regName} onChange={(e) => setRegName(e.target.value)} placeholder="Full name" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="reg-username" className="text-xs font-medium text-text-primary">Username</Label>
+                    <Input id="reg-username" value={regUsername} onChange={(e) => setRegUsername(e.target.value)} placeholder="Admin username" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="reg-password" className="text-xs font-medium text-text-primary">Password</Label>
+                    <Input id="reg-password" type="password" value={regPassword} onChange={(e) => setRegPassword(e.target.value)} placeholder="Min 8 characters" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="reg-confirm" className="text-xs font-medium text-text-primary">Confirm</Label>
+                    <Input id="reg-confirm" type="password" value={regConfirm} onChange={(e) => setRegConfirm(e.target.value)} placeholder="Repeat password" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="reg-email" className="text-xs font-medium text-text-primary">Email (optional)</Label>
+                    <Input id="reg-email" type="email" value={regEmail} onChange={(e) => setRegEmail(e.target.value)} placeholder="you@example.com" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="reg-phone" className="text-xs font-medium text-text-primary">Phone (optional)</Label>
+                    <Input id="reg-phone" value={regPhone} onChange={(e) => setRegPhone(e.target.value)} placeholder="Phone" />
+                  </div>
+                </div>
+                <p className="text-[11px] text-text-secondary bg-surface/60 border border-border rounded-lg px-3 py-2 leading-relaxed">
+                  Creates your pharmacy with a 30-day free trial. Your first account becomes the pharmacy super admin.
+                </p>
+              </>
+            ) : (
+              <>
+                <div className="space-y-1.5">
+                  <Label htmlFor="username" className="text-xs font-medium text-text-primary">Username</Label>
+                  <Input
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Enter username"
+                    autoFocus
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="password" className="text-xs font-medium text-text-primary">Password</Label>
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter password"
+                      className="pr-9"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 flex items-center pr-2.5 text-text-secondary hover:text-text-primary transition-colors"
+                    >
+                      {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
 
             {error && (
               <motion.p
@@ -150,19 +258,38 @@ export default function Login() {
               {loading ? (
                 <span className="flex items-center gap-2">
                   <span className="h-3.5 w-3.5 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                  Signing in...
+                  {mode === "register" ? "Creating pharmacy..." : "Signing in..."}
                 </span>
-              ) : "Sign in"}
+              ) : mode === "register" ? "Create pharmacy & sign in" : "Sign in"}
             </Button>
 
-            <div className="flex items-center justify-between">
-              <button
-                type="button"
-                onClick={() => setRecoveryOpen(true)}
-                className="text-xs text-text-secondary hover:text-text-primary transition-colors"
-              >
-                Forgot password?
-              </button>
+            <div className="flex items-center justify-between text-xs">
+              {mode === "login" ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setRecoveryOpen(true)}
+                    className="text-text-secondary hover:text-text-primary transition-colors"
+                  >
+                    Forgot password?
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => switchMode("register")}
+                    className="text-accent hover:text-accent-hover transition-colors font-medium"
+                  >
+                    New pharmacy? Sign up
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => switchMode("login")}
+                  className="text-accent hover:text-accent-hover transition-colors font-medium"
+                >
+                  Already have an account? Sign in
+                </button>
+              )}
             </div>
           </form>
         </motion.div>
@@ -206,7 +333,19 @@ export default function Login() {
             </motion.div>
           ) : (
             <form onSubmit={handleRecoverySubmit} className="space-y-3">
-              <p className="text-xs text-text-secondary">Enter your recovery key to reset your password.</p>
+              <p className="text-xs text-text-secondary">
+                Enter your username and recovery key to reset your password.
+              </p>
+              <div className="space-y-1">
+                <Label htmlFor="recovery-username" className="text-xs">Username</Label>
+                <Input
+                  id="recovery-username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Your username"
+                  className="text-xs"
+                />
+              </div>
               <div className="space-y-1">
                 <Label htmlFor="recovery-phrase" className="text-xs">Recovery Key</Label>
                 <Input
@@ -215,7 +354,6 @@ export default function Login() {
                   onChange={(e) => setRecoveryPhrase(e.target.value)}
                   placeholder="Paste your recovery key"
                   className="font-mono text-xs"
-                  autoFocus
                 />
               </div>
               <div className="space-y-1">

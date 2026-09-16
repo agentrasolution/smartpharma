@@ -15,7 +15,8 @@ import { api } from "@/lib/api";
 import { downloadCSV, downloadPDF } from "@/lib/export";
 import ConfirmDialog from "@/components/shared/ConfirmDialog";
 import PrintBarcodeDialog from "@/components/shared/PrintBarcodeDialog";
-import type { Product, ProductPriceInput, Category } from "@/types";
+import { useAuth } from "@/contexts/AuthContext";
+import type { Product, ProductPriceInput, Category, Branch } from "@/types";
 
 interface CsvRow {
   rowNum: number; barcode: string; name: string; category: string; location: string;
@@ -50,7 +51,7 @@ interface PriceTierForm {
 
 interface ProductForm {
   barcode: string; name: string; category: string; location: string;
-  purchasePrice: string; salePrice: string; packSize: string;
+  purchasePrice: string; salePrice: string; packSize: string; branchId: string;
   prices: PriceTierForm[];
 }
 
@@ -60,12 +61,14 @@ const emptyPriceTier = (): PriceTierForm => ({
 
 const emptyForm = (): ProductForm => ({
   barcode: generateBarcode(), name: "", category: "", location: "",
-  purchasePrice: "", salePrice: "", packSize: "1",
+  purchasePrice: "", salePrice: "", packSize: "1", branchId: "",
   prices: [],
 });
 
 export default function Products() {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
+  const isCrossBranchAdmin = !user?.branchId;
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -111,6 +114,18 @@ export default function Products() {
     queryFn: api.categories.list,
   });
 
+  const { data: branches = [] } = useQuery({
+    queryKey: ["branches"],
+    queryFn: api.branches.list,
+    enabled: isCrossBranchAdmin,
+  });
+
+  useEffect(() => {
+    if (isCrossBranchAdmin && branches.length > 0 && !form.branchId) {
+      setForm((prev) => ({ ...prev, branchId: branches[0]!.id }));
+    }
+  }, [isCrossBranchAdmin, branches, form.branchId]);
+
   useEffect(() => {
     const t = setTimeout(() => { setDebouncedSearch(search.trim()); setPage(1); }, 300);
     return () => clearTimeout(t);
@@ -155,6 +170,7 @@ export default function Products() {
       location: form.location, purchasePrice: Number(form.purchasePrice),
       salePrice: Number(form.salePrice) || 0, packSize: Number(form.packSize),
       prices: buildPricesPayload(),
+      branchId: isCrossBranchAdmin ? form.branchId : user?.branchId ?? undefined,
     }),
     onSuccess: (product) => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
@@ -257,6 +273,7 @@ export default function Products() {
       barcode: product.barcode, name: product.name, category: product.category,
       location: product.location, purchasePrice: String(product.purchase_price),
       salePrice: String(product.sale_price), packSize: String(product.pack_size),
+      branchId: product.branch_id || user?.branchId || "",
       prices: p
         ? p.map((pt) => ({ purchasePrice: String(pt.purchasePrice), salePrice: String(pt.salePrice) }))
         : [],
@@ -463,6 +480,7 @@ export default function Products() {
           salePrice: Number(row.salePrice) || 0,
           expiry: row.expiry || undefined,
           packSize: row.packSize ? (Number.isFinite(packNum) ? packNum : undefined) : undefined,
+          branchId: isCrossBranchAdmin ? form.branchId : user?.branchId ?? undefined,
         });
         results[i] = { ...results[i], status: "completed" };
       } catch (err) {
@@ -788,6 +806,22 @@ export default function Products() {
                 <Input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} placeholder="e.g. Shelf A1" />
               </div>
             </div>
+            {isCrossBranchAdmin && (
+              <div className="space-y-1">
+                <Label>Branch</Label>
+                <Select value={form.branchId} onValueChange={(v) => setForm({ ...form, branchId: v })}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select branch" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {branches.map((b: Branch) => (
+                      <SelectItem key={b.id} value={b.id}>{b.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-[11px] text-text-secondary">Products are created for this branch&apos;s catalog.</p>
+              </div>
+            )}
             <div className="space-y-1">
               <Label>Pack Size (units per pack)</Label>
               <Input type="number" min="1" value={form.packSize} onChange={(e) => setForm({ ...form, packSize: e.target.value })} placeholder="e.g. 10" />

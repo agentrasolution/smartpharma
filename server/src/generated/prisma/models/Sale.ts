@@ -44,6 +44,8 @@ export type SaleSumAggregateOutputType = {
 
 export type SaleMinAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
+  branchId: string | null
   customerId: string | null
   subtotal: number | null
   discount: number | null
@@ -56,6 +58,8 @@ export type SaleMinAggregateOutputType = {
 
 export type SaleMaxAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
+  branchId: string | null
   customerId: string | null
   subtotal: number | null
   discount: number | null
@@ -68,6 +72,8 @@ export type SaleMaxAggregateOutputType = {
 
 export type SaleCountAggregateOutputType = {
   id: number
+  pharmacyId: number
+  branchId: number
   customerId: number
   subtotal: number
   discount: number
@@ -98,6 +104,8 @@ export type SaleSumAggregateInputType = {
 
 export type SaleMinAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   customerId?: true
   subtotal?: true
   discount?: true
@@ -110,6 +118,8 @@ export type SaleMinAggregateInputType = {
 
 export type SaleMaxAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   customerId?: true
   subtotal?: true
   discount?: true
@@ -122,6 +132,8 @@ export type SaleMaxAggregateInputType = {
 
 export type SaleCountAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   customerId?: true
   subtotal?: true
   discount?: true
@@ -221,6 +233,8 @@ export type SaleGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type SaleGroupByOutputType = {
   id: string
+  pharmacyId: string
+  branchId: string
   customerId: string | null
   subtotal: number
   discount: number
@@ -256,6 +270,8 @@ export type SaleWhereInput = {
   OR?: Prisma.SaleWhereInput[]
   NOT?: Prisma.SaleWhereInput | Prisma.SaleWhereInput[]
   id?: Prisma.StringFilter<"Sale"> | string
+  pharmacyId?: Prisma.StringFilter<"Sale"> | string
+  branchId?: Prisma.StringFilter<"Sale"> | string
   customerId?: Prisma.StringNullableFilter<"Sale"> | string | null
   subtotal?: Prisma.FloatFilter<"Sale"> | number
   discount?: Prisma.FloatFilter<"Sale"> | number
@@ -264,6 +280,8 @@ export type SaleWhereInput = {
   change?: Prisma.FloatFilter<"Sale"> | number
   status?: Prisma.StringFilter<"Sale"> | string
   createdAt?: Prisma.DateTimeFilter<"Sale"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
   items?: Prisma.SaleItemListRelationFilter
   returns?: Prisma.ReturnEntryListRelationFilter
@@ -272,6 +290,8 @@ export type SaleWhereInput = {
 
 export type SaleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrderInput | Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   discount?: Prisma.SortOrder
@@ -280,6 +300,8 @@ export type SaleOrderByWithRelationInput = {
   change?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  pharmacy?: Prisma.PharmacyOrderByWithRelationInput
+  branch?: Prisma.BranchOrderByWithRelationInput
   customer?: Prisma.CustomerOrderByWithRelationInput
   items?: Prisma.SaleItemOrderByRelationAggregateInput
   returns?: Prisma.ReturnEntryOrderByRelationAggregateInput
@@ -291,6 +313,8 @@ export type SaleWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SaleWhereInput | Prisma.SaleWhereInput[]
   OR?: Prisma.SaleWhereInput[]
   NOT?: Prisma.SaleWhereInput | Prisma.SaleWhereInput[]
+  pharmacyId?: Prisma.StringFilter<"Sale"> | string
+  branchId?: Prisma.StringFilter<"Sale"> | string
   customerId?: Prisma.StringNullableFilter<"Sale"> | string | null
   subtotal?: Prisma.FloatFilter<"Sale"> | number
   discount?: Prisma.FloatFilter<"Sale"> | number
@@ -299,6 +323,8 @@ export type SaleWhereUniqueInput = Prisma.AtLeast<{
   change?: Prisma.FloatFilter<"Sale"> | number
   status?: Prisma.StringFilter<"Sale"> | string
   createdAt?: Prisma.DateTimeFilter<"Sale"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
   items?: Prisma.SaleItemListRelationFilter
   returns?: Prisma.ReturnEntryListRelationFilter
@@ -307,6 +333,8 @@ export type SaleWhereUniqueInput = Prisma.AtLeast<{
 
 export type SaleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrderInput | Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   discount?: Prisma.SortOrder
@@ -327,6 +355,8 @@ export type SaleScalarWhereWithAggregatesInput = {
   OR?: Prisma.SaleScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SaleScalarWhereWithAggregatesInput | Prisma.SaleScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Sale"> | string
+  pharmacyId?: Prisma.StringWithAggregatesFilter<"Sale"> | string
+  branchId?: Prisma.StringWithAggregatesFilter<"Sale"> | string
   customerId?: Prisma.StringNullableWithAggregatesFilter<"Sale"> | string | null
   subtotal?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
   discount?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
@@ -346,6 +376,8 @@ export type SaleCreateInput = {
   change?: number
   status?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
+  branch: Prisma.BranchCreateNestedOneWithoutSalesInput
   customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
   items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
@@ -354,6 +386,8 @@ export type SaleCreateInput = {
 
 export type SaleUncheckedCreateInput = {
   id: string
+  pharmacyId: string
+  branchId: string
   customerId?: string | null
   subtotal?: number
   discount?: number
@@ -376,6 +410,8 @@ export type SaleUpdateInput = {
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
   items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
@@ -384,6 +420,8 @@ export type SaleUpdateInput = {
 
 export type SaleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   discount?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -399,6 +437,8 @@ export type SaleUncheckedUpdateInput = {
 
 export type SaleCreateManyInput = {
   id: string
+  pharmacyId: string
+  branchId: string
   customerId?: string | null
   subtotal?: number
   discount?: number
@@ -422,6 +462,8 @@ export type SaleUpdateManyMutationInput = {
 
 export type SaleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   discount?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -444,6 +486,8 @@ export type SaleOrderByRelationAggregateInput = {
 
 export type SaleCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   discount?: Prisma.SortOrder
@@ -464,6 +508,8 @@ export type SaleAvgOrderByAggregateInput = {
 
 export type SaleMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   discount?: Prisma.SortOrder
@@ -476,6 +522,8 @@ export type SaleMaxOrderByAggregateInput = {
 
 export type SaleMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   discount?: Prisma.SortOrder
@@ -502,6 +550,90 @@ export type SaleScalarRelationFilter = {
 export type SaleNullableScalarRelationFilter = {
   is?: Prisma.SaleWhereInput | null
   isNot?: Prisma.SaleWhereInput | null
+}
+
+export type SaleCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutPharmacyInput, Prisma.SaleUncheckedCreateWithoutPharmacyInput> | Prisma.SaleCreateWithoutPharmacyInput[] | Prisma.SaleUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutPharmacyInput | Prisma.SaleCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.SaleCreateManyPharmacyInputEnvelope
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+}
+
+export type SaleUncheckedCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutPharmacyInput, Prisma.SaleUncheckedCreateWithoutPharmacyInput> | Prisma.SaleCreateWithoutPharmacyInput[] | Prisma.SaleUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutPharmacyInput | Prisma.SaleCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.SaleCreateManyPharmacyInputEnvelope
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+}
+
+export type SaleUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutPharmacyInput, Prisma.SaleUncheckedCreateWithoutPharmacyInput> | Prisma.SaleCreateWithoutPharmacyInput[] | Prisma.SaleUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutPharmacyInput | Prisma.SaleCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.SaleUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.SaleUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.SaleCreateManyPharmacyInputEnvelope
+  set?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  disconnect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  delete?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  update?: Prisma.SaleUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.SaleUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.SaleUpdateManyWithWhereWithoutPharmacyInput | Prisma.SaleUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
+}
+
+export type SaleUncheckedUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutPharmacyInput, Prisma.SaleUncheckedCreateWithoutPharmacyInput> | Prisma.SaleCreateWithoutPharmacyInput[] | Prisma.SaleUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutPharmacyInput | Prisma.SaleCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.SaleUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.SaleUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.SaleCreateManyPharmacyInputEnvelope
+  set?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  disconnect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  delete?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  update?: Prisma.SaleUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.SaleUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.SaleUpdateManyWithWhereWithoutPharmacyInput | Prisma.SaleUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
+}
+
+export type SaleCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutBranchInput, Prisma.SaleUncheckedCreateWithoutBranchInput> | Prisma.SaleCreateWithoutBranchInput[] | Prisma.SaleUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutBranchInput | Prisma.SaleCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.SaleCreateManyBranchInputEnvelope
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+}
+
+export type SaleUncheckedCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutBranchInput, Prisma.SaleUncheckedCreateWithoutBranchInput> | Prisma.SaleCreateWithoutBranchInput[] | Prisma.SaleUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutBranchInput | Prisma.SaleCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.SaleCreateManyBranchInputEnvelope
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+}
+
+export type SaleUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutBranchInput, Prisma.SaleUncheckedCreateWithoutBranchInput> | Prisma.SaleCreateWithoutBranchInput[] | Prisma.SaleUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutBranchInput | Prisma.SaleCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.SaleUpsertWithWhereUniqueWithoutBranchInput | Prisma.SaleUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.SaleCreateManyBranchInputEnvelope
+  set?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  disconnect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  delete?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  update?: Prisma.SaleUpdateWithWhereUniqueWithoutBranchInput | Prisma.SaleUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.SaleUpdateManyWithWhereWithoutBranchInput | Prisma.SaleUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
+}
+
+export type SaleUncheckedUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutBranchInput, Prisma.SaleUncheckedCreateWithoutBranchInput> | Prisma.SaleCreateWithoutBranchInput[] | Prisma.SaleUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutBranchInput | Prisma.SaleCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.SaleUpsertWithWhereUniqueWithoutBranchInput | Prisma.SaleUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.SaleCreateManyBranchInputEnvelope
+  set?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  disconnect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  delete?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  update?: Prisma.SaleUpdateWithWhereUniqueWithoutBranchInput | Prisma.SaleUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.SaleUpdateManyWithWhereWithoutBranchInput | Prisma.SaleUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
 }
 
 export type SaleCreateNestedManyWithoutCustomerInput = {
@@ -590,6 +722,139 @@ export type SaleUpdateOneRequiredWithoutReturnsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SaleUpdateToOneWithWhereWithoutReturnsInput, Prisma.SaleUpdateWithoutReturnsInput>, Prisma.SaleUncheckedUpdateWithoutReturnsInput>
 }
 
+export type SaleCreateWithoutPharmacyInput = {
+  id: string
+  subtotal?: number
+  discount?: number
+  total?: number
+  amountPaid?: number
+  change?: number
+  status?: string
+  createdAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutSalesInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
+  items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
+}
+
+export type SaleUncheckedCreateWithoutPharmacyInput = {
+  id: string
+  branchId: string
+  customerId?: string | null
+  subtotal?: number
+  discount?: number
+  total?: number
+  amountPaid?: number
+  change?: number
+  status?: string
+  createdAt?: Date | string
+  items?: Prisma.SaleItemUncheckedCreateNestedManyWithoutSaleInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutSaleInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutSaleInput
+}
+
+export type SaleCreateOrConnectWithoutPharmacyInput = {
+  where: Prisma.SaleWhereUniqueInput
+  create: Prisma.XOR<Prisma.SaleCreateWithoutPharmacyInput, Prisma.SaleUncheckedCreateWithoutPharmacyInput>
+}
+
+export type SaleCreateManyPharmacyInputEnvelope = {
+  data: Prisma.SaleCreateManyPharmacyInput | Prisma.SaleCreateManyPharmacyInput[]
+  skipDuplicates?: boolean
+}
+
+export type SaleUpsertWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.SaleWhereUniqueInput
+  update: Prisma.XOR<Prisma.SaleUpdateWithoutPharmacyInput, Prisma.SaleUncheckedUpdateWithoutPharmacyInput>
+  create: Prisma.XOR<Prisma.SaleCreateWithoutPharmacyInput, Prisma.SaleUncheckedCreateWithoutPharmacyInput>
+}
+
+export type SaleUpdateWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.SaleWhereUniqueInput
+  data: Prisma.XOR<Prisma.SaleUpdateWithoutPharmacyInput, Prisma.SaleUncheckedUpdateWithoutPharmacyInput>
+}
+
+export type SaleUpdateManyWithWhereWithoutPharmacyInput = {
+  where: Prisma.SaleScalarWhereInput
+  data: Prisma.XOR<Prisma.SaleUpdateManyMutationInput, Prisma.SaleUncheckedUpdateManyWithoutPharmacyInput>
+}
+
+export type SaleScalarWhereInput = {
+  AND?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
+  OR?: Prisma.SaleScalarWhereInput[]
+  NOT?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
+  id?: Prisma.StringFilter<"Sale"> | string
+  pharmacyId?: Prisma.StringFilter<"Sale"> | string
+  branchId?: Prisma.StringFilter<"Sale"> | string
+  customerId?: Prisma.StringNullableFilter<"Sale"> | string | null
+  subtotal?: Prisma.FloatFilter<"Sale"> | number
+  discount?: Prisma.FloatFilter<"Sale"> | number
+  total?: Prisma.FloatFilter<"Sale"> | number
+  amountPaid?: Prisma.FloatFilter<"Sale"> | number
+  change?: Prisma.FloatFilter<"Sale"> | number
+  status?: Prisma.StringFilter<"Sale"> | string
+  createdAt?: Prisma.DateTimeFilter<"Sale"> | Date | string
+}
+
+export type SaleCreateWithoutBranchInput = {
+  id: string
+  subtotal?: number
+  discount?: number
+  total?: number
+  amountPaid?: number
+  change?: number
+  status?: string
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
+  items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
+}
+
+export type SaleUncheckedCreateWithoutBranchInput = {
+  id: string
+  pharmacyId: string
+  customerId?: string | null
+  subtotal?: number
+  discount?: number
+  total?: number
+  amountPaid?: number
+  change?: number
+  status?: string
+  createdAt?: Date | string
+  items?: Prisma.SaleItemUncheckedCreateNestedManyWithoutSaleInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutSaleInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutSaleInput
+}
+
+export type SaleCreateOrConnectWithoutBranchInput = {
+  where: Prisma.SaleWhereUniqueInput
+  create: Prisma.XOR<Prisma.SaleCreateWithoutBranchInput, Prisma.SaleUncheckedCreateWithoutBranchInput>
+}
+
+export type SaleCreateManyBranchInputEnvelope = {
+  data: Prisma.SaleCreateManyBranchInput | Prisma.SaleCreateManyBranchInput[]
+  skipDuplicates?: boolean
+}
+
+export type SaleUpsertWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.SaleWhereUniqueInput
+  update: Prisma.XOR<Prisma.SaleUpdateWithoutBranchInput, Prisma.SaleUncheckedUpdateWithoutBranchInput>
+  create: Prisma.XOR<Prisma.SaleCreateWithoutBranchInput, Prisma.SaleUncheckedCreateWithoutBranchInput>
+}
+
+export type SaleUpdateWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.SaleWhereUniqueInput
+  data: Prisma.XOR<Prisma.SaleUpdateWithoutBranchInput, Prisma.SaleUncheckedUpdateWithoutBranchInput>
+}
+
+export type SaleUpdateManyWithWhereWithoutBranchInput = {
+  where: Prisma.SaleScalarWhereInput
+  data: Prisma.XOR<Prisma.SaleUpdateManyMutationInput, Prisma.SaleUncheckedUpdateManyWithoutBranchInput>
+}
+
 export type SaleCreateWithoutCustomerInput = {
   id: string
   subtotal?: number
@@ -599,6 +864,8 @@ export type SaleCreateWithoutCustomerInput = {
   change?: number
   status?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
+  branch: Prisma.BranchCreateNestedOneWithoutSalesInput
   items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
@@ -606,6 +873,8 @@ export type SaleCreateWithoutCustomerInput = {
 
 export type SaleUncheckedCreateWithoutCustomerInput = {
   id: string
+  pharmacyId: string
+  branchId: string
   subtotal?: number
   discount?: number
   total?: number
@@ -644,21 +913,6 @@ export type SaleUpdateManyWithWhereWithoutCustomerInput = {
   data: Prisma.XOR<Prisma.SaleUpdateManyMutationInput, Prisma.SaleUncheckedUpdateManyWithoutCustomerInput>
 }
 
-export type SaleScalarWhereInput = {
-  AND?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
-  OR?: Prisma.SaleScalarWhereInput[]
-  NOT?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
-  id?: Prisma.StringFilter<"Sale"> | string
-  customerId?: Prisma.StringNullableFilter<"Sale"> | string | null
-  subtotal?: Prisma.FloatFilter<"Sale"> | number
-  discount?: Prisma.FloatFilter<"Sale"> | number
-  total?: Prisma.FloatFilter<"Sale"> | number
-  amountPaid?: Prisma.FloatFilter<"Sale"> | number
-  change?: Prisma.FloatFilter<"Sale"> | number
-  status?: Prisma.StringFilter<"Sale"> | string
-  createdAt?: Prisma.DateTimeFilter<"Sale"> | Date | string
-}
-
 export type SaleCreateWithoutItemsInput = {
   id: string
   subtotal?: number
@@ -668,6 +922,8 @@ export type SaleCreateWithoutItemsInput = {
   change?: number
   status?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
+  branch: Prisma.BranchCreateNestedOneWithoutSalesInput
   customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
@@ -675,6 +931,8 @@ export type SaleCreateWithoutItemsInput = {
 
 export type SaleUncheckedCreateWithoutItemsInput = {
   id: string
+  pharmacyId: string
+  branchId: string
   customerId?: string | null
   subtotal?: number
   discount?: number
@@ -712,6 +970,8 @@ export type SaleUpdateWithoutItemsInput = {
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
   returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
@@ -719,6 +979,8 @@ export type SaleUpdateWithoutItemsInput = {
 
 export type SaleUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   discount?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -740,6 +1002,8 @@ export type SaleCreateWithoutArrearsInput = {
   change?: number
   status?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
+  branch: Prisma.BranchCreateNestedOneWithoutSalesInput
   customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
   items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
@@ -747,6 +1011,8 @@ export type SaleCreateWithoutArrearsInput = {
 
 export type SaleUncheckedCreateWithoutArrearsInput = {
   id: string
+  pharmacyId: string
+  branchId: string
   customerId?: string | null
   subtotal?: number
   discount?: number
@@ -784,6 +1050,8 @@ export type SaleUpdateWithoutArrearsInput = {
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
   items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
@@ -791,6 +1059,8 @@ export type SaleUpdateWithoutArrearsInput = {
 
 export type SaleUncheckedUpdateWithoutArrearsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   discount?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -812,6 +1082,8 @@ export type SaleCreateWithoutReturnsInput = {
   change?: number
   status?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
+  branch: Prisma.BranchCreateNestedOneWithoutSalesInput
   customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
   items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
@@ -819,6 +1091,8 @@ export type SaleCreateWithoutReturnsInput = {
 
 export type SaleUncheckedCreateWithoutReturnsInput = {
   id: string
+  pharmacyId: string
+  branchId: string
   customerId?: string | null
   subtotal?: number
   discount?: number
@@ -856,6 +1130,8 @@ export type SaleUpdateWithoutReturnsInput = {
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
   items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
@@ -863,6 +1139,8 @@ export type SaleUpdateWithoutReturnsInput = {
 
 export type SaleUncheckedUpdateWithoutReturnsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   discount?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -875,8 +1153,126 @@ export type SaleUncheckedUpdateWithoutReturnsInput = {
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutSaleNestedInput
 }
 
+export type SaleCreateManyPharmacyInput = {
+  id: string
+  branchId: string
+  customerId?: string | null
+  subtotal?: number
+  discount?: number
+  total?: number
+  amountPaid?: number
+  change?: number
+  status?: string
+  createdAt?: Date | string
+}
+
+export type SaleUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  change?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
+  items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
+}
+
+export type SaleUncheckedUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  change?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.SaleItemUncheckedUpdateManyWithoutSaleNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutSaleNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutSaleNestedInput
+}
+
+export type SaleUncheckedUpdateManyWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  change?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SaleCreateManyBranchInput = {
+  id: string
+  pharmacyId: string
+  customerId?: string | null
+  subtotal?: number
+  discount?: number
+  total?: number
+  amountPaid?: number
+  change?: number
+  status?: string
+  createdAt?: Date | string
+}
+
+export type SaleUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  change?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
+  items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
+}
+
+export type SaleUncheckedUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  change?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.SaleItemUncheckedUpdateManyWithoutSaleNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutSaleNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutSaleNestedInput
+}
+
+export type SaleUncheckedUpdateManyWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  change?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type SaleCreateManyCustomerInput = {
   id: string
+  pharmacyId: string
+  branchId: string
   subtotal?: number
   discount?: number
   total?: number
@@ -895,6 +1291,8 @@ export type SaleUpdateWithoutCustomerInput = {
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
   items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
@@ -902,6 +1300,8 @@ export type SaleUpdateWithoutCustomerInput = {
 
 export type SaleUncheckedUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   discount?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -916,6 +1316,8 @@ export type SaleUncheckedUpdateWithoutCustomerInput = {
 
 export type SaleUncheckedUpdateManyWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   discount?: Prisma.FloatFieldUpdateOperationsInput | number
   total?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -976,6 +1378,8 @@ export type SaleCountOutputTypeCountArrearsArgs<ExtArgs extends runtime.Types.Ex
 
 export type SaleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   customerId?: boolean
   subtotal?: boolean
   discount?: boolean
@@ -984,6 +1388,8 @@ export type SaleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   change?: boolean
   status?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
   items?: boolean | Prisma.Sale$itemsArgs<ExtArgs>
   returns?: boolean | Prisma.Sale$returnsArgs<ExtArgs>
@@ -993,6 +1399,8 @@ export type SaleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 
 export type SaleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   customerId?: boolean
   subtotal?: boolean
   discount?: boolean
@@ -1001,11 +1409,15 @@ export type SaleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   change?: boolean
   status?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
 }, ExtArgs["result"]["sale"]>
 
 export type SaleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   customerId?: boolean
   subtotal?: boolean
   discount?: boolean
@@ -1014,11 +1426,15 @@ export type SaleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   change?: boolean
   status?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
 }, ExtArgs["result"]["sale"]>
 
 export type SaleSelectScalar = {
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   customerId?: boolean
   subtotal?: boolean
   discount?: boolean
@@ -1029,8 +1445,10 @@ export type SaleSelectScalar = {
   createdAt?: boolean
 }
 
-export type SaleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "subtotal" | "discount" | "total" | "amountPaid" | "change" | "status" | "createdAt", ExtArgs["result"]["sale"]>
+export type SaleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "customerId" | "subtotal" | "discount" | "total" | "amountPaid" | "change" | "status" | "createdAt", ExtArgs["result"]["sale"]>
 export type SaleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
   items?: boolean | Prisma.Sale$itemsArgs<ExtArgs>
   returns?: boolean | Prisma.Sale$returnsArgs<ExtArgs>
@@ -1038,15 +1456,21 @@ export type SaleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   _count?: boolean | Prisma.SaleCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SaleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
 }
 export type SaleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
 }
 
 export type $SalePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Sale"
   objects: {
+    pharmacy: Prisma.$PharmacyPayload<ExtArgs>
+    branch: Prisma.$BranchPayload<ExtArgs>
     customer: Prisma.$CustomerPayload<ExtArgs> | null
     items: Prisma.$SaleItemPayload<ExtArgs>[]
     returns: Prisma.$ReturnEntryPayload<ExtArgs>[]
@@ -1054,6 +1478,8 @@ export type $SalePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    pharmacyId: string
+    branchId: string
     customerId: string | null
     subtotal: number
     discount: number
@@ -1456,6 +1882,8 @@ readonly fields: SaleFieldRefs;
  */
 export interface Prisma__SaleClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  pharmacy<T extends Prisma.PharmacyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PharmacyDefaultArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   customer<T extends Prisma.Sale$customerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$customerArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Sale$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SaleItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   returns<T extends Prisma.Sale$returnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$returnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReturnEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1490,6 +1918,8 @@ export interface Prisma__SaleClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface SaleFieldRefs {
   readonly id: Prisma.FieldRef<"Sale", 'String'>
+  readonly pharmacyId: Prisma.FieldRef<"Sale", 'String'>
+  readonly branchId: Prisma.FieldRef<"Sale", 'String'>
   readonly customerId: Prisma.FieldRef<"Sale", 'String'>
   readonly subtotal: Prisma.FieldRef<"Sale", 'Float'>
   readonly discount: Prisma.FieldRef<"Sale", 'Float'>

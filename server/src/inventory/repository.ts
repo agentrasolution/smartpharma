@@ -1,8 +1,9 @@
 import { prisma } from "../services/prisma";
+import type { BranchScope } from "../middleware/auth";
 
 // Aggregated, performant data access for the inventory intelligence engine.
-// All queries here are company-agnostic (single-pharmacy POS) but structured so
-// a `companyId` filter can be added without rewriting the agent.
+// All queries are scoped to the caller's pharmacy (and optionally branch) so a
+// tenant can never see another tenant's products or sales.
 
 export interface ProductRef {
   id: string;
@@ -38,6 +39,13 @@ export interface NetSalesStat {
   net: number;
 }
 
+function branchWhere(scope: BranchScope) {
+  return {
+    pharmacyId: scope.pharmacyId,
+    ...(scope.branchId ? { branchId: scope.branchId } : {}),
+  };
+}
+
 export const inventoryRepository = {
   async getConfig(): Promise<{
     defaultSafetyStockDays: number;
@@ -58,9 +66,9 @@ export const inventoryRepository = {
     };
   },
 
-  async getActiveProducts(): Promise<ProductRef[]> {
+  async getActiveProducts(scope: BranchScope): Promise<ProductRef[]> {
     const products = await prisma.product.findMany({
-      where: { active: 1 },
+      where: { active: 1, ...branchWhere(scope) },
       select: {
         id: true,
         barcode: true,
@@ -80,9 +88,9 @@ export const inventoryRepository = {
     return products;
   },
 
-  async getProductsByIds(ids: string[]): Promise<ProductRef[]> {
+  async getProductsByIds(ids: string[], scope: BranchScope): Promise<ProductRef[]> {
     const products = await prisma.product.findMany({
-      where: { id: { in: ids } },
+      where: { id: { in: ids }, ...branchWhere(scope) },
       select: {
         id: true,
         barcode: true,
@@ -102,9 +110,9 @@ export const inventoryRepository = {
     return products;
   },
 
-  async getProduct(id: string): Promise<ProductRef | null> {
-    const p = await prisma.product.findUnique({
-      where: { id },
+  async getProduct(id: string, scope: BranchScope): Promise<ProductRef | null> {
+    const p = await prisma.product.findFirst({
+      where: { id, ...branchWhere(scope) },
       select: {
         id: true,
         barcode: true,
@@ -124,9 +132,9 @@ export const inventoryRepository = {
     return p;
   },
 
-  async getDistributor(id: string): Promise<DistributorRef | null> {
-    const d = await prisma.distributor.findUnique({
-      where: { id },
+  async getDistributor(id: string, scope: BranchScope): Promise<DistributorRef | null> {
+    const d = await prisma.distributor.findFirst({
+      where: { id, pharmacyId: scope.pharmacyId },
       select: {
         id: true,
         name: true,
@@ -152,8 +160,9 @@ export const inventoryRepository = {
     };
   },
 
-  async getDistributors(): Promise<DistributorRef[]> {
+  async getDistributors(scope: BranchScope): Promise<DistributorRef[]> {
     const ds = await prisma.distributor.findMany({
+      where: { pharmacyId: scope.pharmacyId },
       select: {
         id: true,
         name: true,
@@ -224,9 +233,9 @@ export const inventoryRepository = {
 
   // Aggregate net sales (units sold minus returned) per product over a window.
   // Uses grouped queries, NOT per-product queries.
-  async getNetSalesStats(since: Date, statuses: string[]): Promise<NetSalesStat[]> {
+  async getNetSalesStats(since: Date, statuses: string[], scope: BranchScope): Promise<NetSalesStat[]> {
     const sales = await prisma.sale.findMany({
-      where: { createdAt: { gte: since }, status: { in: statuses } },
+      where: { createdAt: { gte: since }, status: { in: statuses }, ...branchWhere(scope) },
       select: {
         id: true,
         items: { select: { productId: true, quantity: true } },
@@ -241,7 +250,7 @@ export const inventoryRepository = {
     }
 
     const returns = await prisma.returnEntry.findMany({
-      where: { createdAt: { gte: since } },
+      where: { createdAt: { gte: since }, ...branchWhere(scope) },
       select: {
         items: { select: { productId: true, quantity: true } },
       },
@@ -265,18 +274,24 @@ export const inventoryRepository = {
     return stats;
   },
 
-  async getNetSalesStatForProduct(productId: string, since: Date, statuses: string[]): Promise<{
+  async getNetSalesStatForProduct(productId: string, since: Date, statuses: string[], scope: BranchScope): Promise<{
     totalSold: number;
     totalReturned: number;
     net: number;
   }> {
     const [soldAgg, returnedAgg] = await Promise.all([
       prisma.saleItem.aggregate({
-        where: { productId, sale: { createdAt: { gte: since }, status: { in: statuses } } },
+        where: {
+          productId,
+          sale: { createdAt: { gte: since }, status: { in: statuses }, ...branchWhere(scope) },
+        },
         _sum: { quantity: true },
       }),
       prisma.returnItem.aggregate({
-        where: { productId, returnEntry: { createdAt: { gte: since } } },
+        where: {
+          productId,
+          returnEntry: { createdAt: { gte: since }, ...branchWhere(scope) },
+        },
         _sum: { quantity: true },
       }),
     ]);
@@ -286,17 +301,23 @@ export const inventoryRepository = {
     return { totalSold, totalReturned, net: net > 0 ? net : 0 };
   },
 
-  async getSalesHistory(productId: string, since: Date, statuses: string[]): Promise<{
+  async getSalesHistory(productId: string, since: Date, statuses: string[], scope: BranchScope): Promise<{
     totalSold: number;
     totalReturned: number;
   }> {
     const [soldAgg, returnedAgg] = await Promise.all([
       prisma.saleItem.aggregate({
-        where: { productId, sale: { createdAt: { gte: since }, status: { in: statuses } } },
+        where: {
+          productId,
+          sale: { createdAt: { gte: since }, status: { in: statuses }, ...branchWhere(scope) },
+        },
         _sum: { quantity: true },
       }),
       prisma.returnItem.aggregate({
-        where: { productId, returnEntry: { createdAt: { gte: since } } },
+        where: {
+          productId,
+          returnEntry: { createdAt: { gte: since }, ...branchWhere(scope) },
+        },
         _sum: { quantity: true },
       }),
     ]);
@@ -306,11 +327,11 @@ export const inventoryRepository = {
     };
   },
 
-  async getPurchaseHistory(productId: string): Promise<
+  async getPurchaseHistory(productId: string, scope: BranchScope): Promise<
     { date: Date; quantity: number; purchasePrice: number; distributorId: string | null; expiry: string | null }[]
   > {
     const purchases = await prisma.stockPurchase.findMany({
-      where: { productId, active: 1 },
+      where: { productId, active: 1, ...branchWhere(scope) },
       orderBy: { createdAt: "desc" },
       take: 20,
       select: {
@@ -330,11 +351,11 @@ export const inventoryRepository = {
     }));
   },
 
-  async getTotalProductCount(): Promise<number> {
-    return prisma.product.count({ where: { active: 1 } });
+  async getTotalProductCount(scope: BranchScope): Promise<number> {
+    return prisma.product.count({ where: { active: 1, ...branchWhere(scope) } });
   },
 
-  async countActiveProducts(): Promise<number> {
-    return prisma.product.count({ where: { active: 1 } });
+  async countActiveProducts(scope: BranchScope): Promise<number> {
+    return prisma.product.count({ where: { active: 1, ...branchWhere(scope) } });
   },
 };

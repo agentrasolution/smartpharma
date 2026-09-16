@@ -25,3 +25,18 @@ export class UnauthorizedError extends AppError {
     super(401, message);
   }
 }
+
+export class ForbiddenError extends AppError {
+  constructor(message = "You do not have permission to perform this action.") {
+    super(403, message);
+  }
+}
+
+export class PaymentRequiredError extends AppError {
+  code: string;
+  constructor(message = "Your subscription is inactive or expired", code = "SUBSCRIPTION_REQUIRED") {
+    super(402, message);
+    this.name = "PaymentRequiredError";
+    this.code = code;
+  }
+}

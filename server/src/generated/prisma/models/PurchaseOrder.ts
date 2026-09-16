@@ -39,6 +39,8 @@ export type PurchaseOrderSumAggregateOutputType = {
 export type PurchaseOrderMinAggregateOutputType = {
   id: string | null
   orderNumber: string | null
+  pharmacyId: string | null
+  branchId: string | null
   distributorId: string | null
   companyId: string | null
   status: string | null
@@ -59,6 +61,8 @@ export type PurchaseOrderMinAggregateOutputType = {
 export type PurchaseOrderMaxAggregateOutputType = {
   id: string | null
   orderNumber: string | null
+  pharmacyId: string | null
+  branchId: string | null
   distributorId: string | null
   companyId: string | null
   status: string | null
@@ -79,6 +83,8 @@ export type PurchaseOrderMaxAggregateOutputType = {
 export type PurchaseOrderCountAggregateOutputType = {
   id: number
   orderNumber: number
+  pharmacyId: number
+  branchId: number
   distributorId: number
   companyId: number
   status: number
@@ -111,6 +117,8 @@ export type PurchaseOrderSumAggregateInputType = {
 export type PurchaseOrderMinAggregateInputType = {
   id?: true
   orderNumber?: true
+  pharmacyId?: true
+  branchId?: true
   distributorId?: true
   companyId?: true
   status?: true
@@ -131,6 +139,8 @@ export type PurchaseOrderMinAggregateInputType = {
 export type PurchaseOrderMaxAggregateInputType = {
   id?: true
   orderNumber?: true
+  pharmacyId?: true
+  branchId?: true
   distributorId?: true
   companyId?: true
   status?: true
@@ -151,6 +161,8 @@ export type PurchaseOrderMaxAggregateInputType = {
 export type PurchaseOrderCountAggregateInputType = {
   id?: true
   orderNumber?: true
+  pharmacyId?: true
+  branchId?: true
   distributorId?: true
   companyId?: true
   status?: true
@@ -258,6 +270,8 @@ export type PurchaseOrderGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 export type PurchaseOrderGroupByOutputType = {
   id: string
   orderNumber: string
+  pharmacyId: string
+  branchId: string
   distributorId: string
   companyId: string | null
   status: string
@@ -301,6 +315,8 @@ export type PurchaseOrderWhereInput = {
   NOT?: Prisma.PurchaseOrderWhereInput | Prisma.PurchaseOrderWhereInput[]
   id?: Prisma.StringFilter<"PurchaseOrder"> | string
   orderNumber?: Prisma.StringFilter<"PurchaseOrder"> | string
+  pharmacyId?: Prisma.StringFilter<"PurchaseOrder"> | string
+  branchId?: Prisma.StringFilter<"PurchaseOrder"> | string
   distributorId?: Prisma.StringFilter<"PurchaseOrder"> | string
   companyId?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
   status?: Prisma.StringFilter<"PurchaseOrder"> | string
@@ -316,6 +332,8 @@ export type PurchaseOrderWhereInput = {
   idempotencyKey?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PurchaseOrder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PurchaseOrder"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   distributor?: Prisma.XOR<Prisma.DistributorScalarRelationFilter, Prisma.DistributorWhereInput>
   company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   items?: Prisma.PurchaseOrderItemListRelationFilter
@@ -324,6 +342,8 @@ export type PurchaseOrderWhereInput = {
 export type PurchaseOrderOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   orderNumber?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   distributorId?: Prisma.SortOrder
   companyId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -339,6 +359,8 @@ export type PurchaseOrderOrderByWithRelationInput = {
   idempotencyKey?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  pharmacy?: Prisma.PharmacyOrderByWithRelationInput
+  branch?: Prisma.BranchOrderByWithRelationInput
   distributor?: Prisma.DistributorOrderByWithRelationInput
   company?: Prisma.CompanyOrderByWithRelationInput
   items?: Prisma.PurchaseOrderItemOrderByRelationAggregateInput
@@ -351,6 +373,8 @@ export type PurchaseOrderWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PurchaseOrderWhereInput | Prisma.PurchaseOrderWhereInput[]
   OR?: Prisma.PurchaseOrderWhereInput[]
   NOT?: Prisma.PurchaseOrderWhereInput | Prisma.PurchaseOrderWhereInput[]
+  pharmacyId?: Prisma.StringFilter<"PurchaseOrder"> | string
+  branchId?: Prisma.StringFilter<"PurchaseOrder"> | string
   distributorId?: Prisma.StringFilter<"PurchaseOrder"> | string
   companyId?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
   status?: Prisma.StringFilter<"PurchaseOrder"> | string
@@ -365,6 +389,8 @@ export type PurchaseOrderWhereUniqueInput = Prisma.AtLeast<{
   rejectionReason?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PurchaseOrder"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PurchaseOrder"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   distributor?: Prisma.XOR<Prisma.DistributorScalarRelationFilter, Prisma.DistributorWhereInput>
   company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
   items?: Prisma.PurchaseOrderItemListRelationFilter
@@ -373,6 +399,8 @@ export type PurchaseOrderWhereUniqueInput = Prisma.AtLeast<{
 export type PurchaseOrderOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   orderNumber?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   distributorId?: Prisma.SortOrder
   companyId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -401,6 +429,8 @@ export type PurchaseOrderScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PurchaseOrderScalarWhereWithAggregatesInput | Prisma.PurchaseOrderScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"PurchaseOrder"> | string
   orderNumber?: Prisma.StringWithAggregatesFilter<"PurchaseOrder"> | string
+  pharmacyId?: Prisma.StringWithAggregatesFilter<"PurchaseOrder"> | string
+  branchId?: Prisma.StringWithAggregatesFilter<"PurchaseOrder"> | string
   distributorId?: Prisma.StringWithAggregatesFilter<"PurchaseOrder"> | string
   companyId?: Prisma.StringNullableWithAggregatesFilter<"PurchaseOrder"> | string | null
   status?: Prisma.StringWithAggregatesFilter<"PurchaseOrder"> | string
@@ -434,6 +464,8 @@ export type PurchaseOrderCreateInput = {
   idempotencyKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutPurchaseOrdersInput
+  branch: Prisma.BranchCreateNestedOneWithoutPurchaseOrdersInput
   distributor: Prisma.DistributorCreateNestedOneWithoutPurchaseOrdersInput
   company?: Prisma.CompanyCreateNestedOneWithoutPurchaseOrdersInput
   items?: Prisma.PurchaseOrderItemCreateNestedManyWithoutPurchaseOrderInput
@@ -442,6 +474,8 @@ export type PurchaseOrderCreateInput = {
 export type PurchaseOrderUncheckedCreateInput = {
   id?: string
   orderNumber: string
+  pharmacyId: string
+  branchId: string
   distributorId: string
   companyId?: string | null
   status?: string
@@ -476,6 +510,8 @@ export type PurchaseOrderUpdateInput = {
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutPurchaseOrdersNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutPurchaseOrdersNestedInput
   distributor?: Prisma.DistributorUpdateOneRequiredWithoutPurchaseOrdersNestedInput
   company?: Prisma.CompanyUpdateOneWithoutPurchaseOrdersNestedInput
   items?: Prisma.PurchaseOrderItemUpdateManyWithoutPurchaseOrderNestedInput
@@ -484,6 +520,8 @@ export type PurchaseOrderUpdateInput = {
 export type PurchaseOrderUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   distributorId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -505,6 +543,8 @@ export type PurchaseOrderUncheckedUpdateInput = {
 export type PurchaseOrderCreateManyInput = {
   id?: string
   orderNumber: string
+  pharmacyId: string
+  branchId: string
   distributorId: string
   companyId?: string | null
   status?: string
@@ -543,6 +583,8 @@ export type PurchaseOrderUpdateManyMutationInput = {
 export type PurchaseOrderUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   distributorId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -560,9 +602,21 @@ export type PurchaseOrderUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type PurchaseOrderListRelationFilter = {
+  every?: Prisma.PurchaseOrderWhereInput
+  some?: Prisma.PurchaseOrderWhereInput
+  none?: Prisma.PurchaseOrderWhereInput
+}
+
+export type PurchaseOrderOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type PurchaseOrderCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   orderNumber?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   distributorId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -588,6 +642,8 @@ export type PurchaseOrderAvgOrderByAggregateInput = {
 export type PurchaseOrderMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   orderNumber?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   distributorId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -608,6 +664,8 @@ export type PurchaseOrderMaxOrderByAggregateInput = {
 export type PurchaseOrderMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   orderNumber?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   distributorId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -635,22 +693,50 @@ export type PurchaseOrderScalarRelationFilter = {
   isNot?: Prisma.PurchaseOrderWhereInput
 }
 
-export type PurchaseOrderListRelationFilter = {
-  every?: Prisma.PurchaseOrderWhereInput
-  some?: Prisma.PurchaseOrderWhereInput
-  none?: Prisma.PurchaseOrderWhereInput
+export type PurchaseOrderCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutPharmacyInput, Prisma.PurchaseOrderUncheckedCreateWithoutPharmacyInput> | Prisma.PurchaseOrderCreateWithoutPharmacyInput[] | Prisma.PurchaseOrderUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.PurchaseOrderCreateOrConnectWithoutPharmacyInput | Prisma.PurchaseOrderCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.PurchaseOrderCreateManyPharmacyInputEnvelope
+  connect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
 }
 
-export type PurchaseOrderOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type PurchaseOrderUncheckedCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutPharmacyInput, Prisma.PurchaseOrderUncheckedCreateWithoutPharmacyInput> | Prisma.PurchaseOrderCreateWithoutPharmacyInput[] | Prisma.PurchaseOrderUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.PurchaseOrderCreateOrConnectWithoutPharmacyInput | Prisma.PurchaseOrderCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.PurchaseOrderCreateManyPharmacyInputEnvelope
+  connect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+}
+
+export type PurchaseOrderUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutPharmacyInput, Prisma.PurchaseOrderUncheckedCreateWithoutPharmacyInput> | Prisma.PurchaseOrderCreateWithoutPharmacyInput[] | Prisma.PurchaseOrderUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.PurchaseOrderCreateOrConnectWithoutPharmacyInput | Prisma.PurchaseOrderCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.PurchaseOrderUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.PurchaseOrderUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.PurchaseOrderCreateManyPharmacyInputEnvelope
+  set?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  delete?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  connect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  update?: Prisma.PurchaseOrderUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.PurchaseOrderUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.PurchaseOrderUpdateManyWithWhereWithoutPharmacyInput | Prisma.PurchaseOrderUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.PurchaseOrderScalarWhereInput | Prisma.PurchaseOrderScalarWhereInput[]
+}
+
+export type PurchaseOrderUncheckedUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutPharmacyInput, Prisma.PurchaseOrderUncheckedCreateWithoutPharmacyInput> | Prisma.PurchaseOrderCreateWithoutPharmacyInput[] | Prisma.PurchaseOrderUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.PurchaseOrderCreateOrConnectWithoutPharmacyInput | Prisma.PurchaseOrderCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.PurchaseOrderUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.PurchaseOrderUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.PurchaseOrderCreateManyPharmacyInputEnvelope
+  set?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  delete?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  connect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  update?: Prisma.PurchaseOrderUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.PurchaseOrderUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.PurchaseOrderUpdateManyWithWhereWithoutPharmacyInput | Prisma.PurchaseOrderUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.PurchaseOrderScalarWhereInput | Prisma.PurchaseOrderScalarWhereInput[]
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
 }
 
 export type PurchaseOrderCreateNestedOneWithoutItemsInput = {
@@ -665,6 +751,48 @@ export type PurchaseOrderUpdateOneRequiredWithoutItemsNestedInput = {
   upsert?: Prisma.PurchaseOrderUpsertWithoutItemsInput
   connect?: Prisma.PurchaseOrderWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.PurchaseOrderUpdateToOneWithWhereWithoutItemsInput, Prisma.PurchaseOrderUpdateWithoutItemsInput>, Prisma.PurchaseOrderUncheckedUpdateWithoutItemsInput>
+}
+
+export type PurchaseOrderCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutBranchInput, Prisma.PurchaseOrderUncheckedCreateWithoutBranchInput> | Prisma.PurchaseOrderCreateWithoutBranchInput[] | Prisma.PurchaseOrderUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.PurchaseOrderCreateOrConnectWithoutBranchInput | Prisma.PurchaseOrderCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.PurchaseOrderCreateManyBranchInputEnvelope
+  connect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+}
+
+export type PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutBranchInput, Prisma.PurchaseOrderUncheckedCreateWithoutBranchInput> | Prisma.PurchaseOrderCreateWithoutBranchInput[] | Prisma.PurchaseOrderUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.PurchaseOrderCreateOrConnectWithoutBranchInput | Prisma.PurchaseOrderCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.PurchaseOrderCreateManyBranchInputEnvelope
+  connect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+}
+
+export type PurchaseOrderUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutBranchInput, Prisma.PurchaseOrderUncheckedCreateWithoutBranchInput> | Prisma.PurchaseOrderCreateWithoutBranchInput[] | Prisma.PurchaseOrderUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.PurchaseOrderCreateOrConnectWithoutBranchInput | Prisma.PurchaseOrderCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.PurchaseOrderUpsertWithWhereUniqueWithoutBranchInput | Prisma.PurchaseOrderUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.PurchaseOrderCreateManyBranchInputEnvelope
+  set?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  delete?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  connect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  update?: Prisma.PurchaseOrderUpdateWithWhereUniqueWithoutBranchInput | Prisma.PurchaseOrderUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.PurchaseOrderUpdateManyWithWhereWithoutBranchInput | Prisma.PurchaseOrderUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.PurchaseOrderScalarWhereInput | Prisma.PurchaseOrderScalarWhereInput[]
+}
+
+export type PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutBranchInput, Prisma.PurchaseOrderUncheckedCreateWithoutBranchInput> | Prisma.PurchaseOrderCreateWithoutBranchInput[] | Prisma.PurchaseOrderUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.PurchaseOrderCreateOrConnectWithoutBranchInput | Prisma.PurchaseOrderCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.PurchaseOrderUpsertWithWhereUniqueWithoutBranchInput | Prisma.PurchaseOrderUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.PurchaseOrderCreateManyBranchInputEnvelope
+  set?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  delete?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  connect?: Prisma.PurchaseOrderWhereUniqueInput | Prisma.PurchaseOrderWhereUniqueInput[]
+  update?: Prisma.PurchaseOrderUpdateWithWhereUniqueWithoutBranchInput | Prisma.PurchaseOrderUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.PurchaseOrderUpdateManyWithWhereWithoutBranchInput | Prisma.PurchaseOrderUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.PurchaseOrderScalarWhereInput | Prisma.PurchaseOrderScalarWhereInput[]
 }
 
 export type PurchaseOrderCreateNestedManyWithoutDistributorInput = {
@@ -751,6 +879,101 @@ export type PurchaseOrderUncheckedUpdateManyWithoutCompanyNestedInput = {
   deleteMany?: Prisma.PurchaseOrderScalarWhereInput | Prisma.PurchaseOrderScalarWhereInput[]
 }
 
+export type PurchaseOrderCreateWithoutPharmacyInput = {
+  id?: string
+  orderNumber: string
+  status?: string
+  subtotal?: number
+  total?: number
+  notes?: string
+  createdBy?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  rejectionReason?: string | null
+  idempotencyKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutPurchaseOrdersInput
+  distributor: Prisma.DistributorCreateNestedOneWithoutPurchaseOrdersInput
+  company?: Prisma.CompanyCreateNestedOneWithoutPurchaseOrdersInput
+  items?: Prisma.PurchaseOrderItemCreateNestedManyWithoutPurchaseOrderInput
+}
+
+export type PurchaseOrderUncheckedCreateWithoutPharmacyInput = {
+  id?: string
+  orderNumber: string
+  branchId: string
+  distributorId: string
+  companyId?: string | null
+  status?: string
+  subtotal?: number
+  total?: number
+  notes?: string
+  createdBy?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  rejectionReason?: string | null
+  idempotencyKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutPurchaseOrderInput
+}
+
+export type PurchaseOrderCreateOrConnectWithoutPharmacyInput = {
+  where: Prisma.PurchaseOrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutPharmacyInput, Prisma.PurchaseOrderUncheckedCreateWithoutPharmacyInput>
+}
+
+export type PurchaseOrderCreateManyPharmacyInputEnvelope = {
+  data: Prisma.PurchaseOrderCreateManyPharmacyInput | Prisma.PurchaseOrderCreateManyPharmacyInput[]
+  skipDuplicates?: boolean
+}
+
+export type PurchaseOrderUpsertWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.PurchaseOrderWhereUniqueInput
+  update: Prisma.XOR<Prisma.PurchaseOrderUpdateWithoutPharmacyInput, Prisma.PurchaseOrderUncheckedUpdateWithoutPharmacyInput>
+  create: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutPharmacyInput, Prisma.PurchaseOrderUncheckedCreateWithoutPharmacyInput>
+}
+
+export type PurchaseOrderUpdateWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.PurchaseOrderWhereUniqueInput
+  data: Prisma.XOR<Prisma.PurchaseOrderUpdateWithoutPharmacyInput, Prisma.PurchaseOrderUncheckedUpdateWithoutPharmacyInput>
+}
+
+export type PurchaseOrderUpdateManyWithWhereWithoutPharmacyInput = {
+  where: Prisma.PurchaseOrderScalarWhereInput
+  data: Prisma.XOR<Prisma.PurchaseOrderUpdateManyMutationInput, Prisma.PurchaseOrderUncheckedUpdateManyWithoutPharmacyInput>
+}
+
+export type PurchaseOrderScalarWhereInput = {
+  AND?: Prisma.PurchaseOrderScalarWhereInput | Prisma.PurchaseOrderScalarWhereInput[]
+  OR?: Prisma.PurchaseOrderScalarWhereInput[]
+  NOT?: Prisma.PurchaseOrderScalarWhereInput | Prisma.PurchaseOrderScalarWhereInput[]
+  id?: Prisma.StringFilter<"PurchaseOrder"> | string
+  orderNumber?: Prisma.StringFilter<"PurchaseOrder"> | string
+  pharmacyId?: Prisma.StringFilter<"PurchaseOrder"> | string
+  branchId?: Prisma.StringFilter<"PurchaseOrder"> | string
+  distributorId?: Prisma.StringFilter<"PurchaseOrder"> | string
+  companyId?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
+  status?: Prisma.StringFilter<"PurchaseOrder"> | string
+  subtotal?: Prisma.FloatFilter<"PurchaseOrder"> | number
+  total?: Prisma.FloatFilter<"PurchaseOrder"> | number
+  notes?: Prisma.StringFilter<"PurchaseOrder"> | string
+  createdBy?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
+  approvedBy?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"PurchaseOrder"> | Date | string | null
+  rejectedBy?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
+  rejectedAt?: Prisma.DateTimeNullableFilter<"PurchaseOrder"> | Date | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
+  idempotencyKey?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"PurchaseOrder"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"PurchaseOrder"> | Date | string
+}
+
 export type PurchaseOrderCreateWithoutItemsInput = {
   id?: string
   orderNumber: string
@@ -767,6 +990,8 @@ export type PurchaseOrderCreateWithoutItemsInput = {
   idempotencyKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutPurchaseOrdersInput
+  branch: Prisma.BranchCreateNestedOneWithoutPurchaseOrdersInput
   distributor: Prisma.DistributorCreateNestedOneWithoutPurchaseOrdersInput
   company?: Prisma.CompanyCreateNestedOneWithoutPurchaseOrdersInput
 }
@@ -774,6 +999,8 @@ export type PurchaseOrderCreateWithoutItemsInput = {
 export type PurchaseOrderUncheckedCreateWithoutItemsInput = {
   id?: string
   orderNumber: string
+  pharmacyId: string
+  branchId: string
   distributorId: string
   companyId?: string | null
   status?: string
@@ -823,6 +1050,8 @@ export type PurchaseOrderUpdateWithoutItemsInput = {
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutPurchaseOrdersNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutPurchaseOrdersNestedInput
   distributor?: Prisma.DistributorUpdateOneRequiredWithoutPurchaseOrdersNestedInput
   company?: Prisma.CompanyUpdateOneWithoutPurchaseOrdersNestedInput
 }
@@ -830,6 +1059,8 @@ export type PurchaseOrderUpdateWithoutItemsInput = {
 export type PurchaseOrderUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   distributorId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
@@ -845,6 +1076,76 @@ export type PurchaseOrderUncheckedUpdateWithoutItemsInput = {
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PurchaseOrderCreateWithoutBranchInput = {
+  id?: string
+  orderNumber: string
+  status?: string
+  subtotal?: number
+  total?: number
+  notes?: string
+  createdBy?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  rejectionReason?: string | null
+  idempotencyKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutPurchaseOrdersInput
+  distributor: Prisma.DistributorCreateNestedOneWithoutPurchaseOrdersInput
+  company?: Prisma.CompanyCreateNestedOneWithoutPurchaseOrdersInput
+  items?: Prisma.PurchaseOrderItemCreateNestedManyWithoutPurchaseOrderInput
+}
+
+export type PurchaseOrderUncheckedCreateWithoutBranchInput = {
+  id?: string
+  orderNumber: string
+  pharmacyId: string
+  distributorId: string
+  companyId?: string | null
+  status?: string
+  subtotal?: number
+  total?: number
+  notes?: string
+  createdBy?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  rejectionReason?: string | null
+  idempotencyKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutPurchaseOrderInput
+}
+
+export type PurchaseOrderCreateOrConnectWithoutBranchInput = {
+  where: Prisma.PurchaseOrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutBranchInput, Prisma.PurchaseOrderUncheckedCreateWithoutBranchInput>
+}
+
+export type PurchaseOrderCreateManyBranchInputEnvelope = {
+  data: Prisma.PurchaseOrderCreateManyBranchInput | Prisma.PurchaseOrderCreateManyBranchInput[]
+  skipDuplicates?: boolean
+}
+
+export type PurchaseOrderUpsertWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.PurchaseOrderWhereUniqueInput
+  update: Prisma.XOR<Prisma.PurchaseOrderUpdateWithoutBranchInput, Prisma.PurchaseOrderUncheckedUpdateWithoutBranchInput>
+  create: Prisma.XOR<Prisma.PurchaseOrderCreateWithoutBranchInput, Prisma.PurchaseOrderUncheckedCreateWithoutBranchInput>
+}
+
+export type PurchaseOrderUpdateWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.PurchaseOrderWhereUniqueInput
+  data: Prisma.XOR<Prisma.PurchaseOrderUpdateWithoutBranchInput, Prisma.PurchaseOrderUncheckedUpdateWithoutBranchInput>
+}
+
+export type PurchaseOrderUpdateManyWithWhereWithoutBranchInput = {
+  where: Prisma.PurchaseOrderScalarWhereInput
+  data: Prisma.XOR<Prisma.PurchaseOrderUpdateManyMutationInput, Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchInput>
 }
 
 export type PurchaseOrderCreateWithoutDistributorInput = {
@@ -863,6 +1164,8 @@ export type PurchaseOrderCreateWithoutDistributorInput = {
   idempotencyKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutPurchaseOrdersInput
+  branch: Prisma.BranchCreateNestedOneWithoutPurchaseOrdersInput
   company?: Prisma.CompanyCreateNestedOneWithoutPurchaseOrdersInput
   items?: Prisma.PurchaseOrderItemCreateNestedManyWithoutPurchaseOrderInput
 }
@@ -870,6 +1173,8 @@ export type PurchaseOrderCreateWithoutDistributorInput = {
 export type PurchaseOrderUncheckedCreateWithoutDistributorInput = {
   id?: string
   orderNumber: string
+  pharmacyId: string
+  branchId: string
   companyId?: string | null
   status?: string
   subtotal?: number
@@ -913,29 +1218,6 @@ export type PurchaseOrderUpdateManyWithWhereWithoutDistributorInput = {
   data: Prisma.XOR<Prisma.PurchaseOrderUpdateManyMutationInput, Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorInput>
 }
 
-export type PurchaseOrderScalarWhereInput = {
-  AND?: Prisma.PurchaseOrderScalarWhereInput | Prisma.PurchaseOrderScalarWhereInput[]
-  OR?: Prisma.PurchaseOrderScalarWhereInput[]
-  NOT?: Prisma.PurchaseOrderScalarWhereInput | Prisma.PurchaseOrderScalarWhereInput[]
-  id?: Prisma.StringFilter<"PurchaseOrder"> | string
-  orderNumber?: Prisma.StringFilter<"PurchaseOrder"> | string
-  distributorId?: Prisma.StringFilter<"PurchaseOrder"> | string
-  companyId?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
-  status?: Prisma.StringFilter<"PurchaseOrder"> | string
-  subtotal?: Prisma.FloatFilter<"PurchaseOrder"> | number
-  total?: Prisma.FloatFilter<"PurchaseOrder"> | number
-  notes?: Prisma.StringFilter<"PurchaseOrder"> | string
-  createdBy?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
-  approvedBy?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
-  approvedAt?: Prisma.DateTimeNullableFilter<"PurchaseOrder"> | Date | string | null
-  rejectedBy?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
-  rejectedAt?: Prisma.DateTimeNullableFilter<"PurchaseOrder"> | Date | string | null
-  rejectionReason?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
-  idempotencyKey?: Prisma.StringNullableFilter<"PurchaseOrder"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"PurchaseOrder"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"PurchaseOrder"> | Date | string
-}
-
 export type PurchaseOrderCreateWithoutCompanyInput = {
   id?: string
   orderNumber: string
@@ -952,6 +1234,8 @@ export type PurchaseOrderCreateWithoutCompanyInput = {
   idempotencyKey?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutPurchaseOrdersInput
+  branch: Prisma.BranchCreateNestedOneWithoutPurchaseOrdersInput
   distributor: Prisma.DistributorCreateNestedOneWithoutPurchaseOrdersInput
   items?: Prisma.PurchaseOrderItemCreateNestedManyWithoutPurchaseOrderInput
 }
@@ -959,6 +1243,8 @@ export type PurchaseOrderCreateWithoutCompanyInput = {
 export type PurchaseOrderUncheckedCreateWithoutCompanyInput = {
   id?: string
   orderNumber: string
+  pharmacyId: string
+  branchId: string
   distributorId: string
   status?: string
   subtotal?: number
@@ -1002,9 +1288,183 @@ export type PurchaseOrderUpdateManyWithWhereWithoutCompanyInput = {
   data: Prisma.XOR<Prisma.PurchaseOrderUpdateManyMutationInput, Prisma.PurchaseOrderUncheckedUpdateManyWithoutCompanyInput>
 }
 
+export type PurchaseOrderCreateManyPharmacyInput = {
+  id?: string
+  orderNumber: string
+  branchId: string
+  distributorId: string
+  companyId?: string | null
+  status?: string
+  subtotal?: number
+  total?: number
+  notes?: string
+  createdBy?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  rejectionReason?: string | null
+  idempotencyKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PurchaseOrderUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutPurchaseOrdersNestedInput
+  distributor?: Prisma.DistributorUpdateOneRequiredWithoutPurchaseOrdersNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutPurchaseOrdersNestedInput
+  items?: Prisma.PurchaseOrderItemUpdateManyWithoutPurchaseOrderNestedInput
+}
+
+export type PurchaseOrderUncheckedUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutPurchaseOrderNestedInput
+}
+
+export type PurchaseOrderUncheckedUpdateManyWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PurchaseOrderCreateManyBranchInput = {
+  id?: string
+  orderNumber: string
+  pharmacyId: string
+  distributorId: string
+  companyId?: string | null
+  status?: string
+  subtotal?: number
+  total?: number
+  notes?: string
+  createdBy?: string | null
+  approvedBy?: string | null
+  approvedAt?: Date | string | null
+  rejectedBy?: string | null
+  rejectedAt?: Date | string | null
+  rejectionReason?: string | null
+  idempotencyKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PurchaseOrderUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutPurchaseOrdersNestedInput
+  distributor?: Prisma.DistributorUpdateOneRequiredWithoutPurchaseOrdersNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutPurchaseOrdersNestedInput
+  items?: Prisma.PurchaseOrderItemUpdateManyWithoutPurchaseOrderNestedInput
+}
+
+export type PurchaseOrderUncheckedUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutPurchaseOrderNestedInput
+}
+
+export type PurchaseOrderUncheckedUpdateManyWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type PurchaseOrderCreateManyDistributorInput = {
   id?: string
   orderNumber: string
+  pharmacyId: string
+  branchId: string
   companyId?: string | null
   status?: string
   subtotal?: number
@@ -1037,6 +1497,8 @@ export type PurchaseOrderUpdateWithoutDistributorInput = {
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutPurchaseOrdersNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutPurchaseOrdersNestedInput
   company?: Prisma.CompanyUpdateOneWithoutPurchaseOrdersNestedInput
   items?: Prisma.PurchaseOrderItemUpdateManyWithoutPurchaseOrderNestedInput
 }
@@ -1044,6 +1506,8 @@ export type PurchaseOrderUpdateWithoutDistributorInput = {
 export type PurchaseOrderUncheckedUpdateWithoutDistributorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1064,6 +1528,8 @@ export type PurchaseOrderUncheckedUpdateWithoutDistributorInput = {
 export type PurchaseOrderUncheckedUpdateManyWithoutDistributorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1083,6 +1549,8 @@ export type PurchaseOrderUncheckedUpdateManyWithoutDistributorInput = {
 export type PurchaseOrderCreateManyCompanyInput = {
   id?: string
   orderNumber: string
+  pharmacyId: string
+  branchId: string
   distributorId: string
   status?: string
   subtotal?: number
@@ -1115,6 +1583,8 @@ export type PurchaseOrderUpdateWithoutCompanyInput = {
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutPurchaseOrdersNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutPurchaseOrdersNestedInput
   distributor?: Prisma.DistributorUpdateOneRequiredWithoutPurchaseOrdersNestedInput
   items?: Prisma.PurchaseOrderItemUpdateManyWithoutPurchaseOrderNestedInput
 }
@@ -1122,6 +1592,8 @@ export type PurchaseOrderUpdateWithoutCompanyInput = {
 export type PurchaseOrderUncheckedUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   distributorId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1142,6 +1614,8 @@ export type PurchaseOrderUncheckedUpdateWithoutCompanyInput = {
 export type PurchaseOrderUncheckedUpdateManyWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   orderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   distributorId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1192,6 +1666,8 @@ export type PurchaseOrderCountOutputTypeCountItemsArgs<ExtArgs extends runtime.T
 export type PurchaseOrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   orderNumber?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   distributorId?: boolean
   companyId?: boolean
   status?: boolean
@@ -1207,6 +1683,8 @@ export type PurchaseOrderSelect<ExtArgs extends runtime.Types.Extensions.Interna
   idempotencyKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.DistributorDefaultArgs<ExtArgs>
   company?: boolean | Prisma.PurchaseOrder$companyArgs<ExtArgs>
   items?: boolean | Prisma.PurchaseOrder$itemsArgs<ExtArgs>
@@ -1216,6 +1694,8 @@ export type PurchaseOrderSelect<ExtArgs extends runtime.Types.Extensions.Interna
 export type PurchaseOrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   orderNumber?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   distributorId?: boolean
   companyId?: boolean
   status?: boolean
@@ -1231,6 +1711,8 @@ export type PurchaseOrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   idempotencyKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.DistributorDefaultArgs<ExtArgs>
   company?: boolean | Prisma.PurchaseOrder$companyArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseOrder"]>
@@ -1238,6 +1720,8 @@ export type PurchaseOrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 export type PurchaseOrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   orderNumber?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   distributorId?: boolean
   companyId?: boolean
   status?: boolean
@@ -1253,6 +1737,8 @@ export type PurchaseOrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   idempotencyKey?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.DistributorDefaultArgs<ExtArgs>
   company?: boolean | Prisma.PurchaseOrder$companyArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseOrder"]>
@@ -1260,6 +1746,8 @@ export type PurchaseOrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 export type PurchaseOrderSelectScalar = {
   id?: boolean
   orderNumber?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   distributorId?: boolean
   companyId?: boolean
   status?: boolean
@@ -1277,18 +1765,24 @@ export type PurchaseOrderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PurchaseOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "distributorId" | "companyId" | "status" | "subtotal" | "total" | "notes" | "createdBy" | "approvedBy" | "approvedAt" | "rejectedBy" | "rejectedAt" | "rejectionReason" | "idempotencyKey" | "createdAt" | "updatedAt", ExtArgs["result"]["purchaseOrder"]>
+export type PurchaseOrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderNumber" | "pharmacyId" | "branchId" | "distributorId" | "companyId" | "status" | "subtotal" | "total" | "notes" | "createdBy" | "approvedBy" | "approvedAt" | "rejectedBy" | "rejectedAt" | "rejectionReason" | "idempotencyKey" | "createdAt" | "updatedAt", ExtArgs["result"]["purchaseOrder"]>
 export type PurchaseOrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.DistributorDefaultArgs<ExtArgs>
   company?: boolean | Prisma.PurchaseOrder$companyArgs<ExtArgs>
   items?: boolean | Prisma.PurchaseOrder$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.PurchaseOrderCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PurchaseOrderIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.DistributorDefaultArgs<ExtArgs>
   company?: boolean | Prisma.PurchaseOrder$companyArgs<ExtArgs>
 }
 export type PurchaseOrderIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.DistributorDefaultArgs<ExtArgs>
   company?: boolean | Prisma.PurchaseOrder$companyArgs<ExtArgs>
 }
@@ -1296,6 +1790,8 @@ export type PurchaseOrderIncludeUpdateManyAndReturn<ExtArgs extends runtime.Type
 export type $PurchaseOrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PurchaseOrder"
   objects: {
+    pharmacy: Prisma.$PharmacyPayload<ExtArgs>
+    branch: Prisma.$BranchPayload<ExtArgs>
     distributor: Prisma.$DistributorPayload<ExtArgs>
     company: Prisma.$CompanyPayload<ExtArgs> | null
     items: Prisma.$PurchaseOrderItemPayload<ExtArgs>[]
@@ -1303,6 +1799,8 @@ export type $PurchaseOrderPayload<ExtArgs extends runtime.Types.Extensions.Inter
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     orderNumber: string
+    pharmacyId: string
+    branchId: string
     distributorId: string
     companyId: string | null
     status: string
@@ -1712,6 +2210,8 @@ readonly fields: PurchaseOrderFieldRefs;
  */
 export interface Prisma__PurchaseOrderClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  pharmacy<T extends Prisma.PharmacyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PharmacyDefaultArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   distributor<T extends Prisma.DistributorDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DistributorDefaultArgs<ExtArgs>>): Prisma.Prisma__DistributorClient<runtime.Types.Result.GetResult<Prisma.$DistributorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   company<T extends Prisma.PurchaseOrder$companyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseOrder$companyArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.PurchaseOrder$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseOrder$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseOrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1746,6 +2246,8 @@ export interface Prisma__PurchaseOrderClient<T, Null = never, ExtArgs extends ru
 export interface PurchaseOrderFieldRefs {
   readonly id: Prisma.FieldRef<"PurchaseOrder", 'String'>
   readonly orderNumber: Prisma.FieldRef<"PurchaseOrder", 'String'>
+  readonly pharmacyId: Prisma.FieldRef<"PurchaseOrder", 'String'>
+  readonly branchId: Prisma.FieldRef<"PurchaseOrder", 'String'>
   readonly distributorId: Prisma.FieldRef<"PurchaseOrder", 'String'>
   readonly companyId: Prisma.FieldRef<"PurchaseOrder", 'String'>
   readonly status: Prisma.FieldRef<"PurchaseOrder", 'String'>

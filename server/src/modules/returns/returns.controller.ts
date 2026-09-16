@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { returnsService } from "./returns.service";
+import { branchScope } from "../../middleware/auth";
 
 function normalizeReturnItem(i: any) {
   return {
@@ -24,23 +25,26 @@ function normalizeReturn(r: any) {
 }
 
 export const returnsController = {
-  async list(_req: Request, res: Response, next: NextFunction) {
+  async list(req: Request, res: Response, next: NextFunction) {
     try {
-      const returns = await returnsService.list();
+      const scope = branchScope(req);
+      const returns = await returnsService.list(scope);
       res.json(returns.map(normalizeReturn));
     } catch (err) { next(err); }
   },
 
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const entry = await returnsService.getById(req.params.id);
+      const scope = branchScope(req);
+      const entry = await returnsService.getById(scope, req.params.id);
       res.json(normalizeReturn(entry));
     } catch (err) { next(err); }
   },
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await returnsService.create(req.body);
+      const scope = branchScope(req);
+      const result = await returnsService.create(scope, req.body);
       res.json(normalizeReturn(result));
     } catch (err) { next(err); }
   },

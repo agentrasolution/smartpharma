@@ -36,6 +36,8 @@ export type ReturnEntrySumAggregateOutputType = {
 
 export type ReturnEntryMinAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
+  branchId: string | null
   saleId: string | null
   refundAmount: number | null
   reason: string | null
@@ -44,6 +46,8 @@ export type ReturnEntryMinAggregateOutputType = {
 
 export type ReturnEntryMaxAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
+  branchId: string | null
   saleId: string | null
   refundAmount: number | null
   reason: string | null
@@ -52,6 +56,8 @@ export type ReturnEntryMaxAggregateOutputType = {
 
 export type ReturnEntryCountAggregateOutputType = {
   id: number
+  pharmacyId: number
+  branchId: number
   saleId: number
   refundAmount: number
   reason: number
@@ -70,6 +76,8 @@ export type ReturnEntrySumAggregateInputType = {
 
 export type ReturnEntryMinAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   saleId?: true
   refundAmount?: true
   reason?: true
@@ -78,6 +86,8 @@ export type ReturnEntryMinAggregateInputType = {
 
 export type ReturnEntryMaxAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   saleId?: true
   refundAmount?: true
   reason?: true
@@ -86,6 +96,8 @@ export type ReturnEntryMaxAggregateInputType = {
 
 export type ReturnEntryCountAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   saleId?: true
   refundAmount?: true
   reason?: true
@@ -181,6 +193,8 @@ export type ReturnEntryGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type ReturnEntryGroupByOutputType = {
   id: string
+  pharmacyId: string
+  branchId: string
   saleId: string
   refundAmount: number
   reason: string
@@ -212,20 +226,28 @@ export type ReturnEntryWhereInput = {
   OR?: Prisma.ReturnEntryWhereInput[]
   NOT?: Prisma.ReturnEntryWhereInput | Prisma.ReturnEntryWhereInput[]
   id?: Prisma.StringFilter<"ReturnEntry"> | string
+  pharmacyId?: Prisma.StringFilter<"ReturnEntry"> | string
+  branchId?: Prisma.StringFilter<"ReturnEntry"> | string
   saleId?: Prisma.StringFilter<"ReturnEntry"> | string
   refundAmount?: Prisma.FloatFilter<"ReturnEntry"> | number
   reason?: Prisma.StringFilter<"ReturnEntry"> | string
   createdAt?: Prisma.DateTimeFilter<"ReturnEntry"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   sale?: Prisma.XOR<Prisma.SaleScalarRelationFilter, Prisma.SaleWhereInput>
   items?: Prisma.ReturnItemListRelationFilter
 }
 
 export type ReturnEntryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   saleId?: Prisma.SortOrder
   refundAmount?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  pharmacy?: Prisma.PharmacyOrderByWithRelationInput
+  branch?: Prisma.BranchOrderByWithRelationInput
   sale?: Prisma.SaleOrderByWithRelationInput
   items?: Prisma.ReturnItemOrderByRelationAggregateInput
 }
@@ -235,16 +257,22 @@ export type ReturnEntryWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ReturnEntryWhereInput | Prisma.ReturnEntryWhereInput[]
   OR?: Prisma.ReturnEntryWhereInput[]
   NOT?: Prisma.ReturnEntryWhereInput | Prisma.ReturnEntryWhereInput[]
+  pharmacyId?: Prisma.StringFilter<"ReturnEntry"> | string
+  branchId?: Prisma.StringFilter<"ReturnEntry"> | string
   saleId?: Prisma.StringFilter<"ReturnEntry"> | string
   refundAmount?: Prisma.FloatFilter<"ReturnEntry"> | number
   reason?: Prisma.StringFilter<"ReturnEntry"> | string
   createdAt?: Prisma.DateTimeFilter<"ReturnEntry"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   sale?: Prisma.XOR<Prisma.SaleScalarRelationFilter, Prisma.SaleWhereInput>
   items?: Prisma.ReturnItemListRelationFilter
 }, "id">
 
 export type ReturnEntryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   saleId?: Prisma.SortOrder
   refundAmount?: Prisma.SortOrder
   reason?: Prisma.SortOrder
@@ -261,6 +289,8 @@ export type ReturnEntryScalarWhereWithAggregatesInput = {
   OR?: Prisma.ReturnEntryScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ReturnEntryScalarWhereWithAggregatesInput | Prisma.ReturnEntryScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"ReturnEntry"> | string
+  pharmacyId?: Prisma.StringWithAggregatesFilter<"ReturnEntry"> | string
+  branchId?: Prisma.StringWithAggregatesFilter<"ReturnEntry"> | string
   saleId?: Prisma.StringWithAggregatesFilter<"ReturnEntry"> | string
   refundAmount?: Prisma.FloatWithAggregatesFilter<"ReturnEntry"> | number
   reason?: Prisma.StringWithAggregatesFilter<"ReturnEntry"> | string
@@ -272,12 +302,16 @@ export type ReturnEntryCreateInput = {
   refundAmount?: number
   reason?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutReturnsInput
+  branch: Prisma.BranchCreateNestedOneWithoutReturnsInput
   sale: Prisma.SaleCreateNestedOneWithoutReturnsInput
   items?: Prisma.ReturnItemCreateNestedManyWithoutReturnEntryInput
 }
 
 export type ReturnEntryUncheckedCreateInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   saleId: string
   refundAmount?: number
   reason?: string
@@ -290,12 +324,16 @@ export type ReturnEntryUpdateInput = {
   refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutReturnsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutReturnsNestedInput
   sale?: Prisma.SaleUpdateOneRequiredWithoutReturnsNestedInput
   items?: Prisma.ReturnItemUpdateManyWithoutReturnEntryNestedInput
 }
 
 export type ReturnEntryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   saleId?: Prisma.StringFieldUpdateOperationsInput | string
   refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
@@ -305,6 +343,8 @@ export type ReturnEntryUncheckedUpdateInput = {
 
 export type ReturnEntryCreateManyInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   saleId: string
   refundAmount?: number
   reason?: string
@@ -320,6 +360,8 @@ export type ReturnEntryUpdateManyMutationInput = {
 
 export type ReturnEntryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   saleId?: Prisma.StringFieldUpdateOperationsInput | string
   refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
@@ -338,6 +380,8 @@ export type ReturnEntryOrderByRelationAggregateInput = {
 
 export type ReturnEntryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   saleId?: Prisma.SortOrder
   refundAmount?: Prisma.SortOrder
   reason?: Prisma.SortOrder
@@ -350,6 +394,8 @@ export type ReturnEntryAvgOrderByAggregateInput = {
 
 export type ReturnEntryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   saleId?: Prisma.SortOrder
   refundAmount?: Prisma.SortOrder
   reason?: Prisma.SortOrder
@@ -358,6 +404,8 @@ export type ReturnEntryMaxOrderByAggregateInput = {
 
 export type ReturnEntryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   saleId?: Prisma.SortOrder
   refundAmount?: Prisma.SortOrder
   reason?: Prisma.SortOrder
@@ -371,6 +419,90 @@ export type ReturnEntrySumOrderByAggregateInput = {
 export type ReturnEntryScalarRelationFilter = {
   is?: Prisma.ReturnEntryWhereInput
   isNot?: Prisma.ReturnEntryWhereInput
+}
+
+export type ReturnEntryCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.ReturnEntryCreateWithoutPharmacyInput, Prisma.ReturnEntryUncheckedCreateWithoutPharmacyInput> | Prisma.ReturnEntryCreateWithoutPharmacyInput[] | Prisma.ReturnEntryUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ReturnEntryCreateOrConnectWithoutPharmacyInput | Prisma.ReturnEntryCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.ReturnEntryCreateManyPharmacyInputEnvelope
+  connect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+}
+
+export type ReturnEntryUncheckedCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.ReturnEntryCreateWithoutPharmacyInput, Prisma.ReturnEntryUncheckedCreateWithoutPharmacyInput> | Prisma.ReturnEntryCreateWithoutPharmacyInput[] | Prisma.ReturnEntryUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ReturnEntryCreateOrConnectWithoutPharmacyInput | Prisma.ReturnEntryCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.ReturnEntryCreateManyPharmacyInputEnvelope
+  connect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+}
+
+export type ReturnEntryUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.ReturnEntryCreateWithoutPharmacyInput, Prisma.ReturnEntryUncheckedCreateWithoutPharmacyInput> | Prisma.ReturnEntryCreateWithoutPharmacyInput[] | Prisma.ReturnEntryUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ReturnEntryCreateOrConnectWithoutPharmacyInput | Prisma.ReturnEntryCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.ReturnEntryUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.ReturnEntryUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.ReturnEntryCreateManyPharmacyInputEnvelope
+  set?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  disconnect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  delete?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  connect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  update?: Prisma.ReturnEntryUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.ReturnEntryUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.ReturnEntryUpdateManyWithWhereWithoutPharmacyInput | Prisma.ReturnEntryUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.ReturnEntryScalarWhereInput | Prisma.ReturnEntryScalarWhereInput[]
+}
+
+export type ReturnEntryUncheckedUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.ReturnEntryCreateWithoutPharmacyInput, Prisma.ReturnEntryUncheckedCreateWithoutPharmacyInput> | Prisma.ReturnEntryCreateWithoutPharmacyInput[] | Prisma.ReturnEntryUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ReturnEntryCreateOrConnectWithoutPharmacyInput | Prisma.ReturnEntryCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.ReturnEntryUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.ReturnEntryUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.ReturnEntryCreateManyPharmacyInputEnvelope
+  set?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  disconnect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  delete?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  connect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  update?: Prisma.ReturnEntryUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.ReturnEntryUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.ReturnEntryUpdateManyWithWhereWithoutPharmacyInput | Prisma.ReturnEntryUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.ReturnEntryScalarWhereInput | Prisma.ReturnEntryScalarWhereInput[]
+}
+
+export type ReturnEntryCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.ReturnEntryCreateWithoutBranchInput, Prisma.ReturnEntryUncheckedCreateWithoutBranchInput> | Prisma.ReturnEntryCreateWithoutBranchInput[] | Prisma.ReturnEntryUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ReturnEntryCreateOrConnectWithoutBranchInput | Prisma.ReturnEntryCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.ReturnEntryCreateManyBranchInputEnvelope
+  connect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+}
+
+export type ReturnEntryUncheckedCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.ReturnEntryCreateWithoutBranchInput, Prisma.ReturnEntryUncheckedCreateWithoutBranchInput> | Prisma.ReturnEntryCreateWithoutBranchInput[] | Prisma.ReturnEntryUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ReturnEntryCreateOrConnectWithoutBranchInput | Prisma.ReturnEntryCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.ReturnEntryCreateManyBranchInputEnvelope
+  connect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+}
+
+export type ReturnEntryUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.ReturnEntryCreateWithoutBranchInput, Prisma.ReturnEntryUncheckedCreateWithoutBranchInput> | Prisma.ReturnEntryCreateWithoutBranchInput[] | Prisma.ReturnEntryUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ReturnEntryCreateOrConnectWithoutBranchInput | Prisma.ReturnEntryCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.ReturnEntryUpsertWithWhereUniqueWithoutBranchInput | Prisma.ReturnEntryUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.ReturnEntryCreateManyBranchInputEnvelope
+  set?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  disconnect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  delete?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  connect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  update?: Prisma.ReturnEntryUpdateWithWhereUniqueWithoutBranchInput | Prisma.ReturnEntryUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.ReturnEntryUpdateManyWithWhereWithoutBranchInput | Prisma.ReturnEntryUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.ReturnEntryScalarWhereInput | Prisma.ReturnEntryScalarWhereInput[]
+}
+
+export type ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.ReturnEntryCreateWithoutBranchInput, Prisma.ReturnEntryUncheckedCreateWithoutBranchInput> | Prisma.ReturnEntryCreateWithoutBranchInput[] | Prisma.ReturnEntryUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ReturnEntryCreateOrConnectWithoutBranchInput | Prisma.ReturnEntryCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.ReturnEntryUpsertWithWhereUniqueWithoutBranchInput | Prisma.ReturnEntryUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.ReturnEntryCreateManyBranchInputEnvelope
+  set?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  disconnect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  delete?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  connect?: Prisma.ReturnEntryWhereUniqueInput | Prisma.ReturnEntryWhereUniqueInput[]
+  update?: Prisma.ReturnEntryUpdateWithWhereUniqueWithoutBranchInput | Prisma.ReturnEntryUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.ReturnEntryUpdateManyWithWhereWithoutBranchInput | Prisma.ReturnEntryUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.ReturnEntryScalarWhereInput | Prisma.ReturnEntryScalarWhereInput[]
 }
 
 export type ReturnEntryCreateNestedManyWithoutSaleInput = {
@@ -429,16 +561,125 @@ export type ReturnEntryUpdateOneRequiredWithoutItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ReturnEntryUpdateToOneWithWhereWithoutItemsInput, Prisma.ReturnEntryUpdateWithoutItemsInput>, Prisma.ReturnEntryUncheckedUpdateWithoutItemsInput>
 }
 
+export type ReturnEntryCreateWithoutPharmacyInput = {
+  id?: string
+  refundAmount?: number
+  reason?: string
+  createdAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutReturnsInput
+  sale: Prisma.SaleCreateNestedOneWithoutReturnsInput
+  items?: Prisma.ReturnItemCreateNestedManyWithoutReturnEntryInput
+}
+
+export type ReturnEntryUncheckedCreateWithoutPharmacyInput = {
+  id?: string
+  branchId: string
+  saleId: string
+  refundAmount?: number
+  reason?: string
+  createdAt?: Date | string
+  items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnEntryInput
+}
+
+export type ReturnEntryCreateOrConnectWithoutPharmacyInput = {
+  where: Prisma.ReturnEntryWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReturnEntryCreateWithoutPharmacyInput, Prisma.ReturnEntryUncheckedCreateWithoutPharmacyInput>
+}
+
+export type ReturnEntryCreateManyPharmacyInputEnvelope = {
+  data: Prisma.ReturnEntryCreateManyPharmacyInput | Prisma.ReturnEntryCreateManyPharmacyInput[]
+  skipDuplicates?: boolean
+}
+
+export type ReturnEntryUpsertWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.ReturnEntryWhereUniqueInput
+  update: Prisma.XOR<Prisma.ReturnEntryUpdateWithoutPharmacyInput, Prisma.ReturnEntryUncheckedUpdateWithoutPharmacyInput>
+  create: Prisma.XOR<Prisma.ReturnEntryCreateWithoutPharmacyInput, Prisma.ReturnEntryUncheckedCreateWithoutPharmacyInput>
+}
+
+export type ReturnEntryUpdateWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.ReturnEntryWhereUniqueInput
+  data: Prisma.XOR<Prisma.ReturnEntryUpdateWithoutPharmacyInput, Prisma.ReturnEntryUncheckedUpdateWithoutPharmacyInput>
+}
+
+export type ReturnEntryUpdateManyWithWhereWithoutPharmacyInput = {
+  where: Prisma.ReturnEntryScalarWhereInput
+  data: Prisma.XOR<Prisma.ReturnEntryUpdateManyMutationInput, Prisma.ReturnEntryUncheckedUpdateManyWithoutPharmacyInput>
+}
+
+export type ReturnEntryScalarWhereInput = {
+  AND?: Prisma.ReturnEntryScalarWhereInput | Prisma.ReturnEntryScalarWhereInput[]
+  OR?: Prisma.ReturnEntryScalarWhereInput[]
+  NOT?: Prisma.ReturnEntryScalarWhereInput | Prisma.ReturnEntryScalarWhereInput[]
+  id?: Prisma.StringFilter<"ReturnEntry"> | string
+  pharmacyId?: Prisma.StringFilter<"ReturnEntry"> | string
+  branchId?: Prisma.StringFilter<"ReturnEntry"> | string
+  saleId?: Prisma.StringFilter<"ReturnEntry"> | string
+  refundAmount?: Prisma.FloatFilter<"ReturnEntry"> | number
+  reason?: Prisma.StringFilter<"ReturnEntry"> | string
+  createdAt?: Prisma.DateTimeFilter<"ReturnEntry"> | Date | string
+}
+
+export type ReturnEntryCreateWithoutBranchInput = {
+  id?: string
+  refundAmount?: number
+  reason?: string
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutReturnsInput
+  sale: Prisma.SaleCreateNestedOneWithoutReturnsInput
+  items?: Prisma.ReturnItemCreateNestedManyWithoutReturnEntryInput
+}
+
+export type ReturnEntryUncheckedCreateWithoutBranchInput = {
+  id?: string
+  pharmacyId: string
+  saleId: string
+  refundAmount?: number
+  reason?: string
+  createdAt?: Date | string
+  items?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutReturnEntryInput
+}
+
+export type ReturnEntryCreateOrConnectWithoutBranchInput = {
+  where: Prisma.ReturnEntryWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReturnEntryCreateWithoutBranchInput, Prisma.ReturnEntryUncheckedCreateWithoutBranchInput>
+}
+
+export type ReturnEntryCreateManyBranchInputEnvelope = {
+  data: Prisma.ReturnEntryCreateManyBranchInput | Prisma.ReturnEntryCreateManyBranchInput[]
+  skipDuplicates?: boolean
+}
+
+export type ReturnEntryUpsertWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.ReturnEntryWhereUniqueInput
+  update: Prisma.XOR<Prisma.ReturnEntryUpdateWithoutBranchInput, Prisma.ReturnEntryUncheckedUpdateWithoutBranchInput>
+  create: Prisma.XOR<Prisma.ReturnEntryCreateWithoutBranchInput, Prisma.ReturnEntryUncheckedCreateWithoutBranchInput>
+}
+
+export type ReturnEntryUpdateWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.ReturnEntryWhereUniqueInput
+  data: Prisma.XOR<Prisma.ReturnEntryUpdateWithoutBranchInput, Prisma.ReturnEntryUncheckedUpdateWithoutBranchInput>
+}
+
+export type ReturnEntryUpdateManyWithWhereWithoutBranchInput = {
+  where: Prisma.ReturnEntryScalarWhereInput
+  data: Prisma.XOR<Prisma.ReturnEntryUpdateManyMutationInput, Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchInput>
+}
+
 export type ReturnEntryCreateWithoutSaleInput = {
   id?: string
   refundAmount?: number
   reason?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutReturnsInput
+  branch: Prisma.BranchCreateNestedOneWithoutReturnsInput
   items?: Prisma.ReturnItemCreateNestedManyWithoutReturnEntryInput
 }
 
 export type ReturnEntryUncheckedCreateWithoutSaleInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   refundAmount?: number
   reason?: string
   createdAt?: Date | string
@@ -471,27 +712,20 @@ export type ReturnEntryUpdateManyWithWhereWithoutSaleInput = {
   data: Prisma.XOR<Prisma.ReturnEntryUpdateManyMutationInput, Prisma.ReturnEntryUncheckedUpdateManyWithoutSaleInput>
 }
 
-export type ReturnEntryScalarWhereInput = {
-  AND?: Prisma.ReturnEntryScalarWhereInput | Prisma.ReturnEntryScalarWhereInput[]
-  OR?: Prisma.ReturnEntryScalarWhereInput[]
-  NOT?: Prisma.ReturnEntryScalarWhereInput | Prisma.ReturnEntryScalarWhereInput[]
-  id?: Prisma.StringFilter<"ReturnEntry"> | string
-  saleId?: Prisma.StringFilter<"ReturnEntry"> | string
-  refundAmount?: Prisma.FloatFilter<"ReturnEntry"> | number
-  reason?: Prisma.StringFilter<"ReturnEntry"> | string
-  createdAt?: Prisma.DateTimeFilter<"ReturnEntry"> | Date | string
-}
-
 export type ReturnEntryCreateWithoutItemsInput = {
   id?: string
   refundAmount?: number
   reason?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutReturnsInput
+  branch: Prisma.BranchCreateNestedOneWithoutReturnsInput
   sale: Prisma.SaleCreateNestedOneWithoutReturnsInput
 }
 
 export type ReturnEntryUncheckedCreateWithoutItemsInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   saleId: string
   refundAmount?: number
   reason?: string
@@ -519,11 +753,91 @@ export type ReturnEntryUpdateWithoutItemsInput = {
   refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutReturnsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutReturnsNestedInput
   sale?: Prisma.SaleUpdateOneRequiredWithoutReturnsNestedInput
 }
 
 export type ReturnEntryUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  saleId?: Prisma.StringFieldUpdateOperationsInput | string
+  refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ReturnEntryCreateManyPharmacyInput = {
+  id?: string
+  branchId: string
+  saleId: string
+  refundAmount?: number
+  reason?: string
+  createdAt?: Date | string
+}
+
+export type ReturnEntryUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutReturnsNestedInput
+  sale?: Prisma.SaleUpdateOneRequiredWithoutReturnsNestedInput
+  items?: Prisma.ReturnItemUpdateManyWithoutReturnEntryNestedInput
+}
+
+export type ReturnEntryUncheckedUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  saleId?: Prisma.StringFieldUpdateOperationsInput | string
+  refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnEntryNestedInput
+}
+
+export type ReturnEntryUncheckedUpdateManyWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  saleId?: Prisma.StringFieldUpdateOperationsInput | string
+  refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ReturnEntryCreateManyBranchInput = {
+  id?: string
+  pharmacyId: string
+  saleId: string
+  refundAmount?: number
+  reason?: string
+  createdAt?: Date | string
+}
+
+export type ReturnEntryUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutReturnsNestedInput
+  sale?: Prisma.SaleUpdateOneRequiredWithoutReturnsNestedInput
+  items?: Prisma.ReturnItemUpdateManyWithoutReturnEntryNestedInput
+}
+
+export type ReturnEntryUncheckedUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  saleId?: Prisma.StringFieldUpdateOperationsInput | string
+  refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  reason?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ReturnItemUncheckedUpdateManyWithoutReturnEntryNestedInput
+}
+
+export type ReturnEntryUncheckedUpdateManyWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   saleId?: Prisma.StringFieldUpdateOperationsInput | string
   refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
@@ -532,6 +846,8 @@ export type ReturnEntryUncheckedUpdateWithoutItemsInput = {
 
 export type ReturnEntryCreateManySaleInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   refundAmount?: number
   reason?: string
   createdAt?: Date | string
@@ -542,11 +858,15 @@ export type ReturnEntryUpdateWithoutSaleInput = {
   refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutReturnsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutReturnsNestedInput
   items?: Prisma.ReturnItemUpdateManyWithoutReturnEntryNestedInput
 }
 
 export type ReturnEntryUncheckedUpdateWithoutSaleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -555,6 +875,8 @@ export type ReturnEntryUncheckedUpdateWithoutSaleInput = {
 
 export type ReturnEntryUncheckedUpdateManyWithoutSaleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   refundAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   reason?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -593,10 +915,14 @@ export type ReturnEntryCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Typ
 
 export type ReturnEntrySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   saleId?: boolean
   refundAmount?: boolean
   reason?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.SaleDefaultArgs<ExtArgs>
   items?: boolean | Prisma.ReturnEntry$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.ReturnEntryCountOutputTypeDefaultArgs<ExtArgs>
@@ -604,51 +930,71 @@ export type ReturnEntrySelect<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type ReturnEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   saleId?: boolean
   refundAmount?: boolean
   reason?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.SaleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["returnEntry"]>
 
 export type ReturnEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   saleId?: boolean
   refundAmount?: boolean
   reason?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.SaleDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["returnEntry"]>
 
 export type ReturnEntrySelectScalar = {
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   saleId?: boolean
   refundAmount?: boolean
   reason?: boolean
   createdAt?: boolean
 }
 
-export type ReturnEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "saleId" | "refundAmount" | "reason" | "createdAt", ExtArgs["result"]["returnEntry"]>
+export type ReturnEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "saleId" | "refundAmount" | "reason" | "createdAt", ExtArgs["result"]["returnEntry"]>
 export type ReturnEntryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.SaleDefaultArgs<ExtArgs>
   items?: boolean | Prisma.ReturnEntry$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.ReturnEntryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ReturnEntryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.SaleDefaultArgs<ExtArgs>
 }
 export type ReturnEntryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.SaleDefaultArgs<ExtArgs>
 }
 
 export type $ReturnEntryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ReturnEntry"
   objects: {
+    pharmacy: Prisma.$PharmacyPayload<ExtArgs>
+    branch: Prisma.$BranchPayload<ExtArgs>
     sale: Prisma.$SalePayload<ExtArgs>
     items: Prisma.$ReturnItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    pharmacyId: string
+    branchId: string
     saleId: string
     refundAmount: number
     reason: string
@@ -1047,6 +1393,8 @@ readonly fields: ReturnEntryFieldRefs;
  */
 export interface Prisma__ReturnEntryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  pharmacy<T extends Prisma.PharmacyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PharmacyDefaultArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   sale<T extends Prisma.SaleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SaleDefaultArgs<ExtArgs>>): Prisma.Prisma__SaleClient<runtime.Types.Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.ReturnEntry$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReturnEntry$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReturnItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1079,6 +1427,8 @@ export interface Prisma__ReturnEntryClient<T, Null = never, ExtArgs extends runt
  */
 export interface ReturnEntryFieldRefs {
   readonly id: Prisma.FieldRef<"ReturnEntry", 'String'>
+  readonly pharmacyId: Prisma.FieldRef<"ReturnEntry", 'String'>
+  readonly branchId: Prisma.FieldRef<"ReturnEntry", 'String'>
   readonly saleId: Prisma.FieldRef<"ReturnEntry", 'String'>
   readonly refundAmount: Prisma.FieldRef<"ReturnEntry", 'Float'>
   readonly reason: Prisma.FieldRef<"ReturnEntry", 'String'>

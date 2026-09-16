@@ -5,14 +5,16 @@ import {
   LayoutDashboard, ShoppingCart, Package, Boxes, Tags, Users, CreditCard,
   Factory, Building2, Undo2, Wallet, BarChart3, Receipt, Barcode, Settings,
   LogOut, PanelLeftClose, BrainCircuit, ListChecks, MessageSquare, ShieldCheck, Activity,
+  UserCog, KeyRound, Store, Globe,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+import { JOB_ROLE_LABELS } from "@/types";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
 import logoSrc from "@/asset/image/logo.png";
 
-const navItems = [
+const tenantNavItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/pos", label: "POS / Sales", icon: ShoppingCart },
   { href: "/invoices", label: "Invoices", icon: Receipt },
@@ -32,8 +34,17 @@ const navItems = [
   { href: "/ai/chat", label: "AI Chat", icon: MessageSquare },
   { href: "/ai/approvals", label: "AI Approvals", icon: ShieldCheck },
   { href: "/ai/activity", label: "AI Activity", icon: Activity },
+  { href: "/billing", label: "Subscription & Billing", icon: CreditCard },
+  { href: "/users", label: "Users", icon: UserCog },
+  { href: "/roles", label: "Roles", icon: KeyRound },
+  { href: "/branches", label: "Branches", icon: Store },
   { href: "/settings/ai", label: "LLM Providers", icon: BrainCircuit },
   { href: "/settings", label: "Settings", icon: Settings },
+];
+
+const platformNavItems = [
+  { href: "/platform", label: "Registered Pharmacies", icon: Globe },
+  { href: "/platform", label: "Subscriptions", icon: CreditCard },
 ];
 
 export default function Sidebar() {
@@ -44,6 +55,9 @@ export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [posWindowCount, setPosWindowCount] = useState(0);
   const [pendingApprovals, setPendingApprovals] = useState(0);
+
+  const isPlatform = user?.role === "platform";
+  const navItems = isPlatform ? platformNavItems : tenantNavItems;
 
   const fetchWindowCount = useCallback(async () => {
     try {
@@ -70,10 +84,11 @@ export default function Sidebar() {
   }, [fetchWindowCount]);
 
   useEffect(() => {
+    if (isPlatform) return;
     fetchPendingApprovals();
     const interval = setInterval(fetchPendingApprovals, 15000);
     return () => clearInterval(interval);
-  }, [fetchPendingApprovals]);
+  }, [fetchPendingApprovals, isPlatform]);
 
   const handleNewSale = async () => {
     try {
@@ -108,44 +123,48 @@ export default function Sidebar() {
               exit={{ opacity: 0, width: 0 }}
               className="min-w-0 overflow-hidden"
             >
-              <p className="text-sm font-display font-semibold text-sidebar-foreground truncate tracking-tight">Faraz Pharmacy</p>
+              <p className="text-sm font-display font-semibold text-sidebar-foreground truncate tracking-tight">
+                {isPlatform ? "Platform Console" : (user?.pharmacyName || "Faraz Pharmacy")}
+              </p>
               <p className="text-[10px] text-sidebar-foreground/40 truncate tracking-widest uppercase">Management</p>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      <div className={cn("px-3 pb-3", collapsed && "px-2")}>
-        <button
-          onClick={handleNewSale}
-          className={cn(
-            "flex items-center w-full rounded-lg transition-all duration-150 text-sm font-medium relative",
-            "bg-accent text-accent-foreground hover:bg-accent-hover shadow-xs",
-            collapsed ? "justify-center h-9" : "gap-2.5 px-3 h-9"
-          )}
-        >
-          <ShoppingCart className="h-4 w-4" />
-          <AnimatePresence>
-            {!collapsed && (
-              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                New Sale
-              </motion.span>
+      {!isPlatform && (
+        <div className={cn("px-3 pb-3", collapsed && "px-2")}>
+          <button
+            onClick={handleNewSale}
+            className={cn(
+              "flex items-center w-full rounded-lg transition-all duration-150 text-sm font-medium relative",
+              "bg-accent text-accent-foreground hover:bg-accent-hover shadow-xs",
+              collapsed ? "justify-center h-9" : "gap-2.5 px-3 h-9"
             )}
-          </AnimatePresence>
-          {posWindowCount > 0 && (
-            <span
-              className={cn(
-                "absolute flex items-center justify-center rounded-full bg-background text-[10px] font-bold text-text-primary border border-border",
-                collapsed
-                  ? "-top-1 -right-1 h-5 min-w-5 px-1"
-                  : "right-3 h-5 min-w-5 px-1"
+          >
+            <ShoppingCart className="h-4 w-4" />
+            <AnimatePresence>
+              {!collapsed && (
+                <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  New Sale
+                </motion.span>
               )}
-            >
-              {posWindowCount}
-            </span>
-          )}
-        </button>
-      </div>
+            </AnimatePresence>
+            {posWindowCount > 0 && (
+              <span
+                className={cn(
+                  "absolute flex items-center justify-center rounded-full bg-background text-[10px] font-bold text-text-primary border border-border",
+                  collapsed
+                    ? "-top-1 -right-1 h-5 min-w-5 px-1"
+                    : "right-3 h-5 min-w-5 px-1"
+                )}
+              >
+                {posWindowCount}
+              </span>
+            )}
+          </button>
+        </div>
+      )}
 
       <nav className="flex-1 overflow-y-auto space-y-1 px-3" data-sidebar>
         {navItems.map((item, idx) => {
@@ -223,11 +242,29 @@ export default function Sidebar() {
                 className="min-w-0 overflow-hidden flex-1 ml-2.5"
               >
                 <p className="text-xs font-medium text-sidebar-foreground/80 truncate leading-tight">{user?.username || "Admin"}</p>
-                <p className="text-[10px] text-sidebar-foreground/40 truncate tracking-wider uppercase leading-tight">Admin</p>
+                <p className="text-[10px] text-sidebar-foreground/40 truncate tracking-wider uppercase leading-tight">
+                  {isPlatform ? "Platform Admin" : (user?.branchName || JOB_ROLE_LABELS[user?.jobRole || ""] || "Main Branch")}
+                </p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
+        <button
+          onClick={() => navigate("/change-password")}
+          className={cn(
+            "flex items-center rounded-lg transition-all duration-150 text-sidebar-foreground/40 hover:text-sidebar-foreground",
+            collapsed ? "justify-center h-9" : "gap-3 px-3 h-9 w-full text-xs"
+          )}
+        >
+          <KeyRound className="h-4 w-4 shrink-0" />
+          <AnimatePresence>
+            {!collapsed && (
+              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                Change password
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </button>
         <button
           onClick={logout}
           className={cn(

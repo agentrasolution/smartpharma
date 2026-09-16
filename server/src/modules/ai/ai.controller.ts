@@ -1,12 +1,14 @@
 import type { Request, Response, NextFunction } from "express";
 import { aiService } from "./ai.service";
+import { branchScope } from "../../middleware/auth";
 
 export const aiController = {
   async chat(req: Request, res: Response, next: NextFunction) {
     try {
       const { message, conversationId } = req.body;
       const user = req.user!;
-      const result = await aiService.chat(user.userId, user.username, user.role, message, conversationId);
+      const scope = branchScope(req);
+      const result = await aiService.chat(scope, user.userId, user.username, user.role, message, conversationId);
       res.json(result);
     } catch (err) { next(err); }
   },
@@ -21,7 +23,7 @@ export const aiController = {
 
   async conversationById(req: Request, res: Response, next: NextFunction) {
     try {
-      const conv = await aiService.getConversation(req.params.id);
+      const conv = await aiService.getConversation(req.params.id, req.user!.userId);
       res.json(conv);
     } catch (err) { next(err); }
   },

@@ -31,8 +31,8 @@ export * from "./enums"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more InventoryConfigs
- * const inventoryConfigs = await prisma.inventoryConfig.findMany()
+ * // Fetch zero or more Pharmacies
+ * const pharmacies = await prisma.pharmacy.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -41,6 +41,16 @@ export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
 export { Prisma }
 
+/**
+ * Model Pharmacy
+ * 
+ */
+export type Pharmacy = Prisma.PharmacyModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel
 /**
  * Model InventoryConfig
  * 
@@ -92,6 +102,11 @@ export type AIMessage = Prisma.AIMessageModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model Branch
+ * 
+ */
+export type Branch = Prisma.BranchModel
+/**
  * Model AuthToken
  * 
  */
@@ -101,6 +116,21 @@ export type AuthToken = Prisma.AuthTokenModel
  * 
  */
 export type RecoveryKey = Prisma.RecoveryKeyModel
+/**
+ * Model Role
+ * 
+ */
+export type Role = Prisma.RoleModel
+/**
+ * Model Permission
+ * 
+ */
+export type Permission = Prisma.PermissionModel
+/**
+ * Model RolePermission
+ * 
+ */
+export type RolePermission = Prisma.RolePermissionModel
 /**
  * Model Product
  * 

@@ -1,21 +1,24 @@
 import type { Request, Response, NextFunction } from "express";
 import { inventoryIntelligence } from "../../inventory/inventory.service";
 import { recommendationService } from "../../inventory/recommendations.service";
+import { branchScope } from "../../middleware/auth";
 
 export const aiInventoryController = {
-  async summary(_req: Request, res: Response, next: NextFunction) {
+  async summary(req: Request, res: Response, next: NextFunction) {
     try {
-      const days = Number(_req.query.days ?? 30);
-      res.json(await inventoryIntelligence.getSummary(days));
+      const scope = branchScope(req, { branchParam: true });
+      const days = Number(req.query.days ?? 30);
+      res.json(await inventoryIntelligence.getSummary(scope, days));
     } catch (err) { next(err); }
   },
 
   async products(req: Request, res: Response, next: NextFunction) {
     try {
+      const scope = branchScope(req, { branchParam: true });
       const riskLevel = String(req.query.riskLevel ?? "CRITICAL");
       const limit = Number(req.query.limit ?? 20);
       const days = Number(req.query.days ?? 30);
-      const rows = await inventoryIntelligence.getProductsByRisk(riskLevel as never, limit, days);
+      const rows = await inventoryIntelligence.getProductsByRisk(scope, riskLevel as never, limit, days);
       res.json(rows.map((r) => ({
         productId: r.product.id,
         name: r.product.name,
@@ -39,8 +42,9 @@ export const aiInventoryController = {
 
   async productDetail(req: Request, res: Response, next: NextFunction) {
     try {
+      const scope = branchScope(req);
       const days = Number(req.query.days ?? 30);
-      const a = await inventoryIntelligence.analyzeProduct(req.params.id, days);
+      const a = await inventoryIntelligence.analyzeProduct(scope, req.params.id, days);
       if (!a) {
         res.status(404).json({ error: "Product not found or inactive" });
         return;
@@ -56,9 +60,10 @@ export const aiInventoryController = {
    */
   async recommendations(req: Request, res: Response, next: NextFunction) {
     try {
+      const scope = branchScope(req, { branchParam: true });
       const status = req.query.status ? String(req.query.status) : undefined;
       const limit = Number(req.query.limit ?? 100);
-      const rows = await recommendationService.list({
+      const rows = await recommendationService.list(scope, {
         status: status as never,
         limit: Math.min(limit, 500),
       });
@@ -67,9 +72,10 @@ export const aiInventoryController = {
   },
 
   /** Persisted recommendations summary (counts by status). */
-  async recommendationsSummary(_req: Request, res: Response, next: NextFunction) {
+  async recommendationsSummary(req: Request, res: Response, next: NextFunction) {
     try {
-      res.json(await recommendationService.summary());
+      const scope = branchScope(req, { branchParam: true });
+      res.json(await recommendationService.summary(scope));
     } catch (err) { next(err); }
   },
 
@@ -81,8 +87,9 @@ export const aiInventoryController = {
    */
   async runRecommendations(req: Request, res: Response, next: NextFunction) {
     try {
+      const scope = branchScope(req, { branchParam: true });
       const days = Number(req.body?.days ?? 30);
-      const created = await recommendationService.generate(days);
+      const created = await recommendationService.generate(scope, days);
       res.json({ created, at: new Date().toISOString() });
     } catch (err) { next(err); }
   },
@@ -90,7 +97,9 @@ export const aiInventoryController = {
   /** Human action: acknowledge a recommendation. */
   async acknowledgeRecommendation(req: Request, res: Response, next: NextFunction) {
     try {
+      const scope = branchScope(req);
       const rec = await recommendationService.acknowledge(
+        scope,
         req.params.id,
         (req as Request & { user?: { userId: string } }).user?.userId ?? "",
       );
@@ -101,7 +110,9 @@ export const aiInventoryController = {
   /** Human action: dismiss a recommendation. */
   async dismissRecommendation(req: Request, res: Response, next: NextFunction) {
     try {
+      const scope = branchScope(req);
       const rec = await recommendationService.dismiss(
+        scope,
         req.params.id,
         (req as Request & { user?: { userId: string } }).user?.userId ?? "",
       );
@@ -112,8 +123,9 @@ export const aiInventoryController = {
   /** Live reorder candidates from the deterministic engine (no persistence). */
   async reorderCandidates(req: Request, res: Response, next: NextFunction) {
     try {
+      const scope = branchScope(req, { branchParam: true });
       const days = Number(req.query.days ?? 30);
-      const rows = await inventoryIntelligence.getReorderCandidates(days);
+      const rows = await inventoryIntelligence.getReorderCandidates(scope, days);
       res.json(rows.map((r) => ({
         productId: r.product.id,
         name: r.product.name,
@@ -134,28 +146,32 @@ export const aiInventoryController = {
 
   async critical(req: Request, res: Response, next: NextFunction) {
     try {
-      const rows = await inventoryIntelligence.getProductsByRisk("CRITICAL", 200);
+      const scope = branchScope(req, { branchParam: true });
+      const rows = await inventoryIntelligence.getProductsByRisk(scope, "CRITICAL", 200);
       res.json(rows);
     } catch (err) { next(err); }
   },
 
   async overstock(req: Request, res: Response, next: NextFunction) {
     try {
-      const rows = await inventoryIntelligence.getOverstock(200, 30);
+      const scope = branchScope(req, { branchParam: true });
+      const rows = await inventoryIntelligence.getOverstock(scope, 200, 30);
       res.json(rows);
     } catch (err) { next(err); }
   },
 
   async slowMoving(req: Request, res: Response, next: NextFunction) {
     try {
-      const rows = await inventoryIntelligence.getSlowMoving(1, 90, 200, 30);
+      const scope = branchScope(req, { branchParam: true });
+      const rows = await inventoryIntelligence.getSlowMoving(scope, 1, 90, 200, 30);
       res.json(rows);
     } catch (err) { next(err); }
   },
 
   async expiry(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await inventoryIntelligence.getExpiryAnalysis();
+      const scope = branchScope(req, { branchParam: true });
+      const result = await inventoryIntelligence.getExpiryAnalysis(scope);
       const serialize = (rows: Awaited<ReturnType<typeof inventoryIntelligence.getExpiryAnalysis>>["expired"]) =>
         rows.map((r) => ({
           productId: r.product.id,
@@ -174,9 +190,10 @@ export const aiInventoryController = {
     } catch (err) { next(err); }
   },
 
-  async dataQuality(_req: Request, res: Response, next: NextFunction) {
+  async dataQuality(req: Request, res: Response, next: NextFunction) {
     try {
-      res.json(await inventoryIntelligence.getDataQuality(30));
+      const scope = branchScope(req, { branchParam: true });
+      res.json(await inventoryIntelligence.getDataQuality(scope, 30));
     } catch (err) { next(err); }
   },
 };

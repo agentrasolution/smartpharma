@@ -1,40 +1,85 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
 import '@/global.css';
 
+import { DarkTheme, DefaultTheme, type Theme } from '@react-navigation/native';
 import { Platform } from 'react-native';
 
 export const Colors = {
   light: {
-    text: '#000000',
-    background: '#ffffff',
+    text: '#0F172A',
+    background: '#F5F7F9',
     backgroundElement: '#F0F0F3',
     backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
+    textSecondary: '#64748B',
+    surface: '#FFFFFF',
+    surface2: '#F8FAFC',
+    accent: '#0D9488',
+    accentHover: '#0F766E',
+    accentFg: '#FFFFFF',
+    danger: '#DC2626',
+    success: '#16A34A',
+    warning: '#D97706',
+    info: '#2563EB',
+    border: '#E2E8F0',
+    borderStrong: '#CBD5E1',
+    muted: '#F8FAFC',
+    mutedFg: '#94A3B8',
   },
   dark: {
-    text: '#ffffff',
-    background: '#000000',
+    text: '#F8FAFC',
+    background: '#0F172A',
     backgroundElement: '#212225',
     backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
+    textSecondary: '#94A3B8',
+    surface: '#111827',
+    surface2: '#1E293B',
+    accent: '#14B8A6',
+    accentHover: '#2DD4BF',
+    accentFg: '#0F172A',
+    danger: '#EF4444',
+    success: '#22C55E',
+    warning: '#F59E0B',
+    info: '#3B82F6',
+    border: '#334155',
+    borderStrong: '#475569',
+    muted: '#1E293B',
+    mutedFg: '#94A3B8',
   },
 } as const;
 
-export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
+export type ThemeColor = keyof typeof Colors.light;
+
+export const AppTheme: { light: Theme; dark: Theme } = {
+  light: {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: Colors.light.accent,
+      background: Colors.light.background,
+      card: Colors.light.surface,
+      text: Colors.light.text,
+      border: Colors.light.border,
+      notification: Colors.light.danger,
+    },
+  },
+  dark: {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      primary: Colors.dark.accent,
+      background: Colors.dark.background,
+      card: Colors.dark.surface,
+      text: Colors.dark.text,
+      border: Colors.dark.border,
+      notification: Colors.dark.danger,
+    },
+  },
+};
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
     sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
     serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
     rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: 'ui-monospace',
   },
   default: {
@@ -63,3 +108,5 @@ export const Spacing = {
 
 export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
 export const MaxContentWidth = 800;
+
+export type ColorsType = typeof Colors.light;

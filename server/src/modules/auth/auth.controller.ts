@@ -9,23 +9,45 @@ export const authController = {
     } catch (err) { next(err); }
   },
 
-  async verifyPassword(req: Request, res: Response, next: NextFunction) {
+  async register(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await authService.verifyPassword(req.body.password);
+      const result = await authService.register(req.body);
+      res.status(201).json(result);
+    } catch (err) { next(err); }
+  },
+
+  async changePassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await authService.changePassword(
+        req.user!.userId,
+        req.body.currentPassword,
+        req.body.newPassword,
+      );
       res.json(result);
     } catch (err) { next(err); }
   },
 
-  async generateRecoveryKey(_req: Request, res: Response, next: NextFunction) {
+  async verifyPassword(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await authService.generateRecoveryKey();
+      const result = await authService.verifyPassword(req.user!.pharmacyId, req.body.password);
+      res.json(result);
+    } catch (err) { next(err); }
+  },
+
+  async generateRecoveryKey(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await authService.generateRecoveryKey(req.user!.pharmacyId);
       res.json(result);
     } catch (err) { next(err); }
   },
 
   async recoverPassword(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await authService.recoverPassword(req.body.phrase, req.body.newPassword);
+      const result = await authService.recoverPassword(
+        req.body.username,
+        req.body.phrase,
+        req.body.newPassword,
+      );
       res.json(result);
     } catch (err) { next(err); }
   },

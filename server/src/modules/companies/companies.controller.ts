@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { companiesService } from "./companies.service";
+import { branchScope } from "../../middleware/auth";
 
 function normalizeCompany(c: Record<string, unknown>): Record<string, unknown> {
   return {
@@ -15,30 +16,34 @@ function normalizeCompany(c: Record<string, unknown>): Record<string, unknown> {
 }
 
 export const companiesController = {
-  async list(_req: Request, res: Response, next: NextFunction) {
+  async list(req: Request, res: Response, next: NextFunction) {
     try {
-      const companies = await companiesService.list();
+      const scope = branchScope(req);
+      const companies = await companiesService.list({ pharmacyId: scope.pharmacyId });
       res.json(companies.map(normalizeCompany));
     } catch (err) { next(err); }
   },
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const company = await companiesService.create(req.body);
+      const scope = branchScope(req);
+      const company = await companiesService.create({ pharmacyId: scope.pharmacyId }, req.body);
       res.json(normalizeCompany(company));
     } catch (err) { next(err); }
   },
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const company = await companiesService.update(req.params.id, req.body);
+      const scope = branchScope(req);
+      const company = await companiesService.update({ pharmacyId: scope.pharmacyId }, req.params.id, req.body);
       res.json(normalizeCompany(company));
     } catch (err) { next(err); }
   },
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await companiesService.remove(req.params.id);
+      const scope = branchScope(req);
+      const result = await companiesService.remove({ pharmacyId: scope.pharmacyId }, req.params.id);
       res.json(result);
     } catch (err) { next(err); }
   },

@@ -51,6 +51,8 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Pharmacy: 'Pharmacy',
+  Subscription: 'Subscription',
   InventoryConfig: 'InventoryConfig',
   DistributorInventoryConfig: 'DistributorInventoryConfig',
   ProductDistributorConfig: 'ProductDistributorConfig',
@@ -61,8 +63,12 @@ export const ModelName = {
   AIConversation: 'AIConversation',
   AIMessage: 'AIMessage',
   User: 'User',
+  Branch: 'Branch',
   AuthToken: 'AuthToken',
   RecoveryKey: 'RecoveryKey',
+  Role: 'Role',
+  Permission: 'Permission',
+  RolePermission: 'RolePermission',
   Product: 'Product',
   Barcode: 'Barcode',
   ProductPrice: 'ProductPrice',
@@ -94,6 +100,38 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const PharmacyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  contact: 'contact',
+  phone: 'phone',
+  email: 'email',
+  address: 'address',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PharmacyScalarFieldEnum = (typeof PharmacyScalarFieldEnum)[keyof typeof PharmacyScalarFieldEnum]
+
+
+export const SubscriptionScalarFieldEnum = {
+  id: 'id',
+  pharmacyId: 'pharmacyId',
+  plan: 'plan',
+  price: 'price',
+  status: 'status',
+  startedAt: 'startedAt',
+  renewsAt: 'renewsAt',
+  cancelledAt: 'cancelledAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
 
 
 export const InventoryConfigScalarFieldEnum = {
@@ -138,6 +176,8 @@ export type ProductDistributorConfigScalarFieldEnum = (typeof ProductDistributor
 export const PurchaseOrderScalarFieldEnum = {
   id: 'id',
   orderNumber: 'orderNumber',
+  pharmacyId: 'pharmacyId',
+  branchId: 'branchId',
   distributorId: 'distributorId',
   companyId: 'companyId',
   status: 'status',
@@ -239,13 +279,39 @@ export type AIMessageScalarFieldEnum = (typeof AIMessageScalarFieldEnum)[keyof t
 
 export const UserScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
   username: 'username',
   passwordHash: 'passwordHash',
+  name: 'name',
+  phone: 'phone',
+  email: 'email',
   role: 'role',
-  createdAt: 'createdAt'
+  roleId: 'roleId',
+  branchId: 'branchId',
+  jobRole: 'jobRole',
+  isActive: 'isActive',
+  mustChangePassword: 'mustChangePassword',
+  passwordChangedAt: 'passwordChangedAt',
+  lastLoginAt: 'lastLoginAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const BranchScalarFieldEnum = {
+  id: 'id',
+  pharmacyId: 'pharmacyId',
+  name: 'name',
+  address: 'address',
+  phone: 'phone',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BranchScalarFieldEnum = (typeof BranchScalarFieldEnum)[keyof typeof BranchScalarFieldEnum]
 
 
 export const AuthTokenScalarFieldEnum = {
@@ -264,6 +330,7 @@ export type AuthTokenScalarFieldEnum = (typeof AuthTokenScalarFieldEnum)[keyof t
 
 export const RecoveryKeyScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
   keyHash: 'keyHash',
   createdAt: 'createdAt',
   usedAt: 'usedAt'
@@ -272,8 +339,39 @@ export const RecoveryKeyScalarFieldEnum = {
 export type RecoveryKeyScalarFieldEnum = (typeof RecoveryKeyScalarFieldEnum)[keyof typeof RecoveryKeyScalarFieldEnum]
 
 
+export const RoleScalarFieldEnum = {
+  id: 'id',
+  pharmacyId: 'pharmacyId',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+export const PermissionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description'
+} as const
+
+export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
+
+
+export const RolePermissionScalarFieldEnum = {
+  roleId: 'roleId',
+  permissionId: 'permissionId'
+} as const
+
+export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnum)[keyof typeof RolePermissionScalarFieldEnum]
+
+
 export const ProductScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
+  branchId: 'branchId',
   barcode: 'barcode',
   name: 'name',
   company: 'company',
@@ -295,6 +393,7 @@ export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeo
 
 export const BarcodeScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
   code: 'code',
   productId: 'productId',
   createdAt: 'createdAt'
@@ -318,6 +417,7 @@ export type ProductPriceScalarFieldEnum = (typeof ProductPriceScalarFieldEnum)[k
 
 export const DistributorScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
   name: 'name',
   contact: 'contact',
   phone: 'phone',
@@ -331,6 +431,7 @@ export type DistributorScalarFieldEnum = (typeof DistributorScalarFieldEnum)[key
 
 export const CompanyScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
   name: 'name',
   contact: 'contact',
   phone: 'phone',
@@ -344,6 +445,8 @@ export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeo
 
 export const CustomerScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
+  branchId: 'branchId',
   name: 'name',
   phone: 'phone',
   address: 'address',
@@ -357,6 +460,8 @@ export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typ
 
 export const SaleScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
+  branchId: 'branchId',
   customerId: 'customerId',
   subtotal: 'subtotal',
   discount: 'discount',
@@ -386,6 +491,8 @@ export type SaleItemScalarFieldEnum = (typeof SaleItemScalarFieldEnum)[keyof typ
 
 export const ArrearScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
+  branchId: 'branchId',
   saleId: 'saleId',
   customerId: 'customerId',
   totalBill: 'totalBill',
@@ -411,6 +518,8 @@ export type ArrearPaymentScalarFieldEnum = (typeof ArrearPaymentScalarFieldEnum)
 
 export const StockPurchaseScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
+  branchId: 'branchId',
   productId: 'productId',
   distributorId: 'distributorId',
   companyId: 'companyId',
@@ -429,6 +538,8 @@ export type StockPurchaseScalarFieldEnum = (typeof StockPurchaseScalarFieldEnum)
 
 export const ReturnEntryScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
+  branchId: 'branchId',
   saleId: 'saleId',
   refundAmount: 'refundAmount',
   reason: 'reason',
@@ -452,6 +563,7 @@ export type ReturnItemScalarFieldEnum = (typeof ReturnItemScalarFieldEnum)[keyof
 
 export const CategoryScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
   name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -462,6 +574,8 @@ export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typ
 
 export const ExpenseScalarFieldEnum = {
   id: 'id',
+  pharmacyId: 'pharmacyId',
+  branchId: 'branchId',
   title: 'title',
   category: 'category',
   amount: 'amount',

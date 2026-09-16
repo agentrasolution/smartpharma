@@ -26,52 +26,124 @@ export type AggregateUser = {
 
 export type UserMinAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
   username: string | null
   passwordHash: string | null
+  name: string | null
+  phone: string | null
+  email: string | null
   role: string | null
+  roleId: string | null
+  branchId: string | null
+  jobRole: string | null
+  isActive: boolean | null
+  mustChangePassword: boolean | null
+  passwordChangedAt: Date | null
+  lastLoginAt: Date | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
   username: string | null
   passwordHash: string | null
+  name: string | null
+  phone: string | null
+  email: string | null
   role: string | null
+  roleId: string | null
+  branchId: string | null
+  jobRole: string | null
+  isActive: boolean | null
+  mustChangePassword: boolean | null
+  passwordChangedAt: Date | null
+  lastLoginAt: Date | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
+  pharmacyId: number
   username: number
   passwordHash: number
+  name: number
+  phone: number
+  email: number
   role: number
+  roleId: number
+  branchId: number
+  jobRole: number
+  isActive: number
+  mustChangePassword: number
+  passwordChangedAt: number
+  lastLoginAt: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
 
 export type UserMinAggregateInputType = {
   id?: true
+  pharmacyId?: true
   username?: true
   passwordHash?: true
+  name?: true
+  phone?: true
+  email?: true
   role?: true
+  roleId?: true
+  branchId?: true
+  jobRole?: true
+  isActive?: true
+  mustChangePassword?: true
+  passwordChangedAt?: true
+  lastLoginAt?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
+  pharmacyId?: true
   username?: true
   passwordHash?: true
+  name?: true
+  phone?: true
+  email?: true
   role?: true
+  roleId?: true
+  branchId?: true
+  jobRole?: true
+  isActive?: true
+  mustChangePassword?: true
+  passwordChangedAt?: true
+  lastLoginAt?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
+  pharmacyId?: true
   username?: true
   passwordHash?: true
+  name?: true
+  phone?: true
+  email?: true
   role?: true
+  roleId?: true
+  branchId?: true
+  jobRole?: true
+  isActive?: true
+  mustChangePassword?: true
+  passwordChangedAt?: true
+  lastLoginAt?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -149,10 +221,22 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UserGroupByOutputType = {
   id: string
+  pharmacyId: string
   username: string
   passwordHash: string
+  name: string
+  phone: string
+  email: string
   role: string
+  roleId: string | null
+  branchId: string | null
+  jobRole: string
+  isActive: boolean
+  mustChangePassword: boolean
+  passwordChangedAt: Date | null
+  lastLoginAt: Date | null
   createdAt: Date
+  updatedAt: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -178,19 +262,49 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
+  pharmacyId?: Prisma.StringFilter<"User"> | string
   username?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
+  phone?: Prisma.StringFilter<"User"> | string
+  email?: Prisma.StringFilter<"User"> | string
   role?: Prisma.StringFilter<"User"> | string
+  roleId?: Prisma.StringNullableFilter<"User"> | string | null
+  branchId?: Prisma.StringNullableFilter<"User"> | string | null
+  jobRole?: Prisma.StringFilter<"User"> | string
+  isActive?: Prisma.BoolFilter<"User"> | boolean
+  mustChangePassword?: Prisma.BoolFilter<"User"> | boolean
+  passwordChangedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  roleRef?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
+  branch?: Prisma.XOR<Prisma.BranchNullableScalarRelationFilter, Prisma.BranchWhereInput> | null
   authTokens?: Prisma.AuthTokenListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  branchId?: Prisma.SortOrderInput | Prisma.SortOrder
+  jobRole?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  mustChangePassword?: Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  pharmacy?: Prisma.PharmacyOrderByWithRelationInput
+  roleRef?: Prisma.RoleOrderByWithRelationInput
+  branch?: Prisma.BranchOrderByWithRelationInput
   authTokens?: Prisma.AuthTokenOrderByRelationAggregateInput
 }
 
@@ -200,18 +314,45 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
+  pharmacyId?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
+  phone?: Prisma.StringFilter<"User"> | string
+  email?: Prisma.StringFilter<"User"> | string
   role?: Prisma.StringFilter<"User"> | string
+  roleId?: Prisma.StringNullableFilter<"User"> | string | null
+  branchId?: Prisma.StringNullableFilter<"User"> | string | null
+  jobRole?: Prisma.StringFilter<"User"> | string
+  isActive?: Prisma.BoolFilter<"User"> | boolean
+  mustChangePassword?: Prisma.BoolFilter<"User"> | boolean
+  passwordChangedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  roleRef?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
+  branch?: Prisma.XOR<Prisma.BranchNullableScalarRelationFilter, Prisma.BranchWhereInput> | null
   authTokens?: Prisma.AuthTokenListRelationFilter
 }, "id" | "username">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  roleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  branchId?: Prisma.SortOrderInput | Prisma.SortOrder
+  jobRole?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  mustChangePassword?: Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -222,27 +363,63 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
+  pharmacyId?: Prisma.StringWithAggregatesFilter<"User"> | string
   username?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
+  name?: Prisma.StringWithAggregatesFilter<"User"> | string
+  phone?: Prisma.StringWithAggregatesFilter<"User"> | string
+  email?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.StringWithAggregatesFilter<"User"> | string
+  roleId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  branchId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  jobRole?: Prisma.StringWithAggregatesFilter<"User"> | string
+  isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  mustChangePassword?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  passwordChangedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  lastLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
   id?: string
   username: string
   passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
   role?: string
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutUsersInput
+  roleRef?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
   authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
+  pharmacyId: string
   username: string
   passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
   role?: string
+  roleId?: string | null
+  branchId?: string | null
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -250,71 +427,258 @@ export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutUsersNestedInput
+  roleRef?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
   authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
+  pharmacyId: string
   username: string
   passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
   role?: string
+  roleId?: string | null
+  branchId?: string | null
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
+}
+
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
+  jobRole?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  mustChangePassword?: Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrder
+  lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
+  jobRole?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  mustChangePassword?: Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrder
+  lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   username?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  roleId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
+  jobRole?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  mustChangePassword?: Prisma.SortOrder
+  passwordChangedAt?: Prisma.SortOrder
+  lastLoginAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPharmacyInput, Prisma.UserUncheckedCreateWithoutPharmacyInput> | Prisma.UserCreateWithoutPharmacyInput[] | Prisma.UserUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPharmacyInput | Prisma.UserCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.UserCreateManyPharmacyInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPharmacyInput, Prisma.UserUncheckedCreateWithoutPharmacyInput> | Prisma.UserCreateWithoutPharmacyInput[] | Prisma.UserUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPharmacyInput | Prisma.UserCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.UserCreateManyPharmacyInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPharmacyInput, Prisma.UserUncheckedCreateWithoutPharmacyInput> | Prisma.UserCreateWithoutPharmacyInput[] | Prisma.UserUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPharmacyInput | Prisma.UserCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.UserUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.UserCreateManyPharmacyInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.UserUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutPharmacyInput | Prisma.UserUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPharmacyInput, Prisma.UserUncheckedCreateWithoutPharmacyInput> | Prisma.UserCreateWithoutPharmacyInput[] | Prisma.UserUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPharmacyInput | Prisma.UserCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.UserUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.UserCreateManyPharmacyInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.UserUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutPharmacyInput | Prisma.UserUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput> | Prisma.UserCreateWithoutBranchInput[] | Prisma.UserUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBranchInput | Prisma.UserCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.UserCreateManyBranchInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput> | Prisma.UserCreateWithoutBranchInput[] | Prisma.UserUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBranchInput | Prisma.UserCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.UserCreateManyBranchInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput> | Prisma.UserCreateWithoutBranchInput[] | Prisma.UserUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBranchInput | Prisma.UserCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutBranchInput | Prisma.UserUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.UserCreateManyBranchInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutBranchInput | Prisma.UserUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutBranchInput | Prisma.UserUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput> | Prisma.UserCreateWithoutBranchInput[] | Prisma.UserUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutBranchInput | Prisma.UserCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutBranchInput | Prisma.UserUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.UserCreateManyBranchInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutBranchInput | Prisma.UserUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutBranchInput | Prisma.UserUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
 export type UserCreateNestedOneWithoutAuthTokensInput = {
@@ -331,20 +695,241 @@ export type UserUpdateOneRequiredWithoutAuthTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuthTokensInput, Prisma.UserUpdateWithoutAuthTokensInput>, Prisma.UserUncheckedUpdateWithoutAuthTokensInput>
 }
 
+export type UserCreateNestedManyWithoutRoleRefInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRoleRefInput, Prisma.UserUncheckedCreateWithoutRoleRefInput> | Prisma.UserCreateWithoutRoleRefInput[] | Prisma.UserUncheckedCreateWithoutRoleRefInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRoleRefInput | Prisma.UserCreateOrConnectWithoutRoleRefInput[]
+  createMany?: Prisma.UserCreateManyRoleRefInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutRoleRefInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRoleRefInput, Prisma.UserUncheckedCreateWithoutRoleRefInput> | Prisma.UserCreateWithoutRoleRefInput[] | Prisma.UserUncheckedCreateWithoutRoleRefInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRoleRefInput | Prisma.UserCreateOrConnectWithoutRoleRefInput[]
+  createMany?: Prisma.UserCreateManyRoleRefInputEnvelope
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutRoleRefNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRoleRefInput, Prisma.UserUncheckedCreateWithoutRoleRefInput> | Prisma.UserCreateWithoutRoleRefInput[] | Prisma.UserUncheckedCreateWithoutRoleRefInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRoleRefInput | Prisma.UserCreateOrConnectWithoutRoleRefInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutRoleRefInput | Prisma.UserUpsertWithWhereUniqueWithoutRoleRefInput[]
+  createMany?: Prisma.UserCreateManyRoleRefInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutRoleRefInput | Prisma.UserUpdateWithWhereUniqueWithoutRoleRefInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutRoleRefInput | Prisma.UserUpdateManyWithWhereWithoutRoleRefInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutRoleRefNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRoleRefInput, Prisma.UserUncheckedCreateWithoutRoleRefInput> | Prisma.UserCreateWithoutRoleRefInput[] | Prisma.UserUncheckedCreateWithoutRoleRefInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRoleRefInput | Prisma.UserCreateOrConnectWithoutRoleRefInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutRoleRefInput | Prisma.UserUpsertWithWhereUniqueWithoutRoleRefInput[]
+  createMany?: Prisma.UserCreateManyRoleRefInputEnvelope
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutRoleRefInput | Prisma.UserUpdateWithWhereUniqueWithoutRoleRefInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutRoleRefInput | Prisma.UserUpdateManyWithWhereWithoutRoleRefInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateWithoutPharmacyInput = {
+  id?: string
+  username: string
+  passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
+  role?: string
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  roleRef?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
+  authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPharmacyInput = {
+  id?: string
+  username: string
+  passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
+  role?: string
+  roleId?: string | null
+  branchId?: string | null
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPharmacyInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPharmacyInput, Prisma.UserUncheckedCreateWithoutPharmacyInput>
+}
+
+export type UserCreateManyPharmacyInputEnvelope = {
+  data: Prisma.UserCreateManyPharmacyInput | Prisma.UserCreateManyPharmacyInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPharmacyInput, Prisma.UserUncheckedUpdateWithoutPharmacyInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPharmacyInput, Prisma.UserUncheckedCreateWithoutPharmacyInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPharmacyInput, Prisma.UserUncheckedUpdateWithoutPharmacyInput>
+}
+
+export type UserUpdateManyWithWhereWithoutPharmacyInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutPharmacyInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.StringFilter<"User"> | string
+  pharmacyId?: Prisma.StringFilter<"User"> | string
+  username?: Prisma.StringFilter<"User"> | string
+  passwordHash?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
+  phone?: Prisma.StringFilter<"User"> | string
+  email?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.StringFilter<"User"> | string
+  roleId?: Prisma.StringNullableFilter<"User"> | string | null
+  branchId?: Prisma.StringNullableFilter<"User"> | string | null
+  jobRole?: Prisma.StringFilter<"User"> | string
+  isActive?: Prisma.BoolFilter<"User"> | boolean
+  mustChangePassword?: Prisma.BoolFilter<"User"> | boolean
+  passwordChangedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+}
+
+export type UserCreateWithoutBranchInput = {
+  id?: string
+  username: string
+  passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
+  role?: string
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutUsersInput
+  roleRef?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutBranchInput = {
+  id?: string
+  pharmacyId: string
+  username: string
+  passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
+  role?: string
+  roleId?: string | null
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutBranchInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput>
+}
+
+export type UserCreateManyBranchInputEnvelope = {
+  data: Prisma.UserCreateManyBranchInput | Prisma.UserCreateManyBranchInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutBranchInput, Prisma.UserUncheckedUpdateWithoutBranchInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutBranchInput, Prisma.UserUncheckedCreateWithoutBranchInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutBranchInput, Prisma.UserUncheckedUpdateWithoutBranchInput>
+}
+
+export type UserUpdateManyWithWhereWithoutBranchInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutBranchInput>
+}
+
 export type UserCreateWithoutAuthTokensInput = {
   id?: string
   username: string
   passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
   role?: string
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutUsersInput
+  roleRef?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutAuthTokensInput = {
   id?: string
+  pharmacyId: string
   username: string
   passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
   role?: string
+  roleId?: string | null
+  branchId?: string | null
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type UserCreateOrConnectWithoutAuthTokensInput = {
@@ -367,16 +952,340 @@ export type UserUpdateWithoutAuthTokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutUsersNestedInput
+  roleRef?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuthTokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserCreateWithoutRoleRefInput = {
+  id?: string
+  username: string
+  passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
+  role?: string
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutUsersInput
+  branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
+  authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutRoleRefInput = {
+  id?: string
+  pharmacyId: string
+  username: string
+  passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
+  role?: string
+  branchId?: string | null
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutRoleRefInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRoleRefInput, Prisma.UserUncheckedCreateWithoutRoleRefInput>
+}
+
+export type UserCreateManyRoleRefInputEnvelope = {
+  data: Prisma.UserCreateManyRoleRefInput | Prisma.UserCreateManyRoleRefInput[]
+  skipDuplicates?: boolean
+}
+
+export type UserUpsertWithWhereUniqueWithoutRoleRefInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRoleRefInput, Prisma.UserUncheckedUpdateWithoutRoleRefInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRoleRefInput, Prisma.UserUncheckedCreateWithoutRoleRefInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutRoleRefInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRoleRefInput, Prisma.UserUncheckedUpdateWithoutRoleRefInput>
+}
+
+export type UserUpdateManyWithWhereWithoutRoleRefInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutRoleRefInput>
+}
+
+export type UserCreateManyPharmacyInput = {
+  id?: string
+  username: string
+  passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
+  role?: string
+  roleId?: string | null
+  branchId?: string | null
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  roleRef?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
+  authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserCreateManyBranchInput = {
+  id?: string
+  pharmacyId: string
+  username: string
+  passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
+  role?: string
+  roleId?: string | null
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutUsersNestedInput
+  roleRef?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserCreateManyRoleRefInput = {
+  id?: string
+  pharmacyId: string
+  username: string
+  passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
+  role?: string
+  branchId?: string | null
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type UserUpdateWithoutRoleRefInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutUsersNestedInput
+  branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
+  authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRoleRefInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutRoleRefInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -412,57 +1321,140 @@ export type UserCountOutputTypeCountAuthTokensArgs<ExtArgs extends runtime.Types
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   username?: boolean
   passwordHash?: boolean
+  name?: boolean
+  phone?: boolean
+  email?: boolean
   role?: boolean
+  roleId?: boolean
+  branchId?: boolean
+  jobRole?: boolean
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: boolean
+  lastLoginAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  roleRef?: boolean | Prisma.User$roleRefArgs<ExtArgs>
+  branch?: boolean | Prisma.User$branchArgs<ExtArgs>
   authTokens?: boolean | Prisma.User$authTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   username?: boolean
   passwordHash?: boolean
+  name?: boolean
+  phone?: boolean
+  email?: boolean
   role?: boolean
+  roleId?: boolean
+  branchId?: boolean
+  jobRole?: boolean
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: boolean
+  lastLoginAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  roleRef?: boolean | Prisma.User$roleRefArgs<ExtArgs>
+  branch?: boolean | Prisma.User$branchArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   username?: boolean
   passwordHash?: boolean
+  name?: boolean
+  phone?: boolean
+  email?: boolean
   role?: boolean
+  roleId?: boolean
+  branchId?: boolean
+  jobRole?: boolean
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: boolean
+  lastLoginAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  roleRef?: boolean | Prisma.User$roleRefArgs<ExtArgs>
+  branch?: boolean | Prisma.User$branchArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
+  pharmacyId?: boolean
   username?: boolean
   passwordHash?: boolean
+  name?: boolean
+  phone?: boolean
+  email?: boolean
   role?: boolean
+  roleId?: boolean
+  branchId?: boolean
+  jobRole?: boolean
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: boolean
+  lastLoginAt?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "passwordHash" | "role" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "username" | "passwordHash" | "name" | "phone" | "email" | "role" | "roleId" | "branchId" | "jobRole" | "isActive" | "mustChangePassword" | "passwordChangedAt" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  roleRef?: boolean | Prisma.User$roleRefArgs<ExtArgs>
+  branch?: boolean | Prisma.User$branchArgs<ExtArgs>
   authTokens?: boolean | Prisma.User$authTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  roleRef?: boolean | Prisma.User$roleRefArgs<ExtArgs>
+  branch?: boolean | Prisma.User$branchArgs<ExtArgs>
+}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  roleRef?: boolean | Prisma.User$roleRefArgs<ExtArgs>
+  branch?: boolean | Prisma.User$branchArgs<ExtArgs>
+}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    pharmacy: Prisma.$PharmacyPayload<ExtArgs>
+    roleRef: Prisma.$RolePayload<ExtArgs> | null
+    branch: Prisma.$BranchPayload<ExtArgs> | null
     authTokens: Prisma.$AuthTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    pharmacyId: string
     username: string
     passwordHash: string
+    name: string
+    phone: string
+    email: string
     role: string
+    roleId: string | null
+    branchId: string | null
+    jobRole: string
+    isActive: boolean
+    mustChangePassword: boolean
+    passwordChangedAt: Date | null
+    lastLoginAt: Date | null
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -857,6 +1849,9 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  pharmacy<T extends Prisma.PharmacyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PharmacyDefaultArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  roleRef<T extends Prisma.User$roleRefArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$roleRefArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  branch<T extends Prisma.User$branchArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$branchArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   authTokens<T extends Prisma.User$authTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$authTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -888,10 +1883,22 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
+  readonly pharmacyId: Prisma.FieldRef<"User", 'String'>
   readonly username: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
+  readonly name: Prisma.FieldRef<"User", 'String'>
+  readonly phone: Prisma.FieldRef<"User", 'String'>
+  readonly email: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'String'>
+  readonly roleId: Prisma.FieldRef<"User", 'String'>
+  readonly branchId: Prisma.FieldRef<"User", 'String'>
+  readonly jobRole: Prisma.FieldRef<"User", 'String'>
+  readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
+  readonly mustChangePassword: Prisma.FieldRef<"User", 'Boolean'>
+  readonly passwordChangedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 
@@ -1146,6 +2153,10 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1216,6 +2227,10 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1282,6 +2297,44 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.roleRef
+ */
+export type User$roleRefArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Role
+   */
+  select?: Prisma.RoleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Role
+   */
+  omit?: Prisma.RoleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RoleInclude<ExtArgs> | null
+  where?: Prisma.RoleWhereInput
+}
+
+/**
+ * User.branch
+ */
+export type User$branchArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Branch
+   */
+  select?: Prisma.BranchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Branch
+   */
+  omit?: Prisma.BranchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BranchInclude<ExtArgs> | null
+  where?: Prisma.BranchWhereInput
 }
 
 /**

@@ -40,6 +40,8 @@ export type ArrearSumAggregateOutputType = {
 
 export type ArrearMinAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
+  branchId: string | null
   saleId: string | null
   customerId: string | null
   totalBill: number | null
@@ -51,6 +53,8 @@ export type ArrearMinAggregateOutputType = {
 
 export type ArrearMaxAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
+  branchId: string | null
   saleId: string | null
   customerId: string | null
   totalBill: number | null
@@ -62,6 +66,8 @@ export type ArrearMaxAggregateOutputType = {
 
 export type ArrearCountAggregateOutputType = {
   id: number
+  pharmacyId: number
+  branchId: number
   saleId: number
   customerId: number
   totalBill: number
@@ -87,6 +93,8 @@ export type ArrearSumAggregateInputType = {
 
 export type ArrearMinAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   saleId?: true
   customerId?: true
   totalBill?: true
@@ -98,6 +106,8 @@ export type ArrearMinAggregateInputType = {
 
 export type ArrearMaxAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   saleId?: true
   customerId?: true
   totalBill?: true
@@ -109,6 +119,8 @@ export type ArrearMaxAggregateInputType = {
 
 export type ArrearCountAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   saleId?: true
   customerId?: true
   totalBill?: true
@@ -207,6 +219,8 @@ export type ArrearGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type ArrearGroupByOutputType = {
   id: string
+  pharmacyId: string
+  branchId: string
   saleId: string | null
   customerId: string
   totalBill: number
@@ -241,6 +255,8 @@ export type ArrearWhereInput = {
   OR?: Prisma.ArrearWhereInput[]
   NOT?: Prisma.ArrearWhereInput | Prisma.ArrearWhereInput[]
   id?: Prisma.StringFilter<"Arrear"> | string
+  pharmacyId?: Prisma.StringFilter<"Arrear"> | string
+  branchId?: Prisma.StringFilter<"Arrear"> | string
   saleId?: Prisma.StringNullableFilter<"Arrear"> | string | null
   customerId?: Prisma.StringFilter<"Arrear"> | string
   totalBill?: Prisma.FloatFilter<"Arrear"> | number
@@ -248,6 +264,8 @@ export type ArrearWhereInput = {
   balanceDue?: Prisma.FloatFilter<"Arrear"> | number
   status?: Prisma.StringFilter<"Arrear"> | string
   createdAt?: Prisma.DateTimeFilter<"Arrear"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   sale?: Prisma.XOR<Prisma.SaleNullableScalarRelationFilter, Prisma.SaleWhereInput> | null
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
   payments?: Prisma.ArrearPaymentListRelationFilter
@@ -255,6 +273,8 @@ export type ArrearWhereInput = {
 
 export type ArrearOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   saleId?: Prisma.SortOrderInput | Prisma.SortOrder
   customerId?: Prisma.SortOrder
   totalBill?: Prisma.SortOrder
@@ -262,6 +282,8 @@ export type ArrearOrderByWithRelationInput = {
   balanceDue?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  pharmacy?: Prisma.PharmacyOrderByWithRelationInput
+  branch?: Prisma.BranchOrderByWithRelationInput
   sale?: Prisma.SaleOrderByWithRelationInput
   customer?: Prisma.CustomerOrderByWithRelationInput
   payments?: Prisma.ArrearPaymentOrderByRelationAggregateInput
@@ -272,6 +294,8 @@ export type ArrearWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ArrearWhereInput | Prisma.ArrearWhereInput[]
   OR?: Prisma.ArrearWhereInput[]
   NOT?: Prisma.ArrearWhereInput | Prisma.ArrearWhereInput[]
+  pharmacyId?: Prisma.StringFilter<"Arrear"> | string
+  branchId?: Prisma.StringFilter<"Arrear"> | string
   saleId?: Prisma.StringNullableFilter<"Arrear"> | string | null
   customerId?: Prisma.StringFilter<"Arrear"> | string
   totalBill?: Prisma.FloatFilter<"Arrear"> | number
@@ -279,6 +303,8 @@ export type ArrearWhereUniqueInput = Prisma.AtLeast<{
   balanceDue?: Prisma.FloatFilter<"Arrear"> | number
   status?: Prisma.StringFilter<"Arrear"> | string
   createdAt?: Prisma.DateTimeFilter<"Arrear"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   sale?: Prisma.XOR<Prisma.SaleNullableScalarRelationFilter, Prisma.SaleWhereInput> | null
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
   payments?: Prisma.ArrearPaymentListRelationFilter
@@ -286,6 +312,8 @@ export type ArrearWhereUniqueInput = Prisma.AtLeast<{
 
 export type ArrearOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   saleId?: Prisma.SortOrderInput | Prisma.SortOrder
   customerId?: Prisma.SortOrder
   totalBill?: Prisma.SortOrder
@@ -305,6 +333,8 @@ export type ArrearScalarWhereWithAggregatesInput = {
   OR?: Prisma.ArrearScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ArrearScalarWhereWithAggregatesInput | Prisma.ArrearScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Arrear"> | string
+  pharmacyId?: Prisma.StringWithAggregatesFilter<"Arrear"> | string
+  branchId?: Prisma.StringWithAggregatesFilter<"Arrear"> | string
   saleId?: Prisma.StringNullableWithAggregatesFilter<"Arrear"> | string | null
   customerId?: Prisma.StringWithAggregatesFilter<"Arrear"> | string
   totalBill?: Prisma.FloatWithAggregatesFilter<"Arrear"> | number
@@ -321,6 +351,8 @@ export type ArrearCreateInput = {
   balanceDue?: number
   status?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutArrearsInput
+  branch: Prisma.BranchCreateNestedOneWithoutArrearsInput
   sale?: Prisma.SaleCreateNestedOneWithoutArrearsInput
   customer: Prisma.CustomerCreateNestedOneWithoutArrearsInput
   payments?: Prisma.ArrearPaymentCreateNestedManyWithoutArrearInput
@@ -328,6 +360,8 @@ export type ArrearCreateInput = {
 
 export type ArrearUncheckedCreateInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   saleId?: string | null
   customerId: string
   totalBill?: number
@@ -345,6 +379,8 @@ export type ArrearUpdateInput = {
   balanceDue?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutArrearsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutArrearsNestedInput
   sale?: Prisma.SaleUpdateOneWithoutArrearsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutArrearsNestedInput
   payments?: Prisma.ArrearPaymentUpdateManyWithoutArrearNestedInput
@@ -352,6 +388,8 @@ export type ArrearUpdateInput = {
 
 export type ArrearUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   saleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -364,6 +402,8 @@ export type ArrearUncheckedUpdateInput = {
 
 export type ArrearCreateManyInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   saleId?: string | null
   customerId: string
   totalBill?: number
@@ -384,6 +424,8 @@ export type ArrearUpdateManyMutationInput = {
 
 export type ArrearUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   saleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -405,6 +447,8 @@ export type ArrearOrderByRelationAggregateInput = {
 
 export type ArrearCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   saleId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   totalBill?: Prisma.SortOrder
@@ -422,6 +466,8 @@ export type ArrearAvgOrderByAggregateInput = {
 
 export type ArrearMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   saleId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   totalBill?: Prisma.SortOrder
@@ -433,6 +479,8 @@ export type ArrearMaxOrderByAggregateInput = {
 
 export type ArrearMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   saleId?: Prisma.SortOrder
   customerId?: Prisma.SortOrder
   totalBill?: Prisma.SortOrder
@@ -451,6 +499,90 @@ export type ArrearSumOrderByAggregateInput = {
 export type ArrearScalarRelationFilter = {
   is?: Prisma.ArrearWhereInput
   isNot?: Prisma.ArrearWhereInput
+}
+
+export type ArrearCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.ArrearCreateWithoutPharmacyInput, Prisma.ArrearUncheckedCreateWithoutPharmacyInput> | Prisma.ArrearCreateWithoutPharmacyInput[] | Prisma.ArrearUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ArrearCreateOrConnectWithoutPharmacyInput | Prisma.ArrearCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.ArrearCreateManyPharmacyInputEnvelope
+  connect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+}
+
+export type ArrearUncheckedCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.ArrearCreateWithoutPharmacyInput, Prisma.ArrearUncheckedCreateWithoutPharmacyInput> | Prisma.ArrearCreateWithoutPharmacyInput[] | Prisma.ArrearUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ArrearCreateOrConnectWithoutPharmacyInput | Prisma.ArrearCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.ArrearCreateManyPharmacyInputEnvelope
+  connect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+}
+
+export type ArrearUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.ArrearCreateWithoutPharmacyInput, Prisma.ArrearUncheckedCreateWithoutPharmacyInput> | Prisma.ArrearCreateWithoutPharmacyInput[] | Prisma.ArrearUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ArrearCreateOrConnectWithoutPharmacyInput | Prisma.ArrearCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.ArrearUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.ArrearUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.ArrearCreateManyPharmacyInputEnvelope
+  set?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  disconnect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  delete?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  connect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  update?: Prisma.ArrearUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.ArrearUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.ArrearUpdateManyWithWhereWithoutPharmacyInput | Prisma.ArrearUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.ArrearScalarWhereInput | Prisma.ArrearScalarWhereInput[]
+}
+
+export type ArrearUncheckedUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.ArrearCreateWithoutPharmacyInput, Prisma.ArrearUncheckedCreateWithoutPharmacyInput> | Prisma.ArrearCreateWithoutPharmacyInput[] | Prisma.ArrearUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ArrearCreateOrConnectWithoutPharmacyInput | Prisma.ArrearCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.ArrearUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.ArrearUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.ArrearCreateManyPharmacyInputEnvelope
+  set?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  disconnect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  delete?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  connect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  update?: Prisma.ArrearUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.ArrearUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.ArrearUpdateManyWithWhereWithoutPharmacyInput | Prisma.ArrearUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.ArrearScalarWhereInput | Prisma.ArrearScalarWhereInput[]
+}
+
+export type ArrearCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.ArrearCreateWithoutBranchInput, Prisma.ArrearUncheckedCreateWithoutBranchInput> | Prisma.ArrearCreateWithoutBranchInput[] | Prisma.ArrearUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ArrearCreateOrConnectWithoutBranchInput | Prisma.ArrearCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.ArrearCreateManyBranchInputEnvelope
+  connect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+}
+
+export type ArrearUncheckedCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.ArrearCreateWithoutBranchInput, Prisma.ArrearUncheckedCreateWithoutBranchInput> | Prisma.ArrearCreateWithoutBranchInput[] | Prisma.ArrearUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ArrearCreateOrConnectWithoutBranchInput | Prisma.ArrearCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.ArrearCreateManyBranchInputEnvelope
+  connect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+}
+
+export type ArrearUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.ArrearCreateWithoutBranchInput, Prisma.ArrearUncheckedCreateWithoutBranchInput> | Prisma.ArrearCreateWithoutBranchInput[] | Prisma.ArrearUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ArrearCreateOrConnectWithoutBranchInput | Prisma.ArrearCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.ArrearUpsertWithWhereUniqueWithoutBranchInput | Prisma.ArrearUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.ArrearCreateManyBranchInputEnvelope
+  set?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  disconnect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  delete?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  connect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  update?: Prisma.ArrearUpdateWithWhereUniqueWithoutBranchInput | Prisma.ArrearUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.ArrearUpdateManyWithWhereWithoutBranchInput | Prisma.ArrearUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.ArrearScalarWhereInput | Prisma.ArrearScalarWhereInput[]
+}
+
+export type ArrearUncheckedUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.ArrearCreateWithoutBranchInput, Prisma.ArrearUncheckedCreateWithoutBranchInput> | Prisma.ArrearCreateWithoutBranchInput[] | Prisma.ArrearUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ArrearCreateOrConnectWithoutBranchInput | Prisma.ArrearCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.ArrearUpsertWithWhereUniqueWithoutBranchInput | Prisma.ArrearUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.ArrearCreateManyBranchInputEnvelope
+  set?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  disconnect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  delete?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  connect?: Prisma.ArrearWhereUniqueInput | Prisma.ArrearWhereUniqueInput[]
+  update?: Prisma.ArrearUpdateWithWhereUniqueWithoutBranchInput | Prisma.ArrearUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.ArrearUpdateManyWithWhereWithoutBranchInput | Prisma.ArrearUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.ArrearScalarWhereInput | Prisma.ArrearScalarWhereInput[]
 }
 
 export type ArrearCreateNestedManyWithoutCustomerInput = {
@@ -551,6 +683,126 @@ export type ArrearUpdateOneRequiredWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ArrearUpdateToOneWithWhereWithoutPaymentsInput, Prisma.ArrearUpdateWithoutPaymentsInput>, Prisma.ArrearUncheckedUpdateWithoutPaymentsInput>
 }
 
+export type ArrearCreateWithoutPharmacyInput = {
+  id?: string
+  totalBill?: number
+  amountPaid?: number
+  balanceDue?: number
+  status?: string
+  createdAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutArrearsInput
+  sale?: Prisma.SaleCreateNestedOneWithoutArrearsInput
+  customer: Prisma.CustomerCreateNestedOneWithoutArrearsInput
+  payments?: Prisma.ArrearPaymentCreateNestedManyWithoutArrearInput
+}
+
+export type ArrearUncheckedCreateWithoutPharmacyInput = {
+  id?: string
+  branchId: string
+  saleId?: string | null
+  customerId: string
+  totalBill?: number
+  amountPaid?: number
+  balanceDue?: number
+  status?: string
+  createdAt?: Date | string
+  payments?: Prisma.ArrearPaymentUncheckedCreateNestedManyWithoutArrearInput
+}
+
+export type ArrearCreateOrConnectWithoutPharmacyInput = {
+  where: Prisma.ArrearWhereUniqueInput
+  create: Prisma.XOR<Prisma.ArrearCreateWithoutPharmacyInput, Prisma.ArrearUncheckedCreateWithoutPharmacyInput>
+}
+
+export type ArrearCreateManyPharmacyInputEnvelope = {
+  data: Prisma.ArrearCreateManyPharmacyInput | Prisma.ArrearCreateManyPharmacyInput[]
+  skipDuplicates?: boolean
+}
+
+export type ArrearUpsertWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.ArrearWhereUniqueInput
+  update: Prisma.XOR<Prisma.ArrearUpdateWithoutPharmacyInput, Prisma.ArrearUncheckedUpdateWithoutPharmacyInput>
+  create: Prisma.XOR<Prisma.ArrearCreateWithoutPharmacyInput, Prisma.ArrearUncheckedCreateWithoutPharmacyInput>
+}
+
+export type ArrearUpdateWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.ArrearWhereUniqueInput
+  data: Prisma.XOR<Prisma.ArrearUpdateWithoutPharmacyInput, Prisma.ArrearUncheckedUpdateWithoutPharmacyInput>
+}
+
+export type ArrearUpdateManyWithWhereWithoutPharmacyInput = {
+  where: Prisma.ArrearScalarWhereInput
+  data: Prisma.XOR<Prisma.ArrearUpdateManyMutationInput, Prisma.ArrearUncheckedUpdateManyWithoutPharmacyInput>
+}
+
+export type ArrearScalarWhereInput = {
+  AND?: Prisma.ArrearScalarWhereInput | Prisma.ArrearScalarWhereInput[]
+  OR?: Prisma.ArrearScalarWhereInput[]
+  NOT?: Prisma.ArrearScalarWhereInput | Prisma.ArrearScalarWhereInput[]
+  id?: Prisma.StringFilter<"Arrear"> | string
+  pharmacyId?: Prisma.StringFilter<"Arrear"> | string
+  branchId?: Prisma.StringFilter<"Arrear"> | string
+  saleId?: Prisma.StringNullableFilter<"Arrear"> | string | null
+  customerId?: Prisma.StringFilter<"Arrear"> | string
+  totalBill?: Prisma.FloatFilter<"Arrear"> | number
+  amountPaid?: Prisma.FloatFilter<"Arrear"> | number
+  balanceDue?: Prisma.FloatFilter<"Arrear"> | number
+  status?: Prisma.StringFilter<"Arrear"> | string
+  createdAt?: Prisma.DateTimeFilter<"Arrear"> | Date | string
+}
+
+export type ArrearCreateWithoutBranchInput = {
+  id?: string
+  totalBill?: number
+  amountPaid?: number
+  balanceDue?: number
+  status?: string
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutArrearsInput
+  sale?: Prisma.SaleCreateNestedOneWithoutArrearsInput
+  customer: Prisma.CustomerCreateNestedOneWithoutArrearsInput
+  payments?: Prisma.ArrearPaymentCreateNestedManyWithoutArrearInput
+}
+
+export type ArrearUncheckedCreateWithoutBranchInput = {
+  id?: string
+  pharmacyId: string
+  saleId?: string | null
+  customerId: string
+  totalBill?: number
+  amountPaid?: number
+  balanceDue?: number
+  status?: string
+  createdAt?: Date | string
+  payments?: Prisma.ArrearPaymentUncheckedCreateNestedManyWithoutArrearInput
+}
+
+export type ArrearCreateOrConnectWithoutBranchInput = {
+  where: Prisma.ArrearWhereUniqueInput
+  create: Prisma.XOR<Prisma.ArrearCreateWithoutBranchInput, Prisma.ArrearUncheckedCreateWithoutBranchInput>
+}
+
+export type ArrearCreateManyBranchInputEnvelope = {
+  data: Prisma.ArrearCreateManyBranchInput | Prisma.ArrearCreateManyBranchInput[]
+  skipDuplicates?: boolean
+}
+
+export type ArrearUpsertWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.ArrearWhereUniqueInput
+  update: Prisma.XOR<Prisma.ArrearUpdateWithoutBranchInput, Prisma.ArrearUncheckedUpdateWithoutBranchInput>
+  create: Prisma.XOR<Prisma.ArrearCreateWithoutBranchInput, Prisma.ArrearUncheckedCreateWithoutBranchInput>
+}
+
+export type ArrearUpdateWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.ArrearWhereUniqueInput
+  data: Prisma.XOR<Prisma.ArrearUpdateWithoutBranchInput, Prisma.ArrearUncheckedUpdateWithoutBranchInput>
+}
+
+export type ArrearUpdateManyWithWhereWithoutBranchInput = {
+  where: Prisma.ArrearScalarWhereInput
+  data: Prisma.XOR<Prisma.ArrearUpdateManyMutationInput, Prisma.ArrearUncheckedUpdateManyWithoutBranchInput>
+}
+
 export type ArrearCreateWithoutCustomerInput = {
   id?: string
   totalBill?: number
@@ -558,12 +810,16 @@ export type ArrearCreateWithoutCustomerInput = {
   balanceDue?: number
   status?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutArrearsInput
+  branch: Prisma.BranchCreateNestedOneWithoutArrearsInput
   sale?: Prisma.SaleCreateNestedOneWithoutArrearsInput
   payments?: Prisma.ArrearPaymentCreateNestedManyWithoutArrearInput
 }
 
 export type ArrearUncheckedCreateWithoutCustomerInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   saleId?: string | null
   totalBill?: number
   amountPaid?: number
@@ -599,20 +855,6 @@ export type ArrearUpdateManyWithWhereWithoutCustomerInput = {
   data: Prisma.XOR<Prisma.ArrearUpdateManyMutationInput, Prisma.ArrearUncheckedUpdateManyWithoutCustomerInput>
 }
 
-export type ArrearScalarWhereInput = {
-  AND?: Prisma.ArrearScalarWhereInput | Prisma.ArrearScalarWhereInput[]
-  OR?: Prisma.ArrearScalarWhereInput[]
-  NOT?: Prisma.ArrearScalarWhereInput | Prisma.ArrearScalarWhereInput[]
-  id?: Prisma.StringFilter<"Arrear"> | string
-  saleId?: Prisma.StringNullableFilter<"Arrear"> | string | null
-  customerId?: Prisma.StringFilter<"Arrear"> | string
-  totalBill?: Prisma.FloatFilter<"Arrear"> | number
-  amountPaid?: Prisma.FloatFilter<"Arrear"> | number
-  balanceDue?: Prisma.FloatFilter<"Arrear"> | number
-  status?: Prisma.StringFilter<"Arrear"> | string
-  createdAt?: Prisma.DateTimeFilter<"Arrear"> | Date | string
-}
-
 export type ArrearCreateWithoutSaleInput = {
   id?: string
   totalBill?: number
@@ -620,12 +862,16 @@ export type ArrearCreateWithoutSaleInput = {
   balanceDue?: number
   status?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutArrearsInput
+  branch: Prisma.BranchCreateNestedOneWithoutArrearsInput
   customer: Prisma.CustomerCreateNestedOneWithoutArrearsInput
   payments?: Prisma.ArrearPaymentCreateNestedManyWithoutArrearInput
 }
 
 export type ArrearUncheckedCreateWithoutSaleInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   customerId: string
   totalBill?: number
   amountPaid?: number
@@ -668,12 +914,16 @@ export type ArrearCreateWithoutPaymentsInput = {
   balanceDue?: number
   status?: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutArrearsInput
+  branch: Prisma.BranchCreateNestedOneWithoutArrearsInput
   sale?: Prisma.SaleCreateNestedOneWithoutArrearsInput
   customer: Prisma.CustomerCreateNestedOneWithoutArrearsInput
 }
 
 export type ArrearUncheckedCreateWithoutPaymentsInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   saleId?: string | null
   customerId: string
   totalBill?: number
@@ -706,12 +956,116 @@ export type ArrearUpdateWithoutPaymentsInput = {
   balanceDue?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutArrearsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutArrearsNestedInput
   sale?: Prisma.SaleUpdateOneWithoutArrearsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutArrearsNestedInput
 }
 
 export type ArrearUncheckedUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  saleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  balanceDue?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ArrearCreateManyPharmacyInput = {
+  id?: string
+  branchId: string
+  saleId?: string | null
+  customerId: string
+  totalBill?: number
+  amountPaid?: number
+  balanceDue?: number
+  status?: string
+  createdAt?: Date | string
+}
+
+export type ArrearUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  balanceDue?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutArrearsNestedInput
+  sale?: Prisma.SaleUpdateOneWithoutArrearsNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutArrearsNestedInput
+  payments?: Prisma.ArrearPaymentUpdateManyWithoutArrearNestedInput
+}
+
+export type ArrearUncheckedUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  saleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  balanceDue?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.ArrearPaymentUncheckedUpdateManyWithoutArrearNestedInput
+}
+
+export type ArrearUncheckedUpdateManyWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  saleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  balanceDue?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ArrearCreateManyBranchInput = {
+  id?: string
+  pharmacyId: string
+  saleId?: string | null
+  customerId: string
+  totalBill?: number
+  amountPaid?: number
+  balanceDue?: number
+  status?: string
+  createdAt?: Date | string
+}
+
+export type ArrearUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  balanceDue?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutArrearsNestedInput
+  sale?: Prisma.SaleUpdateOneWithoutArrearsNestedInput
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutArrearsNestedInput
+  payments?: Prisma.ArrearPaymentUpdateManyWithoutArrearNestedInput
+}
+
+export type ArrearUncheckedUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  saleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  balanceDue?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.ArrearPaymentUncheckedUpdateManyWithoutArrearNestedInput
+}
+
+export type ArrearUncheckedUpdateManyWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   saleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -723,6 +1077,8 @@ export type ArrearUncheckedUpdateWithoutPaymentsInput = {
 
 export type ArrearCreateManyCustomerInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   saleId?: string | null
   totalBill?: number
   amountPaid?: number
@@ -738,12 +1094,16 @@ export type ArrearUpdateWithoutCustomerInput = {
   balanceDue?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutArrearsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutArrearsNestedInput
   sale?: Prisma.SaleUpdateOneWithoutArrearsNestedInput
   payments?: Prisma.ArrearPaymentUpdateManyWithoutArrearNestedInput
 }
 
 export type ArrearUncheckedUpdateWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   saleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -755,6 +1115,8 @@ export type ArrearUncheckedUpdateWithoutCustomerInput = {
 
 export type ArrearUncheckedUpdateManyWithoutCustomerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   saleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -765,6 +1127,8 @@ export type ArrearUncheckedUpdateManyWithoutCustomerInput = {
 
 export type ArrearCreateManySaleInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   customerId: string
   totalBill?: number
   amountPaid?: number
@@ -780,12 +1144,16 @@ export type ArrearUpdateWithoutSaleInput = {
   balanceDue?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutArrearsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutArrearsNestedInput
   customer?: Prisma.CustomerUpdateOneRequiredWithoutArrearsNestedInput
   payments?: Prisma.ArrearPaymentUpdateManyWithoutArrearNestedInput
 }
 
 export type ArrearUncheckedUpdateWithoutSaleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -797,6 +1165,8 @@ export type ArrearUncheckedUpdateWithoutSaleInput = {
 
 export type ArrearUncheckedUpdateManyWithoutSaleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   totalBill?: Prisma.FloatFieldUpdateOperationsInput | number
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -838,6 +1208,8 @@ export type ArrearCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types
 
 export type ArrearSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   saleId?: boolean
   customerId?: boolean
   totalBill?: boolean
@@ -845,6 +1217,8 @@ export type ArrearSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   balanceDue?: boolean
   status?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.Arrear$saleArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   payments?: boolean | Prisma.Arrear$paymentsArgs<ExtArgs>
@@ -853,6 +1227,8 @@ export type ArrearSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 
 export type ArrearSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   saleId?: boolean
   customerId?: boolean
   totalBill?: boolean
@@ -860,12 +1236,16 @@ export type ArrearSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   balanceDue?: boolean
   status?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.Arrear$saleArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["arrear"]>
 
 export type ArrearSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   saleId?: boolean
   customerId?: boolean
   totalBill?: boolean
@@ -873,12 +1253,16 @@ export type ArrearSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   balanceDue?: boolean
   status?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.Arrear$saleArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["arrear"]>
 
 export type ArrearSelectScalar = {
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   saleId?: boolean
   customerId?: boolean
   totalBill?: boolean
@@ -888,18 +1272,24 @@ export type ArrearSelectScalar = {
   createdAt?: boolean
 }
 
-export type ArrearOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "saleId" | "customerId" | "totalBill" | "amountPaid" | "balanceDue" | "status" | "createdAt", ExtArgs["result"]["arrear"]>
+export type ArrearOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "saleId" | "customerId" | "totalBill" | "amountPaid" | "balanceDue" | "status" | "createdAt", ExtArgs["result"]["arrear"]>
 export type ArrearInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.Arrear$saleArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   payments?: boolean | Prisma.Arrear$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.ArrearCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ArrearIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.Arrear$saleArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
 }
 export type ArrearIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sale?: boolean | Prisma.Arrear$saleArgs<ExtArgs>
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
 }
@@ -907,12 +1297,16 @@ export type ArrearIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type $ArrearPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Arrear"
   objects: {
+    pharmacy: Prisma.$PharmacyPayload<ExtArgs>
+    branch: Prisma.$BranchPayload<ExtArgs>
     sale: Prisma.$SalePayload<ExtArgs> | null
     customer: Prisma.$CustomerPayload<ExtArgs>
     payments: Prisma.$ArrearPaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    pharmacyId: string
+    branchId: string
     saleId: string | null
     customerId: string
     totalBill: number
@@ -1314,6 +1708,8 @@ readonly fields: ArrearFieldRefs;
  */
 export interface Prisma__ArrearClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  pharmacy<T extends Prisma.PharmacyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PharmacyDefaultArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   sale<T extends Prisma.Arrear$saleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Arrear$saleArgs<ExtArgs>>): Prisma.Prisma__SaleClient<runtime.Types.Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   customer<T extends Prisma.CustomerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CustomerDefaultArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   payments<T extends Prisma.Arrear$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Arrear$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArrearPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1347,6 +1743,8 @@ export interface Prisma__ArrearClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface ArrearFieldRefs {
   readonly id: Prisma.FieldRef<"Arrear", 'String'>
+  readonly pharmacyId: Prisma.FieldRef<"Arrear", 'String'>
+  readonly branchId: Prisma.FieldRef<"Arrear", 'String'>
   readonly saleId: Prisma.FieldRef<"Arrear", 'String'>
   readonly customerId: Prisma.FieldRef<"Arrear", 'String'>
   readonly totalBill: Prisma.FieldRef<"Arrear", 'Float'>

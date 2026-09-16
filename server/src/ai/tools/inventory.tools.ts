@@ -22,6 +22,15 @@ function parseDays(input: Record<string, unknown>): number {
   return d > 0 && d <= 365 ? d : 30;
 }
 
+// Resolve the caller's tenant scope so every underlying query is isolated to
+// their pharmacy (and branch when locked to one).
+function toolScope(ctx: ToolContext): { pharmacyId: string; branchId?: string } {
+  return {
+    pharmacyId: ctx.pharmacyId ?? "",
+    ...(ctx.branchId ? { branchId: ctx.branchId } : {}),
+  };
+}
+
 // Helper to avoid exposing unnecessary sensitive data (spec #80).
 function toSummary(a: import("../../inventory/inventory.service").ProductAnalysis) {
   return {
@@ -55,7 +64,7 @@ export const inventoryTools: AgentTool[] = [
       const denied = requirePermission(ctx, "READ_INVENTORY");
       if (denied) return denied;
       try {
-        return ok(await inventoryIntelligence.getSummary(parseDays(input)));
+        return ok(await inventoryIntelligence.getSummary(toolScope(ctx), parseDays(input)));
       } catch (err) {
         return fail("INVENTORY_ANALYSIS_FAILED", (err as Error).message);
       }
@@ -82,7 +91,7 @@ export const inventoryTools: AgentTool[] = [
       const riskLevel = String(input.riskLevel ?? "CRITICAL") as never;
       const limit = Math.min(Number(input.limit ?? 20), 200);
       try {
-        const rows = await inventoryIntelligence.getProductsByRisk(riskLevel, limit, parseDays(input));
+        const rows = await inventoryIntelligence.getProductsByRisk(toolScope(ctx), riskLevel, limit, parseDays(input));
         return ok(rows.map(toSummary));
       } catch (err) {
         return fail("INVENTORY_ANALYSIS_FAILED", (err as Error).message);
@@ -102,7 +111,7 @@ export const inventoryTools: AgentTool[] = [
       const productId = String(input.productId ?? "");
       if (!productId) return fail("INVALID_INPUT", "productId is required");
       try {
-        const a = await inventoryIntelligence.analyzeProduct(productId, 30);
+        const a = await inventoryIntelligence.analyzeProduct(toolScope(ctx), productId, 30);
         if (!a) return fail("PRODUCT_NOT_FOUND", "Product not found or inactive");
         return ok({
           product: a.product,
@@ -137,8 +146,8 @@ export const inventoryTools: AgentTool[] = [
       if (!productId) return fail("INVALID_INPUT", "productId is required");
       try {
         const since = new Date(Date.now() - days * 86400000);
-        const hist = await inventoryRepository.getSalesHistory(productId, since, ["paid"]);
-        const product = await inventoryRepository.getProduct(productId);
+        const hist = await inventoryRepository.getSalesHistory(productId, since, ["paid"], toolScope(ctx));
+        const product = await inventoryRepository.getProduct(productId, toolScope(ctx));
         if (!product) return fail("PRODUCT_NOT_FOUND", "Product not found or inactive");
         const net = hist.totalSold - hist.totalReturned;
         const avg = days > 0 ? net / days : 0;
@@ -220,7 +229,7 @@ export const inventoryTools: AgentTool[] = [
       const productId = String(input.productId ?? "");
       if (!productId) return fail("INVALID_INPUT", "productId is required");
       try {
-        const a = await inventoryIntelligence.analyzeProduct(productId, parseDays(input));
+        const a = await inventoryIntelligence.analyzeProduct(toolScope(ctx), productId, parseDays(input));
         if (!a) return fail("PRODUCT_NOT_FOUND", "Product not found or inactive");
         return ok({
           productId: a.product.id,
@@ -257,7 +266,7 @@ export const inventoryTools: AgentTool[] = [
       const denied = requirePermission(ctx, "READ_INVENTORY");
       if (denied) return denied;
       try {
-        const candidates = await inventoryIntelligence.getReorderCandidates(parseDays(input));
+        const candidates = await inventoryIntelligence.getReorderCandidates(toolScope(ctx), parseDays(input));
         return ok(candidates.map(toSummary));
       } catch (err) {
         return fail("INVENTORY_ANALYSIS_FAILED", (err as Error).message);
@@ -283,6 +292,7 @@ export const inventoryTools: AgentTool[] = [
       if (denied) return denied;
       try {
         const rows = await inventoryIntelligence.getSlowMoving(
+          toolScope(ctx),
           Number(input.lowDailySales ?? 1),
           Number(input.highCoverageDays ?? 90),
           Math.min(Number(input.limit ?? 50), 200),
@@ -306,7 +316,7 @@ export const inventoryTools: AgentTool[] = [
       const denied = requirePermission(ctx, "READ_INVENTORY");
       if (denied) return denied;
       try {
-        const rows = await inventoryIntelligence.getOverstock(Math.min(Number(input.limit ?? 50), 200), parseDays(input));
+        const rows = await inventoryIntelligence.getOverstock(toolScope(ctx), Math.min(Number(input.limit ?? 50), 200), parseDays(input));
         return ok(rows.map(toSummary));
       } catch (err) {
         return fail("INVENTORY_ANALYSIS_FAILED", (err as Error).message);
@@ -324,7 +334,7 @@ export const inventoryTools: AgentTool[] = [
       const denied = requirePermission(ctx, "READ_INVENTORY");
       if (denied) return denied;
       try {
-        const result = await inventoryIntelligence.getExpiryAnalysis();
+        const result = await inventoryIntelligence.getExpiryAnalysis(toolScope(ctx));
         const serialize = (rows: import("../../inventory/inventory.service").ProductAnalysis[]) =>
           rows.map((r) => ({
             productId: r.product.id,
@@ -357,7 +367,7 @@ export const inventoryTools: AgentTool[] = [
       const id = String(input.distributorId ?? "");
       if (!id) return fail("INVALID_INPUT", "distributorId is required");
       try {
-        const d = await inventoryRepository.getDistributor(id);
+        const d = await inventoryRepository.getDistributor(id, toolScope(ctx));
         if (!d) return fail("DISTRIBUTOR_NOT_FOUND", "Distributor not found");
         return ok({
           id: d.id,
@@ -384,7 +394,7 @@ export const inventoryTools: AgentTool[] = [
       const id = String(input.productId ?? "");
       if (!id) return fail("INVALID_INPUT", "productId is required");
       try {
-        const history = await inventoryRepository.getPurchaseHistory(id);
+        const history = await inventoryRepository.getPurchaseHistory(id, toolScope(ctx));
         return ok(history);
       } catch (err) {
         return fail("PURCHASE_HISTORY_FAILED", (err as Error).message);
@@ -435,6 +445,7 @@ export const inventoryTools: AgentTool[] = [
       }
       try {
         const order = await purchaseOrderService.createDraft(
+          toolScope(ctx),
           {
             distributorId,
             items,
@@ -476,7 +487,7 @@ export const inventoryTools: AgentTool[] = [
       const id = String(input.purchaseOrderId ?? "");
       if (!id) return fail("INVALID_INPUT", "purchaseOrderId is required");
       try {
-        const order = await purchaseOrderService.submitForApproval(id, { userId: ctx.userId ?? "", role: ctx.role });
+        const order = await purchaseOrderService.submitForApproval(toolScope(ctx), id, { userId: ctx.userId ?? "", role: ctx.role });
         return ok({ id: order.id, orderNumber: order.orderNumber, status: order.status });
       } catch (err) {
         return fail("PURCHASE_ORDER_SUBMIT_FAILED", (err as Error).message);
@@ -494,7 +505,7 @@ export const inventoryTools: AgentTool[] = [
       const denied = requirePermission(ctx, "READ_INVENTORY");
       if (denied) return denied;
       try {
-        const q = await inventoryIntelligence.getDataQuality();
+        const q = await inventoryIntelligence.getDataQuality(toolScope(ctx));
         return ok(q);
       } catch (err) {
         return fail("DATA_QUALITY_FAILED", (err as Error).message);

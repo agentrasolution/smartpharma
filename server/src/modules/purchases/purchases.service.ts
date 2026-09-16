@@ -3,10 +3,19 @@ import { NotFoundError } from "../../utils/errors";
 import { emitEvent } from "../../socket";
 import type { CreateStockInput } from "./purchases.schema";
 import { Prisma } from "../../generated/prisma/client";
+import type { BranchScope } from "../../middleware/auth";
+
+function branchWhere(scope: BranchScope) {
+  return {
+    pharmacyId: scope.pharmacyId,
+    ...(scope.branchId ? { branchId: scope.branchId } : {}),
+  };
+}
 
 export const purchasesService = {
-  async list() {
+  async list(scope: BranchScope) {
     return prisma.stockPurchase.findMany({
+      where: branchWhere(scope),
       orderBy: { createdAt: "desc" },
       include: {
         product: { select: { name: true } },
@@ -16,9 +25,9 @@ export const purchasesService = {
     });
   },
 
-  async create(data: CreateStockInput) {
-    const product = await prisma.product.findUnique({
-      where: { id: data.productId },
+  async create(scope: BranchScope, data: CreateStockInput) {
+    const product = await prisma.product.findFirst({
+      where: { id: data.productId, ...branchWhere(scope) },
       select: { purchasePrice: true, salePrice: true },
     });
 
@@ -29,6 +38,8 @@ export const purchasesService = {
     return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const stockPurchase = await tx.stockPurchase.create({
         data: {
+          pharmacyId: scope.pharmacyId,
+          branchId: scope.branchId!,
           productId: data.productId,
           distributorId: data.distributorId ?? null,
           companyId: data.companyId ?? null,
@@ -59,8 +70,8 @@ export const purchasesService = {
     });
   },
 
-  async update(id: string, data: Partial<CreateStockInput & { quantity: number }>) {
-    const old = await prisma.stockPurchase.findUnique({ where: { id } });
+  async update(scope: BranchScope, id: string, data: Partial<CreateStockInput & { quantity: number }>) {
+    const old = await prisma.stockPurchase.findFirst({ where: { id, ...branchWhere(scope) } });
     if (!old) throw new NotFoundError("Stock purchase");
 
     const qtyDiff = (data.quantity ?? old.quantity) - old.quantity;
@@ -96,8 +107,8 @@ export const purchasesService = {
     });
   },
 
-  async remove(id: string) {
-    const old = await prisma.stockPurchase.findUnique({ where: { id } });
+  async remove(scope: BranchScope, id: string) {
+    const old = await prisma.stockPurchase.findFirst({ where: { id, ...branchWhere(scope) } });
     if (!old) throw new NotFoundError("Stock purchase");
 
     return prisma.$transaction(async (tx: Prisma.TransactionClient) => {

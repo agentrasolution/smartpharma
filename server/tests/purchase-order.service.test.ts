@@ -4,6 +4,8 @@ const { prismaMock } = vi.hoisted(() => {
   const existingOrder = {
     id: "po-existing",
     orderNumber: "PO-2609-000001",
+    pharmacyId: "ph1",
+    branchId: "b1",
     distributorId: "d1",
     companyId: null,
     status: "DRAFT",
@@ -33,9 +35,13 @@ const { prismaMock } = vi.hoisted(() => {
     },
     distributor: {
       findUnique: vi.fn(async () => null),
+      findFirst: vi.fn(async () => null),
     },
     product: {
       findMany: vi.fn(async () => []),
+    },
+    branch: {
+      findFirst: vi.fn(async () => ({ id: "b1" })),
     },
     aIAuditLog: {
       create: vi.fn(async () => ({})),
@@ -53,18 +59,22 @@ vi.mock("../src/services/prisma", () => ({ prisma: prismaMock }));
 import { purchaseOrderService, roleHasPermission } from "../src/modules/purchase-orders/purchase-order.service";
 import { UnauthorizedError } from "../src/utils/errors";
 
+const scope = { pharmacyId: "ph1", branchId: "b1" };
+
 describe("purchase order idempotency (spec #93)", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     // Default: idempotency key lookup finds nothing (fresh create path) or
     // the existing order when requested in specific tests.
-    prismaMock.purchaseOrder.findUnique.mockResolvedValue(null);
+    prismaMock.purchaseOrder.findFirst.mockResolvedValue(null);
   });
 
   it("replays the same draft when the idempotency key already exists", async () => {
-    prismaMock.purchaseOrder.findUnique.mockResolvedValue({
+    prismaMock.purchaseOrder.findFirst.mockResolvedValue({
       id: "po-existing",
       orderNumber: "PO-2609-000001",
+      pharmacyId: "ph1",
+      branchId: "b1",
       distributorId: "d1",
       companyId: null,
       status: "DRAFT",
@@ -85,6 +95,7 @@ describe("purchase order idempotency (spec #93)", () => {
     });
 
     const result = await purchaseOrderService.createDraft(
+      scope,
       {
         distributorId: "d1",
         items: [{ productId: "p1", quantity: 1 }],
@@ -98,13 +109,13 @@ describe("purchase order idempotency (spec #93)", () => {
     // A duplicate idempotency call must never create a second order.
     expect(prismaMock.$transaction).not.toHaveBeenCalled();
     expect(prismaMock.purchaseOrder.create).not.toHaveBeenCalled();
-    expect(prismaMock.purchaseOrder.findFirst).not.toHaveBeenCalled();
   });
 
   it("rejects draft creation when the actor lacks CREATE_PURCHASE_DRAFT (spec #96)", async () => {
     expect(roleHasPermission("employee", "CREATE_PURCHASE_DRAFT")).toBe(false);
     await expect(
       purchaseOrderService.createDraft(
+        scope,
         { distributorId: "d1", items: [{ productId: "p1", quantity: 1 }] },
         { userId: "u1", role: "employee" },
       ),
@@ -114,6 +125,7 @@ describe("purchase order idempotency (spec #93)", () => {
   it("returns structured error messages rather than fabricated success (spec #94)", async () => {
     await expect(
       purchaseOrderService.createDraft(
+        scope,
         { distributorId: "d1", items: [{ productId: "p1", quantity: 1 }] },
         { userId: "u1", role: "employee" },
       ),
@@ -121,10 +133,11 @@ describe("purchase order idempotency (spec #93)", () => {
   });
 
   it("throws NotFound when distributor does not exist", async () => {
-    prismaMock.purchaseOrder.findUnique.mockResolvedValue(null);
-    prismaMock.distributor.findUnique.mockResolvedValue(null);
+    prismaMock.purchaseOrder.findFirst.mockResolvedValue(null);
+    prismaMock.distributor.findFirst.mockResolvedValue(null);
     await expect(
       purchaseOrderService.createDraft(
+        scope,
         { distributorId: "missing", items: [{ productId: "p1", quantity: 1 }] },
         { userId: "u1", role: "admin" },
       ),
@@ -138,9 +151,11 @@ describe("purchase order lifecycle guards", () => {
   });
 
   it("submit is only allowed from DRAFT", async () => {
-    prismaMock.purchaseOrder.findUnique.mockResolvedValue({
+    prismaMock.purchaseOrder.findFirst.mockResolvedValue({
       id: "po-advanced",
       orderNumber: "PO-2609-000002",
+      pharmacyId: "ph1",
+      branchId: "b1",
       distributorId: "d1",
       companyId: null,
       status: "PENDING_APPROVAL",
@@ -161,14 +176,16 @@ describe("purchase order lifecycle guards", () => {
     });
 
     await expect(
-      purchaseOrderService.submitForApproval("po-advanced", { userId: "u1", role: "admin" }),
+      purchaseOrderService.submitForApproval(scope, "po-advanced", { userId: "u1", role: "admin" }),
     ).rejects.toThrow(/Only DRAFT/);
   });
 
   it("approve records an audit log entry with actor details (spec #65)", async () => {
-    prismaMock.purchaseOrder.findUnique.mockResolvedValue({
+    prismaMock.purchaseOrder.findFirst.mockResolvedValue({
       id: "po-pending",
       orderNumber: "PO-2609-000010",
+      pharmacyId: "ph1",
+      branchId: "b1",
       distributorId: "d1",
       companyId: null,
       status: "PENDING_APPROVAL",
@@ -190,6 +207,8 @@ describe("purchase order lifecycle guards", () => {
     const approvedOrder = {
       id: "po-pending",
       orderNumber: "PO-2609-000010",
+      pharmacyId: "ph1",
+      branchId: "b1",
       distributorId: "d1",
       companyId: null,
       status: "APPROVED",
@@ -213,7 +232,7 @@ describe("purchase order lifecycle guards", () => {
       fn(prismaMock));
     prismaMock.purchaseOrder.update.mockResolvedValue(approvedOrder);
 
-    const result = await purchaseOrderService.approve("po-pending", { userId: "u1", role: "manager" });
+    const result = await purchaseOrderService.approve(scope, "po-pending", { userId: "u1", role: "manager" });
 
     expect(result.status).toBe("APPROVED");
     const logged = prismaMock.aIAuditLog.create.mock.calls[0][0];
@@ -225,9 +244,11 @@ describe("purchase order lifecycle guards", () => {
   });
 
   it("reject records an audit log entry with the reason (spec #65)", async () => {
-    prismaMock.purchaseOrder.findUnique.mockResolvedValue({
+    prismaMock.purchaseOrder.findFirst.mockResolvedValue({
       id: "po-draft",
       orderNumber: "PO-2609-000011",
+      pharmacyId: "ph1",
+      branchId: "b1",
       distributorId: "d1",
       companyId: null,
       status: "DRAFT",
@@ -249,6 +270,8 @@ describe("purchase order lifecycle guards", () => {
     const rejectedOrder = {
       id: "po-draft",
       orderNumber: "PO-2609-000011",
+      pharmacyId: "ph1",
+      branchId: "b1",
       distributorId: "d1",
       companyId: null,
       status: "REJECTED",
@@ -270,7 +293,7 @@ describe("purchase order lifecycle guards", () => {
 
     prismaMock.purchaseOrder.update.mockResolvedValue(rejectedOrder);
 
-    const result = await purchaseOrderService.reject("po-draft", { userId: "u1", role: "admin" }, "Too many units");
+    const result = await purchaseOrderService.reject(scope, "po-draft", { userId: "u1", role: "admin" }, "Too many units");
 
     expect(result.status).toBe("REJECTED");
     const logged = prismaMock.aIAuditLog.create.mock.calls[0][0];

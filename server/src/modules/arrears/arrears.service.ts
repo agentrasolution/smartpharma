@@ -2,6 +2,7 @@ import { prisma } from "../../services/prisma";
 import { BadRequestError, NotFoundError, UnauthorizedError } from "../../utils/errors";
 import { Prisma } from "../../generated/prisma/client";
 import { authService } from "../auth/auth.service";
+import type { BranchScope } from "../../middleware/auth";
 
 function generateSaleId(prefix: string, lastId: string | null) {
   let nextNum = 1;
@@ -19,8 +20,14 @@ function makeSalePrefix(): string {
 }
 
 export const arrearsService = {
-  async list(status?: string) {
-    const where = status && status !== "all" ? { status } : {};
+  async list(scope: BranchScope, status?: string) {
+    const where: Record<string, unknown> = {
+      pharmacyId: scope.pharmacyId,
+      ...(scope.branchId ? { branchId: scope.branchId } : {}),
+    };
+    if (status && status !== "all") {
+      where.status = status;
+    }
     return prisma.arrear.findMany({
       where,
       orderBy: { createdAt: "desc" },
@@ -31,7 +38,7 @@ export const arrearsService = {
     });
   },
 
-  async create(data: { customerId: string; totalBill: number; amountPaid?: number; saleId?: string }) {
+  async create(scope: BranchScope, data: { customerId: string; totalBill: number; amountPaid?: number; saleId?: string }) {
     const amountPaid = data.amountPaid ?? 0;
     if (amountPaid < 0 || amountPaid > data.totalBill) {
       throw new BadRequestError("Amount paid cannot exceed total bill");
@@ -40,6 +47,8 @@ export const arrearsService = {
     return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const arrear = await tx.arrear.create({
         data: {
+          pharmacyId: scope.pharmacyId,
+          branchId: scope.branchId!,
           saleId: data.saleId ?? null,
           customerId: data.customerId,
           totalBill: data.totalBill,
@@ -66,12 +75,16 @@ export const arrearsService = {
     });
   },
 
-  async recordPayment(id: string, amount: number, password: string) {
-    const { valid } = await authService.verifyPassword(password);
+  async recordPayment(scope: BranchScope, id: string, amount: number, password: string) {
+    const { valid } = await authService.verifyPassword(scope.pharmacyId, password);
     if (!valid) throw new UnauthorizedError("Invalid admin password");
 
-    const arrear = await prisma.arrear.findUnique({
-      where: { id },
+    const arrear = await prisma.arrear.findFirst({
+      where: {
+        id,
+        pharmacyId: scope.pharmacyId,
+        ...(scope.branchId ? { branchId: scope.branchId } : {}),
+      },
       include: { customer: { select: { name: true } } },
     });
     if (!arrear) throw new NotFoundError("Arrear");
@@ -97,7 +110,7 @@ export const arrearsService = {
 
       const prefix = makeSalePrefix();
       const last = await tx.sale.findFirst({
-        where: { id: { startsWith: prefix } },
+        where: { id: { startsWith: prefix }, pharmacyId: scope.pharmacyId, ...(scope.branchId ? { branchId: scope.branchId } : {}) },
         orderBy: { id: "desc" },
       });
       const saleId = generateSaleId(prefix, last?.id ?? null);
@@ -105,6 +118,8 @@ export const arrearsService = {
       const paymentSale = await tx.sale.create({
         data: {
           id: saleId,
+          pharmacyId: scope.pharmacyId,
+          branchId: scope.branchId!,
           customerId: arrear.customerId,
           subtotal: amount,
           discount: 0,
@@ -131,12 +146,16 @@ export const arrearsService = {
     });
   },
 
-  async settle(id: string, password: string) {
-    const { valid } = await authService.verifyPassword(password);
+  async settle(scope: BranchScope, id: string, password: string) {
+    const { valid } = await authService.verifyPassword(scope.pharmacyId, password);
     if (!valid) throw new UnauthorizedError("Invalid admin password");
 
-    const arrear = await prisma.arrear.findUnique({
-      where: { id },
+    const arrear = await prisma.arrear.findFirst({
+      where: {
+        id,
+        pharmacyId: scope.pharmacyId,
+        ...(scope.branchId ? { branchId: scope.branchId } : {}),
+      },
       include: { customer: { select: { name: true } } },
     });
     if (!arrear) throw new NotFoundError("Arrear");
@@ -156,7 +175,7 @@ export const arrearsService = {
 
       const prefix = makeSalePrefix();
       const last = await tx.sale.findFirst({
-        where: { id: { startsWith: prefix } },
+        where: { id: { startsWith: prefix }, pharmacyId: scope.pharmacyId, ...(scope.branchId ? { branchId: scope.branchId } : {}) },
         orderBy: { id: "desc" },
       });
       const saleId = generateSaleId(prefix, last?.id ?? null);
@@ -164,6 +183,8 @@ export const arrearsService = {
       const paymentSale = await tx.sale.create({
         data: {
           id: saleId,
+          pharmacyId: scope.pharmacyId,
+          branchId: scope.branchId!,
           customerId: arrear.customerId,
           subtotal: settleAmount,
           discount: 0,
@@ -192,8 +213,14 @@ export const arrearsService = {
     });
   },
 
-  async delete(id: string) {
-    const arrear = await prisma.arrear.findUnique({ where: { id } });
+  async delete(scope: BranchScope, id: string) {
+    const arrear = await prisma.arrear.findFirst({
+      where: {
+        id,
+        pharmacyId: scope.pharmacyId,
+        ...(scope.branchId ? { branchId: scope.branchId } : {}),
+      },
+    });
     if (!arrear) throw new NotFoundError("Arrear");
     await prisma.arrear.delete({ where: { id } });
     return { success: true };

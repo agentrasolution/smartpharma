@@ -3,16 +3,24 @@ import { NotFoundError } from "../../utils/errors";
 import { emitEvent } from "../../socket";
 import type { CreateSaleInput } from "./sales.schema";
 import { Prisma } from "../../generated/prisma/client";
+import type { BranchScope } from "../../middleware/auth";
+
+function branchWhere(scope: BranchScope): Prisma.SaleWhereInput {
+  return {
+    pharmacyId: scope.pharmacyId,
+    ...(scope.branchId ? { branchId: scope.branchId } : {}),
+  };
+}
 
 export const salesService = {
-  async create(data: CreateSaleInput) {
+  async create(data: CreateSaleInput, scope: BranchScope) {
     const now = new Date();
     const yy = now.getFullYear().toString().slice(-2);
     const mm = (now.getMonth() + 1).toString().padStart(2, "0");
     const prefix = `${yy}${mm}-`;
 
     const last = await prisma.sale.findFirst({
-      where: { id: { startsWith: prefix } },
+      where: { id: { startsWith: prefix }, ...branchWhere(scope) },
       orderBy: { id: "desc" },
     });
 
@@ -26,6 +34,8 @@ export const salesService = {
       const sale = await tx.sale.create({
         data: {
           id: saleId,
+          pharmacyId: scope.pharmacyId,
+          branchId: scope.branchId!,
           customerId: data.customerId ?? null,
           subtotal: data.subtotal,
           discount: data.discount,
@@ -58,6 +68,8 @@ export const salesService = {
       if (data.amountPaid < data.total && data.customerId) {
         await tx.arrear.create({
           data: {
+            pharmacyId: scope.pharmacyId,
+            branchId: scope.branchId!,
             saleId: sale.id,
             customerId: data.customerId,
             totalBill: data.total,
@@ -78,8 +90,9 @@ export const salesService = {
     });
   },
 
-  async listRecent(limit = 10) {
+  async listRecent(scope: BranchScope, limit = 10) {
     return prisma.sale.findMany({
+      where: branchWhere(scope),
       take: limit,
       orderBy: { createdAt: "desc" },
       include: {
@@ -89,13 +102,16 @@ export const salesService = {
     });
   },
 
-  async listByDate(dateStr: string, tzOffsetMinutes?: number) {
+  async listByDate(scope: BranchScope, dateStr: string, tzOffsetMinutes?: number) {
     const offsetMs = (tzOffsetMinutes ?? 0) * 60000;
     const start = new Date(`${dateStr}T00:00:00.000Z`).getTime() - offsetMs;
     const end = start + 24 * 60 * 60 * 1000 - 1;
 
     return prisma.sale.findMany({
-      where: { createdAt: { gte: new Date(start), lte: new Date(end) } },
+      where: {
+        ...branchWhere(scope),
+        createdAt: { gte: new Date(start), lte: new Date(end) },
+      },
       orderBy: { createdAt: "desc" },
       include: {
         customer: { select: { name: true } },
@@ -104,10 +120,11 @@ export const salesService = {
     });
   },
 
-  async search(q: string, limit = 50) {
+  async search(scope: BranchScope, q: string, limit = 50) {
     const query = q.trim();
     return prisma.sale.findMany({
       where: {
+        ...branchWhere(scope),
         OR: [
           { id: { contains: query, mode: "insensitive" } },
           { customer: { is: { name: { contains: query, mode: "insensitive" } } } },
@@ -123,8 +140,8 @@ export const salesService = {
     });
   },
 
-  async listAll(opts?: { search?: string; dateFrom?: string; dateTo?: string; tzOffsetMinutes?: number }) {
-    const where: Record<string, unknown> = {};
+  async listAll(scope: BranchScope, opts?: { search?: string; dateFrom?: string; dateTo?: string; tzOffsetMinutes?: number }) {
+    const where: Record<string, unknown> = { ...branchWhere(scope) };
     const offsetMs = (opts?.tzOffsetMinutes ?? 0) * 60000;
 
     if (opts?.dateFrom || opts?.dateTo) {
@@ -157,9 +174,9 @@ export const salesService = {
     });
   },
 
-  async getById(id: string) {
-    const sale = await prisma.sale.findUnique({
-      where: { id },
+  async getById(scope: BranchScope, id: string) {
+    const sale = await prisma.sale.findFirst({
+      where: { id, ...branchWhere(scope) },
       include: {
         customer: { select: { name: true } },
         items: true,

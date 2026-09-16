@@ -10,6 +10,7 @@ import type {
 } from "./purchase-order.schema";
 import type { Prisma } from "../../generated/prisma/client";
 import { auditService } from "../../audit/audit.service";
+import type { BranchScope } from "../../middleware/auth";
 
 export const PO_STATUS = {
   DRAFT: "DRAFT",
@@ -51,6 +52,13 @@ export function roleHasPermission(role: string, permission: string): boolean {
   return perms.includes(permission);
 }
 
+function poBranchWhere(scope: BranchScope): Prisma.PurchaseOrderWhereInput {
+  return {
+    pharmacyId: scope.pharmacyId,
+    ...(scope.branchId ? { branchId: scope.branchId } : {}),
+  };
+}
+
 async function generateOrderNumber(tx: Prisma.TransactionClient): Promise<string> {
   const now = new Date();
   const yy = now.getFullYear().toString().slice(-2);
@@ -77,34 +85,54 @@ interface DraftItemSpec {
 export const purchaseOrderService = {
   // Create a DRAFT purchase order. Idempotent on idempotencyKey (spec #59).
   async createDraft(
-    data: CreatePurchaseOrderDraftInput,
+    scope: BranchScope,
+    data: CreatePurchaseOrderDraftInput & { branchId?: string },
     actor: { userId: string; role: string },
   ) {
     if (!roleHasPermission(actor.role, "CREATE_PURCHASE_DRAFT")) {
       throw new UnauthorizedError("You do not have permission to create purchase orders");
     }
 
+    // A branch operator always creates into their own branch. A cross-branch
+    // admin may target a specific branch; falls back to the first active one.
+    const targetBranchId =
+      scope.branchId ?? data.branchId ?? (await firstBranchId(scope.pharmacyId));
+    if (!targetBranchId) throw new BadRequestError("No branch available for the purchase order");
+    await assertBranchInPharmacy(scope.pharmacyId, targetBranchId);
+    if (scope.branchId && data.branchId && data.branchId !== scope.branchId) {
+      throw new BadRequestError("Purchase orders can only be created for your own branch");
+    }
+
     if (data.idempotencyKey) {
-      const existing = await prisma.purchaseOrder.findUnique({
-        where: { idempotencyKey: data.idempotencyKey },
+      const existing = await prisma.purchaseOrder.findFirst({
+        where: {
+          idempotencyKey: data.idempotencyKey,
+          pharmacyId: scope.pharmacyId,
+          branchId: targetBranchId,
+        },
         include: { items: true, distributor: true },
       });
       if (existing) return existing;
     }
 
-    const distributor = await prisma.distributor.findUnique({
-      where: { id: data.distributorId },
+    const distributor = await prisma.distributor.findFirst({
+      where: { id: data.distributorId, pharmacyId: scope.pharmacyId },
     });
     if (!distributor) throw new NotFoundError("Distributor");
 
     // Load all products up-front so we never trust AI/frontend quantities/prices.
     const productIds = data.items.map((i) => i.productId);
     const products = await prisma.product.findMany({
-      where: { id: { in: productIds }, active: 1 },
+      where: {
+        id: { in: productIds },
+        active: 1,
+        pharmacyId: scope.pharmacyId,
+        branchId: targetBranchId,
+      },
     });
     const productMap = new Map(products.map((p) => [p.id, p]));
     if (productMap.size !== productIds.length) {
-      throw new BadRequestError("One or more products do not exist or are inactive");
+      throw new BadRequestError("One or more products do not exist in this branch or are inactive");
     }
 
     const items = data.items.map((item) => {
@@ -124,6 +152,8 @@ export const purchaseOrderService = {
       const order = await tx.purchaseOrder.create({
         data: {
           orderNumber,
+          pharmacyId: scope.pharmacyId,
+          branchId: targetBranchId,
           distributorId: distributor.id,
           status: PO_STATUS.DRAFT,
           subtotal,
@@ -160,11 +190,11 @@ export const purchaseOrderService = {
     });
   },
 
-  async submitForApproval(id: string, actor: { userId: string; role: string }) {
+  async submitForApproval(scope: BranchScope, id: string, actor: { userId: string; role: string }) {
     if (!roleHasPermission(actor.role, "SUBMIT_PURCHASE")) {
       throw new UnauthorizedError("You do not have permission to submit purchase orders");
     }
-    const order = await prisma.purchaseOrder.findUnique({ where: { id } });
+    const order = await prisma.purchaseOrder.findFirst({ where: { id, ...poBranchWhere(scope) } });
     if (!order) throw new NotFoundError("Purchase order");
     if (order.status !== PO_STATUS.DRAFT) {
       throw new BadRequestError(`Only DRAFT purchase orders can be submitted (current: ${order.status})`);
@@ -188,12 +218,12 @@ export const purchaseOrderService = {
   },
 
   // HUMAN-ONLY. AI MUST NOT have this tool. Rollback-protected via $transaction.
-  async approve(id: string, actor: { userId: string; role: string }) {
+  async approve(scope: BranchScope, id: string, actor: { userId: string; role: string }) {
     if (!roleHasPermission(actor.role, "APPROVE_PURCHASE")) {
       throw new UnauthorizedError("Only managers/admins can approve purchase orders");
     }
-    const order = await prisma.purchaseOrder.findUnique({
-      where: { id },
+    const order = await prisma.purchaseOrder.findFirst({
+      where: { id, ...poBranchWhere(scope) },
       include: { items: true },
     });
     if (!order) throw new NotFoundError("Purchase order");
@@ -225,6 +255,8 @@ export const purchaseOrderService = {
         });
         const stockPurchase = await tx.stockPurchase.create({
           data: {
+            pharmacyId: updated.pharmacyId,
+            branchId: updated.branchId,
             productId,
             distributorId: updated.distributorId,
             companyId: updated.company?.id ?? null,
@@ -255,6 +287,7 @@ export const purchaseOrderService = {
   },
 
   async reject(
+    scope: BranchScope,
     id: string,
     actor: { userId: string; role: string },
     reason: string,
@@ -262,7 +295,7 @@ export const purchaseOrderService = {
     if (!roleHasPermission(actor.role, "REJECT_PURCHASE")) {
       throw new UnauthorizedError("Only managers/admins can reject purchase orders");
     }
-    const order = await prisma.purchaseOrder.findUnique({ where: { id } });
+    const order = await prisma.purchaseOrder.findFirst({ where: { id, ...poBranchWhere(scope) } });
     if (!order) throw new NotFoundError("Purchase order");
     const rejectable = new Set<string>([PO_STATUS.PENDING_APPROVAL, PO_STATUS.DRAFT]);
     if (!rejectable.has(order.status)) {
@@ -292,8 +325,10 @@ export const purchaseOrderService = {
     return rejected;
   },
 
-  async list(opts?: { status?: string; search?: string; from?: string; to?: string }) {
-    const where: Prisma.PurchaseOrderWhereInput = {};
+  async list(scope: BranchScope, opts?: { status?: string; search?: string; from?: string; to?: string }) {
+    const where: Prisma.PurchaseOrderWhereInput = {
+      ...poBranchWhere(scope),
+    };
     if (opts?.status) where.status = opts.status;
     if (opts?.from || opts?.to) {
       const toDate = opts?.to ? new Date(opts.to) : null;
@@ -340,9 +375,9 @@ export const purchaseOrderService = {
     return result;
   },
 
-  async getById(id: string) {
-    const order = await prisma.purchaseOrder.findUnique({
-      where: { id },
+  async getById(scope: BranchScope, id: string) {
+    const order = await prisma.purchaseOrder.findFirst({
+      where: { id, ...poBranchWhere(scope) },
       include: {
         distributor: true,
         items: { include: { product: true } },
@@ -352,3 +387,17 @@ export const purchaseOrderService = {
     return order;
   },
 };
+
+async function firstBranchId(pharmacyId: string): Promise<string | null> {
+  const branch = await prisma.branch.findFirst({
+    where: { pharmacyId, isActive: true },
+    orderBy: { createdAt: "asc" },
+    select: { id: true },
+  });
+  return branch?.id ?? null;
+}
+
+async function assertBranchInPharmacy(pharmacyId: string, branchId: string) {
+  const branch = await prisma.branch.findFirst({ where: { id: branchId, pharmacyId } });
+  if (!branch) throw new BadRequestError("Branch does not belong to this pharmacy");
+}

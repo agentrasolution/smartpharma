@@ -11,6 +11,8 @@ import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
 import OfflineBanner from "@/components/shared/OfflineBanner";
 import Login from "@/pages/Login";
+import Billing from "@/pages/Billing";
+import PlatformAdmin from "@/pages/PlatformAdmin";
 import Dashboard from "@/pages/Dashboard";
 import POS from "@/pages/POS";
 import Products from "@/pages/Products";
@@ -27,6 +29,10 @@ import Expenses from "@/pages/Expenses";
 import Reports from "@/pages/Reports";
 import Invoices from "@/pages/Invoices";
 import Settings from "@/pages/Settings";
+import Users from "@/pages/Users";
+import Roles from "@/pages/Roles";
+import Branches from "@/pages/Branches";
+import ChangePassword from "@/pages/ChangePassword";
 import AIProvidersIndex from "@/pages/settings/AIProvidersIndex";
 import AIProviderSetupPage from "@/pages/settings/AIProviderSetupPage";
 import AIOverview from "@/pages/ai/AIOverview";
@@ -50,12 +56,14 @@ function AnimatedPage({ children }: { children: React.ReactNode }) {
 }
 
 function AppShell() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, subscriptionBlocked, user } = useAuth();
   const [ready, setReady] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   const isPosWindow = new URLSearchParams(location.search).has("pos");
+
+  const isPlatform = user?.role === "platform";
 
   const [reprintOpen, setReprintOpen] = useState(false);
   const [reprintData, setReprintData] = useState<unknown>(null);
@@ -63,6 +71,12 @@ function AppShell() {
   useEffect(() => {
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    if (subscriptionBlocked && isAuthenticated && !isPlatform && location.pathname !== "/billing") {
+      navigate("/billing", { replace: true });
+    }
+  }, [subscriptionBlocked, isAuthenticated, isPlatform, location.pathname, navigate]);
 
   const generateReprintHtml = useCallback(async (paperSize: string): Promise<string> => {
     if (!reprintData) return "";
@@ -151,29 +165,49 @@ function AppShell() {
   const routes = (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Navigate to="/pos" replace />} />
-        <Route path="/dashboard" element={<AnimatedPage><Dashboard /></AnimatedPage>} />
-        <Route path="/pos" element={<AnimatedPage><POS /></AnimatedPage>} />
-        <Route path="/products" element={<AnimatedPage><Products /></AnimatedPage>} />
-        <Route path="/customers" element={<AnimatedPage><Customers /></AnimatedPage>} />
-        <Route path="/customers/:id" element={<AnimatedPage><CustomerDetail /></AnimatedPage>} />
-        <Route path="/arrears" element={<AnimatedPage><Arrears /></AnimatedPage>} />
-        <Route path="/stock" element={<AnimatedPage><Stock /></AnimatedPage>} />
-        <Route path="/distributors" element={<AnimatedPage><Distributors /></AnimatedPage>} />
-        <Route path="/companies" element={<AnimatedPage><Companies /></AnimatedPage>} />
-        <Route path="/barcodes" element={<AnimatedPage><Barcodes /></AnimatedPage>} />
-        <Route path="/returns" element={<AnimatedPage><Returns /></AnimatedPage>} />
-        <Route path="/expenses" element={<AnimatedPage><Expenses /></AnimatedPage>} />
-        <Route path="/reports" element={<AnimatedPage><Reports /></AnimatedPage>} />
-        <Route path="/invoices" element={<AnimatedPage><Invoices /></AnimatedPage>} />
-        <Route path="/settings" element={<AnimatedPage><Settings /></AnimatedPage>} />
-        <Route path="/settings/ai" element={<AnimatedPage><AIProvidersIndex /></AnimatedPage>} />
-        <Route path="/settings/ai/:providerId" element={<AnimatedPage><AIProviderSetupPage /></AnimatedPage>} />
-        <Route path="/ai" element={<AnimatedPage><AIOverview /></AnimatedPage>} />
-        <Route path="/ai/recommendations" element={<AnimatedPage><AIRecommendations /></AnimatedPage>} />
-        <Route path="/ai/chat" element={<AnimatedPage><AIChat /></AnimatedPage>} />
-        <Route path="/ai/approvals" element={<AnimatedPage><AIApprovals /></AnimatedPage>} />
-        <Route path="/ai/activity" element={<AnimatedPage><AIActivity /></AnimatedPage>} />
+        <Route path="/" element={<Navigate to={isPlatform ? "/platform" : "/pos"} replace />} />
+        <Route
+          path="/platform"
+          element={
+            isPlatform ? (
+              <AnimatedPage><PlatformAdmin /></AnimatedPage>
+            ) : (
+              <Navigate to="/pos" replace />
+            )
+          }
+        />
+        <Route path="/change-password" element={<AnimatedPage><ChangePassword /></AnimatedPage>} />
+        {!isPlatform && (
+          <>
+            <Route path="/dashboard" element={<AnimatedPage><Dashboard /></AnimatedPage>} />
+            <Route path="/pos" element={<AnimatedPage><POS /></AnimatedPage>} />
+            <Route path="/products" element={<AnimatedPage><Products /></AnimatedPage>} />
+            <Route path="/customers" element={<AnimatedPage><Customers /></AnimatedPage>} />
+            <Route path="/customers/:id" element={<AnimatedPage><CustomerDetail /></AnimatedPage>} />
+            <Route path="/arrears" element={<AnimatedPage><Arrears /></AnimatedPage>} />
+            <Route path="/stock" element={<AnimatedPage><Stock /></AnimatedPage>} />
+            <Route path="/distributors" element={<AnimatedPage><Distributors /></AnimatedPage>} />
+            <Route path="/companies" element={<AnimatedPage><Companies /></AnimatedPage>} />
+            <Route path="/barcodes" element={<AnimatedPage><Barcodes /></AnimatedPage>} />
+            <Route path="/returns" element={<AnimatedPage><Returns /></AnimatedPage>} />
+            <Route path="/expenses" element={<AnimatedPage><Expenses /></AnimatedPage>} />
+            <Route path="/reports" element={<AnimatedPage><Reports /></AnimatedPage>} />
+            <Route path="/invoices" element={<AnimatedPage><Invoices /></AnimatedPage>} />
+            <Route path="/settings" element={<AnimatedPage><Settings /></AnimatedPage>} />
+            <Route path="/users" element={<AnimatedPage><Users /></AnimatedPage>} />
+            <Route path="/roles" element={<AnimatedPage><Roles /></AnimatedPage>} />
+            <Route path="/branches" element={<AnimatedPage><Branches /></AnimatedPage>} />
+            <Route path="/settings/ai" element={<AnimatedPage><AIProvidersIndex /></AnimatedPage>} />
+            <Route path="/settings/ai/:providerId" element={<AnimatedPage><AIProviderSetupPage /></AnimatedPage>} />
+            <Route path="/billing" element={<AnimatedPage><Billing /></AnimatedPage>} />
+            <Route path="/ai" element={<AnimatedPage><AIOverview /></AnimatedPage>} />
+            <Route path="/ai/recommendations" element={<AnimatedPage><AIRecommendations /></AnimatedPage>} />
+            <Route path="/ai/chat" element={<AnimatedPage><AIChat /></AnimatedPage>} />
+            <Route path="/ai/approvals" element={<AnimatedPage><AIApprovals /></AnimatedPage>} />
+            <Route path="/ai/activity" element={<AnimatedPage><AIActivity /></AnimatedPage>} />
+          </>
+        )}
+        <Route path="*" element={<Navigate to={isPlatform ? "/platform" : "/pos"} replace />} />
       </Routes>
     </AnimatePresence>
   );

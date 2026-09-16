@@ -1,5 +1,7 @@
 import { prisma } from "../services/prisma";
 import { inventoryIntelligence, type ProductAnalysis } from "./inventory.service";
+import { NotFoundError } from "../utils/errors";
+import type { BranchScope } from "../middleware/auth";
 
 // Recommendation lifecycle:
 // NEW -> ACKNOWLEDGED (human) | DISMISSED (human) | EXPIRED (superseded)
@@ -75,6 +77,19 @@ async function supersede(productIds: string[], now: Date): Promise<number> {
   return result.count;
 }
 
+/**
+ * Recommendations are linked to a (branch-scoped) product. Filtering through the
+ * product relation keeps the AI recommendation views tenant/branch isolated.
+ */
+function recBranchWhere(scope: BranchScope) {
+  return {
+    product: {
+      pharmacyId: scope.pharmacyId,
+      ...(scope.branchId ? { branchId: scope.branchId } : {}),
+    },
+  };
+}
+
 export const recommendationService = {
   /**
    * Run a full analysis pass and persist recommendations for every product
@@ -82,8 +97,8 @@ export const recommendationService = {
    * superseded (status -> EXPIRED) so the UI always reflects current state.
    * Returns the number of recommendations persisted.
    */
-  async generate(days = 30): Promise<number> {
-    const analyses = await inventoryIntelligence.analyzeMany(null, days);
+  async generate(scope: BranchScope, days = 30): Promise<number> {
+    const analyses = await inventoryIntelligence.analyzeMany(scope, null, days);
     const actionable = analyses.filter(isActionable);
 
     const now = new Date();
@@ -123,7 +138,7 @@ export const recommendationService = {
     return result.count;
   },
 
-  async list(opts?: {
+  async list(scope: BranchScope, opts?: {
     status?: RecommendationStatus | RecommendationStatus[];
     limit?: number;
   }): Promise<Awaited<ReturnType<typeof prisma.aIInventoryRecommendation.findMany>>> {
@@ -131,7 +146,7 @@ export const recommendationService = {
       ? (Array.isArray(opts.status) ? opts.status : [opts.status]) as string[]
       : undefined;
     return prisma.aIInventoryRecommendation.findMany({
-      where: statuses ? { status: { in: statuses } } : {},
+      where: statuses ? { status: { in: statuses }, ...recBranchWhere(scope) } : recBranchWhere(scope),
       orderBy: [{ riskLevel: "asc" as const }, { createdAt: "desc" as const }],
       take: opts?.limit ?? 100,
       include: {
@@ -141,9 +156,10 @@ export const recommendationService = {
   },
 
   /** Counts by status, used for the recommendation dashboard tiles. */
-  async summary(): Promise<Record<string, number>> {
+  async summary(scope: BranchScope): Promise<Record<string, number>> {
     const rows = await prisma.aIInventoryRecommendation.groupBy({
       by: ["status"],
+      where: recBranchWhere(scope),
       _count: { _all: true },
     });
     const out: Record<string, number> = {
@@ -161,22 +177,30 @@ export const recommendationService = {
    * Human action: acknowledge a recommendation. Human-only operation; the AI
    * agent never writes recommendations to non-NEW states.
    */
-  async acknowledge(id: string, actorUserId: string): Promise<unknown> {
-    const rec = await prisma.aIInventoryRecommendation.update({
+  async acknowledge(scope: BranchScope, id: string, actorUserId: string): Promise<unknown> {
+    const rec = await prisma.aIInventoryRecommendation.findFirst({
+      where: { id, ...recBranchWhere(scope) },
+    });
+    if (!rec) throw new NotFoundError("Recommendation");
+    const updated = await prisma.aIInventoryRecommendation.update({
       where: { id },
       data: { status: RECOMMENDATION_STATUS.ACKNOWLEDGED },
     });
     void actorUserId;
-    return rec;
+    return updated;
   },
 
   /** Human action: dismiss (reject) a recommendation. */
-  async dismiss(id: string, actorUserId: string): Promise<unknown> {
-    const rec = await prisma.aIInventoryRecommendation.update({
+  async dismiss(scope: BranchScope, id: string, actorUserId: string): Promise<unknown> {
+    const rec = await prisma.aIInventoryRecommendation.findFirst({
+      where: { id, ...recBranchWhere(scope) },
+    });
+    if (!rec) throw new NotFoundError("Recommendation");
+    const updated = await prisma.aIInventoryRecommendation.update({
       where: { id },
       data: { status: RECOMMENDATION_STATUS.DISMISSED },
     });
     void actorUserId;
-    return rec;
+    return updated;
   },
 };

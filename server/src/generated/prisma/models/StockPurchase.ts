@@ -44,6 +44,8 @@ export type StockPurchaseSumAggregateOutputType = {
 
 export type StockPurchaseMinAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
+  branchId: string | null
   productId: string | null
   distributorId: string | null
   companyId: string | null
@@ -59,6 +61,8 @@ export type StockPurchaseMinAggregateOutputType = {
 
 export type StockPurchaseMaxAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
+  branchId: string | null
   productId: string | null
   distributorId: string | null
   companyId: string | null
@@ -74,6 +78,8 @@ export type StockPurchaseMaxAggregateOutputType = {
 
 export type StockPurchaseCountAggregateOutputType = {
   id: number
+  pharmacyId: number
+  branchId: number
   productId: number
   distributorId: number
   companyId: number
@@ -107,6 +113,8 @@ export type StockPurchaseSumAggregateInputType = {
 
 export type StockPurchaseMinAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   productId?: true
   distributorId?: true
   companyId?: true
@@ -122,6 +130,8 @@ export type StockPurchaseMinAggregateInputType = {
 
 export type StockPurchaseMaxAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   productId?: true
   distributorId?: true
   companyId?: true
@@ -137,6 +147,8 @@ export type StockPurchaseMaxAggregateInputType = {
 
 export type StockPurchaseCountAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   productId?: true
   distributorId?: true
   companyId?: true
@@ -239,6 +251,8 @@ export type StockPurchaseGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type StockPurchaseGroupByOutputType = {
   id: string
+  pharmacyId: string
+  branchId: string
   productId: string
   distributorId: string | null
   companyId: string | null
@@ -277,6 +291,8 @@ export type StockPurchaseWhereInput = {
   OR?: Prisma.StockPurchaseWhereInput[]
   NOT?: Prisma.StockPurchaseWhereInput | Prisma.StockPurchaseWhereInput[]
   id?: Prisma.StringFilter<"StockPurchase"> | string
+  pharmacyId?: Prisma.StringFilter<"StockPurchase"> | string
+  branchId?: Prisma.StringFilter<"StockPurchase"> | string
   productId?: Prisma.StringFilter<"StockPurchase"> | string
   distributorId?: Prisma.StringNullableFilter<"StockPurchase"> | string | null
   companyId?: Prisma.StringNullableFilter<"StockPurchase"> | string | null
@@ -288,6 +304,8 @@ export type StockPurchaseWhereInput = {
   totalValue?: Prisma.FloatFilter<"StockPurchase"> | number
   active?: Prisma.IntFilter<"StockPurchase"> | number
   createdAt?: Prisma.DateTimeFilter<"StockPurchase"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   distributor?: Prisma.XOR<Prisma.DistributorNullableScalarRelationFilter, Prisma.DistributorWhereInput> | null
   company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
@@ -295,6 +313,8 @@ export type StockPurchaseWhereInput = {
 
 export type StockPurchaseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   distributorId?: Prisma.SortOrderInput | Prisma.SortOrder
   companyId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -306,6 +326,8 @@ export type StockPurchaseOrderByWithRelationInput = {
   totalValue?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  pharmacy?: Prisma.PharmacyOrderByWithRelationInput
+  branch?: Prisma.BranchOrderByWithRelationInput
   product?: Prisma.ProductOrderByWithRelationInput
   distributor?: Prisma.DistributorOrderByWithRelationInput
   company?: Prisma.CompanyOrderByWithRelationInput
@@ -316,6 +338,8 @@ export type StockPurchaseWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.StockPurchaseWhereInput | Prisma.StockPurchaseWhereInput[]
   OR?: Prisma.StockPurchaseWhereInput[]
   NOT?: Prisma.StockPurchaseWhereInput | Prisma.StockPurchaseWhereInput[]
+  pharmacyId?: Prisma.StringFilter<"StockPurchase"> | string
+  branchId?: Prisma.StringFilter<"StockPurchase"> | string
   productId?: Prisma.StringFilter<"StockPurchase"> | string
   distributorId?: Prisma.StringNullableFilter<"StockPurchase"> | string | null
   companyId?: Prisma.StringNullableFilter<"StockPurchase"> | string | null
@@ -327,6 +351,8 @@ export type StockPurchaseWhereUniqueInput = Prisma.AtLeast<{
   totalValue?: Prisma.FloatFilter<"StockPurchase"> | number
   active?: Prisma.IntFilter<"StockPurchase"> | number
   createdAt?: Prisma.DateTimeFilter<"StockPurchase"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   distributor?: Prisma.XOR<Prisma.DistributorNullableScalarRelationFilter, Prisma.DistributorWhereInput> | null
   company?: Prisma.XOR<Prisma.CompanyNullableScalarRelationFilter, Prisma.CompanyWhereInput> | null
@@ -334,6 +360,8 @@ export type StockPurchaseWhereUniqueInput = Prisma.AtLeast<{
 
 export type StockPurchaseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   distributorId?: Prisma.SortOrderInput | Prisma.SortOrder
   companyId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -357,6 +385,8 @@ export type StockPurchaseScalarWhereWithAggregatesInput = {
   OR?: Prisma.StockPurchaseScalarWhereWithAggregatesInput[]
   NOT?: Prisma.StockPurchaseScalarWhereWithAggregatesInput | Prisma.StockPurchaseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"StockPurchase"> | string
+  pharmacyId?: Prisma.StringWithAggregatesFilter<"StockPurchase"> | string
+  branchId?: Prisma.StringWithAggregatesFilter<"StockPurchase"> | string
   productId?: Prisma.StringWithAggregatesFilter<"StockPurchase"> | string
   distributorId?: Prisma.StringNullableWithAggregatesFilter<"StockPurchase"> | string | null
   companyId?: Prisma.StringNullableWithAggregatesFilter<"StockPurchase"> | string | null
@@ -380,6 +410,8 @@ export type StockPurchaseCreateInput = {
   totalValue?: number
   active?: number
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutStockPurchasesInput
+  branch: Prisma.BranchCreateNestedOneWithoutStockPurchasesInput
   product: Prisma.ProductCreateNestedOneWithoutStockPurchasesInput
   distributor?: Prisma.DistributorCreateNestedOneWithoutStockPurchasesInput
   company?: Prisma.CompanyCreateNestedOneWithoutStockPurchasesInput
@@ -387,6 +419,8 @@ export type StockPurchaseCreateInput = {
 
 export type StockPurchaseUncheckedCreateInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   productId: string
   distributorId?: string | null
   companyId?: string | null
@@ -410,6 +444,8 @@ export type StockPurchaseUpdateInput = {
   totalValue?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutStockPurchasesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutStockPurchasesNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutStockPurchasesNestedInput
   distributor?: Prisma.DistributorUpdateOneWithoutStockPurchasesNestedInput
   company?: Prisma.CompanyUpdateOneWithoutStockPurchasesNestedInput
@@ -417,6 +453,8 @@ export type StockPurchaseUpdateInput = {
 
 export type StockPurchaseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -432,6 +470,8 @@ export type StockPurchaseUncheckedUpdateInput = {
 
 export type StockPurchaseCreateManyInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   productId: string
   distributorId?: string | null
   companyId?: string | null
@@ -459,6 +499,8 @@ export type StockPurchaseUpdateManyMutationInput = {
 
 export type StockPurchaseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -484,6 +526,8 @@ export type StockPurchaseOrderByRelationAggregateInput = {
 
 export type StockPurchaseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   distributorId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
@@ -507,6 +551,8 @@ export type StockPurchaseAvgOrderByAggregateInput = {
 
 export type StockPurchaseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   distributorId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
@@ -522,6 +568,8 @@ export type StockPurchaseMaxOrderByAggregateInput = {
 
 export type StockPurchaseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   distributorId?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
@@ -541,6 +589,90 @@ export type StockPurchaseSumOrderByAggregateInput = {
   salePrice?: Prisma.SortOrder
   totalValue?: Prisma.SortOrder
   active?: Prisma.SortOrder
+}
+
+export type StockPurchaseCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.StockPurchaseCreateWithoutPharmacyInput, Prisma.StockPurchaseUncheckedCreateWithoutPharmacyInput> | Prisma.StockPurchaseCreateWithoutPharmacyInput[] | Prisma.StockPurchaseUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.StockPurchaseCreateOrConnectWithoutPharmacyInput | Prisma.StockPurchaseCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.StockPurchaseCreateManyPharmacyInputEnvelope
+  connect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+}
+
+export type StockPurchaseUncheckedCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.StockPurchaseCreateWithoutPharmacyInput, Prisma.StockPurchaseUncheckedCreateWithoutPharmacyInput> | Prisma.StockPurchaseCreateWithoutPharmacyInput[] | Prisma.StockPurchaseUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.StockPurchaseCreateOrConnectWithoutPharmacyInput | Prisma.StockPurchaseCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.StockPurchaseCreateManyPharmacyInputEnvelope
+  connect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+}
+
+export type StockPurchaseUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.StockPurchaseCreateWithoutPharmacyInput, Prisma.StockPurchaseUncheckedCreateWithoutPharmacyInput> | Prisma.StockPurchaseCreateWithoutPharmacyInput[] | Prisma.StockPurchaseUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.StockPurchaseCreateOrConnectWithoutPharmacyInput | Prisma.StockPurchaseCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.StockPurchaseUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.StockPurchaseUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.StockPurchaseCreateManyPharmacyInputEnvelope
+  set?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  disconnect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  delete?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  connect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  update?: Prisma.StockPurchaseUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.StockPurchaseUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.StockPurchaseUpdateManyWithWhereWithoutPharmacyInput | Prisma.StockPurchaseUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.StockPurchaseScalarWhereInput | Prisma.StockPurchaseScalarWhereInput[]
+}
+
+export type StockPurchaseUncheckedUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.StockPurchaseCreateWithoutPharmacyInput, Prisma.StockPurchaseUncheckedCreateWithoutPharmacyInput> | Prisma.StockPurchaseCreateWithoutPharmacyInput[] | Prisma.StockPurchaseUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.StockPurchaseCreateOrConnectWithoutPharmacyInput | Prisma.StockPurchaseCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.StockPurchaseUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.StockPurchaseUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.StockPurchaseCreateManyPharmacyInputEnvelope
+  set?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  disconnect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  delete?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  connect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  update?: Prisma.StockPurchaseUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.StockPurchaseUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.StockPurchaseUpdateManyWithWhereWithoutPharmacyInput | Prisma.StockPurchaseUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.StockPurchaseScalarWhereInput | Prisma.StockPurchaseScalarWhereInput[]
+}
+
+export type StockPurchaseCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.StockPurchaseCreateWithoutBranchInput, Prisma.StockPurchaseUncheckedCreateWithoutBranchInput> | Prisma.StockPurchaseCreateWithoutBranchInput[] | Prisma.StockPurchaseUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.StockPurchaseCreateOrConnectWithoutBranchInput | Prisma.StockPurchaseCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.StockPurchaseCreateManyBranchInputEnvelope
+  connect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+}
+
+export type StockPurchaseUncheckedCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.StockPurchaseCreateWithoutBranchInput, Prisma.StockPurchaseUncheckedCreateWithoutBranchInput> | Prisma.StockPurchaseCreateWithoutBranchInput[] | Prisma.StockPurchaseUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.StockPurchaseCreateOrConnectWithoutBranchInput | Prisma.StockPurchaseCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.StockPurchaseCreateManyBranchInputEnvelope
+  connect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+}
+
+export type StockPurchaseUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.StockPurchaseCreateWithoutBranchInput, Prisma.StockPurchaseUncheckedCreateWithoutBranchInput> | Prisma.StockPurchaseCreateWithoutBranchInput[] | Prisma.StockPurchaseUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.StockPurchaseCreateOrConnectWithoutBranchInput | Prisma.StockPurchaseCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.StockPurchaseUpsertWithWhereUniqueWithoutBranchInput | Prisma.StockPurchaseUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.StockPurchaseCreateManyBranchInputEnvelope
+  set?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  disconnect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  delete?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  connect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  update?: Prisma.StockPurchaseUpdateWithWhereUniqueWithoutBranchInput | Prisma.StockPurchaseUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.StockPurchaseUpdateManyWithWhereWithoutBranchInput | Prisma.StockPurchaseUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.StockPurchaseScalarWhereInput | Prisma.StockPurchaseScalarWhereInput[]
+}
+
+export type StockPurchaseUncheckedUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.StockPurchaseCreateWithoutBranchInput, Prisma.StockPurchaseUncheckedCreateWithoutBranchInput> | Prisma.StockPurchaseCreateWithoutBranchInput[] | Prisma.StockPurchaseUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.StockPurchaseCreateOrConnectWithoutBranchInput | Prisma.StockPurchaseCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.StockPurchaseUpsertWithWhereUniqueWithoutBranchInput | Prisma.StockPurchaseUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.StockPurchaseCreateManyBranchInputEnvelope
+  set?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  disconnect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  delete?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  connect?: Prisma.StockPurchaseWhereUniqueInput | Prisma.StockPurchaseWhereUniqueInput[]
+  update?: Prisma.StockPurchaseUpdateWithWhereUniqueWithoutBranchInput | Prisma.StockPurchaseUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.StockPurchaseUpdateManyWithWhereWithoutBranchInput | Prisma.StockPurchaseUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.StockPurchaseScalarWhereInput | Prisma.StockPurchaseScalarWhereInput[]
 }
 
 export type StockPurchaseCreateNestedManyWithoutProductInput = {
@@ -669,6 +801,142 @@ export type StockPurchaseUncheckedUpdateManyWithoutCompanyNestedInput = {
   deleteMany?: Prisma.StockPurchaseScalarWhereInput | Prisma.StockPurchaseScalarWhereInput[]
 }
 
+export type StockPurchaseCreateWithoutPharmacyInput = {
+  id?: string
+  invoiceNumber?: string
+  quantity?: number
+  purchasePrice?: number
+  salePrice?: number
+  expiry?: string | null
+  totalValue?: number
+  active?: number
+  createdAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutStockPurchasesInput
+  product: Prisma.ProductCreateNestedOneWithoutStockPurchasesInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutStockPurchasesInput
+  company?: Prisma.CompanyCreateNestedOneWithoutStockPurchasesInput
+}
+
+export type StockPurchaseUncheckedCreateWithoutPharmacyInput = {
+  id?: string
+  branchId: string
+  productId: string
+  distributorId?: string | null
+  companyId?: string | null
+  invoiceNumber?: string
+  quantity?: number
+  purchasePrice?: number
+  salePrice?: number
+  expiry?: string | null
+  totalValue?: number
+  active?: number
+  createdAt?: Date | string
+}
+
+export type StockPurchaseCreateOrConnectWithoutPharmacyInput = {
+  where: Prisma.StockPurchaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.StockPurchaseCreateWithoutPharmacyInput, Prisma.StockPurchaseUncheckedCreateWithoutPharmacyInput>
+}
+
+export type StockPurchaseCreateManyPharmacyInputEnvelope = {
+  data: Prisma.StockPurchaseCreateManyPharmacyInput | Prisma.StockPurchaseCreateManyPharmacyInput[]
+  skipDuplicates?: boolean
+}
+
+export type StockPurchaseUpsertWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.StockPurchaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.StockPurchaseUpdateWithoutPharmacyInput, Prisma.StockPurchaseUncheckedUpdateWithoutPharmacyInput>
+  create: Prisma.XOR<Prisma.StockPurchaseCreateWithoutPharmacyInput, Prisma.StockPurchaseUncheckedCreateWithoutPharmacyInput>
+}
+
+export type StockPurchaseUpdateWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.StockPurchaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.StockPurchaseUpdateWithoutPharmacyInput, Prisma.StockPurchaseUncheckedUpdateWithoutPharmacyInput>
+}
+
+export type StockPurchaseUpdateManyWithWhereWithoutPharmacyInput = {
+  where: Prisma.StockPurchaseScalarWhereInput
+  data: Prisma.XOR<Prisma.StockPurchaseUpdateManyMutationInput, Prisma.StockPurchaseUncheckedUpdateManyWithoutPharmacyInput>
+}
+
+export type StockPurchaseScalarWhereInput = {
+  AND?: Prisma.StockPurchaseScalarWhereInput | Prisma.StockPurchaseScalarWhereInput[]
+  OR?: Prisma.StockPurchaseScalarWhereInput[]
+  NOT?: Prisma.StockPurchaseScalarWhereInput | Prisma.StockPurchaseScalarWhereInput[]
+  id?: Prisma.StringFilter<"StockPurchase"> | string
+  pharmacyId?: Prisma.StringFilter<"StockPurchase"> | string
+  branchId?: Prisma.StringFilter<"StockPurchase"> | string
+  productId?: Prisma.StringFilter<"StockPurchase"> | string
+  distributorId?: Prisma.StringNullableFilter<"StockPurchase"> | string | null
+  companyId?: Prisma.StringNullableFilter<"StockPurchase"> | string | null
+  invoiceNumber?: Prisma.StringFilter<"StockPurchase"> | string
+  quantity?: Prisma.IntFilter<"StockPurchase"> | number
+  purchasePrice?: Prisma.FloatFilter<"StockPurchase"> | number
+  salePrice?: Prisma.FloatFilter<"StockPurchase"> | number
+  expiry?: Prisma.StringNullableFilter<"StockPurchase"> | string | null
+  totalValue?: Prisma.FloatFilter<"StockPurchase"> | number
+  active?: Prisma.IntFilter<"StockPurchase"> | number
+  createdAt?: Prisma.DateTimeFilter<"StockPurchase"> | Date | string
+}
+
+export type StockPurchaseCreateWithoutBranchInput = {
+  id?: string
+  invoiceNumber?: string
+  quantity?: number
+  purchasePrice?: number
+  salePrice?: number
+  expiry?: string | null
+  totalValue?: number
+  active?: number
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutStockPurchasesInput
+  product: Prisma.ProductCreateNestedOneWithoutStockPurchasesInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutStockPurchasesInput
+  company?: Prisma.CompanyCreateNestedOneWithoutStockPurchasesInput
+}
+
+export type StockPurchaseUncheckedCreateWithoutBranchInput = {
+  id?: string
+  pharmacyId: string
+  productId: string
+  distributorId?: string | null
+  companyId?: string | null
+  invoiceNumber?: string
+  quantity?: number
+  purchasePrice?: number
+  salePrice?: number
+  expiry?: string | null
+  totalValue?: number
+  active?: number
+  createdAt?: Date | string
+}
+
+export type StockPurchaseCreateOrConnectWithoutBranchInput = {
+  where: Prisma.StockPurchaseWhereUniqueInput
+  create: Prisma.XOR<Prisma.StockPurchaseCreateWithoutBranchInput, Prisma.StockPurchaseUncheckedCreateWithoutBranchInput>
+}
+
+export type StockPurchaseCreateManyBranchInputEnvelope = {
+  data: Prisma.StockPurchaseCreateManyBranchInput | Prisma.StockPurchaseCreateManyBranchInput[]
+  skipDuplicates?: boolean
+}
+
+export type StockPurchaseUpsertWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.StockPurchaseWhereUniqueInput
+  update: Prisma.XOR<Prisma.StockPurchaseUpdateWithoutBranchInput, Prisma.StockPurchaseUncheckedUpdateWithoutBranchInput>
+  create: Prisma.XOR<Prisma.StockPurchaseCreateWithoutBranchInput, Prisma.StockPurchaseUncheckedCreateWithoutBranchInput>
+}
+
+export type StockPurchaseUpdateWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.StockPurchaseWhereUniqueInput
+  data: Prisma.XOR<Prisma.StockPurchaseUpdateWithoutBranchInput, Prisma.StockPurchaseUncheckedUpdateWithoutBranchInput>
+}
+
+export type StockPurchaseUpdateManyWithWhereWithoutBranchInput = {
+  where: Prisma.StockPurchaseScalarWhereInput
+  data: Prisma.XOR<Prisma.StockPurchaseUpdateManyMutationInput, Prisma.StockPurchaseUncheckedUpdateManyWithoutBranchInput>
+}
+
 export type StockPurchaseCreateWithoutProductInput = {
   id?: string
   invoiceNumber?: string
@@ -679,12 +947,16 @@ export type StockPurchaseCreateWithoutProductInput = {
   totalValue?: number
   active?: number
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutStockPurchasesInput
+  branch: Prisma.BranchCreateNestedOneWithoutStockPurchasesInput
   distributor?: Prisma.DistributorCreateNestedOneWithoutStockPurchasesInput
   company?: Prisma.CompanyCreateNestedOneWithoutStockPurchasesInput
 }
 
 export type StockPurchaseUncheckedCreateWithoutProductInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   distributorId?: string | null
   companyId?: string | null
   invoiceNumber?: string
@@ -723,24 +995,6 @@ export type StockPurchaseUpdateManyWithWhereWithoutProductInput = {
   data: Prisma.XOR<Prisma.StockPurchaseUpdateManyMutationInput, Prisma.StockPurchaseUncheckedUpdateManyWithoutProductInput>
 }
 
-export type StockPurchaseScalarWhereInput = {
-  AND?: Prisma.StockPurchaseScalarWhereInput | Prisma.StockPurchaseScalarWhereInput[]
-  OR?: Prisma.StockPurchaseScalarWhereInput[]
-  NOT?: Prisma.StockPurchaseScalarWhereInput | Prisma.StockPurchaseScalarWhereInput[]
-  id?: Prisma.StringFilter<"StockPurchase"> | string
-  productId?: Prisma.StringFilter<"StockPurchase"> | string
-  distributorId?: Prisma.StringNullableFilter<"StockPurchase"> | string | null
-  companyId?: Prisma.StringNullableFilter<"StockPurchase"> | string | null
-  invoiceNumber?: Prisma.StringFilter<"StockPurchase"> | string
-  quantity?: Prisma.IntFilter<"StockPurchase"> | number
-  purchasePrice?: Prisma.FloatFilter<"StockPurchase"> | number
-  salePrice?: Prisma.FloatFilter<"StockPurchase"> | number
-  expiry?: Prisma.StringNullableFilter<"StockPurchase"> | string | null
-  totalValue?: Prisma.FloatFilter<"StockPurchase"> | number
-  active?: Prisma.IntFilter<"StockPurchase"> | number
-  createdAt?: Prisma.DateTimeFilter<"StockPurchase"> | Date | string
-}
-
 export type StockPurchaseCreateWithoutDistributorInput = {
   id?: string
   invoiceNumber?: string
@@ -751,12 +1005,16 @@ export type StockPurchaseCreateWithoutDistributorInput = {
   totalValue?: number
   active?: number
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutStockPurchasesInput
+  branch: Prisma.BranchCreateNestedOneWithoutStockPurchasesInput
   product: Prisma.ProductCreateNestedOneWithoutStockPurchasesInput
   company?: Prisma.CompanyCreateNestedOneWithoutStockPurchasesInput
 }
 
 export type StockPurchaseUncheckedCreateWithoutDistributorInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   productId: string
   companyId?: string | null
   invoiceNumber?: string
@@ -805,12 +1063,16 @@ export type StockPurchaseCreateWithoutCompanyInput = {
   totalValue?: number
   active?: number
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutStockPurchasesInput
+  branch: Prisma.BranchCreateNestedOneWithoutStockPurchasesInput
   product: Prisma.ProductCreateNestedOneWithoutStockPurchasesInput
   distributor?: Prisma.DistributorCreateNestedOneWithoutStockPurchasesInput
 }
 
 export type StockPurchaseUncheckedCreateWithoutCompanyInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   productId: string
   distributorId?: string | null
   invoiceNumber?: string
@@ -849,8 +1111,138 @@ export type StockPurchaseUpdateManyWithWhereWithoutCompanyInput = {
   data: Prisma.XOR<Prisma.StockPurchaseUpdateManyMutationInput, Prisma.StockPurchaseUncheckedUpdateManyWithoutCompanyInput>
 }
 
+export type StockPurchaseCreateManyPharmacyInput = {
+  id?: string
+  branchId: string
+  productId: string
+  distributorId?: string | null
+  companyId?: string | null
+  invoiceNumber?: string
+  quantity?: number
+  purchasePrice?: number
+  salePrice?: number
+  expiry?: string | null
+  totalValue?: number
+  active?: number
+  createdAt?: Date | string
+}
+
+export type StockPurchaseUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutStockPurchasesNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutStockPurchasesNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutStockPurchasesNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutStockPurchasesNestedInput
+}
+
+export type StockPurchaseUncheckedUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StockPurchaseUncheckedUpdateManyWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StockPurchaseCreateManyBranchInput = {
+  id?: string
+  pharmacyId: string
+  productId: string
+  distributorId?: string | null
+  companyId?: string | null
+  invoiceNumber?: string
+  quantity?: number
+  purchasePrice?: number
+  salePrice?: number
+  expiry?: string | null
+  totalValue?: number
+  active?: number
+  createdAt?: Date | string
+}
+
+export type StockPurchaseUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutStockPurchasesNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutStockPurchasesNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutStockPurchasesNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutStockPurchasesNestedInput
+}
+
+export type StockPurchaseUncheckedUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StockPurchaseUncheckedUpdateManyWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalValue?: Prisma.FloatFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type StockPurchaseCreateManyProductInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   distributorId?: string | null
   companyId?: string | null
   invoiceNumber?: string
@@ -873,12 +1265,16 @@ export type StockPurchaseUpdateWithoutProductInput = {
   totalValue?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutStockPurchasesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutStockPurchasesNestedInput
   distributor?: Prisma.DistributorUpdateOneWithoutStockPurchasesNestedInput
   company?: Prisma.CompanyUpdateOneWithoutStockPurchasesNestedInput
 }
 
 export type StockPurchaseUncheckedUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -893,6 +1289,8 @@ export type StockPurchaseUncheckedUpdateWithoutProductInput = {
 
 export type StockPurchaseUncheckedUpdateManyWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -907,6 +1305,8 @@ export type StockPurchaseUncheckedUpdateManyWithoutProductInput = {
 
 export type StockPurchaseCreateManyDistributorInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   productId: string
   companyId?: string | null
   invoiceNumber?: string
@@ -929,12 +1329,16 @@ export type StockPurchaseUpdateWithoutDistributorInput = {
   totalValue?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutStockPurchasesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutStockPurchasesNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutStockPurchasesNestedInput
   company?: Prisma.CompanyUpdateOneWithoutStockPurchasesNestedInput
 }
 
 export type StockPurchaseUncheckedUpdateWithoutDistributorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -949,6 +1353,8 @@ export type StockPurchaseUncheckedUpdateWithoutDistributorInput = {
 
 export type StockPurchaseUncheckedUpdateManyWithoutDistributorInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -963,6 +1369,8 @@ export type StockPurchaseUncheckedUpdateManyWithoutDistributorInput = {
 
 export type StockPurchaseCreateManyCompanyInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   productId: string
   distributorId?: string | null
   invoiceNumber?: string
@@ -985,12 +1393,16 @@ export type StockPurchaseUpdateWithoutCompanyInput = {
   totalValue?: Prisma.FloatFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutStockPurchasesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutStockPurchasesNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutStockPurchasesNestedInput
   distributor?: Prisma.DistributorUpdateOneWithoutStockPurchasesNestedInput
 }
 
 export type StockPurchaseUncheckedUpdateWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1005,6 +1417,8 @@ export type StockPurchaseUncheckedUpdateWithoutCompanyInput = {
 
 export type StockPurchaseUncheckedUpdateManyWithoutCompanyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.StringFieldUpdateOperationsInput | string
   distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1021,6 +1435,8 @@ export type StockPurchaseUncheckedUpdateManyWithoutCompanyInput = {
 
 export type StockPurchaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   productId?: boolean
   distributorId?: boolean
   companyId?: boolean
@@ -1032,6 +1448,8 @@ export type StockPurchaseSelect<ExtArgs extends runtime.Types.Extensions.Interna
   totalValue?: boolean
   active?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.StockPurchase$distributorArgs<ExtArgs>
   company?: boolean | Prisma.StockPurchase$companyArgs<ExtArgs>
@@ -1039,6 +1457,8 @@ export type StockPurchaseSelect<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type StockPurchaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   productId?: boolean
   distributorId?: boolean
   companyId?: boolean
@@ -1050,6 +1470,8 @@ export type StockPurchaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   totalValue?: boolean
   active?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.StockPurchase$distributorArgs<ExtArgs>
   company?: boolean | Prisma.StockPurchase$companyArgs<ExtArgs>
@@ -1057,6 +1479,8 @@ export type StockPurchaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 
 export type StockPurchaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   productId?: boolean
   distributorId?: boolean
   companyId?: boolean
@@ -1068,6 +1492,8 @@ export type StockPurchaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   totalValue?: boolean
   active?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.StockPurchase$distributorArgs<ExtArgs>
   company?: boolean | Prisma.StockPurchase$companyArgs<ExtArgs>
@@ -1075,6 +1501,8 @@ export type StockPurchaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 
 export type StockPurchaseSelectScalar = {
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   productId?: boolean
   distributorId?: boolean
   companyId?: boolean
@@ -1088,18 +1516,24 @@ export type StockPurchaseSelectScalar = {
   createdAt?: boolean
 }
 
-export type StockPurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "distributorId" | "companyId" | "invoiceNumber" | "quantity" | "purchasePrice" | "salePrice" | "expiry" | "totalValue" | "active" | "createdAt", ExtArgs["result"]["stockPurchase"]>
+export type StockPurchaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "productId" | "distributorId" | "companyId" | "invoiceNumber" | "quantity" | "purchasePrice" | "salePrice" | "expiry" | "totalValue" | "active" | "createdAt", ExtArgs["result"]["stockPurchase"]>
 export type StockPurchaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.StockPurchase$distributorArgs<ExtArgs>
   company?: boolean | Prisma.StockPurchase$companyArgs<ExtArgs>
 }
 export type StockPurchaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.StockPurchase$distributorArgs<ExtArgs>
   company?: boolean | Prisma.StockPurchase$companyArgs<ExtArgs>
 }
 export type StockPurchaseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   distributor?: boolean | Prisma.StockPurchase$distributorArgs<ExtArgs>
   company?: boolean | Prisma.StockPurchase$companyArgs<ExtArgs>
@@ -1108,12 +1542,16 @@ export type StockPurchaseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Type
 export type $StockPurchasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "StockPurchase"
   objects: {
+    pharmacy: Prisma.$PharmacyPayload<ExtArgs>
+    branch: Prisma.$BranchPayload<ExtArgs>
     product: Prisma.$ProductPayload<ExtArgs>
     distributor: Prisma.$DistributorPayload<ExtArgs> | null
     company: Prisma.$CompanyPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    pharmacyId: string
+    branchId: string
     productId: string
     distributorId: string | null
     companyId: string | null
@@ -1519,6 +1957,8 @@ readonly fields: StockPurchaseFieldRefs;
  */
 export interface Prisma__StockPurchaseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  pharmacy<T extends Prisma.PharmacyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PharmacyDefaultArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   distributor<T extends Prisma.StockPurchase$distributorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StockPurchase$distributorArgs<ExtArgs>>): Prisma.Prisma__DistributorClient<runtime.Types.Result.GetResult<Prisma.$DistributorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   company<T extends Prisma.StockPurchase$companyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StockPurchase$companyArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -1552,6 +1992,8 @@ export interface Prisma__StockPurchaseClient<T, Null = never, ExtArgs extends ru
  */
 export interface StockPurchaseFieldRefs {
   readonly id: Prisma.FieldRef<"StockPurchase", 'String'>
+  readonly pharmacyId: Prisma.FieldRef<"StockPurchase", 'String'>
+  readonly branchId: Prisma.FieldRef<"StockPurchase", 'String'>
   readonly productId: Prisma.FieldRef<"StockPurchase", 'String'>
   readonly distributorId: Prisma.FieldRef<"StockPurchase", 'String'>
   readonly companyId: Prisma.FieldRef<"StockPurchase", 'String'>

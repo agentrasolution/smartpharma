@@ -3,10 +3,19 @@ import { BadRequestError, NotFoundError } from "../../utils/errors";
 import { emitEvent } from "../../socket";
 import type { CreateReturnInput } from "./returns.schema";
 import { Prisma } from "../../generated/prisma/client";
+import type { BranchScope } from "../../middleware/auth";
+
+function branchWhere(scope: BranchScope) {
+  return {
+    pharmacyId: scope.pharmacyId,
+    ...(scope.branchId ? { branchId: scope.branchId } : {}),
+  };
+}
 
 export const returnsService = {
-  async list() {
+  async list(scope: BranchScope) {
     return prisma.returnEntry.findMany({
+      where: branchWhere(scope),
       orderBy: { createdAt: "desc" },
       include: {
         items: true,
@@ -15,9 +24,9 @@ export const returnsService = {
     });
   },
 
-  async getById(id: string) {
-    const entry = await prisma.returnEntry.findUnique({
-      where: { id },
+  async getById(scope: BranchScope, id: string) {
+    const entry = await prisma.returnEntry.findFirst({
+      where: { id, ...branchWhere(scope) },
       include: {
         items: true,
         sale: { include: { customer: { select: { name: true } } } },
@@ -27,10 +36,10 @@ export const returnsService = {
     return entry;
   },
 
-  async create(data: CreateReturnInput) {
+  async create(scope: BranchScope, data: CreateReturnInput) {
     return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
-      const sale = await tx.sale.findUnique({
-        where: { id: data.saleId },
+      const sale = await tx.sale.findFirst({
+        where: { id: data.saleId, ...branchWhere(scope) },
         include: {
           items: true,
           returns: { include: { items: true } },
@@ -61,6 +70,8 @@ export const returnsService = {
 
       const returnEntry = await tx.returnEntry.create({
         data: {
+          pharmacyId: sale.pharmacyId,
+          branchId: sale.branchId,
           saleId: data.saleId,
           refundAmount: data.refundAmount,
           reason: data.reason ?? "",

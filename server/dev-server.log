@@ -1,0 +1,7 @@
+
+> faraz-pharmacy-server@1.0.0 dev
+> tsx src/server.ts
+
+[FarazPharmacy] Database connected
+[FarazPharmacy] [daily-analysis] worker started, first run scheduled at 2:00
+[FarazPharmacy] Faraz Pharmacy API server running on port 3001

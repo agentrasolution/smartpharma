@@ -2,6 +2,7 @@ import { prisma } from "../../services/prisma";
 import { NotFoundError, BadRequestError } from "../../utils/errors";
 import type { CreateCustomerInput } from "./customers.schema";
 import { Prisma } from "../../generated/prisma/client";
+import type { BranchScope } from "../../middleware/auth";
 
 interface CustomerStats {
   total_purchases: number;
@@ -9,36 +10,74 @@ interface CustomerStats {
   last_purchase: string | null;
 }
 
-const customerStatsSelect = `
-  (SELECT COUNT(*)::int FROM sales s WHERE s.customer_id = c.id) AS total_purchases,
-  COALESCE((SELECT SUM(a.balance_due) FROM arrears a WHERE a.customer_id = c.id AND a.status = 'pending'), 0) AS outstanding_arrear,
-  (SELECT MAX(s.created_at) FROM sales s WHERE s.customer_id = c.id) AS last_purchase`;
+function buildCustomerStatsSelect(scope: BranchScope): string {
+  if (scope.branchId) {
+    return `
+      (SELECT COUNT(*)::int FROM sales s WHERE s.customer_id = c.id AND s.pharmacy_id = $1 AND s.branch_id = $2) AS total_purchases,
+      COALESCE((SELECT SUM(a.balance_due) FROM arrears a WHERE a.customer_id = c.id AND a.pharmacy_id = $1 AND a.branch_id = $2 AND a.status = 'pending'), 0) AS outstanding_arrear,
+      (SELECT MAX(s.created_at) FROM sales s WHERE s.customer_id = c.id AND s.pharmacy_id = $1 AND s.branch_id = $2) AS last_purchase`;
+  }
+  return `
+    (SELECT COUNT(*)::int FROM sales s WHERE s.customer_id = c.id AND s.pharmacy_id = $1) AS total_purchases,
+    COALESCE((SELECT SUM(a.balance_due) FROM arrears a WHERE a.customer_id = c.id AND a.pharmacy_id = $1 AND a.status = 'pending'), 0) AS outstanding_arrear,
+    (SELECT MAX(s.created_at) FROM sales s WHERE s.customer_id = c.id AND s.pharmacy_id = $1) AS last_purchase`;
+}
 
 export const customersService = {
-  async list() {
+  async list(scope: BranchScope) {
+    const customerStatsSelect = buildCustomerStatsSelect(scope);
+    if (scope.branchId) {
+      return prisma.$queryRawUnsafe<unknown[]>(
+        `SELECT c.id, c.name, c.phone, c.address, c.father_name, c.father_phone, c.created_at,
+          ${customerStatsSelect}
+         FROM customers c
+         WHERE c.pharmacy_id = $1 AND c.branch_id = $2
+         ORDER BY c.name ASC`,
+        scope.pharmacyId,
+        scope.branchId,
+      );
+    }
     return prisma.$queryRawUnsafe<unknown[]>(
       `SELECT c.id, c.name, c.phone, c.address, c.father_name, c.father_phone, c.created_at,
         ${customerStatsSelect}
        FROM customers c
+       WHERE c.pharmacy_id = $1
        ORDER BY c.name ASC`,
+      scope.pharmacyId,
     );
   },
 
-  async search(query: string) {
+  async search(scope: BranchScope, query: string) {
     const q = `%${query}%`;
+    const customerStatsSelect = buildCustomerStatsSelect(scope);
+    if (scope.branchId) {
+      return prisma.$queryRawUnsafe<unknown[]>(
+        `SELECT c.id, c.name, c.phone, c.address, c.father_name, c.father_phone, c.created_at,
+          ${customerStatsSelect}
+         FROM customers c
+         WHERE c.pharmacy_id = $1 AND c.branch_id = $2
+           AND (c.name ILIKE $3 OR c.phone ILIKE $3 OR c.father_name ILIKE $3 OR c.father_phone ILIKE $3)
+         ORDER BY c.name LIMIT 20`,
+        scope.pharmacyId,
+        scope.branchId,
+        q,
+      );
+    }
     return prisma.$queryRawUnsafe<unknown[]>(
       `SELECT c.id, c.name, c.phone, c.address, c.father_name, c.father_phone, c.created_at,
         ${customerStatsSelect}
        FROM customers c
-       WHERE c.name ILIKE $1 OR c.phone ILIKE $1 OR c.father_name ILIKE $1 OR c.father_phone ILIKE $1
+       WHERE c.pharmacy_id = $1
+         AND (c.name ILIKE $2 OR c.phone ILIKE $2 OR c.father_name ILIKE $2 OR c.father_phone ILIKE $2)
        ORDER BY c.name LIMIT 20`,
+      scope.pharmacyId,
       q,
     );
   },
 
-  async getById(id: string) {
-    const customer = await prisma.customer.findUnique({
-      where: { id },
+  async getById(scope: BranchScope, id: string) {
+    const customer = await prisma.customer.findFirst({
+      where: { id, pharmacyId: scope.pharmacyId, ...(scope.branchId ? { branchId: scope.branchId } : {}) },
       include: {
         sales: {
           orderBy: { createdAt: "desc" },
@@ -52,13 +91,21 @@ export const customersService = {
     });
     if (!customer) throw new NotFoundError("Customer");
 
+    const customerStatsSelect = buildCustomerStatsSelect(scope);
+    const statsWhere = scope.branchId
+      ? `WHERE c.id = $1 AND c.pharmacy_id = $2 AND c.branch_id = $3`
+      : `WHERE c.id = $1 AND c.pharmacy_id = $2`;
+    const statsParams = scope.branchId
+      ? [id, scope.pharmacyId, scope.branchId]
+      : [id, scope.pharmacyId];
+
     const [stats] = await prisma.$queryRawUnsafe<CustomerStats[]>(
       `SELECT
         ${customerStatsSelect}
        FROM customers c
-       WHERE c.id = $1
+       ${statsWhere}
        GROUP BY c.id`,
-      id,
+      ...statsParams,
     );
 
     return {
@@ -112,9 +159,11 @@ export const customersService = {
     };
   },
 
-  async create(data: CreateCustomerInput) {
+  async create(scope: BranchScope, data: CreateCustomerInput) {
     return prisma.customer.create({
       data: {
+        pharmacyId: scope.pharmacyId,
+        branchId: scope.branchId!,
         name: data.name,
         phone: data.phone ?? "",
         address: data.address ?? "",
@@ -124,8 +173,10 @@ export const customersService = {
     });
   },
 
-  async update(id: string, data: CreateCustomerInput) {
-    const existing = await prisma.customer.findUnique({ where: { id } });
+  async update(scope: BranchScope, id: string, data: CreateCustomerInput) {
+    const existing = await prisma.customer.findFirst({
+      where: { id, pharmacyId: scope.pharmacyId, ...(scope.branchId ? { branchId: scope.branchId } : {}) },
+    });
     if (!existing) throw new NotFoundError("Customer");
 
     return prisma.customer.update({
@@ -140,7 +191,12 @@ export const customersService = {
     });
   },
 
-  async delete(id: string, force = false) {
+  async delete(scope: BranchScope, id: string, force = false) {
+    const existing = await prisma.customer.findFirst({
+      where: { id, pharmacyId: scope.pharmacyId, ...(scope.branchId ? { branchId: scope.branchId } : {}) },
+    });
+    if (!existing) throw new NotFoundError("Customer");
+
     const salesCount = await prisma.sale.count({ where: { customerId: id } });
     const arrearsCount = await prisma.arrear.count({ where: { customerId: id } });
 

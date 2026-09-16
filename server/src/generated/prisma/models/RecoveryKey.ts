@@ -26,6 +26,7 @@ export type AggregateRecoveryKey = {
 
 export type RecoveryKeyMinAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
   keyHash: string | null
   createdAt: Date | null
   usedAt: Date | null
@@ -33,6 +34,7 @@ export type RecoveryKeyMinAggregateOutputType = {
 
 export type RecoveryKeyMaxAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
   keyHash: string | null
   createdAt: Date | null
   usedAt: Date | null
@@ -40,6 +42,7 @@ export type RecoveryKeyMaxAggregateOutputType = {
 
 export type RecoveryKeyCountAggregateOutputType = {
   id: number
+  pharmacyId: number
   keyHash: number
   createdAt: number
   usedAt: number
@@ -49,6 +52,7 @@ export type RecoveryKeyCountAggregateOutputType = {
 
 export type RecoveryKeyMinAggregateInputType = {
   id?: true
+  pharmacyId?: true
   keyHash?: true
   createdAt?: true
   usedAt?: true
@@ -56,6 +60,7 @@ export type RecoveryKeyMinAggregateInputType = {
 
 export type RecoveryKeyMaxAggregateInputType = {
   id?: true
+  pharmacyId?: true
   keyHash?: true
   createdAt?: true
   usedAt?: true
@@ -63,6 +68,7 @@ export type RecoveryKeyMaxAggregateInputType = {
 
 export type RecoveryKeyCountAggregateInputType = {
   id?: true
+  pharmacyId?: true
   keyHash?: true
   createdAt?: true
   usedAt?: true
@@ -143,6 +149,7 @@ export type RecoveryKeyGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type RecoveryKeyGroupByOutputType = {
   id: string
+  pharmacyId: string | null
   keyHash: string
   createdAt: Date
   usedAt: Date | null
@@ -171,16 +178,20 @@ export type RecoveryKeyWhereInput = {
   OR?: Prisma.RecoveryKeyWhereInput[]
   NOT?: Prisma.RecoveryKeyWhereInput | Prisma.RecoveryKeyWhereInput[]
   id?: Prisma.StringFilter<"RecoveryKey"> | string
+  pharmacyId?: Prisma.StringNullableFilter<"RecoveryKey"> | string | null
   keyHash?: Prisma.StringFilter<"RecoveryKey"> | string
   createdAt?: Prisma.DateTimeFilter<"RecoveryKey"> | Date | string
   usedAt?: Prisma.DateTimeNullableFilter<"RecoveryKey"> | Date | string | null
+  pharmacy?: Prisma.XOR<Prisma.PharmacyNullableScalarRelationFilter, Prisma.PharmacyWhereInput> | null
 }
 
 export type RecoveryKeyOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrderInput | Prisma.SortOrder
   keyHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  pharmacy?: Prisma.PharmacyOrderByWithRelationInput
 }
 
 export type RecoveryKeyWhereUniqueInput = Prisma.AtLeast<{
@@ -188,13 +199,16 @@ export type RecoveryKeyWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.RecoveryKeyWhereInput | Prisma.RecoveryKeyWhereInput[]
   OR?: Prisma.RecoveryKeyWhereInput[]
   NOT?: Prisma.RecoveryKeyWhereInput | Prisma.RecoveryKeyWhereInput[]
+  pharmacyId?: Prisma.StringNullableFilter<"RecoveryKey"> | string | null
   keyHash?: Prisma.StringFilter<"RecoveryKey"> | string
   createdAt?: Prisma.DateTimeFilter<"RecoveryKey"> | Date | string
   usedAt?: Prisma.DateTimeNullableFilter<"RecoveryKey"> | Date | string | null
+  pharmacy?: Prisma.XOR<Prisma.PharmacyNullableScalarRelationFilter, Prisma.PharmacyWhereInput> | null
 }, "id">
 
 export type RecoveryKeyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrderInput | Prisma.SortOrder
   keyHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -208,6 +222,7 @@ export type RecoveryKeyScalarWhereWithAggregatesInput = {
   OR?: Prisma.RecoveryKeyScalarWhereWithAggregatesInput[]
   NOT?: Prisma.RecoveryKeyScalarWhereWithAggregatesInput | Prisma.RecoveryKeyScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"RecoveryKey"> | string
+  pharmacyId?: Prisma.StringNullableWithAggregatesFilter<"RecoveryKey"> | string | null
   keyHash?: Prisma.StringWithAggregatesFilter<"RecoveryKey"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"RecoveryKey"> | Date | string
   usedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"RecoveryKey"> | Date | string | null
@@ -218,10 +233,12 @@ export type RecoveryKeyCreateInput = {
   keyHash: string
   createdAt?: Date | string
   usedAt?: Date | string | null
+  pharmacy?: Prisma.PharmacyCreateNestedOneWithoutRecoveryKeysInput
 }
 
 export type RecoveryKeyUncheckedCreateInput = {
   id?: string
+  pharmacyId?: string | null
   keyHash: string
   createdAt?: Date | string
   usedAt?: Date | string | null
@@ -232,10 +249,12 @@ export type RecoveryKeyUpdateInput = {
   keyHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pharmacy?: Prisma.PharmacyUpdateOneWithoutRecoveryKeysNestedInput
 }
 
 export type RecoveryKeyUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keyHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -243,6 +262,7 @@ export type RecoveryKeyUncheckedUpdateInput = {
 
 export type RecoveryKeyCreateManyInput = {
   id?: string
+  pharmacyId?: string | null
   keyHash: string
   createdAt?: Date | string
   usedAt?: Date | string | null
@@ -257,13 +277,25 @@ export type RecoveryKeyUpdateManyMutationInput = {
 
 export type RecoveryKeyUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   keyHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
+export type RecoveryKeyListRelationFilter = {
+  every?: Prisma.RecoveryKeyWhereInput
+  some?: Prisma.RecoveryKeyWhereInput
+  none?: Prisma.RecoveryKeyWhereInput
+}
+
+export type RecoveryKeyOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type RecoveryKeyCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   keyHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usedAt?: Prisma.SortOrder
@@ -271,6 +303,7 @@ export type RecoveryKeyCountOrderByAggregateInput = {
 
 export type RecoveryKeyMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   keyHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usedAt?: Prisma.SortOrder
@@ -278,48 +311,189 @@ export type RecoveryKeyMaxOrderByAggregateInput = {
 
 export type RecoveryKeyMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   keyHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   usedAt?: Prisma.SortOrder
+}
+
+export type RecoveryKeyCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.RecoveryKeyCreateWithoutPharmacyInput, Prisma.RecoveryKeyUncheckedCreateWithoutPharmacyInput> | Prisma.RecoveryKeyCreateWithoutPharmacyInput[] | Prisma.RecoveryKeyUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.RecoveryKeyCreateOrConnectWithoutPharmacyInput | Prisma.RecoveryKeyCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.RecoveryKeyCreateManyPharmacyInputEnvelope
+  connect?: Prisma.RecoveryKeyWhereUniqueInput | Prisma.RecoveryKeyWhereUniqueInput[]
+}
+
+export type RecoveryKeyUncheckedCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.RecoveryKeyCreateWithoutPharmacyInput, Prisma.RecoveryKeyUncheckedCreateWithoutPharmacyInput> | Prisma.RecoveryKeyCreateWithoutPharmacyInput[] | Prisma.RecoveryKeyUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.RecoveryKeyCreateOrConnectWithoutPharmacyInput | Prisma.RecoveryKeyCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.RecoveryKeyCreateManyPharmacyInputEnvelope
+  connect?: Prisma.RecoveryKeyWhereUniqueInput | Prisma.RecoveryKeyWhereUniqueInput[]
+}
+
+export type RecoveryKeyUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.RecoveryKeyCreateWithoutPharmacyInput, Prisma.RecoveryKeyUncheckedCreateWithoutPharmacyInput> | Prisma.RecoveryKeyCreateWithoutPharmacyInput[] | Prisma.RecoveryKeyUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.RecoveryKeyCreateOrConnectWithoutPharmacyInput | Prisma.RecoveryKeyCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.RecoveryKeyUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.RecoveryKeyUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.RecoveryKeyCreateManyPharmacyInputEnvelope
+  set?: Prisma.RecoveryKeyWhereUniqueInput | Prisma.RecoveryKeyWhereUniqueInput[]
+  disconnect?: Prisma.RecoveryKeyWhereUniqueInput | Prisma.RecoveryKeyWhereUniqueInput[]
+  delete?: Prisma.RecoveryKeyWhereUniqueInput | Prisma.RecoveryKeyWhereUniqueInput[]
+  connect?: Prisma.RecoveryKeyWhereUniqueInput | Prisma.RecoveryKeyWhereUniqueInput[]
+  update?: Prisma.RecoveryKeyUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.RecoveryKeyUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.RecoveryKeyUpdateManyWithWhereWithoutPharmacyInput | Prisma.RecoveryKeyUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.RecoveryKeyScalarWhereInput | Prisma.RecoveryKeyScalarWhereInput[]
+}
+
+export type RecoveryKeyUncheckedUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.RecoveryKeyCreateWithoutPharmacyInput, Prisma.RecoveryKeyUncheckedCreateWithoutPharmacyInput> | Prisma.RecoveryKeyCreateWithoutPharmacyInput[] | Prisma.RecoveryKeyUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.RecoveryKeyCreateOrConnectWithoutPharmacyInput | Prisma.RecoveryKeyCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.RecoveryKeyUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.RecoveryKeyUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.RecoveryKeyCreateManyPharmacyInputEnvelope
+  set?: Prisma.RecoveryKeyWhereUniqueInput | Prisma.RecoveryKeyWhereUniqueInput[]
+  disconnect?: Prisma.RecoveryKeyWhereUniqueInput | Prisma.RecoveryKeyWhereUniqueInput[]
+  delete?: Prisma.RecoveryKeyWhereUniqueInput | Prisma.RecoveryKeyWhereUniqueInput[]
+  connect?: Prisma.RecoveryKeyWhereUniqueInput | Prisma.RecoveryKeyWhereUniqueInput[]
+  update?: Prisma.RecoveryKeyUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.RecoveryKeyUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.RecoveryKeyUpdateManyWithWhereWithoutPharmacyInput | Prisma.RecoveryKeyUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.RecoveryKeyScalarWhereInput | Prisma.RecoveryKeyScalarWhereInput[]
+}
+
+export type RecoveryKeyCreateWithoutPharmacyInput = {
+  id?: string
+  keyHash: string
+  createdAt?: Date | string
+  usedAt?: Date | string | null
+}
+
+export type RecoveryKeyUncheckedCreateWithoutPharmacyInput = {
+  id?: string
+  keyHash: string
+  createdAt?: Date | string
+  usedAt?: Date | string | null
+}
+
+export type RecoveryKeyCreateOrConnectWithoutPharmacyInput = {
+  where: Prisma.RecoveryKeyWhereUniqueInput
+  create: Prisma.XOR<Prisma.RecoveryKeyCreateWithoutPharmacyInput, Prisma.RecoveryKeyUncheckedCreateWithoutPharmacyInput>
+}
+
+export type RecoveryKeyCreateManyPharmacyInputEnvelope = {
+  data: Prisma.RecoveryKeyCreateManyPharmacyInput | Prisma.RecoveryKeyCreateManyPharmacyInput[]
+  skipDuplicates?: boolean
+}
+
+export type RecoveryKeyUpsertWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.RecoveryKeyWhereUniqueInput
+  update: Prisma.XOR<Prisma.RecoveryKeyUpdateWithoutPharmacyInput, Prisma.RecoveryKeyUncheckedUpdateWithoutPharmacyInput>
+  create: Prisma.XOR<Prisma.RecoveryKeyCreateWithoutPharmacyInput, Prisma.RecoveryKeyUncheckedCreateWithoutPharmacyInput>
+}
+
+export type RecoveryKeyUpdateWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.RecoveryKeyWhereUniqueInput
+  data: Prisma.XOR<Prisma.RecoveryKeyUpdateWithoutPharmacyInput, Prisma.RecoveryKeyUncheckedUpdateWithoutPharmacyInput>
+}
+
+export type RecoveryKeyUpdateManyWithWhereWithoutPharmacyInput = {
+  where: Prisma.RecoveryKeyScalarWhereInput
+  data: Prisma.XOR<Prisma.RecoveryKeyUpdateManyMutationInput, Prisma.RecoveryKeyUncheckedUpdateManyWithoutPharmacyInput>
+}
+
+export type RecoveryKeyScalarWhereInput = {
+  AND?: Prisma.RecoveryKeyScalarWhereInput | Prisma.RecoveryKeyScalarWhereInput[]
+  OR?: Prisma.RecoveryKeyScalarWhereInput[]
+  NOT?: Prisma.RecoveryKeyScalarWhereInput | Prisma.RecoveryKeyScalarWhereInput[]
+  id?: Prisma.StringFilter<"RecoveryKey"> | string
+  pharmacyId?: Prisma.StringNullableFilter<"RecoveryKey"> | string | null
+  keyHash?: Prisma.StringFilter<"RecoveryKey"> | string
+  createdAt?: Prisma.DateTimeFilter<"RecoveryKey"> | Date | string
+  usedAt?: Prisma.DateTimeNullableFilter<"RecoveryKey"> | Date | string | null
+}
+
+export type RecoveryKeyCreateManyPharmacyInput = {
+  id?: string
+  keyHash: string
+  createdAt?: Date | string
+  usedAt?: Date | string | null
+}
+
+export type RecoveryKeyUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  keyHash?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type RecoveryKeyUncheckedUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  keyHash?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type RecoveryKeyUncheckedUpdateManyWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  keyHash?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  usedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
 
 export type RecoveryKeySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   keyHash?: boolean
   createdAt?: boolean
   usedAt?: boolean
+  pharmacy?: boolean | Prisma.RecoveryKey$pharmacyArgs<ExtArgs>
 }, ExtArgs["result"]["recoveryKey"]>
 
 export type RecoveryKeySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   keyHash?: boolean
   createdAt?: boolean
   usedAt?: boolean
+  pharmacy?: boolean | Prisma.RecoveryKey$pharmacyArgs<ExtArgs>
 }, ExtArgs["result"]["recoveryKey"]>
 
 export type RecoveryKeySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   keyHash?: boolean
   createdAt?: boolean
   usedAt?: boolean
+  pharmacy?: boolean | Prisma.RecoveryKey$pharmacyArgs<ExtArgs>
 }, ExtArgs["result"]["recoveryKey"]>
 
 export type RecoveryKeySelectScalar = {
   id?: boolean
+  pharmacyId?: boolean
   keyHash?: boolean
   createdAt?: boolean
   usedAt?: boolean
 }
 
-export type RecoveryKeyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "keyHash" | "createdAt" | "usedAt", ExtArgs["result"]["recoveryKey"]>
+export type RecoveryKeyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "keyHash" | "createdAt" | "usedAt", ExtArgs["result"]["recoveryKey"]>
+export type RecoveryKeyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.RecoveryKey$pharmacyArgs<ExtArgs>
+}
+export type RecoveryKeyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.RecoveryKey$pharmacyArgs<ExtArgs>
+}
+export type RecoveryKeyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.RecoveryKey$pharmacyArgs<ExtArgs>
+}
 
 export type $RecoveryKeyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "RecoveryKey"
-  objects: {}
+  objects: {
+    pharmacy: Prisma.$PharmacyPayload<ExtArgs> | null
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    pharmacyId: string | null
     keyHash: string
     createdAt: Date
     usedAt: Date | null
@@ -717,6 +891,7 @@ readonly fields: RecoveryKeyFieldRefs;
  */
 export interface Prisma__RecoveryKeyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  pharmacy<T extends Prisma.RecoveryKey$pharmacyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.RecoveryKey$pharmacyArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -747,6 +922,7 @@ export interface Prisma__RecoveryKeyClient<T, Null = never, ExtArgs extends runt
  */
 export interface RecoveryKeyFieldRefs {
   readonly id: Prisma.FieldRef<"RecoveryKey", 'String'>
+  readonly pharmacyId: Prisma.FieldRef<"RecoveryKey", 'String'>
   readonly keyHash: Prisma.FieldRef<"RecoveryKey", 'String'>
   readonly createdAt: Prisma.FieldRef<"RecoveryKey", 'DateTime'>
   readonly usedAt: Prisma.FieldRef<"RecoveryKey", 'DateTime'>
@@ -767,6 +943,10 @@ export type RecoveryKeyFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.RecoveryKeyOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyInclude<ExtArgs> | null
+  /**
    * Filter, which RecoveryKey to fetch.
    */
   where: Prisma.RecoveryKeyWhereUniqueInput
@@ -785,6 +965,10 @@ export type RecoveryKeyFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Exten
    */
   omit?: Prisma.RecoveryKeyOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyInclude<ExtArgs> | null
+  /**
    * Filter, which RecoveryKey to fetch.
    */
   where: Prisma.RecoveryKeyWhereUniqueInput
@@ -802,6 +986,10 @@ export type RecoveryKeyFindFirstArgs<ExtArgs extends runtime.Types.Extensions.In
    * Omit specific fields from the RecoveryKey
    */
   omit?: Prisma.RecoveryKeyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyInclude<ExtArgs> | null
   /**
    * Filter, which RecoveryKey to fetch.
    */
@@ -851,6 +1039,10 @@ export type RecoveryKeyFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extens
    */
   omit?: Prisma.RecoveryKeyOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyInclude<ExtArgs> | null
+  /**
    * Filter, which RecoveryKey to fetch.
    */
   where?: Prisma.RecoveryKeyWhereInput
@@ -898,6 +1090,10 @@ export type RecoveryKeyFindManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the RecoveryKey
    */
   omit?: Prisma.RecoveryKeyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyInclude<ExtArgs> | null
   /**
    * Filter, which RecoveryKeys to fetch.
    */
@@ -947,6 +1143,10 @@ export type RecoveryKeyCreateArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   omit?: Prisma.RecoveryKeyOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyInclude<ExtArgs> | null
+  /**
    * The data needed to create a RecoveryKey.
    */
   data: Prisma.XOR<Prisma.RecoveryKeyCreateInput, Prisma.RecoveryKeyUncheckedCreateInput>
@@ -980,6 +1180,10 @@ export type RecoveryKeyCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    */
   data: Prisma.RecoveryKeyCreateManyInput | Prisma.RecoveryKeyCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -994,6 +1198,10 @@ export type RecoveryKeyUpdateArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the RecoveryKey
    */
   omit?: Prisma.RecoveryKeyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyInclude<ExtArgs> | null
   /**
    * The data needed to update a RecoveryKey.
    */
@@ -1046,6 +1254,10 @@ export type RecoveryKeyUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Ext
    * Limit how many RecoveryKeys to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1060,6 +1272,10 @@ export type RecoveryKeyUpsertArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the RecoveryKey
    */
   omit?: Prisma.RecoveryKeyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyInclude<ExtArgs> | null
   /**
    * The filter to search for the RecoveryKey to update in case it exists.
    */
@@ -1087,6 +1303,10 @@ export type RecoveryKeyDeleteArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   omit?: Prisma.RecoveryKeyOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyInclude<ExtArgs> | null
+  /**
    * Filter which RecoveryKey to delete.
    */
   where: Prisma.RecoveryKeyWhereUniqueInput
@@ -1107,6 +1327,25 @@ export type RecoveryKeyDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
+ * RecoveryKey.pharmacy
+ */
+export type RecoveryKey$pharmacyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Pharmacy
+   */
+  select?: Prisma.PharmacySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Pharmacy
+   */
+  omit?: Prisma.PharmacyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PharmacyInclude<ExtArgs> | null
+  where?: Prisma.PharmacyWhereInput
+}
+
+/**
  * RecoveryKey without action
  */
 export type RecoveryKeyDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1118,4 +1357,8 @@ export type RecoveryKeyDefaultArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the RecoveryKey
    */
   omit?: Prisma.RecoveryKeyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RecoveryKeyInclude<ExtArgs> | null
 }

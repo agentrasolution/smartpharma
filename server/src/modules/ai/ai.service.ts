@@ -6,6 +6,7 @@ import { InventoryAgent } from "../../ai/agents/inventory/inventory.agent";
 import { auditService } from "../../audit/audit.service";
 import { settingsService } from "../settings/settings.service";
 import { randomUUID } from "crypto";
+import type { BranchScope } from "../../middleware/auth";
 
 function buildAgent() {
   const aiCfg = settingsService.getAIConfig();
@@ -41,11 +42,19 @@ function toChatMessage(msg: MessageRow): AIChatMessage {
 }
 
 export const aiService = {
-  async chat(userId: string, username: string, role: string, message: string, conversationId?: string) {
+  async chat(
+    scope: BranchScope,
+    userId: string,
+    username: string,
+    role: string,
+    message: string,
+    conversationId?: string,
+  ) {
     const requestId = randomUUID();
 
+    // A conversation can only be resumed by the user who owns it.
     let conv = conversationId
-      ? await prisma.aIConversation.findUnique({ where: { id: conversationId } })
+      ? await prisma.aIConversation.findFirst({ where: { id: conversationId, userId } })
       : null;
     if (conversationId && !conv) throw new NotFoundError("Conversation");
 
@@ -66,7 +75,15 @@ export const aiService = {
     const history = historyRows.map(toChatMessage);
 
     const result = await buildAgent().run(
-      { userId, username, role, agentName: "InventoryAgent", requestId },
+      {
+        userId,
+        username,
+        role,
+        agentName: "InventoryAgent",
+        requestId,
+        pharmacyId: scope.pharmacyId,
+        branchId: scope.branchId ?? null,
+      },
       { conversationId: conv.id, history },
       message,
     );
@@ -99,9 +116,9 @@ export const aiService = {
     });
   },
 
-  async getConversation(id: string) {
-    const conv = await prisma.aIConversation.findUnique({
-      where: { id },
+  async getConversation(id: string, userId: string) {
+    const conv = await prisma.aIConversation.findFirst({
+      where: { id, userId },
       include: {
         messages: {
           orderBy: { createdAt: "asc" },

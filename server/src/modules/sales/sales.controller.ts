@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { salesService } from "./sales.service";
+import { branchScope } from "../../middleware/auth";
 
 function normalizeSale(s: Record<string, unknown> | null): Record<string, unknown> | null {
   if (!s) return null;
@@ -43,39 +44,44 @@ function normalizeSale(s: Record<string, unknown> | null): Record<string, unknow
 export const salesController = {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const sale = await salesService.create(req.body);
+      const scope = branchScope(req);
+      const sale = await salesService.create(req.body, scope);
       res.json(normalizeSale(sale));
     } catch (err) { next(err); }
   },
 
   async listRecent(req: Request, res: Response, next: NextFunction) {
     try {
+      const scope = branchScope(req);
       const limit = parseInt(req.query.limit as string) || 10;
-      const sales = await salesService.listRecent(limit);
+      const sales = await salesService.listRecent(scope, limit);
       res.json(sales.map(normalizeSale));
     } catch (err) { next(err); }
   },
 
   async search(req: Request, res: Response, next: NextFunction) {
     try {
+      const scope = branchScope(req);
       const q = (req.query.q as string) ?? "";
       if (!q.trim()) return res.json([]);
-      const sales = await salesService.search(q);
+      const sales = await salesService.search(scope, q);
       res.json(sales.map(normalizeSale));
     } catch (err) { next(err); }
   },
 
   async listByDate(req: Request, res: Response, next: NextFunction) {
     try {
+      const scope = branchScope(req);
       const tzOffsetMinutes = parseInt(req.query.tzOffset as string, 10) || 0;
-      const sales = await salesService.listByDate(req.params.date, tzOffsetMinutes);
+      const sales = await salesService.listByDate(scope, req.params.date, tzOffsetMinutes);
       res.json(sales.map(normalizeSale));
     } catch (err) { next(err); }
   },
 
   async listAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const sales = await salesService.listAll({
+      const scope = branchScope(req);
+      const sales = await salesService.listAll(scope, {
         search: req.query.search as string,
         dateFrom: req.query.dateFrom as string,
         dateTo: req.query.dateTo as string,
@@ -87,7 +93,8 @@ export const salesController = {
 
   async getById(req: Request, res: Response, next: NextFunction) {
     try {
-      const sale = await salesService.getById(req.params.id);
+      const scope = branchScope(req);
+      const sale = await salesService.getById(scope, req.params.id);
       res.json(normalizeSale(sale));
     } catch (err) { next(err); }
   },

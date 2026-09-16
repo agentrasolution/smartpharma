@@ -3,6 +3,7 @@ import { config } from "./config/env";
 import { app } from "./app";
 import { logger } from "./utils/logger";
 import { prisma } from "./services/prisma";
+import { bootstrapPlatform } from "./services/bootstrap";
 import { initializeSocket, getIO } from "./socket";
 import { startDailyAnalysisWorker, stopDailyAnalysisWorker } from "./workers/daily-analysis.worker";
 import "./config/env.js";
@@ -12,6 +13,8 @@ async function main() {
     await prisma.$connect();
     logger.info("Database connected");
 
+    await bootstrapPlatform();
+
     if (config.workerEnabled) {
       startDailyAnalysisWorker();
     }
@@ -20,7 +23,7 @@ async function main() {
     initializeSocket(httpServer);
 
     httpServer.listen(config.port, "0.0.0.0", () => {
-      logger.info(`Faraz Pharmacy API server running on port ${config.port}`);
+      logger.info(`SmartPharma API server running on port ${config.port}`);
     });
   } catch (err) {
     logger.error("Failed to start server:", err);

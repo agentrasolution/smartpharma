@@ -28,8 +28,14 @@ export const createProductSchema = z.object({
       z.number().int().min(0).optional().default(1)
     ),
   prices: z.array(priceTierSchema).optional(),
+  branchId: z.string().optional(),
 });
 
 export const updateProductSchema = createProductSchema;
+
+export const copyCatalogSchema = z.object({
+  fromBranchId: z.string().min(1),
+  toBranchId: z.string().min(1),
+});
 
 export type CreateProductInput = z.infer<typeof createProductSchema>;

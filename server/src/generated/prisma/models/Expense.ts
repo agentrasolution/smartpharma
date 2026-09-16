@@ -36,6 +36,8 @@ export type ExpenseSumAggregateOutputType = {
 
 export type ExpenseMinAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
+  branchId: string | null
   title: string | null
   category: string | null
   amount: number | null
@@ -46,6 +48,8 @@ export type ExpenseMinAggregateOutputType = {
 
 export type ExpenseMaxAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
+  branchId: string | null
   title: string | null
   category: string | null
   amount: number | null
@@ -56,6 +60,8 @@ export type ExpenseMaxAggregateOutputType = {
 
 export type ExpenseCountAggregateOutputType = {
   id: number
+  pharmacyId: number
+  branchId: number
   title: number
   category: number
   amount: number
@@ -76,6 +82,8 @@ export type ExpenseSumAggregateInputType = {
 
 export type ExpenseMinAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   title?: true
   category?: true
   amount?: true
@@ -86,6 +94,8 @@ export type ExpenseMinAggregateInputType = {
 
 export type ExpenseMaxAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   title?: true
   category?: true
   amount?: true
@@ -96,6 +106,8 @@ export type ExpenseMaxAggregateInputType = {
 
 export type ExpenseCountAggregateInputType = {
   id?: true
+  pharmacyId?: true
+  branchId?: true
   title?: true
   category?: true
   amount?: true
@@ -193,6 +205,8 @@ export type ExpenseGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type ExpenseGroupByOutputType = {
   id: string
+  pharmacyId: string
+  branchId: string
   title: string
   category: string
   amount: number
@@ -226,22 +240,30 @@ export type ExpenseWhereInput = {
   OR?: Prisma.ExpenseWhereInput[]
   NOT?: Prisma.ExpenseWhereInput | Prisma.ExpenseWhereInput[]
   id?: Prisma.StringFilter<"Expense"> | string
+  pharmacyId?: Prisma.StringFilter<"Expense"> | string
+  branchId?: Prisma.StringFilter<"Expense"> | string
   title?: Prisma.StringFilter<"Expense"> | string
   category?: Prisma.StringFilter<"Expense"> | string
   amount?: Prisma.FloatFilter<"Expense"> | number
   notes?: Prisma.StringFilter<"Expense"> | string
   date?: Prisma.StringFilter<"Expense"> | string
   createdAt?: Prisma.DateTimeFilter<"Expense"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
 }
 
 export type ExpenseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   category?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   date?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  pharmacy?: Prisma.PharmacyOrderByWithRelationInput
+  branch?: Prisma.BranchOrderByWithRelationInput
 }
 
 export type ExpenseWhereUniqueInput = Prisma.AtLeast<{
@@ -249,16 +271,22 @@ export type ExpenseWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ExpenseWhereInput | Prisma.ExpenseWhereInput[]
   OR?: Prisma.ExpenseWhereInput[]
   NOT?: Prisma.ExpenseWhereInput | Prisma.ExpenseWhereInput[]
+  pharmacyId?: Prisma.StringFilter<"Expense"> | string
+  branchId?: Prisma.StringFilter<"Expense"> | string
   title?: Prisma.StringFilter<"Expense"> | string
   category?: Prisma.StringFilter<"Expense"> | string
   amount?: Prisma.FloatFilter<"Expense"> | number
   notes?: Prisma.StringFilter<"Expense"> | string
   date?: Prisma.StringFilter<"Expense"> | string
   createdAt?: Prisma.DateTimeFilter<"Expense"> | Date | string
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
+  branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
 }, "id">
 
 export type ExpenseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   category?: Prisma.SortOrder
   amount?: Prisma.SortOrder
@@ -277,6 +305,8 @@ export type ExpenseScalarWhereWithAggregatesInput = {
   OR?: Prisma.ExpenseScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ExpenseScalarWhereWithAggregatesInput | Prisma.ExpenseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Expense"> | string
+  pharmacyId?: Prisma.StringWithAggregatesFilter<"Expense"> | string
+  branchId?: Prisma.StringWithAggregatesFilter<"Expense"> | string
   title?: Prisma.StringWithAggregatesFilter<"Expense"> | string
   category?: Prisma.StringWithAggregatesFilter<"Expense"> | string
   amount?: Prisma.FloatWithAggregatesFilter<"Expense"> | number
@@ -293,10 +323,14 @@ export type ExpenseCreateInput = {
   notes?: string
   date: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutExpensesInput
+  branch: Prisma.BranchCreateNestedOneWithoutExpensesInput
 }
 
 export type ExpenseUncheckedCreateInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   title: string
   category: string
   amount?: number
@@ -313,10 +347,14 @@ export type ExpenseUpdateInput = {
   notes?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutExpensesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutExpensesNestedInput
 }
 
 export type ExpenseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -327,6 +365,8 @@ export type ExpenseUncheckedUpdateInput = {
 
 export type ExpenseCreateManyInput = {
   id?: string
+  pharmacyId: string
+  branchId: string
   title: string
   category: string
   amount?: number
@@ -347,6 +387,8 @@ export type ExpenseUpdateManyMutationInput = {
 
 export type ExpenseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -355,8 +397,20 @@ export type ExpenseUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type ExpenseListRelationFilter = {
+  every?: Prisma.ExpenseWhereInput
+  some?: Prisma.ExpenseWhereInput
+  none?: Prisma.ExpenseWhereInput
+}
+
+export type ExpenseOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type ExpenseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   category?: Prisma.SortOrder
   amount?: Prisma.SortOrder
@@ -371,6 +425,8 @@ export type ExpenseAvgOrderByAggregateInput = {
 
 export type ExpenseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   category?: Prisma.SortOrder
   amount?: Prisma.SortOrder
@@ -381,6 +437,8 @@ export type ExpenseMaxOrderByAggregateInput = {
 
 export type ExpenseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
+  branchId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   category?: Prisma.SortOrder
   amount?: Prisma.SortOrder
@@ -393,40 +451,337 @@ export type ExpenseSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
 }
 
+export type ExpenseCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutPharmacyInput, Prisma.ExpenseUncheckedCreateWithoutPharmacyInput> | Prisma.ExpenseCreateWithoutPharmacyInput[] | Prisma.ExpenseUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutPharmacyInput | Prisma.ExpenseCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.ExpenseCreateManyPharmacyInputEnvelope
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+}
+
+export type ExpenseUncheckedCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutPharmacyInput, Prisma.ExpenseUncheckedCreateWithoutPharmacyInput> | Prisma.ExpenseCreateWithoutPharmacyInput[] | Prisma.ExpenseUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutPharmacyInput | Prisma.ExpenseCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.ExpenseCreateManyPharmacyInputEnvelope
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+}
+
+export type ExpenseUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutPharmacyInput, Prisma.ExpenseUncheckedCreateWithoutPharmacyInput> | Prisma.ExpenseCreateWithoutPharmacyInput[] | Prisma.ExpenseUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutPharmacyInput | Prisma.ExpenseCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.ExpenseUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.ExpenseUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.ExpenseCreateManyPharmacyInputEnvelope
+  set?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  disconnect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  delete?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  update?: Prisma.ExpenseUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.ExpenseUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.ExpenseUpdateManyWithWhereWithoutPharmacyInput | Prisma.ExpenseUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
+}
+
+export type ExpenseUncheckedUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutPharmacyInput, Prisma.ExpenseUncheckedCreateWithoutPharmacyInput> | Prisma.ExpenseCreateWithoutPharmacyInput[] | Prisma.ExpenseUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutPharmacyInput | Prisma.ExpenseCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.ExpenseUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.ExpenseUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.ExpenseCreateManyPharmacyInputEnvelope
+  set?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  disconnect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  delete?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  update?: Prisma.ExpenseUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.ExpenseUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.ExpenseUpdateManyWithWhereWithoutPharmacyInput | Prisma.ExpenseUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
+}
+
+export type ExpenseCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutBranchInput, Prisma.ExpenseUncheckedCreateWithoutBranchInput> | Prisma.ExpenseCreateWithoutBranchInput[] | Prisma.ExpenseUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutBranchInput | Prisma.ExpenseCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.ExpenseCreateManyBranchInputEnvelope
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+}
+
+export type ExpenseUncheckedCreateNestedManyWithoutBranchInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutBranchInput, Prisma.ExpenseUncheckedCreateWithoutBranchInput> | Prisma.ExpenseCreateWithoutBranchInput[] | Prisma.ExpenseUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutBranchInput | Prisma.ExpenseCreateOrConnectWithoutBranchInput[]
+  createMany?: Prisma.ExpenseCreateManyBranchInputEnvelope
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+}
+
+export type ExpenseUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutBranchInput, Prisma.ExpenseUncheckedCreateWithoutBranchInput> | Prisma.ExpenseCreateWithoutBranchInput[] | Prisma.ExpenseUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutBranchInput | Prisma.ExpenseCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.ExpenseUpsertWithWhereUniqueWithoutBranchInput | Prisma.ExpenseUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.ExpenseCreateManyBranchInputEnvelope
+  set?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  disconnect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  delete?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  update?: Prisma.ExpenseUpdateWithWhereUniqueWithoutBranchInput | Prisma.ExpenseUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.ExpenseUpdateManyWithWhereWithoutBranchInput | Prisma.ExpenseUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
+}
+
+export type ExpenseUncheckedUpdateManyWithoutBranchNestedInput = {
+  create?: Prisma.XOR<Prisma.ExpenseCreateWithoutBranchInput, Prisma.ExpenseUncheckedCreateWithoutBranchInput> | Prisma.ExpenseCreateWithoutBranchInput[] | Prisma.ExpenseUncheckedCreateWithoutBranchInput[]
+  connectOrCreate?: Prisma.ExpenseCreateOrConnectWithoutBranchInput | Prisma.ExpenseCreateOrConnectWithoutBranchInput[]
+  upsert?: Prisma.ExpenseUpsertWithWhereUniqueWithoutBranchInput | Prisma.ExpenseUpsertWithWhereUniqueWithoutBranchInput[]
+  createMany?: Prisma.ExpenseCreateManyBranchInputEnvelope
+  set?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  disconnect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  delete?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  connect?: Prisma.ExpenseWhereUniqueInput | Prisma.ExpenseWhereUniqueInput[]
+  update?: Prisma.ExpenseUpdateWithWhereUniqueWithoutBranchInput | Prisma.ExpenseUpdateWithWhereUniqueWithoutBranchInput[]
+  updateMany?: Prisma.ExpenseUpdateManyWithWhereWithoutBranchInput | Prisma.ExpenseUpdateManyWithWhereWithoutBranchInput[]
+  deleteMany?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
+}
+
+export type ExpenseCreateWithoutPharmacyInput = {
+  id?: string
+  title: string
+  category: string
+  amount?: number
+  notes?: string
+  date: string
+  createdAt?: Date | string
+  branch: Prisma.BranchCreateNestedOneWithoutExpensesInput
+}
+
+export type ExpenseUncheckedCreateWithoutPharmacyInput = {
+  id?: string
+  branchId: string
+  title: string
+  category: string
+  amount?: number
+  notes?: string
+  date: string
+  createdAt?: Date | string
+}
+
+export type ExpenseCreateOrConnectWithoutPharmacyInput = {
+  where: Prisma.ExpenseWhereUniqueInput
+  create: Prisma.XOR<Prisma.ExpenseCreateWithoutPharmacyInput, Prisma.ExpenseUncheckedCreateWithoutPharmacyInput>
+}
+
+export type ExpenseCreateManyPharmacyInputEnvelope = {
+  data: Prisma.ExpenseCreateManyPharmacyInput | Prisma.ExpenseCreateManyPharmacyInput[]
+  skipDuplicates?: boolean
+}
+
+export type ExpenseUpsertWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.ExpenseWhereUniqueInput
+  update: Prisma.XOR<Prisma.ExpenseUpdateWithoutPharmacyInput, Prisma.ExpenseUncheckedUpdateWithoutPharmacyInput>
+  create: Prisma.XOR<Prisma.ExpenseCreateWithoutPharmacyInput, Prisma.ExpenseUncheckedCreateWithoutPharmacyInput>
+}
+
+export type ExpenseUpdateWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.ExpenseWhereUniqueInput
+  data: Prisma.XOR<Prisma.ExpenseUpdateWithoutPharmacyInput, Prisma.ExpenseUncheckedUpdateWithoutPharmacyInput>
+}
+
+export type ExpenseUpdateManyWithWhereWithoutPharmacyInput = {
+  where: Prisma.ExpenseScalarWhereInput
+  data: Prisma.XOR<Prisma.ExpenseUpdateManyMutationInput, Prisma.ExpenseUncheckedUpdateManyWithoutPharmacyInput>
+}
+
+export type ExpenseScalarWhereInput = {
+  AND?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
+  OR?: Prisma.ExpenseScalarWhereInput[]
+  NOT?: Prisma.ExpenseScalarWhereInput | Prisma.ExpenseScalarWhereInput[]
+  id?: Prisma.StringFilter<"Expense"> | string
+  pharmacyId?: Prisma.StringFilter<"Expense"> | string
+  branchId?: Prisma.StringFilter<"Expense"> | string
+  title?: Prisma.StringFilter<"Expense"> | string
+  category?: Prisma.StringFilter<"Expense"> | string
+  amount?: Prisma.FloatFilter<"Expense"> | number
+  notes?: Prisma.StringFilter<"Expense"> | string
+  date?: Prisma.StringFilter<"Expense"> | string
+  createdAt?: Prisma.DateTimeFilter<"Expense"> | Date | string
+}
+
+export type ExpenseCreateWithoutBranchInput = {
+  id?: string
+  title: string
+  category: string
+  amount?: number
+  notes?: string
+  date: string
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutExpensesInput
+}
+
+export type ExpenseUncheckedCreateWithoutBranchInput = {
+  id?: string
+  pharmacyId: string
+  title: string
+  category: string
+  amount?: number
+  notes?: string
+  date: string
+  createdAt?: Date | string
+}
+
+export type ExpenseCreateOrConnectWithoutBranchInput = {
+  where: Prisma.ExpenseWhereUniqueInput
+  create: Prisma.XOR<Prisma.ExpenseCreateWithoutBranchInput, Prisma.ExpenseUncheckedCreateWithoutBranchInput>
+}
+
+export type ExpenseCreateManyBranchInputEnvelope = {
+  data: Prisma.ExpenseCreateManyBranchInput | Prisma.ExpenseCreateManyBranchInput[]
+  skipDuplicates?: boolean
+}
+
+export type ExpenseUpsertWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.ExpenseWhereUniqueInput
+  update: Prisma.XOR<Prisma.ExpenseUpdateWithoutBranchInput, Prisma.ExpenseUncheckedUpdateWithoutBranchInput>
+  create: Prisma.XOR<Prisma.ExpenseCreateWithoutBranchInput, Prisma.ExpenseUncheckedCreateWithoutBranchInput>
+}
+
+export type ExpenseUpdateWithWhereUniqueWithoutBranchInput = {
+  where: Prisma.ExpenseWhereUniqueInput
+  data: Prisma.XOR<Prisma.ExpenseUpdateWithoutBranchInput, Prisma.ExpenseUncheckedUpdateWithoutBranchInput>
+}
+
+export type ExpenseUpdateManyWithWhereWithoutBranchInput = {
+  where: Prisma.ExpenseScalarWhereInput
+  data: Prisma.XOR<Prisma.ExpenseUpdateManyMutationInput, Prisma.ExpenseUncheckedUpdateManyWithoutBranchInput>
+}
+
+export type ExpenseCreateManyPharmacyInput = {
+  id?: string
+  branchId: string
+  title: string
+  category: string
+  amount?: number
+  notes?: string
+  date: string
+  createdAt?: Date | string
+}
+
+export type ExpenseUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  branch?: Prisma.BranchUpdateOneRequiredWithoutExpensesNestedInput
+}
+
+export type ExpenseUncheckedUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ExpenseUncheckedUpdateManyWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ExpenseCreateManyBranchInput = {
+  id?: string
+  pharmacyId: string
+  title: string
+  category: string
+  amount?: number
+  notes?: string
+  date: string
+  createdAt?: Date | string
+}
+
+export type ExpenseUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutExpensesNestedInput
+}
+
+export type ExpenseUncheckedUpdateWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ExpenseUncheckedUpdateManyWithoutBranchInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.FloatFieldUpdateOperationsInput | number
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  date?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 
 
 export type ExpenseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   title?: boolean
   category?: boolean
   amount?: boolean
   notes?: boolean
   date?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["expense"]>
 
 export type ExpenseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   title?: boolean
   category?: boolean
   amount?: boolean
   notes?: boolean
   date?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["expense"]>
 
 export type ExpenseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   title?: boolean
   category?: boolean
   amount?: boolean
   notes?: boolean
   date?: boolean
   createdAt?: boolean
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["expense"]>
 
 export type ExpenseSelectScalar = {
   id?: boolean
+  pharmacyId?: boolean
+  branchId?: boolean
   title?: boolean
   category?: boolean
   amount?: boolean
@@ -435,13 +790,30 @@ export type ExpenseSelectScalar = {
   createdAt?: boolean
 }
 
-export type ExpenseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "category" | "amount" | "notes" | "date" | "createdAt", ExtArgs["result"]["expense"]>
+export type ExpenseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "title" | "category" | "amount" | "notes" | "date" | "createdAt", ExtArgs["result"]["expense"]>
+export type ExpenseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
+}
+export type ExpenseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
+}
+export type ExpenseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
+  branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
+}
 
 export type $ExpensePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Expense"
-  objects: {}
+  objects: {
+    pharmacy: Prisma.$PharmacyPayload<ExtArgs>
+    branch: Prisma.$BranchPayload<ExtArgs>
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    pharmacyId: string
+    branchId: string
     title: string
     category: string
     amount: number
@@ -842,6 +1214,8 @@ readonly fields: ExpenseFieldRefs;
  */
 export interface Prisma__ExpenseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  pharmacy<T extends Prisma.PharmacyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PharmacyDefaultArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -872,6 +1246,8 @@ export interface Prisma__ExpenseClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface ExpenseFieldRefs {
   readonly id: Prisma.FieldRef<"Expense", 'String'>
+  readonly pharmacyId: Prisma.FieldRef<"Expense", 'String'>
+  readonly branchId: Prisma.FieldRef<"Expense", 'String'>
   readonly title: Prisma.FieldRef<"Expense", 'String'>
   readonly category: Prisma.FieldRef<"Expense", 'String'>
   readonly amount: Prisma.FieldRef<"Expense", 'Float'>
@@ -895,6 +1271,10 @@ export type ExpenseFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   omit?: Prisma.ExpenseOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
+  /**
    * Filter, which Expense to fetch.
    */
   where: Prisma.ExpenseWhereUniqueInput
@@ -913,6 +1293,10 @@ export type ExpenseFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.ExpenseOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
+  /**
    * Filter, which Expense to fetch.
    */
   where: Prisma.ExpenseWhereUniqueInput
@@ -930,6 +1314,10 @@ export type ExpenseFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Expense
    */
   omit?: Prisma.ExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
   /**
    * Filter, which Expense to fetch.
    */
@@ -979,6 +1367,10 @@ export type ExpenseFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.ExpenseOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
+  /**
    * Filter, which Expense to fetch.
    */
   where?: Prisma.ExpenseWhereInput
@@ -1026,6 +1418,10 @@ export type ExpenseFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Expense
    */
   omit?: Prisma.ExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
   /**
    * Filter, which Expenses to fetch.
    */
@@ -1075,6 +1471,10 @@ export type ExpenseCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.ExpenseOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
+  /**
    * The data needed to create a Expense.
    */
   data: Prisma.XOR<Prisma.ExpenseCreateInput, Prisma.ExpenseUncheckedCreateInput>
@@ -1108,6 +1508,10 @@ export type ExpenseCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    */
   data: Prisma.ExpenseCreateManyInput | Prisma.ExpenseCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1122,6 +1526,10 @@ export type ExpenseUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Expense
    */
   omit?: Prisma.ExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
   /**
    * The data needed to update a Expense.
    */
@@ -1174,6 +1582,10 @@ export type ExpenseUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many Expenses to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1188,6 +1600,10 @@ export type ExpenseUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Expense
    */
   omit?: Prisma.ExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
   /**
    * The filter to search for the Expense to update in case it exists.
    */
@@ -1214,6 +1630,10 @@ export type ExpenseDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Expense
    */
   omit?: Prisma.ExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
   /**
    * Filter which Expense to delete.
    */
@@ -1246,4 +1666,8 @@ export type ExpenseDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Expense
    */
   omit?: Prisma.ExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExpenseInclude<ExtArgs> | null
 }

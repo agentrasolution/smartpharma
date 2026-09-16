@@ -26,6 +26,7 @@ export type AggregateBarcode = {
 
 export type BarcodeMinAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
   code: string | null
   productId: string | null
   createdAt: Date | null
@@ -33,6 +34,7 @@ export type BarcodeMinAggregateOutputType = {
 
 export type BarcodeMaxAggregateOutputType = {
   id: string | null
+  pharmacyId: string | null
   code: string | null
   productId: string | null
   createdAt: Date | null
@@ -40,6 +42,7 @@ export type BarcodeMaxAggregateOutputType = {
 
 export type BarcodeCountAggregateOutputType = {
   id: number
+  pharmacyId: number
   code: number
   productId: number
   createdAt: number
@@ -49,6 +52,7 @@ export type BarcodeCountAggregateOutputType = {
 
 export type BarcodeMinAggregateInputType = {
   id?: true
+  pharmacyId?: true
   code?: true
   productId?: true
   createdAt?: true
@@ -56,6 +60,7 @@ export type BarcodeMinAggregateInputType = {
 
 export type BarcodeMaxAggregateInputType = {
   id?: true
+  pharmacyId?: true
   code?: true
   productId?: true
   createdAt?: true
@@ -63,6 +68,7 @@ export type BarcodeMaxAggregateInputType = {
 
 export type BarcodeCountAggregateInputType = {
   id?: true
+  pharmacyId?: true
   code?: true
   productId?: true
   createdAt?: true
@@ -143,6 +149,7 @@ export type BarcodeGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type BarcodeGroupByOutputType = {
   id: string
+  pharmacyId: string
   code: string
   productId: string | null
   createdAt: Date
@@ -171,18 +178,22 @@ export type BarcodeWhereInput = {
   OR?: Prisma.BarcodeWhereInput[]
   NOT?: Prisma.BarcodeWhereInput | Prisma.BarcodeWhereInput[]
   id?: Prisma.StringFilter<"Barcode"> | string
+  pharmacyId?: Prisma.StringFilter<"Barcode"> | string
   code?: Prisma.StringFilter<"Barcode"> | string
   productId?: Prisma.StringNullableFilter<"Barcode"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Barcode"> | Date | string
   product?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
 }
 
 export type BarcodeOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   code?: Prisma.SortOrder
   productId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   product?: Prisma.ProductOrderByWithRelationInput
+  pharmacy?: Prisma.PharmacyOrderByWithRelationInput
 }
 
 export type BarcodeWhereUniqueInput = Prisma.AtLeast<{
@@ -192,12 +203,15 @@ export type BarcodeWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.BarcodeWhereInput | Prisma.BarcodeWhereInput[]
   OR?: Prisma.BarcodeWhereInput[]
   NOT?: Prisma.BarcodeWhereInput | Prisma.BarcodeWhereInput[]
+  pharmacyId?: Prisma.StringFilter<"Barcode"> | string
   createdAt?: Prisma.DateTimeFilter<"Barcode"> | Date | string
   product?: Prisma.XOR<Prisma.ProductNullableScalarRelationFilter, Prisma.ProductWhereInput> | null
+  pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
 }, "id" | "code" | "productId">
 
 export type BarcodeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   code?: Prisma.SortOrder
   productId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -211,6 +225,7 @@ export type BarcodeScalarWhereWithAggregatesInput = {
   OR?: Prisma.BarcodeScalarWhereWithAggregatesInput[]
   NOT?: Prisma.BarcodeScalarWhereWithAggregatesInput | Prisma.BarcodeScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Barcode"> | string
+  pharmacyId?: Prisma.StringWithAggregatesFilter<"Barcode"> | string
   code?: Prisma.StringWithAggregatesFilter<"Barcode"> | string
   productId?: Prisma.StringNullableWithAggregatesFilter<"Barcode"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Barcode"> | Date | string
@@ -221,10 +236,12 @@ export type BarcodeCreateInput = {
   code: string
   createdAt?: Date | string
   product?: Prisma.ProductCreateNestedOneWithoutBarcodeLinkInput
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBarcodesInput
 }
 
 export type BarcodeUncheckedCreateInput = {
   id?: string
+  pharmacyId: string
   code: string
   productId?: string | null
   createdAt?: Date | string
@@ -235,10 +252,12 @@ export type BarcodeUpdateInput = {
   code?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   product?: Prisma.ProductUpdateOneWithoutBarcodeLinkNestedInput
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBarcodesNestedInput
 }
 
 export type BarcodeUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -246,6 +265,7 @@ export type BarcodeUncheckedUpdateInput = {
 
 export type BarcodeCreateManyInput = {
   id?: string
+  pharmacyId: string
   code: string
   productId?: string | null
   createdAt?: Date | string
@@ -259,9 +279,20 @@ export type BarcodeUpdateManyMutationInput = {
 
 export type BarcodeUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type BarcodeListRelationFilter = {
+  every?: Prisma.BarcodeWhereInput
+  some?: Prisma.BarcodeWhereInput
+  none?: Prisma.BarcodeWhereInput
+}
+
+export type BarcodeOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type BarcodeNullableScalarRelationFilter = {
@@ -271,6 +302,7 @@ export type BarcodeNullableScalarRelationFilter = {
 
 export type BarcodeCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   code?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -278,6 +310,7 @@ export type BarcodeCountOrderByAggregateInput = {
 
 export type BarcodeMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   code?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -285,9 +318,52 @@ export type BarcodeMaxOrderByAggregateInput = {
 
 export type BarcodeMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  pharmacyId?: Prisma.SortOrder
   code?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type BarcodeCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.BarcodeCreateWithoutPharmacyInput, Prisma.BarcodeUncheckedCreateWithoutPharmacyInput> | Prisma.BarcodeCreateWithoutPharmacyInput[] | Prisma.BarcodeUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.BarcodeCreateOrConnectWithoutPharmacyInput | Prisma.BarcodeCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.BarcodeCreateManyPharmacyInputEnvelope
+  connect?: Prisma.BarcodeWhereUniqueInput | Prisma.BarcodeWhereUniqueInput[]
+}
+
+export type BarcodeUncheckedCreateNestedManyWithoutPharmacyInput = {
+  create?: Prisma.XOR<Prisma.BarcodeCreateWithoutPharmacyInput, Prisma.BarcodeUncheckedCreateWithoutPharmacyInput> | Prisma.BarcodeCreateWithoutPharmacyInput[] | Prisma.BarcodeUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.BarcodeCreateOrConnectWithoutPharmacyInput | Prisma.BarcodeCreateOrConnectWithoutPharmacyInput[]
+  createMany?: Prisma.BarcodeCreateManyPharmacyInputEnvelope
+  connect?: Prisma.BarcodeWhereUniqueInput | Prisma.BarcodeWhereUniqueInput[]
+}
+
+export type BarcodeUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.BarcodeCreateWithoutPharmacyInput, Prisma.BarcodeUncheckedCreateWithoutPharmacyInput> | Prisma.BarcodeCreateWithoutPharmacyInput[] | Prisma.BarcodeUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.BarcodeCreateOrConnectWithoutPharmacyInput | Prisma.BarcodeCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.BarcodeUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.BarcodeUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.BarcodeCreateManyPharmacyInputEnvelope
+  set?: Prisma.BarcodeWhereUniqueInput | Prisma.BarcodeWhereUniqueInput[]
+  disconnect?: Prisma.BarcodeWhereUniqueInput | Prisma.BarcodeWhereUniqueInput[]
+  delete?: Prisma.BarcodeWhereUniqueInput | Prisma.BarcodeWhereUniqueInput[]
+  connect?: Prisma.BarcodeWhereUniqueInput | Prisma.BarcodeWhereUniqueInput[]
+  update?: Prisma.BarcodeUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.BarcodeUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.BarcodeUpdateManyWithWhereWithoutPharmacyInput | Prisma.BarcodeUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.BarcodeScalarWhereInput | Prisma.BarcodeScalarWhereInput[]
+}
+
+export type BarcodeUncheckedUpdateManyWithoutPharmacyNestedInput = {
+  create?: Prisma.XOR<Prisma.BarcodeCreateWithoutPharmacyInput, Prisma.BarcodeUncheckedCreateWithoutPharmacyInput> | Prisma.BarcodeCreateWithoutPharmacyInput[] | Prisma.BarcodeUncheckedCreateWithoutPharmacyInput[]
+  connectOrCreate?: Prisma.BarcodeCreateOrConnectWithoutPharmacyInput | Prisma.BarcodeCreateOrConnectWithoutPharmacyInput[]
+  upsert?: Prisma.BarcodeUpsertWithWhereUniqueWithoutPharmacyInput | Prisma.BarcodeUpsertWithWhereUniqueWithoutPharmacyInput[]
+  createMany?: Prisma.BarcodeCreateManyPharmacyInputEnvelope
+  set?: Prisma.BarcodeWhereUniqueInput | Prisma.BarcodeWhereUniqueInput[]
+  disconnect?: Prisma.BarcodeWhereUniqueInput | Prisma.BarcodeWhereUniqueInput[]
+  delete?: Prisma.BarcodeWhereUniqueInput | Prisma.BarcodeWhereUniqueInput[]
+  connect?: Prisma.BarcodeWhereUniqueInput | Prisma.BarcodeWhereUniqueInput[]
+  update?: Prisma.BarcodeUpdateWithWhereUniqueWithoutPharmacyInput | Prisma.BarcodeUpdateWithWhereUniqueWithoutPharmacyInput[]
+  updateMany?: Prisma.BarcodeUpdateManyWithWhereWithoutPharmacyInput | Prisma.BarcodeUpdateManyWithWhereWithoutPharmacyInput[]
+  deleteMany?: Prisma.BarcodeScalarWhereInput | Prisma.BarcodeScalarWhereInput[]
 }
 
 export type BarcodeCreateNestedOneWithoutProductInput = {
@@ -322,14 +398,67 @@ export type BarcodeUncheckedUpdateOneWithoutProductNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BarcodeUpdateToOneWithWhereWithoutProductInput, Prisma.BarcodeUpdateWithoutProductInput>, Prisma.BarcodeUncheckedUpdateWithoutProductInput>
 }
 
+export type BarcodeCreateWithoutPharmacyInput = {
+  id?: string
+  code: string
+  createdAt?: Date | string
+  product?: Prisma.ProductCreateNestedOneWithoutBarcodeLinkInput
+}
+
+export type BarcodeUncheckedCreateWithoutPharmacyInput = {
+  id?: string
+  code: string
+  productId?: string | null
+  createdAt?: Date | string
+}
+
+export type BarcodeCreateOrConnectWithoutPharmacyInput = {
+  where: Prisma.BarcodeWhereUniqueInput
+  create: Prisma.XOR<Prisma.BarcodeCreateWithoutPharmacyInput, Prisma.BarcodeUncheckedCreateWithoutPharmacyInput>
+}
+
+export type BarcodeCreateManyPharmacyInputEnvelope = {
+  data: Prisma.BarcodeCreateManyPharmacyInput | Prisma.BarcodeCreateManyPharmacyInput[]
+  skipDuplicates?: boolean
+}
+
+export type BarcodeUpsertWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.BarcodeWhereUniqueInput
+  update: Prisma.XOR<Prisma.BarcodeUpdateWithoutPharmacyInput, Prisma.BarcodeUncheckedUpdateWithoutPharmacyInput>
+  create: Prisma.XOR<Prisma.BarcodeCreateWithoutPharmacyInput, Prisma.BarcodeUncheckedCreateWithoutPharmacyInput>
+}
+
+export type BarcodeUpdateWithWhereUniqueWithoutPharmacyInput = {
+  where: Prisma.BarcodeWhereUniqueInput
+  data: Prisma.XOR<Prisma.BarcodeUpdateWithoutPharmacyInput, Prisma.BarcodeUncheckedUpdateWithoutPharmacyInput>
+}
+
+export type BarcodeUpdateManyWithWhereWithoutPharmacyInput = {
+  where: Prisma.BarcodeScalarWhereInput
+  data: Prisma.XOR<Prisma.BarcodeUpdateManyMutationInput, Prisma.BarcodeUncheckedUpdateManyWithoutPharmacyInput>
+}
+
+export type BarcodeScalarWhereInput = {
+  AND?: Prisma.BarcodeScalarWhereInput | Prisma.BarcodeScalarWhereInput[]
+  OR?: Prisma.BarcodeScalarWhereInput[]
+  NOT?: Prisma.BarcodeScalarWhereInput | Prisma.BarcodeScalarWhereInput[]
+  id?: Prisma.StringFilter<"Barcode"> | string
+  pharmacyId?: Prisma.StringFilter<"Barcode"> | string
+  code?: Prisma.StringFilter<"Barcode"> | string
+  productId?: Prisma.StringNullableFilter<"Barcode"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Barcode"> | Date | string
+}
+
 export type BarcodeCreateWithoutProductInput = {
   id?: string
   code: string
   createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBarcodesInput
 }
 
 export type BarcodeUncheckedCreateWithoutProductInput = {
   id?: string
+  pharmacyId: string
   code: string
   createdAt?: Date | string
 }
@@ -354,11 +483,41 @@ export type BarcodeUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBarcodesNestedInput
 }
 
 export type BarcodeUncheckedUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type BarcodeCreateManyPharmacyInput = {
+  id?: string
+  code: string
+  productId?: string | null
+  createdAt?: Date | string
+}
+
+export type BarcodeUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  product?: Prisma.ProductUpdateOneWithoutBarcodeLinkNestedInput
+}
+
+export type BarcodeUncheckedUpdateWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type BarcodeUncheckedUpdateManyWithoutPharmacyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -366,53 +525,65 @@ export type BarcodeUncheckedUpdateWithoutProductInput = {
 
 export type BarcodeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   code?: boolean
   productId?: boolean
   createdAt?: boolean
   product?: boolean | Prisma.Barcode$productArgs<ExtArgs>
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["barcode"]>
 
 export type BarcodeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   code?: boolean
   productId?: boolean
   createdAt?: boolean
   product?: boolean | Prisma.Barcode$productArgs<ExtArgs>
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["barcode"]>
 
 export type BarcodeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  pharmacyId?: boolean
   code?: boolean
   productId?: boolean
   createdAt?: boolean
   product?: boolean | Prisma.Barcode$productArgs<ExtArgs>
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["barcode"]>
 
 export type BarcodeSelectScalar = {
   id?: boolean
+  pharmacyId?: boolean
   code?: boolean
   productId?: boolean
   createdAt?: boolean
 }
 
-export type BarcodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "productId" | "createdAt", ExtArgs["result"]["barcode"]>
+export type BarcodeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "code" | "productId" | "createdAt", ExtArgs["result"]["barcode"]>
 export type BarcodeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.Barcode$productArgs<ExtArgs>
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
 }
 export type BarcodeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.Barcode$productArgs<ExtArgs>
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
 }
 export type BarcodeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.Barcode$productArgs<ExtArgs>
+  pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
 }
 
 export type $BarcodePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Barcode"
   objects: {
     product: Prisma.$ProductPayload<ExtArgs> | null
+    pharmacy: Prisma.$PharmacyPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    pharmacyId: string
     code: string
     productId: string | null
     createdAt: Date
@@ -811,6 +982,7 @@ readonly fields: BarcodeFieldRefs;
 export interface Prisma__BarcodeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   product<T extends Prisma.Barcode$productArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Barcode$productArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  pharmacy<T extends Prisma.PharmacyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PharmacyDefaultArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -841,6 +1013,7 @@ export interface Prisma__BarcodeClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface BarcodeFieldRefs {
   readonly id: Prisma.FieldRef<"Barcode", 'String'>
+  readonly pharmacyId: Prisma.FieldRef<"Barcode", 'String'>
   readonly code: Prisma.FieldRef<"Barcode", 'String'>
   readonly productId: Prisma.FieldRef<"Barcode", 'String'>
   readonly createdAt: Prisma.FieldRef<"Barcode", 'DateTime'>

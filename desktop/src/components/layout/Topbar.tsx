@@ -3,9 +3,11 @@ import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Server, Monitor, Sun, Moon, RefreshCw, Database, Wifi, Clock } from "lucide-react";
 import { useServerConnection } from "@/contexts/ServerConnectionContext";
+import { useAuth } from "@/contexts/AuthContext";
 import GlobalSearch from "@/components/shared/GlobalSearch";
 
 const pageLabels: Record<string, { title: string; subtitle: string }> = {
+  "/platform": { title: "Platform Admin", subtitle: "Registered pharmacies & subscriptions" },
   "/dashboard": { title: "Dashboard", subtitle: "Business overview" },
   "/pos": { title: "Point of Sale", subtitle: "Create and manage sales" },
   "/products": { title: "Products", subtitle: "Inventory management" },
@@ -20,6 +22,10 @@ const pageLabels: Record<string, { title: string; subtitle: string }> = {
   "/expenses": { title: "Expenses", subtitle: "Expense tracking" },
   "/reports": { title: "Reports", subtitle: "Business insights" },
   "/settings": { title: "Settings", subtitle: "System configuration" },
+  "/users": { title: "Users", subtitle: "User accounts & access" },
+  "/roles": { title: "Roles & Permissions", subtitle: "Role-based access control" },
+  "/branches": { title: "Branches", subtitle: "Pharmacy branches & staff" },
+  "/change-password": { title: "Change Password", subtitle: "Update your account password" },
 };
 
 export default function Topbar() {
@@ -62,6 +68,8 @@ export default function Topbar() {
   }
 
   const { isOnline, isInitialCheck, connectionInfo, reconnect } = useServerConnection();
+  const { user } = useAuth();
+  const isPlatform = user?.role === "platform";
   const page = pageLabels[location.pathname] || { title: "Dashboard", subtitle: "Business overview" };
   const isServer = window.appConfig?.mode === "server";
 
@@ -88,7 +96,7 @@ export default function Topbar() {
             <p className="text-[11px] text-text-secondary leading-none mt-0.5">{page.subtitle}</p>
           </motion.div>
 
-          <GlobalSearch />
+          {!isPlatform && <GlobalSearch />}
         </div>
 
         <div className="flex items-center gap-3">

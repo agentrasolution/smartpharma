@@ -36,6 +36,8 @@ export interface Product {
   company: string;
   category: string;
   location: string;
+  pharmacy_id?: string;
+  branch_id?: string;
   distributor_id?: string;
   sale_price: number;
   purchase_price: number;
@@ -51,6 +53,7 @@ export interface Product {
 export interface ProductInput {
   barcode: string;
   name: string;
+  company?: string;
   distributorId?: string;
   salePrice?: number;
   purchasePrice: number;
@@ -60,6 +63,7 @@ export interface ProductInput {
   expiry?: string;
   packSize?: number;
   prices?: ProductPriceInput[];
+  branchId?: string;
 }
 
 export interface Customer {
@@ -458,4 +462,225 @@ export interface AITestResult {
   error?: string;
   model?: string;
   provider?: string;
+}
+
+export type JobRole =
+  | "admin"
+  | "manager"
+  | "stock_manager"
+  | "salesman"
+  | "cashier"
+  | "helper";
+
+export const JOB_ROLES: JobRole[] = [
+  "admin",
+  "manager",
+  "stock_manager",
+  "salesman",
+  "cashier",
+  "helper",
+];
+
+export const JOB_ROLE_LABELS: Record<string, string> = {
+  admin: "Admin",
+  manager: "Manager",
+  stock_manager: "Stock Manager",
+  salesman: "Salesman",
+  cashier: "Cashier",
+  helper: "Helper",
+};
+
+export interface BranchUserMember {
+  id: string;
+  username: string;
+  name: string;
+  jobRole: string;
+  isActive: boolean;
+}
+
+export interface Branch {
+  id: string;
+  name: string;
+  address: string;
+  phone: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  userCount: number;
+  adminCount: number;
+  managerCount: number;
+  stockManagerCount: number;
+  salesmanCount: number;
+  cashierCount: number;
+  helperCount: number;
+  otherCount: number;
+  users: BranchUserMember[];
+}
+
+export interface BranchInput {
+  name: string;
+  address?: string;
+  phone?: string;
+  isActive?: boolean;
+}
+
+export interface Permission {
+  id: string;
+  name: string;
+  description?: string | null;
+}
+
+export interface PermissionInput {
+  name: string;
+  description?: string;
+}
+
+export interface RoleRef {
+  id: string;
+  name: string;
+}
+
+export interface UserRef {
+  id: string;
+  username: string;
+}
+
+export interface UserListItem {
+  id: string;
+  username: string;
+  name: string;
+  phone: string;
+  email: string;
+  role: string;
+  roleId: string | null;
+  roleName: string | null;
+  branchId: string | null;
+  branchName: string | null;
+  jobRole: string;
+  permissions: string[];
+  isActive: boolean;
+  mustChangePassword: boolean;
+  passwordChangedAt: string | null;
+  lastLoginAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UserInput {
+  username: string;
+  name: string;
+  phone?: string;
+  email?: string;
+  roleId: string;
+  branchId?: string | null;
+  jobRole?: JobRole | "";
+  isActive?: boolean;
+}
+
+export interface UpdateUserInput {
+  name?: string;
+  phone?: string;
+  email?: string;
+  roleId?: string;
+  branchId?: string | null;
+  jobRole?: JobRole | "";
+  isActive?: boolean;
+}
+
+export interface RoleListItem {
+  id: string;
+  name: string;
+  description: string;
+  permissions: Permission[];
+  userCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RoleInput {
+  name: string;
+  description?: string;
+  permissionNames: string[];
+}
+
+export interface ChangePasswordInput {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface SubscriptionInfo {
+  status: string;
+  plan: string;
+  price: number;
+  startedAt?: string;
+  renewsAt: string | null;
+  cancelledAt?: string | null;
+}
+
+export interface Pharmacy {
+  id: string;
+  name: string;
+  slug: string;
+  contact: string;
+  phone: string;
+  email: string;
+  address: string;
+  isActive: boolean;
+  createdAt: string;
+  counts?: {
+    branches: number;
+    users: number;
+    products: number;
+    roles?: number;
+  };
+  subscription: SubscriptionInfo | null;
+}
+
+export interface RegisterInput {
+  pharmacyName: string;
+  branchName?: string;
+  name: string;
+  username: string;
+  password: string;
+  email?: string;
+  phone?: string;
+  contact?: string;
+  address?: string;
+}
+
+export interface AuthUser {
+  id: string;
+  username: string;
+  name: string;
+  phone: string;
+  email: string;
+  role: string;
+  roleId: string | null;
+  roleName: string | null;
+  branchId: string | null;
+  branchName: string | null;
+  jobRole: string;
+  pharmacyId: string;
+  pharmacyName: string;
+  pharmacySlug: string;
+  subscription: SubscriptionInfo | null;
+  permissions: string[];
+  isActive: boolean;
+  mustChangePassword: boolean;
+  passwordChangedAt: string | null;
+  lastLoginAt: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface AuthLoginResponse {
+  accessToken: string;
+  refreshToken: string;
+  csrfToken: string;
+  user: AuthUser;
+}
+
+export interface CreateUserResult {
+  user: UserListItem;
+  temporaryPassword: string;
 }

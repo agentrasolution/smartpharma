@@ -1,4 +1,4 @@
-import type {
+﻿import type {
   Product, ProductInput, Customer, CustomerInput, Sale, SaleInput,
   Arrear, ArrearInput, StockPurchase, StockInput, Distributor, DistributorInput,
   Company, CompanyInput, ReturnEntry, ReturnInput, Expense, ExpenseInput,
@@ -7,8 +7,23 @@ import type {
   AIRecommendationSummary, AIChatReply, AIConversation, AIConversationDetail,
   AIAuditLog, PurchaseOrder, PurchaseOrderStatus,
   AIConfig, AITestResult,
+  AuthUser, RegisterInput, Pharmacy, SubscriptionInfo,
+  Permission, RoleListItem, RoleInput,
+  UserListItem, UserInput, UpdateUserInput,
+  Branch, BranchInput,
 } from "@/types";
 import type { BackupResult, BackupEntry, GDriveConfig } from "@/types/electron";
+
+export class ApiError extends Error {
+  status: number;
+  code?: string;
+  constructor(message: string, status: number, code?: string) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.code = code;
+  }
+}
 
 function getApiUrl(): string {
   const cfg = window.appConfig?.serverUrl?.trim();
@@ -33,31 +48,56 @@ async function fetchJson<T>(method: string, path: string, body?: unknown, auth =
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-    throw new Error(err.error || `API error: ${res.status}`);
+    if (res.status === 402) {
+      window.dispatchEvent(new CustomEvent("subscription:blocked", { detail: { error: err.error } }));
+    }
+    throw new ApiError(err.error || `API error: ${res.status}`, res.status, err.code);
   }
   return res.json();
 }
 
 const api = {
   auth: {
+    register: (input: RegisterInput): Promise<{
+      accessToken: string; refreshToken: string; csrfToken: string;
+      user: AuthUser;
+    }> =>
+      fetchJson("POST", "/api/auth/register", input, false),
     login: (username: string, password: string): Promise<{
       accessToken: string; refreshToken: string; csrfToken: string;
-      user: { id: string; username: string; role: string };
+      user: AuthUser;
     }> =>
       fetchJson("POST", "/api/auth/login", { username, password }, false),
     refresh: (refreshToken: string): Promise<{
       accessToken: string; refreshToken: string; csrfToken: string;
-      user: { id: string; username: string; role: string };
+      user: AuthUser;
     }> =>
       fetchJson("POST", "/api/auth/refresh", { refreshToken }, false),
+    me: (): Promise<AuthUser> => fetchJson("GET", "/api/auth/me"),
     logout: (accessToken: string): Promise<{ success: boolean }> =>
       fetchJson("POST", "/api/auth/logout", { accessToken }),
+    changePassword: (currentPassword: string, newPassword: string): Promise<{
+      accessToken: string; refreshToken: string; csrfToken: string;
+      user: AuthUser;
+    }> =>
+      fetchJson("POST", "/api/auth/change-password", { currentPassword, newPassword }),
     verifyPassword: (password: string): Promise<{ valid: boolean }> =>
-      fetchJson("POST", "/api/auth/verify-password", { password }, false),
+      fetchJson("POST", "/api/auth/verify-password", { password }),
     generateRecoveryKey: (): Promise<{ phrase: string }> =>
-      fetchJson("POST", "/api/auth/generate-recovery-key", undefined, false),
-    recoverPassword: (phrase: string, newPassword: string): Promise<{ success: boolean; error?: string }> =>
-      fetchJson("POST", "/api/auth/recover-password", { phrase, newPassword }, false),
+      fetchJson("POST", "/api/auth/generate-recovery-key"),
+    recoverPassword: (phrase: string, newPassword: string, username: string): Promise<{ success: boolean; error?: string }> =>
+      fetchJson("POST", "/api/auth/recover-password", { phrase, newPassword, username }, false),
+  },
+  pharmacy: {
+    get: (): Promise<Pharmacy> => fetchJson("GET", "/api/pharmacy"),
+    update: (input: Partial<Pick<Pharmacy, "name" | "contact" | "phone" | "email" | "address">>): Promise<Pharmacy> =>
+      fetchJson("PATCH", "/api/pharmacy", input),
+    adminList: (): Promise<Pharmacy[]> => fetchJson("GET", "/api/pharmacy/admin/pharmacies"),
+    adminUpdateSubscription: (
+      pharmacyId: string,
+      input: Partial<SubscriptionInfo> & { extendMonths?: number },
+    ): Promise<SubscriptionInfo> =>
+      fetchJson("PATCH", `/api/pharmacy/admin/pharmacies/${pharmacyId}/subscription`, input),
   },
   products: {
     list: (opts?: { page?: number; pageSize?: number; search?: string; includeArchived?: boolean }): Promise<Paginated<Product>> => {
@@ -229,6 +269,46 @@ const api = {
       fetchJson("POST", `/api/v1/purchase-orders/${id}/approve`),
     reject: (id: string, reason: string): Promise<PurchaseOrder> =>
       fetchJson("POST", `/api/v1/purchase-orders/${id}/reject`, { id, reason }),
+  },
+  users: {
+    list: (opts?: { search?: string; role?: string; status?: "active" | "inactive" | "all" }): Promise<UserListItem[]> => {
+      const params = new URLSearchParams();
+      if (opts?.search) params.set("search", opts.search);
+      if (opts?.role) params.set("role", opts.role);
+      if (opts?.status && opts.status !== "all") params.set("status", opts.status);
+      const qs = params.toString();
+      return fetchJson("GET", `/api/users${qs ? `?${qs}` : ""}`);
+    },
+    getById: (id: string): Promise<UserListItem> => fetchJson("GET", `/api/users/${id}`),
+    create: (input: UserInput): Promise<{ user: UserListItem; temporaryPassword: string }> =>
+      fetchJson("POST", "/api/users", input),
+    update: (id: string, input: UpdateUserInput): Promise<UserListItem> =>
+      fetchJson("PATCH", `/api/users/${id}`, input),
+    updateStatus: (id: string, isActive: boolean): Promise<UserListItem> =>
+      fetchJson("PATCH", `/api/users/${id}/status`, { isActive }),
+    resetPassword: (id: string): Promise<{ user: UserListItem; temporaryPassword: string }> =>
+      fetchJson("POST", `/api/users/${id}/reset-password`),
+    remove: (id: string): Promise<{ success: boolean }> => fetchJson("DELETE", `/api/users/${id}`),
+  },
+  roles: {
+    list: (): Promise<RoleListItem[]> => fetchJson("GET", "/api/roles"),
+    getById: (id: string): Promise<RoleListItem> => fetchJson("GET", `/api/roles/${id}`),
+    create: (input: RoleInput): Promise<RoleListItem> => fetchJson("POST", "/api/roles", input),
+    update: (id: string, input: RoleInput): Promise<RoleListItem> =>
+      fetchJson("PATCH", `/api/roles/${id}`, input),
+    remove: (id: string): Promise<{ success: boolean }> => fetchJson("DELETE", `/api/roles/${id}`),
+  },
+  permissions: {
+    list: (): Promise<Permission[]> => fetchJson("GET", "/api/permissions"),
+  },
+  branches: {
+    list: (): Promise<Branch[]> => fetchJson("GET", "/api/branches"),
+    getById: (id: string): Promise<Branch> => fetchJson("GET", `/api/branches/${id}`),
+    create: (input: BranchInput): Promise<Branch> => fetchJson("POST", "/api/branches", input),
+    update: (id: string, input: BranchInput): Promise<Branch> =>
+      fetchJson("PATCH", `/api/branches/${id}`, input),
+    remove: (id: string): Promise<{ success: boolean }> =>
+      fetchJson("DELETE", `/api/branches/${id}`),
   },
 };
 

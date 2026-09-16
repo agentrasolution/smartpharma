@@ -1,3 +1,4 @@
+import { prisma } from "../services/prisma";
 import { logger } from "../utils/logger";
 import { recommendationService } from "../inventory/recommendations.service";
 
@@ -21,10 +22,24 @@ function currentMsToNextRun(hour: number, minute: number): number {
   return next.getTime() - now.getTime();
 }
 
-/** Run the full analysis + recommendation pass now. Safe to call on-demand. */
+/**
+ * Run the full analysis + recommendation pass now. Safe to call on-demand.
+ * Analyses run per branch so every query stays scoped to its pharmacy/branch.
+ */
 export async function runAnalysisNow(days = 30): Promise<{ expired: number; created: number }> {
   const expired = await recommendationService.expireStale();
-  const created = await recommendationService.generate(days);
+  const branches = await prisma.branch.findMany({
+    where: { isActive: true },
+    select: { id: true, pharmacyId: true },
+  });
+  let created = 0;
+  for (const branch of branches) {
+    const n = await recommendationService.generate(
+      { pharmacyId: branch.pharmacyId, branchId: branch.id },
+      days,
+    );
+    created += n;
+  }
   logger.info(`[daily-analysis] expired=${expired} recommendations created=${created}`);
   return { expired, created };
 }
