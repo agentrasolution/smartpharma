@@ -12,7 +12,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { JOB_ROLE_LABELS } from "@/types";
 import { toast } from "sonner";
 import { api } from "@/lib/api";
-import logoSrc from "@/asset/image/logo.png";
+
 
 const tenantNavItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -113,7 +113,6 @@ export default function Sidebar() {
         collapsed ? "justify-center" : "px-4 gap-3"
       )}>
         <div className="flex items-center justify-center rounded-lg h-9 w-9 bg-sidebar-primary/10 shrink-0 overflow-hidden">
-          <img src={logoSrc} alt="Faraz Pharmacy" className="h-6 w-6 object-contain" />
         </div>
         <AnimatePresence>
           {!collapsed && (
@@ -124,7 +123,7 @@ export default function Sidebar() {
               className="min-w-0 overflow-hidden"
             >
               <p className="text-sm font-display font-semibold text-sidebar-foreground truncate tracking-tight">
-                {isPlatform ? "Platform Console" : (user?.pharmacyName || "Faraz Pharmacy")}
+                {isPlatform ? "Platform Console" : (user?.pharmacyName || "SmartPharma")}
               </p>
               <p className="text-[10px] text-sidebar-foreground/40 truncate tracking-widest uppercase">Management</p>
             </motion.div>

@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Eye, EyeOff, Lock, Sun, Moon, Building2, Store } from "lucide-react";
 import { api } from "@/lib/api";
-import logoSrc from "@/asset/image/logo.png";
+
 
 export default function Login() {
   const { login, register } = useAuth();
@@ -140,11 +140,8 @@ export default function Login() {
         >
           <div className="block lg:hidden mb-8">
             <div className="flex items-center gap-3 mb-3">
-              <div className="h-9 w-9 rounded-lg flex items-center justify-center">
-                <img src={logoSrc} alt="" className="h-6 w-6 object-cover" />
-              </div>
               <div>
-                <h1 className="text-base font-display font-semibold text-text-primary tracking-tight">Faraz Pharmacy</h1>
+                <h1 className="text-base font-display font-semibold text-text-primary tracking-tight">SmartPharma</h1>
                 <p className="text-[11px] text-text-secondary">Sign in to your account</p>
               </div>
             </div>
@@ -295,7 +292,7 @@ export default function Login() {
         </motion.div>
       </div>
 
-      <div className="hidden lg:flex flex-1 items-center justify-center bg-[#0D9488] relative overflow-hidden">
+      <div className="hidden lg:flex flex-1 items-center justify-center bg-primary relative overflow-hidden">
         <div className="absolute inset-0 bg-white/[0.03] rounded-[100%] -translate-y-1/2 w-[600px] h-[600px] top-0 left-1/2 -translate-x-1/2" />
         <div className="absolute inset-0 bg-black/[0.04] rounded-[100%] translate-y-1/3 w-[400px] h-[400px] bottom-0 right-0" />
         <motion.div
@@ -304,10 +301,7 @@ export default function Login() {
           transition={{ duration: 0.4, ease: "easeOut" }}
           className="relative z-10 text-center px-8"
         >
-          <div className="w-32 h-32 p-5 mx-auto mb-6 rounded-xl bg-white/90 flex items-center justify-center">
-            <img src={logoSrc} alt="Faraz Pharmacy" className="w-full h-full object-cover" />
-          </div>
-          <h2 className="text-2xl font-display font-bold text-white tracking-tight">Faraz Pharmacy</h2>
+          <h2 className="text-2xl font-display font-bold text-white tracking-tight">SmartPharma</h2>
           <p className="text-sm text-white/70 mt-2 max-w-xs mx-auto leading-relaxed">
             Complete pharmacy management solution
           </p>

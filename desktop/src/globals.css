@@ -9,17 +9,17 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
   /* Light Mode Colors */
-  --color-background: #F5F7F9;
+  --color-background: #F8FAFC;
   --color-foreground: #0F172A;
   --color-surface: #FFFFFF;
-  --color-surface-2: #F8FAFC;
+  --color-surface-2: #F1F5F9;
   --color-elevated: #FFFFFF;
   --color-text-primary: #0F172A;
   --color-text-secondary: #64748B;
-  --color-accent: #0D9488;
-  --color-accent-hover: #0F766E;
+  --color-accent: #1E3A8A;
+  --color-accent-hover: #1E40AF;
   --color-accent-foreground: #FFFFFF;
-  --color-accent-subtle: #CCFBF1;
+  --color-accent-subtle: #DBEAFE;
   --color-danger: #DC2626;
   --color-success: #16A34A;
   --color-warning: #D97706;
@@ -32,21 +32,21 @@
   --color-muted-foreground: #94A3B8;
   --color-popover: #FFFFFF;
   --color-popover-foreground: #0F172A;
-  --color-primary: #0D9488;
+  --color-primary: #1E3A8A;
   --color-primary-foreground: #FFFFFF;
   --color-secondary: #F1F5F9;
   --color-secondary-foreground: #0F172A;
   --color-input: #E2E8F0;
   --color-input-foreground: #0F172A;
-  --color-ring: #0D9488;
+  --color-ring: #1E3A8A;
   --color-sidebar-background: #FFFFFF;
   --color-sidebar-foreground: #0F172A;
-  --color-sidebar-primary: #0D9488;
+  --color-sidebar-primary: #1E3A8A;
   --color-sidebar-primary-foreground: #FFFFFF;
   --color-sidebar-accent: #F1F5F9;
   --color-sidebar-accent-foreground: #0F172A;
   --color-sidebar-border: #E2E8F0;
-  --color-sidebar-ring: #0D9488;
+  --color-sidebar-ring: #1E3A8A;
 
   /* Animation Durations */
   --duration-hover: 120ms;
@@ -74,10 +74,10 @@
   --color-elevated: #1E293B;
   --color-text-primary: #F8FAFC;
   --color-text-secondary: #94A3B8;
-  --color-accent: #14B8A6;
-  --color-accent-hover: #2DD4BF;
+  --color-accent: #3B82F6;
+  --color-accent-hover: #60A5FA;
   --color-accent-foreground: #0F172A;
-  --color-accent-subtle: #134E4A;
+  --color-accent-subtle: #1E3A8A;
   --color-danger: #EF4444;
   --color-success: #22C55E;
   --color-warning: #F59E0B;
@@ -90,21 +90,21 @@
   --color-muted-foreground: #94A3B8;
   --color-popover: #1E293B;
   --color-popover-foreground: #F8FAFC;
-  --color-primary: #14B8A6;
+  --color-primary: #3B82F6;
   --color-primary-foreground: #0F172A;
   --color-secondary: #1E293B;
   --color-secondary-foreground: #F8FAFC;
   --color-input: #334155;
   --color-input-foreground: #F8FAFC;
-  --color-ring: #14B8A6;
+  --color-ring: #3B82F6;
   --color-sidebar-background: #111827;
   --color-sidebar-foreground: #F8FAFC;
-  --color-sidebar-primary: #14B8A6;
+  --color-sidebar-primary: #3B82F6;
   --color-sidebar-primary-foreground: #0F172A;
   --color-sidebar-accent: #1E293B;
   --color-sidebar-accent-foreground: #F8FAFC;
   --color-sidebar-border: #1E293B;
-  --color-sidebar-ring: #14B8A6;
+  --color-sidebar-ring: #3B82F6;
 }
 
 * {
