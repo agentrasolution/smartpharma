@@ -123,7 +123,7 @@ export default function Sidebar() {
               className="min-w-0 overflow-hidden"
             >
               <p className="text-sm font-display font-semibold text-sidebar-foreground truncate tracking-tight">
-                {isPlatform ? "Platform Console" : (user?.pharmacyName || "SmartPharma")}
+                {isPlatform ? "Platform Console" : "SmartPharma ERP System"}
               </p>
               <p className="text-[10px] text-sidebar-foreground/40 truncate tracking-widest uppercase">Management</p>
             </motion.div>

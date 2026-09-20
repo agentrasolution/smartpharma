@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Eye, EyeOff, Lock, Sun, Moon, Building2, Store } from "lucide-react";
 import { api } from "@/lib/api";
+import { cn } from "@/lib/utils";
 
 
 export default function Login() {
@@ -123,7 +124,7 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-screen">
+    <div className={cn("flex min-h-screen w-full transition-all duration-700 ease-in-out", mode === "register" ? "flex-row-reverse" : "flex-row")}>
       <button
         onClick={toggleDark}
         className="fixed top-4 right-4 h-8 w-8 rounded-lg flex items-center justify-center text-text-secondary hover:text-text-primary hover:bg-surface-2 transition-all duration-200 z-20 bg-background/80 backdrop-blur-sm"
@@ -131,7 +132,7 @@ export default function Login() {
         {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
       </button>
 
-      <div className="flex-1 flex items-center justify-center bg-background p-6">
+      <motion.div layout transition={{ type: "spring", stiffness: 300, damping: 30 }} className="flex-1 flex items-center justify-center bg-background p-6 z-10">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -148,8 +149,9 @@ export default function Login() {
           </div>
 
           <form onSubmit={mode === "login" ? handleSubmit : handleRegister} className="space-y-4">
-            {mode === "register" ? (
-              <>
+            <AnimatePresence mode="wait">
+              {mode === "register" ? (
+                <motion.div key="register" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.2 }} className="space-y-4">
                 <div className="space-y-1.5">
                   <Label htmlFor="reg-pharmacy" className="text-xs font-medium text-text-primary flex items-center gap-1.5">
                     <Building2 className="h-3 w-3" /> Pharmacy Name
@@ -205,9 +207,9 @@ export default function Login() {
                 <p className="text-[11px] text-text-secondary bg-surface/60 border border-border rounded-lg px-3 py-2 leading-relaxed">
                   Creates your pharmacy with a 30-day free trial. Your first account becomes the pharmacy super admin.
                 </p>
-              </>
+                </motion.div>
             ) : (
-              <>
+                <motion.div key="login" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.2 }} className="space-y-4">
                 <div className="space-y-1.5">
                   <Label htmlFor="username" className="text-xs font-medium text-text-primary">Username</Label>
                   <Input
@@ -238,8 +240,9 @@ export default function Login() {
                     </button>
                   </div>
                 </div>
-              </>
+                </motion.div>
             )}
+            </AnimatePresence>
 
             {error && (
               <motion.p
@@ -290,9 +293,9 @@ export default function Login() {
             </div>
           </form>
         </motion.div>
-      </div>
+      </motion.div>
 
-      <div className="hidden lg:flex flex-1 items-center justify-center bg-primary relative overflow-hidden">
+      <motion.div layout transition={{ type: "spring", stiffness: 300, damping: 30 }} className="hidden lg:flex flex-1 items-center justify-center bg-primary relative overflow-hidden">
         <div className="absolute inset-0 bg-white/[0.03] rounded-[100%] -translate-y-1/2 w-[600px] h-[600px] top-0 left-1/2 -translate-x-1/2" />
         <div className="absolute inset-0 bg-black/[0.04] rounded-[100%] translate-y-1/3 w-[400px] h-[400px] bottom-0 right-0" />
         <motion.div
@@ -306,7 +309,7 @@ export default function Login() {
             Complete pharmacy management solution
           </p>
         </motion.div>
-      </div>
+      </motion.div>
 
       <Dialog open={recoveryOpen} onOpenChange={(v) => { if (!v) { setRecoveryOpen(false); setTimeout(() => { setRecoverySuccess(false); setRecoveryError(""); setRecoveryPhrase(""); setNewPassword(""); setConfirmPassword(""); }, 200); } }}>
         <DialogContent>
