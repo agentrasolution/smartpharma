@@ -26,12 +26,15 @@ export class ApiError extends Error {
 }
 
 function getApiUrl(): string {
-  const cfg = window.appConfig?.serverUrl?.trim();
-  if (cfg) return cfg;
-  return import.meta.env.VITE_API_URL?.trim() || "http://localhost:3001";
+  if (typeof window !== "undefined") {
+    const override = localStorage.getItem("smartpharma_api_url")?.trim();
+    if (override) return override;
+  }
+  return process.env.NEXT_PUBLIC_API_URL?.trim() || "http://localhost:3001";
 }
 
 function getToken(): string | null {
+  if (typeof window === "undefined") return null;
   return localStorage.getItem("faraz_access_token");
 }
 
@@ -48,7 +51,7 @@ async function fetchJson<T>(method: string, path: string, body?: unknown, auth =
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-    if (res.status === 402) {
+    if (res.status === 402 && typeof window !== "undefined") {
       window.dispatchEvent(new CustomEvent("subscription:blocked", { detail: { error: err.error } }));
     }
     throw new ApiError(err.error || `API error: ${res.status}`, res.status, err.code);

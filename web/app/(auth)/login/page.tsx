@@ -1,4 +1,7 @@
+"use client";
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 import { Eye, EyeOff, ArrowRight, ChevronRight } from "lucide-react";
@@ -67,7 +70,7 @@ function SubmitButton({ loading, label, loadingLabel }: { loading: boolean; labe
         "bg-foreground text-background",
         "hover:opacity-90 active:scale-[0.98]",
         "transition-all duration-150",
-        "disabled:opacity-50 disabled:cursor-not-allowed",
+        "disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer",
       )}
     >
       {loading ? (
@@ -120,7 +123,7 @@ function BrandPanel() {
             Built for<br />modern pharmacy.
           </h2>
           <p className="text-background/60 text-sm leading-relaxed max-w-[260px]">
-            Full inventory control, compliance-ready, and designed to run your entire pharmacy from one screen.
+            Full inventory control, compliance-ready, and designed to run your entire pharmacy from one portal.
           </p>
         </div>
 
@@ -147,6 +150,7 @@ function BrandPanel() {
 
 function LoginView({ onSwitch }: { onSwitch: () => void }) {
   const { login } = useAuth();
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
@@ -169,8 +173,12 @@ function LoginView({ onSwitch }: { onSwitch: () => void }) {
     setLoading(true);
     setError("");
     const err = await login(username.trim(), password);
-    if (err) setError(err);
-    setLoading(false);
+    if (err) {
+      setError(err);
+      setLoading(false);
+    } else {
+      router.push("/");
+    }
   }
 
   async function handleRecovery(e: React.FormEvent) {
@@ -237,7 +245,7 @@ function LoginView({ onSwitch }: { onSwitch: () => void }) {
               onChange={setPassword}
               placeholder="Enter your password"
               suffix={
-                <button type="button" onClick={() => setShowPw(!showPw)} className="text-text-secondary hover:text-text-primary transition-colors">
+                <button type="button" onClick={() => setShowPw(!showPw)} className="text-text-secondary hover:text-text-primary transition-colors cursor-pointer">
                   {showPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               }
@@ -255,14 +263,14 @@ function LoginView({ onSwitch }: { onSwitch: () => void }) {
               <button
                 type="button"
                 onClick={() => { setRecovery(true); setError(""); }}
-                className="text-xs text-text-secondary hover:text-text-primary transition-colors"
+                className="text-xs text-text-secondary hover:text-text-primary transition-colors cursor-pointer"
               >
                 Forgot password?
               </button>
               <button
                 type="button"
                 onClick={onSwitch}
-                className="text-xs text-accent hover:text-accent-hover font-medium transition-colors flex items-center gap-1"
+                className="text-xs text-accent hover:text-accent-hover font-medium transition-colors flex items-center gap-1 cursor-pointer"
               >
                 Create pharmacy <ChevronRight className="h-3 w-3" />
               </button>
@@ -302,7 +310,7 @@ function LoginView({ onSwitch }: { onSwitch: () => void }) {
                 <button
                   type="button"
                   onClick={() => { setRecovery(false); setRecError(""); setRecUsername(""); setRecKey(""); setRecNewPw(""); setRecConfirm(""); }}
-                  className="w-full text-xs text-text-secondary hover:text-text-primary transition-colors text-center pt-1"
+                  className="w-full text-xs text-text-secondary hover:text-text-primary transition-colors text-center pt-1 cursor-pointer"
                 >
                   ← Back to sign in
                 </button>
@@ -317,8 +325,9 @@ function LoginView({ onSwitch }: { onSwitch: () => void }) {
 
 // ─── Register view ─────────────────────────────────────────────────────────────
 
-function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegistered: () => void }) {
+function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegistered?: () => void }) {
   const { register } = useAuth();
+  const router = useRouter();
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -335,9 +344,9 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
     if (password !== confirm) { setError("Passwords do not match"); return; }
 
     setLoading(true);
-    // Pass a temporary pharmacy name — onboarding will update it
+    const tempPharmacyName = `${name.trim()} Pharmacy ${Date.now().toString().slice(-4)}`;
     const err = await register({
-      pharmacyName: `${name.trim()}'s Pharmacy`,
+      pharmacyName: tempPharmacyName,
       branchName: "Main Branch",
       name: name.trim(),
       username: username.trim(),
@@ -347,8 +356,11 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
       setError(err);
       setLoading(false);
     } else {
-      // Trigger onboarding flow
-      onRegistered();
+      if (typeof window !== "undefined") {
+        localStorage.setItem("smartpharma_onboarding_pending", "true");
+      }
+      if (onRegistered) onRegistered();
+      router.push("/onboarding");
     }
   }
 
@@ -401,7 +413,7 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
           onChange={setPassword}
           placeholder="Min 8 characters"
           suffix={
-            <button type="button" onClick={() => setShowPw(!showPw)} className="text-text-secondary hover:text-text-primary transition-colors">
+            <button type="button" onClick={() => setShowPw(!showPw)} className="text-text-secondary hover:text-text-primary transition-colors cursor-pointer">
               {showPw ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
           }
@@ -419,7 +431,7 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
         <button
           type="button"
           onClick={onSwitch}
-          className="w-full text-xs text-text-secondary hover:text-text-primary transition-colors text-center pt-1 flex items-center justify-center gap-1"
+          className="w-full text-xs text-text-secondary hover:text-text-primary transition-colors text-center pt-1 flex items-center justify-center gap-1 cursor-pointer"
         >
           Already have an account?{" "}
           <span className="text-accent hover:text-accent-hover font-medium">Sign in</span>
@@ -431,7 +443,7 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
 
 // ─── Root Login page ───────────────────────────────────────────────────────────
 
-export default function Login({ onRegistered }: { onRegistered?: () => void }) {
+export default function LoginPage() {
   const [view, setView] = useState<"login" | "register">("login");
 
   return (
@@ -461,7 +473,6 @@ export default function Login({ onRegistered }: { onRegistered?: () => void }) {
             >
               <RegisterView
                 onSwitch={() => setView("login")}
-                onRegistered={() => onRegistered?.()}
               />
             </motion.div>
           )}
