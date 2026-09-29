@@ -11,6 +11,7 @@ import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
 import OfflineBanner from "@/components/shared/OfflineBanner";
 import Login from "@/pages/Login";
+import Onboarding from "@/pages/Onboarding";
 import Billing from "@/pages/Billing";
 import PlatformAdmin from "@/pages/PlatformAdmin";
 import Dashboard from "@/pages/Dashboard";
@@ -58,6 +59,9 @@ function AnimatedPage({ children }: { children: React.ReactNode }) {
 function AppShell() {
   const { isAuthenticated, logout, subscriptionBlocked, user } = useAuth();
   const [ready, setReady] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(() => {
+    return localStorage.getItem("smartpharma_onboarding_pending") === "true";
+  });
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -159,7 +163,26 @@ function AppShell() {
   if (!ready) return null;
 
   if (!isAuthenticated) {
-    return <Login />;
+    return (
+      <Login
+        onRegistered={() => {
+          localStorage.setItem("smartpharma_onboarding_pending", "true");
+          setShowOnboarding(true);
+        }}
+      />
+    );
+  }
+
+  if (showOnboarding && !isPlatform) {
+    return (
+      <Onboarding
+        onComplete={() => {
+          localStorage.removeItem("smartpharma_onboarding_pending");
+          setShowOnboarding(false);
+          navigate("/pos");
+        }}
+      />
+    );
   }
 
   const routes = (
@@ -200,6 +223,20 @@ function AppShell() {
             <Route path="/settings/ai" element={<AnimatedPage><AIProvidersIndex /></AnimatedPage>} />
             <Route path="/settings/ai/:providerId" element={<AnimatedPage><AIProviderSetupPage /></AnimatedPage>} />
             <Route path="/billing" element={<AnimatedPage><Billing /></AnimatedPage>} />
+            <Route
+              path="/onboarding"
+              element={
+                <AnimatedPage>
+                  <Onboarding
+                    onComplete={() => {
+                      localStorage.removeItem("smartpharma_onboarding_pending");
+                      setShowOnboarding(false);
+                      navigate("/pos");
+                    }}
+                  />
+                </AnimatedPage>
+              }
+            />
             <Route path="/ai" element={<AnimatedPage><AIOverview /></AnimatedPage>} />
             <Route path="/ai/recommendations" element={<AnimatedPage><AIRecommendations /></AnimatedPage>} />
             <Route path="/ai/chat" element={<AnimatedPage><AIChat /></AnimatedPage>} />

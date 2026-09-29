@@ -2,6 +2,16 @@ import { prisma } from "../../services/prisma";
 import { BadRequestError, NotFoundError } from "../../utils/errors";
 import type { UpdatePharmacyInput, UpdateSubscriptionInput } from "./pharmacy.schema";
 
+interface OnboardingInput {
+  pharmacyName: string;
+  country: string;
+  city: string;
+  phone?: string;
+  branchName: string;
+  branchAddress?: string;
+  licenceNumber?: string;
+}
+
 export interface SerializableSubscription {
   id: string;
   pharmacyId: string;
@@ -95,6 +105,59 @@ export const pharmacyService = {
       counts: pharmacy._count,
       subscription: pharmacy.subscription ? serializeSubscription(pharmacy.subscription) : null,
     };
+  },
+
+  async onboard(pharmacyId: string, input: OnboardingInput) {
+    const baseSlug = input.pharmacyName
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 60) || "pharmacy";
+
+    // Check name uniqueness (excluding self)
+    const clash = await prisma.pharmacy.findFirst({
+      where: { name: input.pharmacyName.trim(), id: { not: pharmacyId } },
+    });
+    if (clash) throw new BadRequestError("Another pharmacy already uses this name");
+
+    let slug = baseSlug;
+    const slugClash = await prisma.pharmacy.findFirst({
+      where: { slug, id: { not: pharmacyId } },
+    });
+    if (slugClash) {
+      slug = `${baseSlug}-${pharmacyId.slice(0, 6)}`;
+    }
+
+    // Update pharmacy + first branch in a transaction
+    await prisma.$transaction(async (tx) => {
+      await tx.pharmacy.update({
+        where: { id: pharmacyId },
+        data: {
+          name: input.pharmacyName.trim(),
+          slug,
+          phone: input.phone?.trim() ?? "",
+          // Store country + city in address field until schema gets dedicated columns
+          address: [input.city?.trim(), input.country].filter(Boolean).join(", "),
+          contact: input.licenceNumber?.trim() ?? "",
+        },
+      });
+
+      // Update first branch
+      const branch = await tx.branch.findFirst({ where: { pharmacyId }, orderBy: { createdAt: "asc" } });
+      if (branch) {
+        await tx.branch.update({
+          where: { id: branch.id },
+          data: {
+            name: input.branchName.trim(),
+            address: input.branchAddress?.trim() ?? "",
+            phone: input.phone?.trim() ?? "",
+          },
+        });
+      }
+    });
+
+    return { success: true };
   },
 
   // ---- Platform billing management ----

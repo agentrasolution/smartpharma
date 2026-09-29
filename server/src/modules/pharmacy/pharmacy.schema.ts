@@ -16,5 +16,16 @@ export const updateSubscriptionSchema = z.object({
   renewsAt: z.string().datetime().optional(),
 });
 
+export const onboardingSchema = z.object({
+  pharmacyName: z.string().min(1, "Pharmacy name is required").max(100),
+  country: z.string().min(1, "Country is required"),
+  city: z.string().min(1, "City is required").max(100),
+  phone: z.string().optional(),
+  branchName: z.string().min(1, "Branch name is required").max(100),
+  branchAddress: z.string().optional(),
+  licenceNumber: z.string().optional(),
+});
+
 export type UpdatePharmacyInput = z.infer<typeof updatePharmacySchema>;
 export type UpdateSubscriptionInput = z.infer<typeof updateSubscriptionSchema>;
+export type OnboardingInput = z.infer<typeof onboardingSchema>;

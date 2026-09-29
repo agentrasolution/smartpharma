@@ -336,9 +336,8 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
 
     setLoading(true);
     // Pass a temporary pharmacy name — onboarding will update it
-    const tempPharmacyName = `${name.trim()} Pharmacy ${Date.now().toString().slice(-4)}`;
     const err = await register({
-      pharmacyName: tempPharmacyName,
+      pharmacyName: `${name.trim()}'s Pharmacy`,
       branchName: "Main Branch",
       name: name.trim(),
       username: username.trim(),

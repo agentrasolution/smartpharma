@@ -14,6 +14,12 @@ export const pharmacyController = {
     } catch (err) { next(err); }
   },
 
+  async onboard(req: Request, res: Response, next: NextFunction) {
+    try {
+      res.json(await pharmacyService.onboard(req.user!.pharmacyId, req.body));
+    } catch (err) { next(err); }
+  },
+
   async listAll(req: Request, res: Response, next: NextFunction) {
     try {
       res.json(await pharmacyService.listAll());

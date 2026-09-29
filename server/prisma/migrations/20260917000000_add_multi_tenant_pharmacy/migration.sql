@@ -36,6 +36,27 @@ CREATE TABLE "subscriptions" (
     CONSTRAINT "subscriptions_pkey" PRIMARY KEY ("id")
 );
 
+CREATE TABLE IF NOT EXISTS "barcodes" (
+    "id" TEXT NOT NULL,
+    "code" TEXT NOT NULL,
+    "product_id" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "barcodes_pkey" PRIMARY KEY ("id")
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS "barcodes_code_key" ON "barcodes"("code");
+CREATE UNIQUE INDEX IF NOT EXISTS "barcodes_product_id_key" ON "barcodes"("product_id");
+
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'barcodes_product_id_fkey'
+    ) THEN
+        ALTER TABLE "barcodes" ADD CONSTRAINT "barcodes_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+    END IF;
+END $$;
+
 CREATE UNIQUE INDEX "pharmacies_name_key" ON "pharmacies"("name");
 CREATE UNIQUE INDEX "pharmacies_slug_key" ON "pharmacies"("slug");
 CREATE UNIQUE INDEX "subscriptions_pharmacy_id_key" ON "subscriptions"("pharmacy_id");
@@ -196,14 +217,16 @@ ALTER TABLE "purchase_orders" ADD CONSTRAINT "purchase_orders_branch_id_fkey" FO
 -- ------------------------------------------------------------
 -- 7. Replace global-unique with pharmacy/branch-scoped unique
 -- ------------------------------------------------------------
-ALTER TABLE "products" DROP CONSTRAINT "products_barcode_key";
+ALTER TABLE "products" DROP CONSTRAINT IF EXISTS "products_barcode_key";
+DROP INDEX IF EXISTS "products_barcode_key";
 CREATE UNIQUE INDEX "products_branch_id_barcode_key" ON "products"("branch_id", "barcode");
 
-ALTER TABLE "roles" DROP CONSTRAINT "roles_name_key";
+ALTER TABLE "roles" DROP CONSTRAINT IF EXISTS "roles_name_key";
 DROP INDEX IF EXISTS "roles_name_key";
 CREATE UNIQUE INDEX "roles_pharmacy_id_name_key" ON "roles"("pharmacy_id", "name");
 
-ALTER TABLE "categories" DROP CONSTRAINT "categories_name_key";
+ALTER TABLE "categories" DROP CONSTRAINT IF EXISTS "categories_name_key";
+DROP INDEX IF EXISTS "categories_name_key";
 CREATE UNIQUE INDEX "categories_pharmacy_id_name_key" ON "categories"("pharmacy_id", "name");
 
 CREATE UNIQUE INDEX "distributors_pharmacy_id_name_key" ON "distributors"("pharmacy_id", "name");
