@@ -17,6 +17,8 @@ import type {
   ChronicMedication, ChronicMedicationInput, RefillQueueItem, CustomerStatement,
   StockTransfer, CreateTransferInput, BranchPriceOverride, BranchPriceOverrideInput, CrossBranchStockResponse,
   MarginReport, LossReport, StockValuation, ProfitAndLoss,
+  DrugMasterProduct, DrugMasterDetail, DrugMasterSearchParams, DrugMasterSearchResult,
+  DrugMasterUpdateInput, BulkImportRow, BulkImportResult, ExpiryScanResult,
 } from "@/types";
 import type { BackupResult, BackupEntry, GDriveConfig } from "@/types/electron";
 
@@ -435,6 +437,8 @@ const api = {
       if (params.barcode) qs.set("barcode", params.barcode);
       return fetchJson("GET", `/api/branches/cross-stock?${qs.toString()}`);
     },
+    crossStock: (params: { productId?: string; barcode?: string }): Promise<CrossBranchStockResponse> =>
+      api.branches.crossBranchStock(params),
   },
   transfers: {
     list: (params?: { branchId?: string; direction?: string; status?: string; search?: string; page?: number; pageSize?: number }): Promise<{ data: StockTransfer[]; total: number; page: number; pageSize: number }> => {
@@ -460,6 +464,32 @@ const api = {
       if (params.barcode) qs.set("barcode", params.barcode);
       return fetchJson("GET", `/api/transfers/cross-stock?${qs.toString()}`);
     },
+  },
+  drugMaster: {
+    search: (params?: DrugMasterSearchParams): Promise<DrugMasterSearchResult> => {
+      const qs = new URLSearchParams();
+      if (params?.q) qs.set("q", params.q);
+      if (params?.isRx !== undefined) qs.set("isRx", String(params.isRx));
+      if (params?.isControlled !== undefined) qs.set("isControlled", String(params.isControlled));
+      if (params?.dosageForm) qs.set("dosageForm", params.dosageForm);
+      if (params?.category) qs.set("category", params.category);
+      if (params?.page) qs.set("page", String(params.page));
+      if (params?.limit) qs.set("limit", String(params.limit));
+      const qStr = qs.toString();
+      return fetchJson("GET", `/api/products/drug-master${qStr ? `?${qStr}` : ""}`);
+    },
+    getById: (id: string): Promise<DrugMasterDetail> =>
+      fetchJson("GET", `/api/products/drug-master/${id}`),
+    update: (id: string, input: DrugMasterUpdateInput): Promise<DrugMasterProduct> =>
+      fetchJson("PATCH", `/api/products/drug-master/${id}`, input),
+    bulkImport: (rows: BulkImportRow[]): Promise<BulkImportResult> =>
+      fetchJson("POST", "/api/products/drug-master/bulk-import", rows),
+    listIncomplete: (page = 1, limit = 50): Promise<DrugMasterSearchResult> =>
+      fetchJson("GET", `/api/products/drug-master/incomplete?page=${page}&limit=${limit}`),
+    listDosageForms: (): Promise<string[]> =>
+      fetchJson("GET", "/api/products/drug-master/dosage-forms"),
+    runExpiryScan: (days?: number): Promise<ExpiryScanResult> =>
+      fetchJson("POST", `/api/products/drug-master/run-expiry-scan${days ? `?days=${days}` : ""}`),
   },
   inventory: {
     batches: {

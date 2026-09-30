@@ -13,13 +13,12 @@ import type {
   Permission, RoleListItem, RoleInput,
   UserListItem, UserInput, UpdateUserInput,
   Branch, BranchInput,
-  DrugMasterProduct, DrugMasterDetail, DrugMasterSearchParams,
-  DrugMasterSearchResult, DrugMasterUpdateInput, BulkImportRow,
-  BulkImportResult, ExpiryScanResult,
   Prescription, ControlledDrugRegister, SubstitutionSuggestionResult,
   ChronicMedication, ChronicMedicationInput, RefillQueueItem, CustomerStatement,
   StockTransfer, CreateTransferInput, BranchPriceOverride, BranchPriceOverrideInput, CrossBranchStockResponse,
   MarginReport, LossReport, StockValuation, ProfitAndLoss,
+  DrugMasterProduct, DrugMasterDetail, DrugMasterSearchParams, DrugMasterSearchResult,
+  DrugMasterUpdateInput, BulkImportRow, BulkImportResult, ExpiryScanResult,
 } from "@/types";
 import type { BackupResult, BackupEntry, GDriveConfig } from "@/types/electron";
 
@@ -35,15 +34,12 @@ export class ApiError extends Error {
 }
 
 function getApiUrl(): string {
-  if (typeof window !== "undefined") {
-    const override = localStorage.getItem("smartpharma_api_url")?.trim();
-    if (override) return override;
-  }
+  const cfg = window.appConfig?.serverUrl?.trim();
+  if (cfg) return cfg;
   return process.env.NEXT_PUBLIC_API_URL?.trim() || "http://localhost:3001";
 }
 
 function getToken(): string | null {
-  if (typeof window === "undefined") return null;
   return localStorage.getItem("faraz_access_token");
 }
 
@@ -60,7 +56,7 @@ async function fetchJson<T>(method: string, path: string, body?: unknown, auth =
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-    if (res.status === 402 && typeof window !== "undefined") {
+    if (res.status === 402) {
       window.dispatchEvent(new CustomEvent("subscription:blocked", { detail: { error: err.error } }));
     }
     throw new ApiError(err.error || `API error: ${res.status}`, res.status, err.code);
@@ -441,6 +437,8 @@ const api = {
       if (params.barcode) qs.set("barcode", params.barcode);
       return fetchJson("GET", `/api/branches/cross-stock?${qs.toString()}`);
     },
+    crossStock: (params: { productId?: string; barcode?: string }): Promise<CrossBranchStockResponse> =>
+      api.branches.crossBranchStock(params),
   },
   transfers: {
     list: (params?: { branchId?: string; direction?: string; status?: string; search?: string; page?: number; pageSize?: number }): Promise<{ data: StockTransfer[]; total: number; page: number; pageSize: number }> => {
@@ -491,6 +489,45 @@ const api = {
     listDosageForms: (): Promise<string[]> =>
       fetchJson("GET", "/api/products/drug-master/dosage-forms"),
     runExpiryScan: (days?: number): Promise<ExpiryScanResult> =>
+      fetchJson("POST", `/api/products/drug-master/run-expiry-scan${days ? `?days=${days}` : ""}`),
+  },
+  inventory: {
+    batches: {
+      list: (params?: { status?: string; isRecalled?: boolean }): Promise<unknown[]> => {
+        const qs = new URLSearchParams();
+        if (params?.status) qs.set("status", params.status);
+        if (params?.isRecalled !== undefined) qs.set("isRecalled", String(params.isRecalled));
+        return fetchJson("GET", `/api/v1/inventory/batches${qs.toString() ? `?${qs}` : ""}`);
+      },
+      forProduct: (productId: string): Promise<unknown[]> =>
+        fetchJson("GET", `/api/v1/inventory/batches/product/${productId}`),
+      getById: (id: string): Promise<unknown> => fetchJson("GET", `/api/v1/inventory/batches/${id}`),
+      receive: (data: {
+        productId: string; batchNumber: string; expiryDate: string;
+        quantityInBaseUnits: number; costPricePerUnit: number; salePricePerUnit: number; gtin?: string;
+      }): Promise<unknown> => fetchJson("POST", "/api/v1/inventory/batches", data),
+      adjust: (id: string, data: { deltaUnits: number; reasonCode: string; referenceNumber?: string }): Promise<unknown> =>
+        fetchJson("PATCH", `/api/v1/inventory/batches/${id}/adjust`, data),
+      recall: (id: string, reason: string): Promise<unknown> =>
+        fetchJson("PATCH", `/api/v1/inventory/batches/${id}/recall`, { reason }),
+      expiringSoon: (days?: number): Promise<unknown[]> =>
+        fetchJson("GET", `/api/v1/inventory/batches/expiring-soon${days ? `?days=${days}` : ""}`),
+    },
+    movements: {
+      list: (params?: { productId?: string; movementType?: string; from?: string; to?: string; page?: number; limit?: number; }): Promise<{ data: unknown[]; meta: { total: number; page: number; pages: number } }> => {
+        const qs = new URLSearchParams();
+        if (params?.productId) qs.set("productId", params.productId);
+        if (params?.movementType) qs.set("movementType", params.movementType);
+        if (params?.from) qs.set("from", params.from);
+        if (params?.to) qs.set("to", params.to);
+        if (params?.page) qs.set("page", String(params.page));
+        return fetchJson("GET", `/api/v1/inventory/movements${qs.toString() ? `?${qs}` : ""}`);
+      },
+      summary: (from: string, to: string): Promise<unknown[]> =>
+        fetchJson("GET", `/api/v1/inventory/movements/summary?from=${from}&to=${to}`),
+    },
+    valuation: (): Promise<unknown[]> => fetchJson("GET", "/api/v1/inventory/valuation"),
+    expiringScan: (days?: number): Promise<{ expiredMarked: number; depletedMarked: number; nearExpiryAlerts: number }> =>
       fetchJson("POST", `/api/products/drug-master/run-expiry-scan${days ? `?days=${days}` : ""}`),
   },
   prescriptions: {
@@ -556,5 +593,4 @@ const api = {
     },
   },
 };
-
 export { api };

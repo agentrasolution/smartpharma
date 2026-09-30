@@ -1109,6 +1109,135 @@ export interface CreateUserResult {
   temporaryPassword: string;
 }
 
+// ---------------------------------------------------------------------------
+// Drug Master Data (Pillar B & C)
+// ---------------------------------------------------------------------------
+
+export type DosageForm =
+  | "TABLET"
+  | "CAPSULE"
+  | "SYRUP"
+  | "INJECTION"
+  | "CREAM"
+  | "DROPS"
+  | "INHALER"
+  | "PATCH"
+  | "SUPPOSITORY"
+  | "OTHER";
+
+export type BaseUnit = "TABLET" | "CAPSULE" | "ML" | "MG" | "UNIT" | "PIECE";
+export type PackageUnit = "BOX" | "BOTTLE" | "STRIP" | "VIAL" | "TUBE" | "SACHET" | "PIECE";
+
+export interface DrugMasterBatch {
+  id: string;
+  batchNumber: string;
+  expiryDate: string;
+  quantityInBaseUnits: number;
+  status: string;
+}
+
+export interface DrugMasterProduct {
+  id: string;
+  name: string;
+  nameEn: string;
+  nameAr: string;
+  genericName: string;
+  dosageForm: string;
+  strength: string;
+  regulatoryCode?: string | null;
+  sfdaCode: string | null;
+  isRx: boolean;
+  isControlled: boolean;
+  isPriceRegulated: boolean;
+  publicPrice: number | string;
+  baseUnit: string;
+  packageUnit: string;
+  unitsPerPack: number;
+  packSize: number;
+  barcode: string;
+  category: string;
+  active: number;
+}
+
+export interface DrugMasterDetail extends DrugMasterProduct {
+  batches?: DrugMasterBatch[];
+}
+
+export interface DrugMasterSearchParams {
+  q?: string;
+  isRx?: boolean;
+  isControlled?: boolean;
+  dosageForm?: string;
+  category?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface DrugMasterSearchResult {
+  data: DrugMasterProduct[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    pages: number;
+  };
+}
+
+export interface DrugMasterUpdateInput {
+  nameEn?: string;
+  nameAr?: string;
+  genericName?: string;
+  dosageForm?: string;
+  strength?: string;
+  regulatoryCode?: string;
+  sfdaCode?: string;
+  isRx?: boolean;
+  isControlled?: boolean;
+  isPriceRegulated?: boolean;
+  publicPrice?: number;
+  baseUnit?: string;
+  packageUnit?: string;
+  unitsPerPack?: number;
+}
+
+export interface BulkImportRow {
+  productId: string;
+  nameEn?: string;
+  nameAr?: string;
+  genericName?: string;
+  dosageForm?: string;
+  strength?: string;
+  regulatoryCode?: string;
+  sfdaCode?: string;
+  isRx?: boolean | string;
+  isControlled?: boolean | string;
+  isPriceRegulated?: boolean | string;
+  publicPrice?: number | string;
+  baseUnit?: string;
+  packageUnit?: string;
+  unitsPerPack?: number | string;
+}
+
+export interface BulkImportResult {
+  summary: {
+    total: number;
+    ok: number;
+    notFound: number;
+    errors: number;
+  };
+  results: Array<{
+    productId: string;
+    status: "ok" | "not_found" | "error";
+    error?: string;
+  }>;
+}
+
+export interface ExpiryScanResult {
+  expiredMarked: number;
+  depletedMarked: number;
+  nearExpiryAlerts: number;
+}
+
 export interface PrescriptionItem {
   id: string;
   prescriptionId: string;
@@ -1335,5 +1464,6 @@ export interface ProfitAndLoss {
     totalPurchases: number;
   };
 }
+
 
 

@@ -28,7 +28,7 @@ const tenantNavItems = [
    { href: "/barcodes", label: "Barcodes", icon: Barcode },
   { href: "/distributors", label: "Distributors", icon: Factory },
   { href: "/companies", label: "Companies", icon: Building2 },
- 
+  { href: "/categories", label: "Categories", icon: Tags },
   { href: "/expenses", label: "Expenses", icon: Wallet },
   { href: "/reports", label: "Reports", icon: BarChart3 },
   { href: "/ai", label: "AI Inventory", icon: BrainCircuit },

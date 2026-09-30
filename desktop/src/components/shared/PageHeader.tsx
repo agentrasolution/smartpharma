@@ -5,12 +5,14 @@ import { Plus, ArrowLeft } from "lucide-react";
 interface PageHeaderProps {
   title: string;
   description?: string;
+  subtitle?: string;
   action?: { label: string; onClick: () => void };
   actions?: ReactNode;
   back?: { label: string; onClick: () => void };
 }
 
-export default function PageHeader({ title, description, action, actions, back }: PageHeaderProps) {
+export default function PageHeader({ title, description, subtitle, action, actions, back }: PageHeaderProps) {
+  const desc = description || subtitle;
   return (
     <div className="flex items-center justify-between mb-5">
       <div className="space-y-0.5">
@@ -22,7 +24,7 @@ export default function PageHeader({ title, description, action, actions, back }
           )}
           <h1 className="text-base font-semibold text-text-primary tracking-tight">{title}</h1>
         </div>
-        {description && <p className="text-xs text-text-secondary">{description}</p>}
+        {desc && <p className="text-xs text-text-secondary">{desc}</p>}
       </div>
       {actions ? (
         <div className="flex items-center gap-2">{actions}</div>
