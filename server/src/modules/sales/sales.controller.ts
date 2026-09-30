@@ -24,6 +24,15 @@ function normalizeSale(s: Record<string, unknown> | null): Record<string, unknow
     amount_paid: s.amountPaid,
     change: s.change,
     status: s.status,
+    payment_method: (s as any).paymentMethod ?? "CASH",
+    cash_amount: (s as any).cashAmount ?? 0,
+    card_amount: (s as any).cardAmount ?? 0,
+    credit_amount: (s as any).creditAmount ?? 0,
+    prescription_id: (s as any).prescriptionId ?? null,
+    prescription_number: (s as any).prescriptionNumber ?? null,
+    cashier_id: (s as any).cashierId ?? null,
+    cashier_name: (s as any).cashierName ?? null,
+    notes: (s as any).notes ?? "",
     created_at: s.createdAt,
     items: items.map((i: any) => ({
       id: i.id,
@@ -35,6 +44,9 @@ function normalizeSale(s: Record<string, unknown> | null): Record<string, unknow
       returned_qty: returnedByProduct[i.productId] ?? 0,
       unit_price: i.unitPrice,
       subtotal: i.subtotal,
+      batch_id: i.batchId ?? null,
+      batch_number: i.batchNumber ?? null,
+      expiry_date: i.expiryDate ?? null,
     })),
     item_count: (s as any)._count?.items ?? items.length,
     return_count: (s as any)._count?.returns ?? 0,
@@ -45,7 +57,13 @@ export const salesController = {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const scope = branchScope(req);
-      const sale = await salesService.create(req.body, scope);
+      const user = (req as any).user;
+      const payload = {
+        ...req.body,
+        cashierId: req.body.cashierId || user?.userId || null,
+        cashierName: req.body.cashierName || user?.name || user?.username || null,
+      };
+      const sale = await salesService.create(payload, scope);
       res.json(normalizeSale(sale));
     } catch (err) { next(err); }
   },

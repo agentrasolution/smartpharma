@@ -5,6 +5,7 @@ export const createBranchSchema = z.object({
   address: z.string().max(500).optional().default(""),
   phone: z.string().max(50).optional().default(""),
   isActive: z.boolean().optional().default(true),
+  allowPriceOverride: z.boolean().optional().default(true),
 });
 
 export const updateBranchSchema = z.object({
@@ -12,6 +13,7 @@ export const updateBranchSchema = z.object({
   address: z.string().max(500).optional(),
   phone: z.string().max(50).optional(),
   isActive: z.boolean().optional(),
+  allowPriceOverride: z.boolean().optional(),
 });
 
 export type CreateBranchInput = z.infer<typeof createBranchSchema>;

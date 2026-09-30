@@ -21,9 +21,12 @@ import { barcodesRoutes } from "./modules/barcodes/barcodes.routes";
 import { usersRoutes } from "./modules/users/users.routes";
 import { rolesRoutes, permissionsRoutes } from "./modules/roles/roles.routes";
 import { branchesRoutes } from "./modules/branches/branches.routes";
+import { transfersRoutes } from "./modules/branches/transfers.routes";
 import { aiRoutes } from "./modules/ai/ai.routes";
 import { aiInventoryRoutes } from "./modules/ai/inventory.routes";
 import { purchaseOrderRoutes } from "./modules/purchase-orders/purchase-order.routes";
+import { inventoryRoutes } from "./modules/inventory/inventory.routes";
+import { dispensingRoutes } from "./modules/dispensing/dispensing.routes";
 
 const app = express();
 
@@ -58,11 +61,14 @@ app.use("/api/sales", salesRoutes);
 app.use("/api/customers", customersRoutes);
 app.use("/api/arrears", arrearsRoutes);
 app.use("/api/stock", purchasesRoutes);
+app.use("/api/purchase-invoices", purchasesRoutes);
 app.use("/api/distributors", suppliersRoutes);
 app.use("/api/companies", companiesRoutes);
 app.use("/api/returns", returnsRoutes);
 app.use("/api/expenses", expensesRoutes);
 app.use("/api/dashboard", reportsRoutes);
+app.use("/api/reports", reportsRoutes);
+app.use("/api/v1/reports", reportsRoutes);
 app.use("/api/categories", categoriesRoutes);
 app.use("/api/barcodes", barcodesRoutes);
 app.use("/api/settings", settingsRoutes);
@@ -70,9 +76,16 @@ app.use("/api/users", usersRoutes);
 app.use("/api/roles", rolesRoutes);
 app.use("/api/permissions", permissionsRoutes);
 app.use("/api/branches", branchesRoutes);
+app.use("/api/transfers", transfersRoutes);
+app.use("/api/v1/transfers", transfersRoutes);
 app.use("/api/v1/ai", aiRoutes);
 app.use("/api/v1/ai/inventory", aiInventoryRoutes);
 app.use("/api/v1/purchase-orders", purchaseOrderRoutes);
+app.use("/api/v1/inventory", inventoryRoutes);
+app.use("/api/prescriptions", dispensingRoutes);
+app.use("/api/dispensing", dispensingRoutes);
+app.use("/api/v1/prescriptions", dispensingRoutes);
+app.use("/api/v1/dispensing", dispensingRoutes);
 
 app.use(errorHandler);
 

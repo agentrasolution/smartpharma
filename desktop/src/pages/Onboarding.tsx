@@ -552,7 +552,7 @@ export default function Onboarding({ onComplete }: { onComplete?: () => void }) 
                 <p className="text-background/40 text-xs font-medium tracking-widest uppercase">Step 1 of 2</p>
                 <h3 className="text-background text-2xl font-bold tracking-tight leading-tight">About your<br />pharmacy</h3>
                 <p className="text-background/60 text-sm leading-relaxed max-w-[260px]">
-                  Your country selection determines which tax and compliance rules apply — KSA for ZATCA, UAE for FTA.
+                  Your country selection determines your operational jurisdiction, tax rules, and local currency.
                 </p>
               </motion.div>
             )}
@@ -561,7 +561,7 @@ export default function Onboarding({ onComplete }: { onComplete?: () => void }) 
                 <p className="text-background/40 text-xs font-medium tracking-widest uppercase">Step 2 of 2</p>
                 <h3 className="text-background text-2xl font-bold tracking-tight leading-tight">Your first<br />branch</h3>
                 <p className="text-background/60 text-sm leading-relaxed max-w-[260px]">
-                  Every sale and stock record is tied to a branch. You can add more branches from settings once you're set up.
+                  Every sale and stock record is tied to a branch. You can add more branches from settings once you&apos;re set up.
                 </p>
               </motion.div>
             )}
@@ -569,7 +569,7 @@ export default function Onboarding({ onComplete }: { onComplete?: () => void }) 
               <motion.div key="panel-2" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.25 }} className="space-y-4">
                 <h3 className="text-background text-2xl font-bold tracking-tight leading-tight">Ready to<br />dispense.</h3>
                 <p className="text-background/60 text-sm leading-relaxed max-w-[260px]">
-                  Your pharmacy is configured. Head to settings whenever you're ready to connect ZATCA, SFDA, or NPHIES.
+                  Your pharmacy is configured. Head to settings whenever you&apos;re ready to configure advanced tax rules or hardware peripherals.
                 </p>
               </motion.div>
             )}

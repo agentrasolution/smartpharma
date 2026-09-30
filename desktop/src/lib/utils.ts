@@ -36,15 +36,28 @@ export function renderBarcode(svg: SVGElement, value: string, options: RenderBar
   }
 }
 
-export function formatCurrency(amount: number | null | undefined): string {
+export function getTenantCurrency(): string {
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("smartpharma_currency")?.trim();
+    if (saved) return saved;
+  }
+  return "USD";
+}
+
+export function formatCurrency(amount: number | null | undefined, currency?: string): string {
   const val = Number(amount ?? 0);
-  if (isNaN(val)) return "Rs\u00a00";
-  return new Intl.NumberFormat("en-PK", {
-    style: "currency",
-    currency: "PKR",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(val);
+  if (isNaN(val)) return "0.00";
+  const curr = currency || getTenantCurrency();
+  try {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: curr,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(val);
+  } catch {
+    return `${curr} ${val.toFixed(2)}`;
+  }
 }
 
 export function formatDate(dateString?: string | null): string {

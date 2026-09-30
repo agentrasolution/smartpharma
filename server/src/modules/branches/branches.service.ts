@@ -13,6 +13,7 @@ interface BranchListItem {
   address: string;
   phone: string;
   isActive: boolean;
+  allowPriceOverride: boolean;
   createdAt: string;
   updatedAt: string;
   userCount: number;
@@ -32,6 +33,7 @@ function toListItem(b: {
   address: string;
   phone: string;
   isActive: boolean;
+  allowPriceOverride?: boolean;
   createdAt: Date;
   updatedAt: Date;
   users: Array<{ id: string; username: string; name: string; jobRole: string; isActive: boolean }>;
@@ -57,6 +59,7 @@ function toListItem(b: {
     address: b.address,
     phone: b.phone,
     isActive: b.isActive,
+    allowPriceOverride: b.allowPriceOverride ?? true,
     createdAt: b.createdAt.toISOString(),
     updatedAt: b.updatedAt.toISOString(),
     userCount: users.length,
@@ -94,6 +97,7 @@ export const branchesService = {
         address: input.address ?? "",
         phone: input.phone ?? "",
         isActive: input.isActive ?? true,
+        allowPriceOverride: input.allowPriceOverride ?? true,
       },
       include: branchInclude,
     });
@@ -116,6 +120,7 @@ export const branchesService = {
     if (input.address !== undefined) data.address = input.address;
     if (input.phone !== undefined) data.phone = input.phone;
     if (input.isActive !== undefined) data.isActive = input.isActive;
+    if (input.allowPriceOverride !== undefined) data.allowPriceOverride = input.allowPriceOverride;
 
     const branch = await prisma.branch.update({ where: { id }, data, include: branchInclude });
     return toListItem(branch);

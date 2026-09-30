@@ -1,11 +1,13 @@
 export interface Category {
   id: string;
   name: string;
+  vatRate?: number;
   created_at: string;
 }
 
 export interface CategoryInput {
   name: string;
+  vatRate?: number;
 }
 
 export interface ProductPrice {
@@ -44,6 +46,7 @@ export interface Product {
   markup_percent: number;
   stock_qty: number;
   pack_size: number;
+  unitsPerPack?: number;
   expiry?: string;
   active: number;
   created_at: string;
@@ -73,12 +76,29 @@ export interface Customer {
   address: string;
   father_name?: string;
   father_phone?: string;
+  national_id?: string;
+  date_of_birth?: string | null;
+  gender?: string;
+  blood_group?: string;
+  allergies?: string[];
+  chronic_conditions?: string[];
+  emergency_contact_name?: string;
+  emergency_contact_phone?: string;
+  credit_limit?: number;
+  allow_credit?: boolean;
+  notes?: string;
+  consent_given?: boolean;
+  consent_date?: string | null;
+  consent_notes?: string;
   created_at: string;
+  updated_at?: string;
   total_purchases?: number;
   outstanding_arrear?: number;
-  last_purchase?: string;
+  last_purchase?: string | null;
+  active_chronic_meds?: number;
   purchases?: Sale[];
   arrears?: Arrear[];
+  chronic_medications?: ChronicMedication[];
 }
 
 export interface CustomerInput {
@@ -87,6 +107,102 @@ export interface CustomerInput {
   address?: string;
   fatherName?: string;
   fatherPhone?: string;
+  nationalId?: string;
+  dateOfBirth?: string | null;
+  gender?: string;
+  bloodGroup?: string;
+  allergies?: string[];
+  chronicConditions?: string[];
+  emergencyContactName?: string;
+  emergencyContactPhone?: string;
+  creditLimit?: number;
+  allowCredit?: boolean;
+  notes?: string;
+  consentGiven?: boolean;
+  consentDate?: string | null;
+  consentNotes?: string;
+}
+
+export interface ChronicMedication {
+  id: string;
+  customer_id: string;
+  product_id?: string | null;
+  product_name?: string | null;
+  medication_name: string;
+  dosage: string;
+  frequency: string;
+  days_supply: number;
+  last_dispensed_date: string;
+  next_refill_date: string;
+  days_remaining?: number;
+  reminder_active: boolean;
+  status: "ACTIVE" | "PAUSED" | "DISCONTINUED";
+  notes?: string;
+  last_contacted_at?: string | null;
+  contact_notes?: string;
+  created_at: string;
+}
+
+export interface ChronicMedicationInput {
+  customerId: string;
+  productId?: string | null;
+  medicationName: string;
+  dosage?: string;
+  frequency?: string;
+  daysSupply?: number;
+  lastDispensedDate?: string;
+  nextRefillDate?: string;
+  reminderActive?: boolean;
+  notes?: string;
+}
+
+export interface RefillQueueItem {
+  id: string;
+  customer_id: string;
+  customer_name: string;
+  customer_phone: string;
+  customer_national_id?: string;
+  product_id?: string | null;
+  product_name?: string | null;
+  product_stock: number;
+  product_sale_price: number;
+  medication_name: string;
+  dosage: string;
+  frequency: string;
+  days_supply: number;
+  last_dispensed_date: string;
+  next_refill_date: string;
+  days_remaining: number;
+  urgency: "OVERDUE" | "DUE_TODAY" | "DUE_SOON" | "UPCOMING";
+  notes?: string;
+  last_contacted_at?: string | null;
+  contact_notes?: string;
+}
+
+export interface CustomerStatement {
+  customer: {
+    id: string;
+    name: string;
+    phone: string;
+    address: string;
+    national_id?: string;
+    credit_limit?: number;
+    allow_credit?: boolean;
+  };
+  summary: {
+    total_billed: number;
+    total_paid: number;
+    current_balance: number;
+  };
+  entries: {
+    date: string;
+    reference: string;
+    description: string;
+    type: string;
+    debit: number;
+    credit: number;
+    runningBalance: number;
+  }[];
 }
 
 export interface Sale {
@@ -99,7 +215,22 @@ export interface Sale {
   amount_paid: number;
   change: number;
   status: string;
+  payment_method?: "CASH" | "CARD" | "SPLIT" | "CREDIT";
+  cash_amount?: number;
+  card_amount?: number;
+  credit_amount?: number;
+  prescription_id?: string | null;
+  prescription_number?: string | null;
+  cashier_id?: string | null;
+  cashier_name?: string | null;
+  notes?: string;
   created_at: string;
+  totalCogs?: number;
+  totalVat?: number;
+  grossProfit?: number;
+  total_cogs?: number;
+  total_vat?: number;
+  gross_profit?: number;
   return_count?: number;
   items?: SaleItem[];
 }
@@ -114,6 +245,16 @@ export interface SaleItem {
   returned_qty?: number;
   unit_price: number;
   subtotal: number;
+  unitCost?: number;
+  unit_cost?: number;
+  cogs?: number;
+  vatRate?: number;
+  vat_rate?: number;
+  vatAmount?: number;
+  vat_amount?: number;
+  batch_id?: string | null;
+  batch_number?: string | null;
+  expiry_date?: string | null;
 }
 
 export interface SaleInput {
@@ -123,6 +264,15 @@ export interface SaleInput {
   discount: number;
   total: number;
   amountPaid: number;
+  paymentMethod?: "CASH" | "CARD" | "SPLIT" | "CREDIT";
+  cashAmount?: number;
+  cardAmount?: number;
+  creditAmount?: number;
+  prescriptionId?: string | null;
+  prescriptionNumber?: string | null;
+  cashierId?: string | null;
+  cashierName?: string | null;
+  notes?: string;
   items: SaleItemInput[];
 }
 
@@ -133,6 +283,9 @@ export interface SaleItemInput {
   quantity: number;
   unitPrice: number;
   subtotal: number;
+  batchId?: string | null;
+  batchNumber?: string | null;
+  expiryDate?: string | null;
 }
 
 export interface Arrear {
@@ -189,6 +342,153 @@ export interface StockInput {
   salePrice?: number;
   quantity: number;
   expiry?: string;
+}
+
+export interface PurchaseInvoiceItem {
+  id: string;
+  invoiceId: string;
+  productId: string;
+  productName?: string;
+  productBarcode?: string;
+  batchId?: string | null;
+  batchNumber: string;
+  expiryDate: string;
+  quantityPacks: number;
+  unitsPerPack: number;
+  quantityBaseUnits: number;
+  unitCost: number;
+  salePrice: number;
+  totalCost: number;
+}
+
+export interface PurchaseInvoiceItemInput {
+  productId: string;
+  batchNumber: string;
+  expiryDate: string;
+  quantityPacks: number;
+  unitsPerPack?: number;
+  unitCost: number;
+  salePrice: number;
+}
+
+export interface PurchaseInvoice {
+  id: string;
+  pharmacyId: string;
+  branchId: string;
+  distributorId: string;
+  distributorName?: string;
+  distributorPhone?: string;
+  invoiceNumber: string;
+  invoiceDate: string;
+  dueDate?: string | null;
+  subtotal: number;
+  discount: number;
+  tax: number;
+  totalAmount: number;
+  paidAmount: number;
+  balanceDue: number;
+  status: "UNPAID" | "PARTIAL" | "PAID" | "VOID";
+  paymentMethod: "CASH" | "BANK_TRANSFER" | "CHEQUE" | "CREDIT" | string;
+  notes: string;
+  receivedBy?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  items: PurchaseInvoiceItem[];
+  payments: DistributorPaymentRecord[];
+  distributor?: {
+    id: string;
+    name: string;
+    phone: string;
+    contact?: string;
+  };
+}
+
+export interface CreatePurchaseInvoiceInput {
+  distributorId: string;
+  invoiceNumber: string;
+  invoiceDate?: string;
+  dueDate?: string | null;
+  discount?: number;
+  tax?: number;
+  paidAmount?: number;
+  paymentMethod?: "CASH" | "BANK_TRANSFER" | "CHEQUE" | "CREDIT";
+  notes?: string;
+  items: PurchaseInvoiceItemInput[];
+}
+
+export interface DistributorPaymentRecord {
+  id: string;
+  amount: number;
+  paymentMethod: string;
+  referenceNumber: string;
+  paidAt: string;
+  notes: string;
+  invoiceNumber?: string | null;
+}
+
+export interface RecordSupplierPaymentInput {
+  amount: number;
+  invoiceId?: string | null;
+  paymentMethod?: "CASH" | "BANK_TRANSFER" | "CHEQUE";
+  referenceNumber?: string;
+  paidAt?: string;
+  notes?: string;
+}
+
+export interface LedgerTimelineEntry {
+  id: string;
+  date: string;
+  type: "INVOICE" | "PAYMENT";
+  refNumber: string;
+  description: string;
+  debit: number;
+  credit: number;
+  runningBalance: number;
+  status?: string;
+  paymentMethod?: string;
+}
+
+export interface DistributorLedger {
+  distributor: {
+    id: string;
+    name: string;
+    phone: string;
+    contact?: string;
+    address?: string;
+    companyName?: string | null;
+  };
+  summary: {
+    totalInvoiced: number;
+    totalPaid: number;
+    outstandingBalance: number;
+    totalInvoicesCount: number;
+    unpaidInvoicesCount: number;
+  };
+  statement: LedgerTimelineEntry[];
+  invoices: PurchaseInvoice[];
+  payments: DistributorPaymentRecord[];
+}
+
+export interface SuppliersLedgerSummary {
+  summary: {
+    totalInvoiced: number;
+    totalPaid: number;
+    outstandingBalance: number;
+    supplierCount: number;
+    suppliersWithBalance: number;
+  };
+  distributors: Array<{
+    id: string;
+    name: string;
+    phone: string;
+    contact?: string;
+    companyName?: string | null;
+    invoiceCount: number;
+    unpaidInvoices: number;
+    totalInvoiced: number;
+    totalPaid: number;
+    balanceDue: number;
+  }>;
 }
 
 export interface Distributor {
@@ -292,12 +592,19 @@ export interface PrinterConfig {
 
 export interface DashboardStats {
   todayRevenue: number;
+  todayCogs?: number;
+  todayProfit?: number;
+  todaySalesCount?: number;
+  monthRevenue?: number;
+  monthCogs?: number;
+  monthProfit?: number;
+  monthGrossMarginPercent?: number;
   totalArrears: number;
   lowStockCount: number;
   expiringSoonCount: number;
   weekRevenue: { day: string; revenue: number }[];
-  monthRevenue: { day: string; revenue: number }[];
-  topProducts: { name: string; value: number }[];
+  monthRevenueList?: { day: string; revenue: number }[];
+  topProducts: { name: string; value: number; revenue?: number; cogs?: number; profit?: number }[];
 }
 
 export interface BarcodeEntry {
@@ -504,6 +811,7 @@ export interface Branch {
   address: string;
   phone: string;
   isActive: boolean;
+  allowPriceOverride?: boolean;
   createdAt: string;
   updatedAt: string;
   userCount: number;
@@ -522,6 +830,122 @@ export interface BranchInput {
   address?: string;
   phone?: string;
   isActive?: boolean;
+  allowPriceOverride?: boolean;
+}
+
+export interface BranchPriceOverride {
+  id: string;
+  productId: string;
+  productName: string;
+  barcode: string;
+  catalogPrice: number;
+  overridePrice: number;
+  reason?: string;
+  effectiveDate: string;
+  updatedAt?: string;
+}
+
+export interface BranchPriceOverrideInput {
+  productId: string;
+  salePrice: number;
+  reason?: string;
+}
+
+export interface StockTransferItem {
+  id: string;
+  transferId: string;
+  productId: string;
+  productName: string;
+  barcode: string;
+  sourceBatchId?: string | null;
+  batchNumber: string;
+  expiryDate: string;
+  quantity: number;
+  unitCost: number;
+  salePrice: number;
+  destinationBatchId?: string | null;
+  product?: {
+    id: string;
+    name: string;
+    barcode: string;
+    packSize?: number;
+  };
+  sourceBatch?: {
+    id: string;
+    batchNumber: string;
+    expiryDate: string;
+  };
+}
+
+export interface StockTransfer {
+  id: string;
+  transferNumber: string;
+  pharmacyId: string;
+  sourceBranchId: string;
+  destinationBranchId: string;
+  status: "PENDING" | "APPROVED" | "IN_TRANSIT" | "RECEIVED" | "REJECTED" | "CANCELLED";
+  requestedById?: string | null;
+  requestedByName?: string | null;
+  approvedById?: string | null;
+  approvedByName?: string | null;
+  approvedAt?: string | null;
+  receivedById?: string | null;
+  receivedByName?: string | null;
+  receivedAt?: string | null;
+  rejectionReason?: string | null;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+  sourceBranch?: { id: string; name: string; address?: string; phone?: string };
+  destinationBranch?: { id: string; name: string; address?: string; phone?: string };
+  items: StockTransferItem[];
+}
+
+export interface CreateTransferItemInput {
+  productId: string;
+  sourceBatchId?: string;
+  quantity: number;
+}
+
+export interface CreateTransferInput {
+  sourceBranchId: string;
+  destinationBranchId: string;
+  notes?: string;
+  sendImmediately?: boolean;
+  items: CreateTransferItemInput[];
+}
+
+export interface CrossBranchStockItem {
+  branchId: string;
+  branchName: string;
+  branchAddress: string;
+  branchPhone: string;
+  allowPriceOverride: boolean;
+  hasProductRecord: boolean;
+  productId: string | null;
+  stockQty: number;
+  catalogSalePrice: number;
+  effectiveSalePrice: number;
+  hasPriceOverride: boolean;
+  priceOverrideReason: string | null;
+  lastUpdated: string | null;
+  batches: Array<{
+    id: string;
+    batchNumber: string;
+    expiryDate: string;
+    quantity: number;
+    costPrice: number;
+    salePrice: number;
+    isRecalled: boolean;
+    status: string;
+  }>;
+}
+
+export interface CrossBranchStockResponse {
+  productName: string;
+  barcode: string;
+  totalStockAcrossAllBranches: number;
+  branches: CrossBranchStockItem[];
 }
 
 export interface Permission {
@@ -684,3 +1108,232 @@ export interface CreateUserResult {
   user: UserListItem;
   temporaryPassword: string;
 }
+
+export interface PrescriptionItem {
+  id: string;
+  prescriptionId: string;
+  prescribedDrugName: string;
+  productId?: string | null;
+  dosage: string;
+  frequency: string;
+  duration: string;
+  instructions: string;
+  quantityPrescribed: number;
+  quantityDispensed: number;
+  quantityRemaining: number;
+  status: "PENDING" | "PARTIAL" | "COMPLETED";
+  isControlled: boolean;
+  product?: Product;
+}
+
+export interface DispenseRecord {
+  id: string;
+  prescriptionId: string;
+  prescriptionItemId: string;
+  dispensedProductId: string;
+  batchId?: string | null;
+  quantity: number;
+  isPartialFill: boolean;
+  isSubstitution: boolean;
+  originalProductId?: string | null;
+  substitutionReason?: string | null;
+  pharmacistId?: string | null;
+  pharmacistName?: string | null;
+  dispensedAt: string;
+  notes?: string;
+  dispensedProduct?: { id: string; name: string; genericName?: string; salePrice?: number };
+  batch?: { id: string; batchNumber: string; expiryDate: string };
+}
+
+export interface Prescription {
+  id: string;
+  pharmacyId: string;
+  branchId: string;
+  prescriptionNumber: string;
+  patientName: string;
+  patientIdentifier: string;
+  patientPhone: string;
+  patientAge?: number | null;
+  patientGender?: "MALE" | "FEMALE" | "OTHER" | null;
+  doctorName: string;
+  doctorLicense: string;
+  clinicOrHospital: string;
+  diagnosis: string;
+  prescribedDate: string;
+  status: "PENDING" | "VERIFIED" | "PARTIALLY_DISPENSED" | "FULLY_DISPENSED" | "CANCELLED";
+  verifiedById?: string | null;
+  verifiedByName?: string | null;
+  verifiedAt?: string | null;
+  notes: string;
+  createdAt: string;
+  items: PrescriptionItem[];
+  dispenseRecords?: DispenseRecord[];
+  controlledRegisters?: ControlledDrugRegister[];
+}
+
+export interface ControlledDrugRegister {
+  id: string;
+  pharmacyId: string;
+  branchId: string;
+  productId: string;
+  batchId?: string | null;
+  prescriptionId?: string | null;
+  dispenseRecordId?: string | null;
+  patientName: string;
+  patientIdentifier: string;
+  doctorName: string;
+  doctorLicense: string;
+  transactionType: "DISPENSE" | "RECEIPT" | "ADJUSTMENT" | "DISCARD";
+  quantity: number;
+  balanceAfter: number;
+  pharmacistId?: string | null;
+  pharmacistName: string;
+  witnessName?: string | null;
+  notes: string;
+  recordedAt: string;
+  product?: { id: string; name: string; genericName?: string; dosageForm?: string; strength?: string; schedule?: string };
+  batch?: { id: string; batchNumber: string; expiryDate?: string };
+  prescription?: { id: string; prescriptionNumber: string; prescribedDate?: string };
+}
+
+export interface GenericSubstitutionOption {
+  id: string;
+  name: string;
+  genericName?: string;
+  dosageForm?: string;
+  strength?: string;
+  salePrice: number;
+  stockQty: number;
+  priceDifference: number;
+  isCheaper: boolean;
+  sameDosageForm: boolean;
+  batches?: Array<{ id: string; batchNumber: string; expiryDate: string; quantity: number }>;
+}
+
+export interface SubstitutionSuggestionResult {
+  originalProduct: {
+    id: string;
+    name: string;
+    genericName?: string;
+    dosageForm?: string;
+    strength?: string;
+    salePrice: number;
+    stockQty: number;
+  };
+  hasGenericAlternatives: boolean;
+  substitutions: GenericSubstitutionOption[];
+}
+
+export interface MarginReportItem {
+  key: string;
+  label: string;
+  subLabel?: string;
+  quantity: number;
+  revenue: number;
+  cogs: number;
+  grossProfit: number;
+  marginPercent: number;
+  salesCount: number;
+}
+
+export interface MarginReport {
+  groupBy: "drug" | "category" | "supplier" | "branch";
+  totalQuantity: number;
+  totalRevenue: number;
+  totalCogs: number;
+  totalGrossProfit: number;
+  overallMarginPercent: number;
+  items: MarginReportItem[];
+}
+
+export interface LossItem {
+  id: string;
+  productId?: string;
+  productName: string;
+  barcode: string;
+  batchNumber: string;
+  unitsLost: number;
+  unitCost: number;
+  estimatedLoss: number;
+  reason: string;
+  date: string;
+}
+
+export interface LossReportSummary {
+  totalLoss: number;
+  adjustmentLoss: number;
+  expiryLoss: number;
+  customerRefunds: number;
+}
+
+export interface LossReport {
+  summary: LossReportSummary;
+  adjustmentLosses: LossItem[];
+  expiredDiscards: LossItem[];
+  returnsCount: number;
+}
+
+export interface StockValuationSummary {
+  totalActiveBatches: number;
+  totalUnits: number;
+  totalCostValuation: number;
+  totalRetailValuation: number;
+  potentialGrossProfit: number;
+  potentialMarginPercent: number;
+}
+
+export interface StockValuationCategory {
+  category: string;
+  units: number;
+  costValue: number;
+  retailValue: number;
+}
+
+export interface StockValuationBranch {
+  branchId: string;
+  branchName: string;
+  units: number;
+  costValue: number;
+  retailValue: number;
+}
+
+export interface StockValuation {
+  summary: StockValuationSummary;
+  byCategory: StockValuationCategory[];
+  byBranch: StockValuationBranch[];
+}
+
+export interface ProfitAndLoss {
+  period: {
+    startDate: string;
+    endDate: string;
+  };
+  salesRevenue: {
+    grossSales: number;
+    discounts: number;
+    vatCollected: number;
+    netSales: number;
+    salesCount: number;
+  };
+  costOfGoodsSold: {
+    totalCogs: number;
+    grossProfit: number;
+    grossMarginPercent: number;
+  };
+  operatingExpenses: {
+    total: number;
+    byCategory: Array<{ category: string; amount: number }>;
+  };
+  netProfit: {
+    netOperatingProfit: number;
+    netProfitMarginPercent: number;
+  };
+  taxAndVat: {
+    vatCollectedOnSales: number;
+    vatPaidOnPurchases: number;
+    netVatPayable: number;
+    totalPurchases: number;
+  };
+}
+
+

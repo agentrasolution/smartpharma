@@ -33,6 +33,7 @@ export type BranchMinAggregateOutputType = {
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  allowPriceOverride: boolean | null
 }
 
 export type BranchMaxAggregateOutputType = {
@@ -44,6 +45,7 @@ export type BranchMaxAggregateOutputType = {
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  allowPriceOverride: boolean | null
 }
 
 export type BranchCountAggregateOutputType = {
@@ -55,6 +57,7 @@ export type BranchCountAggregateOutputType = {
   isActive: number
   createdAt: number
   updatedAt: number
+  allowPriceOverride: number
   _all: number
 }
 
@@ -68,6 +71,7 @@ export type BranchMinAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  allowPriceOverride?: true
 }
 
 export type BranchMaxAggregateInputType = {
@@ -79,6 +83,7 @@ export type BranchMaxAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  allowPriceOverride?: true
 }
 
 export type BranchCountAggregateInputType = {
@@ -90,6 +95,7 @@ export type BranchCountAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  allowPriceOverride?: true
   _all?: true
 }
 
@@ -174,6 +180,7 @@ export type BranchGroupByOutputType = {
   isActive: boolean
   createdAt: Date
   updatedAt: Date
+  allowPriceOverride: boolean
   _count: BranchCountAggregateOutputType | null
   _min: BranchMinAggregateOutputType | null
   _max: BranchMaxAggregateOutputType | null
@@ -206,6 +213,7 @@ export type BranchWhereInput = {
   isActive?: Prisma.BoolFilter<"Branch"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Branch"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Branch"> | Date | string
+  allowPriceOverride?: Prisma.BoolFilter<"Branch"> | boolean
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
   users?: Prisma.UserListRelationFilter
   products?: Prisma.ProductListRelationFilter
@@ -216,6 +224,16 @@ export type BranchWhereInput = {
   arrears?: Prisma.ArrearListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
   purchaseOrders?: Prisma.PurchaseOrderListRelationFilter
+  batches?: Prisma.BatchListRelationFilter
+  stockMovements?: Prisma.StockMovementListRelationFilter
+  purchaseInvoices?: Prisma.PurchaseInvoiceListRelationFilter
+  distributorPayments?: Prisma.DistributorPaymentListRelationFilter
+  prescriptions?: Prisma.PrescriptionListRelationFilter
+  controlledRegisters?: Prisma.ControlledDrugRegisterListRelationFilter
+  chronicMedications?: Prisma.ChronicMedicationListRelationFilter
+  transfersSent?: Prisma.StockTransferListRelationFilter
+  transfersReceived?: Prisma.StockTransferListRelationFilter
+  branchPriceOverrides?: Prisma.BranchPriceOverrideListRelationFilter
 }
 
 export type BranchOrderByWithRelationInput = {
@@ -227,6 +245,7 @@ export type BranchOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  allowPriceOverride?: Prisma.SortOrder
   pharmacy?: Prisma.PharmacyOrderByWithRelationInput
   users?: Prisma.UserOrderByRelationAggregateInput
   products?: Prisma.ProductOrderByRelationAggregateInput
@@ -237,6 +256,16 @@ export type BranchOrderByWithRelationInput = {
   arrears?: Prisma.ArrearOrderByRelationAggregateInput
   expenses?: Prisma.ExpenseOrderByRelationAggregateInput
   purchaseOrders?: Prisma.PurchaseOrderOrderByRelationAggregateInput
+  batches?: Prisma.BatchOrderByRelationAggregateInput
+  stockMovements?: Prisma.StockMovementOrderByRelationAggregateInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceOrderByRelationAggregateInput
+  distributorPayments?: Prisma.DistributorPaymentOrderByRelationAggregateInput
+  prescriptions?: Prisma.PrescriptionOrderByRelationAggregateInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterOrderByRelationAggregateInput
+  chronicMedications?: Prisma.ChronicMedicationOrderByRelationAggregateInput
+  transfersSent?: Prisma.StockTransferOrderByRelationAggregateInput
+  transfersReceived?: Prisma.StockTransferOrderByRelationAggregateInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideOrderByRelationAggregateInput
 }
 
 export type BranchWhereUniqueInput = Prisma.AtLeast<{
@@ -251,6 +280,7 @@ export type BranchWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"Branch"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Branch"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Branch"> | Date | string
+  allowPriceOverride?: Prisma.BoolFilter<"Branch"> | boolean
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
   users?: Prisma.UserListRelationFilter
   products?: Prisma.ProductListRelationFilter
@@ -261,6 +291,16 @@ export type BranchWhereUniqueInput = Prisma.AtLeast<{
   arrears?: Prisma.ArrearListRelationFilter
   expenses?: Prisma.ExpenseListRelationFilter
   purchaseOrders?: Prisma.PurchaseOrderListRelationFilter
+  batches?: Prisma.BatchListRelationFilter
+  stockMovements?: Prisma.StockMovementListRelationFilter
+  purchaseInvoices?: Prisma.PurchaseInvoiceListRelationFilter
+  distributorPayments?: Prisma.DistributorPaymentListRelationFilter
+  prescriptions?: Prisma.PrescriptionListRelationFilter
+  controlledRegisters?: Prisma.ControlledDrugRegisterListRelationFilter
+  chronicMedications?: Prisma.ChronicMedicationListRelationFilter
+  transfersSent?: Prisma.StockTransferListRelationFilter
+  transfersReceived?: Prisma.StockTransferListRelationFilter
+  branchPriceOverrides?: Prisma.BranchPriceOverrideListRelationFilter
 }, "id">
 
 export type BranchOrderByWithAggregationInput = {
@@ -272,6 +312,7 @@ export type BranchOrderByWithAggregationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  allowPriceOverride?: Prisma.SortOrder
   _count?: Prisma.BranchCountOrderByAggregateInput
   _max?: Prisma.BranchMaxOrderByAggregateInput
   _min?: Prisma.BranchMinOrderByAggregateInput
@@ -289,6 +330,7 @@ export type BranchScalarWhereWithAggregatesInput = {
   isActive?: Prisma.BoolWithAggregatesFilter<"Branch"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Branch"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Branch"> | Date | string
+  allowPriceOverride?: Prisma.BoolWithAggregatesFilter<"Branch"> | boolean
 }
 
 export type BranchCreateInput = {
@@ -299,6 +341,7 @@ export type BranchCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
@@ -309,6 +352,16 @@ export type BranchCreateInput = {
   arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateInput = {
@@ -320,6 +373,7 @@ export type BranchUncheckedCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
@@ -329,6 +383,16 @@ export type BranchUncheckedCreateInput = {
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUpdateInput = {
@@ -339,6 +403,7 @@ export type BranchUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
@@ -349,6 +414,16 @@ export type BranchUpdateInput = {
   arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateInput = {
@@ -360,6 +435,7 @@ export type BranchUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
@@ -369,6 +445,16 @@ export type BranchUncheckedUpdateInput = {
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateManyInput = {
@@ -380,6 +466,7 @@ export type BranchCreateManyInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
 }
 
 export type BranchUpdateManyMutationInput = {
@@ -390,6 +477,7 @@ export type BranchUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type BranchUncheckedUpdateManyInput = {
@@ -401,6 +489,7 @@ export type BranchUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type BranchListRelationFilter = {
@@ -432,6 +521,7 @@ export type BranchCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  allowPriceOverride?: Prisma.SortOrder
 }
 
 export type BranchMaxOrderByAggregateInput = {
@@ -443,6 +533,7 @@ export type BranchMaxOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  allowPriceOverride?: Prisma.SortOrder
 }
 
 export type BranchMinOrderByAggregateInput = {
@@ -454,6 +545,7 @@ export type BranchMinOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  allowPriceOverride?: Prisma.SortOrder
 }
 
 export type BranchCreateNestedManyWithoutPharmacyInput = {
@@ -556,6 +648,20 @@ export type BranchUpdateOneRequiredWithoutCustomersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutCustomersInput, Prisma.BranchUpdateWithoutCustomersInput>, Prisma.BranchUncheckedUpdateWithoutCustomersInput>
 }
 
+export type BranchCreateNestedOneWithoutChronicMedicationsInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutChronicMedicationsInput, Prisma.BranchUncheckedCreateWithoutChronicMedicationsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutChronicMedicationsInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutChronicMedicationsNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutChronicMedicationsInput, Prisma.BranchUncheckedCreateWithoutChronicMedicationsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutChronicMedicationsInput
+  upsert?: Prisma.BranchUpsertWithoutChronicMedicationsInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutChronicMedicationsInput, Prisma.BranchUpdateWithoutChronicMedicationsInput>, Prisma.BranchUncheckedUpdateWithoutChronicMedicationsInput>
+}
+
 export type BranchCreateNestedOneWithoutSalesInput = {
   create?: Prisma.XOR<Prisma.BranchCreateWithoutSalesInput, Prisma.BranchUncheckedCreateWithoutSalesInput>
   connectOrCreate?: Prisma.BranchCreateOrConnectWithoutSalesInput
@@ -626,6 +732,132 @@ export type BranchUpdateOneRequiredWithoutExpensesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutExpensesInput, Prisma.BranchUpdateWithoutExpensesInput>, Prisma.BranchUncheckedUpdateWithoutExpensesInput>
 }
 
+export type BranchCreateNestedOneWithoutBatchesInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutBatchesInput, Prisma.BranchUncheckedCreateWithoutBatchesInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutBatchesInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutBatchesNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutBatchesInput, Prisma.BranchUncheckedCreateWithoutBatchesInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutBatchesInput
+  upsert?: Prisma.BranchUpsertWithoutBatchesInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutBatchesInput, Prisma.BranchUpdateWithoutBatchesInput>, Prisma.BranchUncheckedUpdateWithoutBatchesInput>
+}
+
+export type BranchCreateNestedOneWithoutStockMovementsInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutStockMovementsInput, Prisma.BranchUncheckedCreateWithoutStockMovementsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutStockMovementsInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutStockMovementsNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutStockMovementsInput, Prisma.BranchUncheckedCreateWithoutStockMovementsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutStockMovementsInput
+  upsert?: Prisma.BranchUpsertWithoutStockMovementsInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutStockMovementsInput, Prisma.BranchUpdateWithoutStockMovementsInput>, Prisma.BranchUncheckedUpdateWithoutStockMovementsInput>
+}
+
+export type BranchCreateNestedOneWithoutPurchaseInvoicesInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutPurchaseInvoicesInput, Prisma.BranchUncheckedCreateWithoutPurchaseInvoicesInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutPurchaseInvoicesInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutPurchaseInvoicesNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutPurchaseInvoicesInput, Prisma.BranchUncheckedCreateWithoutPurchaseInvoicesInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutPurchaseInvoicesInput
+  upsert?: Prisma.BranchUpsertWithoutPurchaseInvoicesInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutPurchaseInvoicesInput, Prisma.BranchUpdateWithoutPurchaseInvoicesInput>, Prisma.BranchUncheckedUpdateWithoutPurchaseInvoicesInput>
+}
+
+export type BranchCreateNestedOneWithoutDistributorPaymentsInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutDistributorPaymentsInput, Prisma.BranchUncheckedCreateWithoutDistributorPaymentsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutDistributorPaymentsInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutDistributorPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutDistributorPaymentsInput, Prisma.BranchUncheckedCreateWithoutDistributorPaymentsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutDistributorPaymentsInput
+  upsert?: Prisma.BranchUpsertWithoutDistributorPaymentsInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutDistributorPaymentsInput, Prisma.BranchUpdateWithoutDistributorPaymentsInput>, Prisma.BranchUncheckedUpdateWithoutDistributorPaymentsInput>
+}
+
+export type BranchCreateNestedOneWithoutPrescriptionsInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutPrescriptionsInput, Prisma.BranchUncheckedCreateWithoutPrescriptionsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutPrescriptionsInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutPrescriptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutPrescriptionsInput, Prisma.BranchUncheckedCreateWithoutPrescriptionsInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutPrescriptionsInput
+  upsert?: Prisma.BranchUpsertWithoutPrescriptionsInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutPrescriptionsInput, Prisma.BranchUpdateWithoutPrescriptionsInput>, Prisma.BranchUncheckedUpdateWithoutPrescriptionsInput>
+}
+
+export type BranchCreateNestedOneWithoutControlledRegistersInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutControlledRegistersInput, Prisma.BranchUncheckedCreateWithoutControlledRegistersInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutControlledRegistersInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutControlledRegistersNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutControlledRegistersInput, Prisma.BranchUncheckedCreateWithoutControlledRegistersInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutControlledRegistersInput
+  upsert?: Prisma.BranchUpsertWithoutControlledRegistersInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutControlledRegistersInput, Prisma.BranchUpdateWithoutControlledRegistersInput>, Prisma.BranchUncheckedUpdateWithoutControlledRegistersInput>
+}
+
+export type BranchCreateNestedOneWithoutBranchPriceOverridesInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutBranchPriceOverridesInput, Prisma.BranchUncheckedCreateWithoutBranchPriceOverridesInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutBranchPriceOverridesInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutBranchPriceOverridesNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutBranchPriceOverridesInput, Prisma.BranchUncheckedCreateWithoutBranchPriceOverridesInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutBranchPriceOverridesInput
+  upsert?: Prisma.BranchUpsertWithoutBranchPriceOverridesInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutBranchPriceOverridesInput, Prisma.BranchUpdateWithoutBranchPriceOverridesInput>, Prisma.BranchUncheckedUpdateWithoutBranchPriceOverridesInput>
+}
+
+export type BranchCreateNestedOneWithoutTransfersSentInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutTransfersSentInput, Prisma.BranchUncheckedCreateWithoutTransfersSentInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutTransfersSentInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchCreateNestedOneWithoutTransfersReceivedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutTransfersReceivedInput, Prisma.BranchUncheckedCreateWithoutTransfersReceivedInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutTransfersReceivedInput
+  connect?: Prisma.BranchWhereUniqueInput
+}
+
+export type BranchUpdateOneRequiredWithoutTransfersSentNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutTransfersSentInput, Prisma.BranchUncheckedCreateWithoutTransfersSentInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutTransfersSentInput
+  upsert?: Prisma.BranchUpsertWithoutTransfersSentInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutTransfersSentInput, Prisma.BranchUpdateWithoutTransfersSentInput>, Prisma.BranchUncheckedUpdateWithoutTransfersSentInput>
+}
+
+export type BranchUpdateOneRequiredWithoutTransfersReceivedNestedInput = {
+  create?: Prisma.XOR<Prisma.BranchCreateWithoutTransfersReceivedInput, Prisma.BranchUncheckedCreateWithoutTransfersReceivedInput>
+  connectOrCreate?: Prisma.BranchCreateOrConnectWithoutTransfersReceivedInput
+  upsert?: Prisma.BranchUpsertWithoutTransfersReceivedInput
+  connect?: Prisma.BranchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BranchUpdateToOneWithWhereWithoutTransfersReceivedInput, Prisma.BranchUpdateWithoutTransfersReceivedInput>, Prisma.BranchUncheckedUpdateWithoutTransfersReceivedInput>
+}
+
 export type BranchCreateWithoutPharmacyInput = {
   id?: string
   name: string
@@ -634,6 +866,7 @@ export type BranchCreateWithoutPharmacyInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
@@ -643,6 +876,16 @@ export type BranchCreateWithoutPharmacyInput = {
   arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutPharmacyInput = {
@@ -653,6 +896,7 @@ export type BranchUncheckedCreateWithoutPharmacyInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
@@ -662,6 +906,16 @@ export type BranchUncheckedCreateWithoutPharmacyInput = {
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutPharmacyInput = {
@@ -702,6 +956,7 @@ export type BranchScalarWhereInput = {
   isActive?: Prisma.BoolFilter<"Branch"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Branch"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Branch"> | Date | string
+  allowPriceOverride?: Prisma.BoolFilter<"Branch"> | boolean
 }
 
 export type BranchCreateWithoutPurchaseOrdersInput = {
@@ -712,6 +967,7 @@ export type BranchCreateWithoutPurchaseOrdersInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
@@ -721,6 +977,16 @@ export type BranchCreateWithoutPurchaseOrdersInput = {
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutPurchaseOrdersInput = {
@@ -732,6 +998,7 @@ export type BranchUncheckedCreateWithoutPurchaseOrdersInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
@@ -740,6 +1007,16 @@ export type BranchUncheckedCreateWithoutPurchaseOrdersInput = {
   returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutPurchaseOrdersInput = {
@@ -766,6 +1043,7 @@ export type BranchUpdateWithoutPurchaseOrdersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
@@ -775,6 +1053,16 @@ export type BranchUpdateWithoutPurchaseOrdersInput = {
   returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutPurchaseOrdersInput = {
@@ -786,6 +1074,7 @@ export type BranchUncheckedUpdateWithoutPurchaseOrdersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
@@ -794,6 +1083,16 @@ export type BranchUncheckedUpdateWithoutPurchaseOrdersInput = {
   returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutUsersInput = {
@@ -804,6 +1103,7 @@ export type BranchCreateWithoutUsersInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
@@ -813,6 +1113,16 @@ export type BranchCreateWithoutUsersInput = {
   arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutUsersInput = {
@@ -824,6 +1134,7 @@ export type BranchUncheckedCreateWithoutUsersInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
@@ -832,6 +1143,16 @@ export type BranchUncheckedCreateWithoutUsersInput = {
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutUsersInput = {
@@ -858,6 +1179,7 @@ export type BranchUpdateWithoutUsersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
@@ -867,6 +1189,16 @@ export type BranchUpdateWithoutUsersInput = {
   arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutUsersInput = {
@@ -878,6 +1210,7 @@ export type BranchUncheckedUpdateWithoutUsersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
   sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
@@ -886,6 +1219,16 @@ export type BranchUncheckedUpdateWithoutUsersInput = {
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutProductsInput = {
@@ -896,6 +1239,7 @@ export type BranchCreateWithoutProductsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
@@ -905,6 +1249,16 @@ export type BranchCreateWithoutProductsInput = {
   arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutProductsInput = {
@@ -916,6 +1270,7 @@ export type BranchUncheckedCreateWithoutProductsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
@@ -924,6 +1279,16 @@ export type BranchUncheckedCreateWithoutProductsInput = {
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutProductsInput = {
@@ -950,6 +1315,7 @@ export type BranchUpdateWithoutProductsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
@@ -959,6 +1325,16 @@ export type BranchUpdateWithoutProductsInput = {
   arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutProductsInput = {
@@ -970,6 +1346,7 @@ export type BranchUncheckedUpdateWithoutProductsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
   sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
@@ -978,6 +1355,16 @@ export type BranchUncheckedUpdateWithoutProductsInput = {
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutCustomersInput = {
@@ -988,6 +1375,7 @@ export type BranchCreateWithoutCustomersInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
@@ -997,6 +1385,16 @@ export type BranchCreateWithoutCustomersInput = {
   arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutCustomersInput = {
@@ -1008,6 +1406,7 @@ export type BranchUncheckedCreateWithoutCustomersInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
@@ -1016,6 +1415,16 @@ export type BranchUncheckedCreateWithoutCustomersInput = {
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutCustomersInput = {
@@ -1042,6 +1451,7 @@ export type BranchUpdateWithoutCustomersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
@@ -1051,6 +1461,16 @@ export type BranchUpdateWithoutCustomersInput = {
   arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutCustomersInput = {
@@ -1062,6 +1482,7 @@ export type BranchUncheckedUpdateWithoutCustomersInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
@@ -1070,6 +1491,152 @@ export type BranchUncheckedUpdateWithoutCustomersInput = {
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutChronicMedicationsInput = {
+  id?: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutChronicMedicationsInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutChronicMedicationsInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutChronicMedicationsInput, Prisma.BranchUncheckedCreateWithoutChronicMedicationsInput>
+}
+
+export type BranchUpsertWithoutChronicMedicationsInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutChronicMedicationsInput, Prisma.BranchUncheckedUpdateWithoutChronicMedicationsInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutChronicMedicationsInput, Prisma.BranchUncheckedCreateWithoutChronicMedicationsInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutChronicMedicationsInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutChronicMedicationsInput, Prisma.BranchUncheckedUpdateWithoutChronicMedicationsInput>
+}
+
+export type BranchUpdateWithoutChronicMedicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutChronicMedicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutSalesInput = {
@@ -1080,6 +1647,7 @@ export type BranchCreateWithoutSalesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
@@ -1089,6 +1657,16 @@ export type BranchCreateWithoutSalesInput = {
   arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutSalesInput = {
@@ -1100,6 +1678,7 @@ export type BranchUncheckedCreateWithoutSalesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
@@ -1108,6 +1687,16 @@ export type BranchUncheckedCreateWithoutSalesInput = {
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutSalesInput = {
@@ -1134,6 +1723,7 @@ export type BranchUpdateWithoutSalesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
@@ -1143,6 +1733,16 @@ export type BranchUpdateWithoutSalesInput = {
   arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutSalesInput = {
@@ -1154,6 +1754,7 @@ export type BranchUncheckedUpdateWithoutSalesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
@@ -1162,6 +1763,16 @@ export type BranchUncheckedUpdateWithoutSalesInput = {
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutArrearsInput = {
@@ -1172,6 +1783,7 @@ export type BranchCreateWithoutArrearsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
@@ -1181,6 +1793,16 @@ export type BranchCreateWithoutArrearsInput = {
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutArrearsInput = {
@@ -1192,6 +1814,7 @@ export type BranchUncheckedCreateWithoutArrearsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
@@ -1200,6 +1823,16 @@ export type BranchUncheckedCreateWithoutArrearsInput = {
   returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutArrearsInput = {
@@ -1226,6 +1859,7 @@ export type BranchUpdateWithoutArrearsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
@@ -1235,6 +1869,16 @@ export type BranchUpdateWithoutArrearsInput = {
   returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutArrearsInput = {
@@ -1246,6 +1890,7 @@ export type BranchUncheckedUpdateWithoutArrearsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
@@ -1254,6 +1899,16 @@ export type BranchUncheckedUpdateWithoutArrearsInput = {
   returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutStockPurchasesInput = {
@@ -1264,6 +1919,7 @@ export type BranchCreateWithoutStockPurchasesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
@@ -1273,6 +1929,16 @@ export type BranchCreateWithoutStockPurchasesInput = {
   arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutStockPurchasesInput = {
@@ -1284,6 +1950,7 @@ export type BranchUncheckedCreateWithoutStockPurchasesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
@@ -1292,6 +1959,16 @@ export type BranchUncheckedCreateWithoutStockPurchasesInput = {
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutStockPurchasesInput = {
@@ -1318,6 +1995,7 @@ export type BranchUpdateWithoutStockPurchasesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
@@ -1327,6 +2005,16 @@ export type BranchUpdateWithoutStockPurchasesInput = {
   arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutStockPurchasesInput = {
@@ -1338,6 +2026,7 @@ export type BranchUncheckedUpdateWithoutStockPurchasesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
@@ -1346,6 +2035,16 @@ export type BranchUncheckedUpdateWithoutStockPurchasesInput = {
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutReturnsInput = {
@@ -1356,6 +2055,7 @@ export type BranchCreateWithoutReturnsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
@@ -1365,6 +2065,16 @@ export type BranchCreateWithoutReturnsInput = {
   arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutReturnsInput = {
@@ -1376,6 +2086,7 @@ export type BranchUncheckedCreateWithoutReturnsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
@@ -1384,6 +2095,16 @@ export type BranchUncheckedCreateWithoutReturnsInput = {
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
   expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutReturnsInput = {
@@ -1410,6 +2131,7 @@ export type BranchUpdateWithoutReturnsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
@@ -1419,6 +2141,16 @@ export type BranchUpdateWithoutReturnsInput = {
   arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutReturnsInput = {
@@ -1430,6 +2162,7 @@ export type BranchUncheckedUpdateWithoutReturnsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
@@ -1438,6 +2171,16 @@ export type BranchUncheckedUpdateWithoutReturnsInput = {
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateWithoutExpensesInput = {
@@ -1448,6 +2191,7 @@ export type BranchCreateWithoutExpensesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
   users?: Prisma.UserCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductCreateNestedManyWithoutBranchInput
@@ -1457,6 +2201,16 @@ export type BranchCreateWithoutExpensesInput = {
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
 }
 
 export type BranchUncheckedCreateWithoutExpensesInput = {
@@ -1468,6 +2222,7 @@ export type BranchUncheckedCreateWithoutExpensesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
   users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
   products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
@@ -1476,6 +2231,16 @@ export type BranchUncheckedCreateWithoutExpensesInput = {
   returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
 }
 
 export type BranchCreateOrConnectWithoutExpensesInput = {
@@ -1502,6 +2267,7 @@ export type BranchUpdateWithoutExpensesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
@@ -1511,6 +2277,16 @@ export type BranchUpdateWithoutExpensesInput = {
   returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutExpensesInput = {
@@ -1522,6 +2298,7 @@ export type BranchUncheckedUpdateWithoutExpensesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
@@ -1530,6 +2307,1240 @@ export type BranchUncheckedUpdateWithoutExpensesInput = {
   returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutBatchesInput = {
+  id?: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutBatchesInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutBatchesInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutBatchesInput, Prisma.BranchUncheckedCreateWithoutBatchesInput>
+}
+
+export type BranchUpsertWithoutBatchesInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutBatchesInput, Prisma.BranchUncheckedUpdateWithoutBatchesInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutBatchesInput, Prisma.BranchUncheckedCreateWithoutBatchesInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutBatchesInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutBatchesInput, Prisma.BranchUncheckedUpdateWithoutBatchesInput>
+}
+
+export type BranchUpdateWithoutBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutStockMovementsInput = {
+  id?: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutStockMovementsInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutStockMovementsInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutStockMovementsInput, Prisma.BranchUncheckedCreateWithoutStockMovementsInput>
+}
+
+export type BranchUpsertWithoutStockMovementsInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutStockMovementsInput, Prisma.BranchUncheckedUpdateWithoutStockMovementsInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutStockMovementsInput, Prisma.BranchUncheckedCreateWithoutStockMovementsInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutStockMovementsInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutStockMovementsInput, Prisma.BranchUncheckedUpdateWithoutStockMovementsInput>
+}
+
+export type BranchUpdateWithoutStockMovementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutStockMovementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutPurchaseInvoicesInput = {
+  id?: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutPurchaseInvoicesInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutPurchaseInvoicesInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutPurchaseInvoicesInput, Prisma.BranchUncheckedCreateWithoutPurchaseInvoicesInput>
+}
+
+export type BranchUpsertWithoutPurchaseInvoicesInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutPurchaseInvoicesInput, Prisma.BranchUncheckedUpdateWithoutPurchaseInvoicesInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutPurchaseInvoicesInput, Prisma.BranchUncheckedCreateWithoutPurchaseInvoicesInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutPurchaseInvoicesInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutPurchaseInvoicesInput, Prisma.BranchUncheckedUpdateWithoutPurchaseInvoicesInput>
+}
+
+export type BranchUpdateWithoutPurchaseInvoicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutPurchaseInvoicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutDistributorPaymentsInput = {
+  id?: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutDistributorPaymentsInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutDistributorPaymentsInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutDistributorPaymentsInput, Prisma.BranchUncheckedCreateWithoutDistributorPaymentsInput>
+}
+
+export type BranchUpsertWithoutDistributorPaymentsInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutDistributorPaymentsInput, Prisma.BranchUncheckedUpdateWithoutDistributorPaymentsInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutDistributorPaymentsInput, Prisma.BranchUncheckedCreateWithoutDistributorPaymentsInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutDistributorPaymentsInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutDistributorPaymentsInput, Prisma.BranchUncheckedUpdateWithoutDistributorPaymentsInput>
+}
+
+export type BranchUpdateWithoutDistributorPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutDistributorPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutPrescriptionsInput = {
+  id?: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutPrescriptionsInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutPrescriptionsInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutPrescriptionsInput, Prisma.BranchUncheckedCreateWithoutPrescriptionsInput>
+}
+
+export type BranchUpsertWithoutPrescriptionsInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutPrescriptionsInput, Prisma.BranchUncheckedUpdateWithoutPrescriptionsInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutPrescriptionsInput, Prisma.BranchUncheckedCreateWithoutPrescriptionsInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutPrescriptionsInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutPrescriptionsInput, Prisma.BranchUncheckedUpdateWithoutPrescriptionsInput>
+}
+
+export type BranchUpdateWithoutPrescriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutPrescriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutControlledRegistersInput = {
+  id?: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutControlledRegistersInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutControlledRegistersInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutControlledRegistersInput, Prisma.BranchUncheckedCreateWithoutControlledRegistersInput>
+}
+
+export type BranchUpsertWithoutControlledRegistersInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutControlledRegistersInput, Prisma.BranchUncheckedUpdateWithoutControlledRegistersInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutControlledRegistersInput, Prisma.BranchUncheckedCreateWithoutControlledRegistersInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutControlledRegistersInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutControlledRegistersInput, Prisma.BranchUncheckedUpdateWithoutControlledRegistersInput>
+}
+
+export type BranchUpdateWithoutControlledRegistersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutControlledRegistersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchCreateWithoutBranchPriceOverridesInput = {
+  id?: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+}
+
+export type BranchUncheckedCreateWithoutBranchPriceOverridesInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+}
+
+export type BranchCreateOrConnectWithoutBranchPriceOverridesInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutBranchPriceOverridesInput, Prisma.BranchUncheckedCreateWithoutBranchPriceOverridesInput>
+}
+
+export type BranchUpsertWithoutBranchPriceOverridesInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutBranchPriceOverridesInput, Prisma.BranchUncheckedUpdateWithoutBranchPriceOverridesInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutBranchPriceOverridesInput, Prisma.BranchUncheckedCreateWithoutBranchPriceOverridesInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutBranchPriceOverridesInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutBranchPriceOverridesInput, Prisma.BranchUncheckedUpdateWithoutBranchPriceOverridesInput>
+}
+
+export type BranchUpdateWithoutBranchPriceOverridesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutBranchPriceOverridesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+}
+
+export type BranchCreateWithoutTransfersSentInput = {
+  id?: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersReceived?: Prisma.StockTransferCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutTransfersSentInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersReceived?: Prisma.StockTransferUncheckedCreateNestedManyWithoutDestinationBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutTransfersSentInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutTransfersSentInput, Prisma.BranchUncheckedCreateWithoutTransfersSentInput>
+}
+
+export type BranchCreateWithoutTransfersReceivedInput = {
+  id?: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutBranchesInput
+  users?: Prisma.UserCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferCreateNestedManyWithoutSourceBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutBranchInput
+}
+
+export type BranchUncheckedCreateWithoutTransfersReceivedInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  address?: string
+  phone?: string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  allowPriceOverride?: boolean
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutBranchInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutBranchInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutBranchInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutBranchInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutBranchInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutBranchInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutBranchInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutBranchInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutBranchInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutBranchInput
+  stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBranchInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutBranchInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutBranchInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutBranchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBranchInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutBranchInput
+  transfersSent?: Prisma.StockTransferUncheckedCreateNestedManyWithoutSourceBranchInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutBranchInput
+}
+
+export type BranchCreateOrConnectWithoutTransfersReceivedInput = {
+  where: Prisma.BranchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BranchCreateWithoutTransfersReceivedInput, Prisma.BranchUncheckedCreateWithoutTransfersReceivedInput>
+}
+
+export type BranchUpsertWithoutTransfersSentInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutTransfersSentInput, Prisma.BranchUncheckedUpdateWithoutTransfersSentInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutTransfersSentInput, Prisma.BranchUncheckedCreateWithoutTransfersSentInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutTransfersSentInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutTransfersSentInput, Prisma.BranchUncheckedUpdateWithoutTransfersSentInput>
+}
+
+export type BranchUpdateWithoutTransfersSentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutTransfersSentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUpsertWithoutTransfersReceivedInput = {
+  update: Prisma.XOR<Prisma.BranchUpdateWithoutTransfersReceivedInput, Prisma.BranchUncheckedUpdateWithoutTransfersReceivedInput>
+  create: Prisma.XOR<Prisma.BranchCreateWithoutTransfersReceivedInput, Prisma.BranchUncheckedCreateWithoutTransfersReceivedInput>
+  where?: Prisma.BranchWhereInput
+}
+
+export type BranchUpdateToOneWithWhereWithoutTransfersReceivedInput = {
+  where?: Prisma.BranchWhereInput
+  data: Prisma.XOR<Prisma.BranchUpdateWithoutTransfersReceivedInput, Prisma.BranchUncheckedUpdateWithoutTransfersReceivedInput>
+}
+
+export type BranchUpdateWithoutTransfersReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutBranchesNestedInput
+  users?: Prisma.UserUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
+}
+
+export type BranchUncheckedUpdateWithoutTransfersReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutBranchNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutBranchNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutBranchNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchCreateManyPharmacyInput = {
@@ -1540,6 +3551,7 @@ export type BranchCreateManyPharmacyInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowPriceOverride?: boolean
 }
 
 export type BranchUpdateWithoutPharmacyInput = {
@@ -1550,6 +3562,7 @@ export type BranchUpdateWithoutPharmacyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.UserUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutBranchNestedInput
@@ -1559,6 +3572,16 @@ export type BranchUpdateWithoutPharmacyInput = {
   arrears?: Prisma.ArrearUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateWithoutPharmacyInput = {
@@ -1569,6 +3592,7 @@ export type BranchUncheckedUpdateWithoutPharmacyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
   users?: Prisma.UserUncheckedUpdateManyWithoutBranchNestedInput
   products?: Prisma.ProductUncheckedUpdateManyWithoutBranchNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutBranchNestedInput
@@ -1578,6 +3602,16 @@ export type BranchUncheckedUpdateWithoutPharmacyInput = {
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutBranchNestedInput
   expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutBranchNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutBranchNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutBranchNestedInput
+  stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutBranchNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutBranchNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutBranchNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutBranchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBranchNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutBranchNestedInput
+  transfersSent?: Prisma.StockTransferUncheckedUpdateManyWithoutSourceBranchNestedInput
+  transfersReceived?: Prisma.StockTransferUncheckedUpdateManyWithoutDestinationBranchNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutBranchNestedInput
 }
 
 export type BranchUncheckedUpdateManyWithoutPharmacyInput = {
@@ -1588,6 +3622,7 @@ export type BranchUncheckedUpdateManyWithoutPharmacyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowPriceOverride?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -1605,6 +3640,16 @@ export type BranchCountOutputType = {
   arrears: number
   expenses: number
   purchaseOrders: number
+  batches: number
+  stockMovements: number
+  purchaseInvoices: number
+  distributorPayments: number
+  prescriptions: number
+  controlledRegisters: number
+  chronicMedications: number
+  transfersSent: number
+  transfersReceived: number
+  branchPriceOverrides: number
 }
 
 export type BranchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1617,6 +3662,16 @@ export type BranchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   arrears?: boolean | BranchCountOutputTypeCountArrearsArgs
   expenses?: boolean | BranchCountOutputTypeCountExpensesArgs
   purchaseOrders?: boolean | BranchCountOutputTypeCountPurchaseOrdersArgs
+  batches?: boolean | BranchCountOutputTypeCountBatchesArgs
+  stockMovements?: boolean | BranchCountOutputTypeCountStockMovementsArgs
+  purchaseInvoices?: boolean | BranchCountOutputTypeCountPurchaseInvoicesArgs
+  distributorPayments?: boolean | BranchCountOutputTypeCountDistributorPaymentsArgs
+  prescriptions?: boolean | BranchCountOutputTypeCountPrescriptionsArgs
+  controlledRegisters?: boolean | BranchCountOutputTypeCountControlledRegistersArgs
+  chronicMedications?: boolean | BranchCountOutputTypeCountChronicMedicationsArgs
+  transfersSent?: boolean | BranchCountOutputTypeCountTransfersSentArgs
+  transfersReceived?: boolean | BranchCountOutputTypeCountTransfersReceivedArgs
+  branchPriceOverrides?: boolean | BranchCountOutputTypeCountBranchPriceOverridesArgs
 }
 
 /**
@@ -1692,6 +3747,76 @@ export type BranchCountOutputTypeCountPurchaseOrdersArgs<ExtArgs extends runtime
   where?: Prisma.PurchaseOrderWhereInput
 }
 
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountBatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BatchWhereInput
+}
+
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountStockMovementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockMovementWhereInput
+}
+
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountPurchaseInvoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseInvoiceWhereInput
+}
+
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountDistributorPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DistributorPaymentWhereInput
+}
+
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountPrescriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PrescriptionWhereInput
+}
+
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountControlledRegistersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ControlledDrugRegisterWhereInput
+}
+
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountChronicMedicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChronicMedicationWhereInput
+}
+
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountTransfersSentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockTransferWhereInput
+}
+
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountTransfersReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockTransferWhereInput
+}
+
+/**
+ * BranchCountOutputType without action
+ */
+export type BranchCountOutputTypeCountBranchPriceOverridesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BranchPriceOverrideWhereInput
+}
+
 
 export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1702,6 +3827,7 @@ export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowPriceOverride?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   users?: boolean | Prisma.Branch$usersArgs<ExtArgs>
   products?: boolean | Prisma.Branch$productsArgs<ExtArgs>
@@ -1712,6 +3838,16 @@ export type BranchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   arrears?: boolean | Prisma.Branch$arrearsArgs<ExtArgs>
   expenses?: boolean | Prisma.Branch$expensesArgs<ExtArgs>
   purchaseOrders?: boolean | Prisma.Branch$purchaseOrdersArgs<ExtArgs>
+  batches?: boolean | Prisma.Branch$batchesArgs<ExtArgs>
+  stockMovements?: boolean | Prisma.Branch$stockMovementsArgs<ExtArgs>
+  purchaseInvoices?: boolean | Prisma.Branch$purchaseInvoicesArgs<ExtArgs>
+  distributorPayments?: boolean | Prisma.Branch$distributorPaymentsArgs<ExtArgs>
+  prescriptions?: boolean | Prisma.Branch$prescriptionsArgs<ExtArgs>
+  controlledRegisters?: boolean | Prisma.Branch$controlledRegistersArgs<ExtArgs>
+  chronicMedications?: boolean | Prisma.Branch$chronicMedicationsArgs<ExtArgs>
+  transfersSent?: boolean | Prisma.Branch$transfersSentArgs<ExtArgs>
+  transfersReceived?: boolean | Prisma.Branch$transfersReceivedArgs<ExtArgs>
+  branchPriceOverrides?: boolean | Prisma.Branch$branchPriceOverridesArgs<ExtArgs>
   _count?: boolean | Prisma.BranchCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["branch"]>
 
@@ -1724,6 +3860,7 @@ export type BranchSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowPriceOverride?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["branch"]>
 
@@ -1736,6 +3873,7 @@ export type BranchSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowPriceOverride?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["branch"]>
 
@@ -1748,9 +3886,10 @@ export type BranchSelectScalar = {
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowPriceOverride?: boolean
 }
 
-export type BranchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "name" | "address" | "phone" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["branch"]>
+export type BranchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "name" | "address" | "phone" | "isActive" | "createdAt" | "updatedAt" | "allowPriceOverride", ExtArgs["result"]["branch"]>
 export type BranchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   users?: boolean | Prisma.Branch$usersArgs<ExtArgs>
@@ -1762,6 +3901,16 @@ export type BranchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   arrears?: boolean | Prisma.Branch$arrearsArgs<ExtArgs>
   expenses?: boolean | Prisma.Branch$expensesArgs<ExtArgs>
   purchaseOrders?: boolean | Prisma.Branch$purchaseOrdersArgs<ExtArgs>
+  batches?: boolean | Prisma.Branch$batchesArgs<ExtArgs>
+  stockMovements?: boolean | Prisma.Branch$stockMovementsArgs<ExtArgs>
+  purchaseInvoices?: boolean | Prisma.Branch$purchaseInvoicesArgs<ExtArgs>
+  distributorPayments?: boolean | Prisma.Branch$distributorPaymentsArgs<ExtArgs>
+  prescriptions?: boolean | Prisma.Branch$prescriptionsArgs<ExtArgs>
+  controlledRegisters?: boolean | Prisma.Branch$controlledRegistersArgs<ExtArgs>
+  chronicMedications?: boolean | Prisma.Branch$chronicMedicationsArgs<ExtArgs>
+  transfersSent?: boolean | Prisma.Branch$transfersSentArgs<ExtArgs>
+  transfersReceived?: boolean | Prisma.Branch$transfersReceivedArgs<ExtArgs>
+  branchPriceOverrides?: boolean | Prisma.Branch$branchPriceOverridesArgs<ExtArgs>
   _count?: boolean | Prisma.BranchCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BranchIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1784,6 +3933,16 @@ export type $BranchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     arrears: Prisma.$ArrearPayload<ExtArgs>[]
     expenses: Prisma.$ExpensePayload<ExtArgs>[]
     purchaseOrders: Prisma.$PurchaseOrderPayload<ExtArgs>[]
+    batches: Prisma.$BatchPayload<ExtArgs>[]
+    stockMovements: Prisma.$StockMovementPayload<ExtArgs>[]
+    purchaseInvoices: Prisma.$PurchaseInvoicePayload<ExtArgs>[]
+    distributorPayments: Prisma.$DistributorPaymentPayload<ExtArgs>[]
+    prescriptions: Prisma.$PrescriptionPayload<ExtArgs>[]
+    controlledRegisters: Prisma.$ControlledDrugRegisterPayload<ExtArgs>[]
+    chronicMedications: Prisma.$ChronicMedicationPayload<ExtArgs>[]
+    transfersSent: Prisma.$StockTransferPayload<ExtArgs>[]
+    transfersReceived: Prisma.$StockTransferPayload<ExtArgs>[]
+    branchPriceOverrides: Prisma.$BranchPriceOverridePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1794,6 +3953,7 @@ export type $BranchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     isActive: boolean
     createdAt: Date
     updatedAt: Date
+    allowPriceOverride: boolean
   }, ExtArgs["result"]["branch"]>
   composites: {}
 }
@@ -2198,6 +4358,16 @@ export interface Prisma__BranchClient<T, Null = never, ExtArgs extends runtime.T
   arrears<T extends Prisma.Branch$arrearsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$arrearsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArrearPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   expenses<T extends Prisma.Branch$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseOrders<T extends Prisma.Branch$purchaseOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$purchaseOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  batches<T extends Prisma.Branch$batchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$batchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stockMovements<T extends Prisma.Branch$stockMovementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$stockMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  purchaseInvoices<T extends Prisma.Branch$purchaseInvoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$purchaseInvoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseInvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  distributorPayments<T extends Prisma.Branch$distributorPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$distributorPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DistributorPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  prescriptions<T extends Prisma.Branch$prescriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$prescriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PrescriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  controlledRegisters<T extends Prisma.Branch$controlledRegistersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$controlledRegistersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ControlledDrugRegisterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  chronicMedications<T extends Prisma.Branch$chronicMedicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$chronicMedicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChronicMedicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transfersSent<T extends Prisma.Branch$transfersSentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$transfersSentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockTransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transfersReceived<T extends Prisma.Branch$transfersReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$transfersReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockTransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  branchPriceOverrides<T extends Prisma.Branch$branchPriceOverridesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Branch$branchPriceOverridesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BranchPriceOverridePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2235,6 +4405,7 @@ export interface BranchFieldRefs {
   readonly isActive: Prisma.FieldRef<"Branch", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Branch", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Branch", 'DateTime'>
+  readonly allowPriceOverride: Prisma.FieldRef<"Branch", 'Boolean'>
 }
     
 
@@ -2849,6 +5020,246 @@ export type Branch$purchaseOrdersArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.PurchaseOrderScalarFieldEnum | Prisma.PurchaseOrderScalarFieldEnum[]
+}
+
+/**
+ * Branch.batches
+ */
+export type Branch$batchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Batch
+   */
+  select?: Prisma.BatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Batch
+   */
+  omit?: Prisma.BatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BatchInclude<ExtArgs> | null
+  where?: Prisma.BatchWhereInput
+  orderBy?: Prisma.BatchOrderByWithRelationInput | Prisma.BatchOrderByWithRelationInput[]
+  cursor?: Prisma.BatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BatchScalarFieldEnum | Prisma.BatchScalarFieldEnum[]
+}
+
+/**
+ * Branch.stockMovements
+ */
+export type Branch$stockMovementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockMovement
+   */
+  select?: Prisma.StockMovementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockMovement
+   */
+  omit?: Prisma.StockMovementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockMovementInclude<ExtArgs> | null
+  where?: Prisma.StockMovementWhereInput
+  orderBy?: Prisma.StockMovementOrderByWithRelationInput | Prisma.StockMovementOrderByWithRelationInput[]
+  cursor?: Prisma.StockMovementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockMovementScalarFieldEnum | Prisma.StockMovementScalarFieldEnum[]
+}
+
+/**
+ * Branch.purchaseInvoices
+ */
+export type Branch$purchaseInvoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseInvoice
+   */
+  select?: Prisma.PurchaseInvoiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseInvoice
+   */
+  omit?: Prisma.PurchaseInvoiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseInvoiceInclude<ExtArgs> | null
+  where?: Prisma.PurchaseInvoiceWhereInput
+  orderBy?: Prisma.PurchaseInvoiceOrderByWithRelationInput | Prisma.PurchaseInvoiceOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseInvoiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseInvoiceScalarFieldEnum | Prisma.PurchaseInvoiceScalarFieldEnum[]
+}
+
+/**
+ * Branch.distributorPayments
+ */
+export type Branch$distributorPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DistributorPayment
+   */
+  select?: Prisma.DistributorPaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DistributorPayment
+   */
+  omit?: Prisma.DistributorPaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DistributorPaymentInclude<ExtArgs> | null
+  where?: Prisma.DistributorPaymentWhereInput
+  orderBy?: Prisma.DistributorPaymentOrderByWithRelationInput | Prisma.DistributorPaymentOrderByWithRelationInput[]
+  cursor?: Prisma.DistributorPaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DistributorPaymentScalarFieldEnum | Prisma.DistributorPaymentScalarFieldEnum[]
+}
+
+/**
+ * Branch.prescriptions
+ */
+export type Branch$prescriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Prescription
+   */
+  select?: Prisma.PrescriptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Prescription
+   */
+  omit?: Prisma.PrescriptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PrescriptionInclude<ExtArgs> | null
+  where?: Prisma.PrescriptionWhereInput
+  orderBy?: Prisma.PrescriptionOrderByWithRelationInput | Prisma.PrescriptionOrderByWithRelationInput[]
+  cursor?: Prisma.PrescriptionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PrescriptionScalarFieldEnum | Prisma.PrescriptionScalarFieldEnum[]
+}
+
+/**
+ * Branch.controlledRegisters
+ */
+export type Branch$controlledRegistersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ControlledDrugRegister
+   */
+  select?: Prisma.ControlledDrugRegisterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ControlledDrugRegister
+   */
+  omit?: Prisma.ControlledDrugRegisterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ControlledDrugRegisterInclude<ExtArgs> | null
+  where?: Prisma.ControlledDrugRegisterWhereInput
+  orderBy?: Prisma.ControlledDrugRegisterOrderByWithRelationInput | Prisma.ControlledDrugRegisterOrderByWithRelationInput[]
+  cursor?: Prisma.ControlledDrugRegisterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ControlledDrugRegisterScalarFieldEnum | Prisma.ControlledDrugRegisterScalarFieldEnum[]
+}
+
+/**
+ * Branch.chronicMedications
+ */
+export type Branch$chronicMedicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChronicMedication
+   */
+  select?: Prisma.ChronicMedicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChronicMedication
+   */
+  omit?: Prisma.ChronicMedicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChronicMedicationInclude<ExtArgs> | null
+  where?: Prisma.ChronicMedicationWhereInput
+  orderBy?: Prisma.ChronicMedicationOrderByWithRelationInput | Prisma.ChronicMedicationOrderByWithRelationInput[]
+  cursor?: Prisma.ChronicMedicationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChronicMedicationScalarFieldEnum | Prisma.ChronicMedicationScalarFieldEnum[]
+}
+
+/**
+ * Branch.transfersSent
+ */
+export type Branch$transfersSentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockTransfer
+   */
+  select?: Prisma.StockTransferSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockTransfer
+   */
+  omit?: Prisma.StockTransferOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockTransferInclude<ExtArgs> | null
+  where?: Prisma.StockTransferWhereInput
+  orderBy?: Prisma.StockTransferOrderByWithRelationInput | Prisma.StockTransferOrderByWithRelationInput[]
+  cursor?: Prisma.StockTransferWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockTransferScalarFieldEnum | Prisma.StockTransferScalarFieldEnum[]
+}
+
+/**
+ * Branch.transfersReceived
+ */
+export type Branch$transfersReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockTransfer
+   */
+  select?: Prisma.StockTransferSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockTransfer
+   */
+  omit?: Prisma.StockTransferOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockTransferInclude<ExtArgs> | null
+  where?: Prisma.StockTransferWhereInput
+  orderBy?: Prisma.StockTransferOrderByWithRelationInput | Prisma.StockTransferOrderByWithRelationInput[]
+  cursor?: Prisma.StockTransferWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockTransferScalarFieldEnum | Prisma.StockTransferScalarFieldEnum[]
+}
+
+/**
+ * Branch.branchPriceOverrides
+ */
+export type Branch$branchPriceOverridesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BranchPriceOverride
+   */
+  select?: Prisma.BranchPriceOverrideSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BranchPriceOverride
+   */
+  omit?: Prisma.BranchPriceOverrideOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BranchPriceOverrideInclude<ExtArgs> | null
+  where?: Prisma.BranchPriceOverrideWhereInput
+  orderBy?: Prisma.BranchPriceOverrideOrderByWithRelationInput | Prisma.BranchPriceOverrideOrderByWithRelationInput[]
+  cursor?: Prisma.BranchPriceOverrideWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BranchPriceOverrideScalarFieldEnum | Prisma.BranchPriceOverrideScalarFieldEnum[]
 }
 
 /**

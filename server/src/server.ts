@@ -6,6 +6,7 @@ import { prisma } from "./services/prisma";
 import { bootstrapPlatform } from "./services/bootstrap";
 import { initializeSocket, getIO } from "./socket";
 import { startDailyAnalysisWorker, stopDailyAnalysisWorker } from "./workers/daily-analysis.worker";
+import { startExpiryAlertWorker, stopExpiryAlertWorker } from "./workers/expiry-alert.worker";
 import "./config/env.js";
 
 async function main() {
@@ -17,6 +18,7 @@ async function main() {
 
     if (config.workerEnabled) {
       startDailyAnalysisWorker();
+      startExpiryAlertWorker();
     }
 
     const httpServer = http.createServer(app);
@@ -35,6 +37,7 @@ main();
 
 function shutdown() {
   stopDailyAnalysisWorker();
+  stopExpiryAlertWorker();
   getIO()?.close();
   process.exit(0);
 }

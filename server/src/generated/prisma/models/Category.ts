@@ -20,14 +20,25 @@ export type CategoryModel = runtime.Types.Result.DefaultSelection<Prisma.$Catego
 
 export type AggregateCategory = {
   _count: CategoryCountAggregateOutputType | null
+  _avg: CategoryAvgAggregateOutputType | null
+  _sum: CategorySumAggregateOutputType | null
   _min: CategoryMinAggregateOutputType | null
   _max: CategoryMaxAggregateOutputType | null
+}
+
+export type CategoryAvgAggregateOutputType = {
+  vatRate: number | null
+}
+
+export type CategorySumAggregateOutputType = {
+  vatRate: number | null
 }
 
 export type CategoryMinAggregateOutputType = {
   id: string | null
   pharmacyId: string | null
   name: string | null
+  vatRate: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -36,6 +47,7 @@ export type CategoryMaxAggregateOutputType = {
   id: string | null
   pharmacyId: string | null
   name: string | null
+  vatRate: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -44,16 +56,26 @@ export type CategoryCountAggregateOutputType = {
   id: number
   pharmacyId: number
   name: number
+  vatRate: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
 
+export type CategoryAvgAggregateInputType = {
+  vatRate?: true
+}
+
+export type CategorySumAggregateInputType = {
+  vatRate?: true
+}
+
 export type CategoryMinAggregateInputType = {
   id?: true
   pharmacyId?: true
   name?: true
+  vatRate?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -62,6 +84,7 @@ export type CategoryMaxAggregateInputType = {
   id?: true
   pharmacyId?: true
   name?: true
+  vatRate?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -70,6 +93,7 @@ export type CategoryCountAggregateInputType = {
   id?: true
   pharmacyId?: true
   name?: true
+  vatRate?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -113,6 +137,18 @@ export type CategoryAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inter
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: CategoryAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: CategorySumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: CategoryMinAggregateInputType
@@ -143,6 +179,8 @@ export type CategoryGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   _count?: CategoryCountAggregateInputType | true
+  _avg?: CategoryAvgAggregateInputType
+  _sum?: CategorySumAggregateInputType
   _min?: CategoryMinAggregateInputType
   _max?: CategoryMaxAggregateInputType
 }
@@ -151,9 +189,12 @@ export type CategoryGroupByOutputType = {
   id: string
   pharmacyId: string
   name: string
+  vatRate: number
   createdAt: Date
   updatedAt: Date
   _count: CategoryCountAggregateOutputType | null
+  _avg: CategoryAvgAggregateOutputType | null
+  _sum: CategorySumAggregateOutputType | null
   _min: CategoryMinAggregateOutputType | null
   _max: CategoryMaxAggregateOutputType | null
 }
@@ -180,6 +221,7 @@ export type CategoryWhereInput = {
   id?: Prisma.StringFilter<"Category"> | string
   pharmacyId?: Prisma.StringFilter<"Category"> | string
   name?: Prisma.StringFilter<"Category"> | string
+  vatRate?: Prisma.FloatFilter<"Category"> | number
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
@@ -189,6 +231,7 @@ export type CategoryOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  vatRate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   pharmacy?: Prisma.PharmacyOrderByWithRelationInput
@@ -202,6 +245,7 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CategoryWhereInput | Prisma.CategoryWhereInput[]
   pharmacyId?: Prisma.StringFilter<"Category"> | string
   name?: Prisma.StringFilter<"Category"> | string
+  vatRate?: Prisma.FloatFilter<"Category"> | number
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
@@ -211,11 +255,14 @@ export type CategoryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  vatRate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CategoryCountOrderByAggregateInput
+  _avg?: Prisma.CategoryAvgOrderByAggregateInput
   _max?: Prisma.CategoryMaxOrderByAggregateInput
   _min?: Prisma.CategoryMinOrderByAggregateInput
+  _sum?: Prisma.CategorySumOrderByAggregateInput
 }
 
 export type CategoryScalarWhereWithAggregatesInput = {
@@ -225,6 +272,7 @@ export type CategoryScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Category"> | string
   pharmacyId?: Prisma.StringWithAggregatesFilter<"Category"> | string
   name?: Prisma.StringWithAggregatesFilter<"Category"> | string
+  vatRate?: Prisma.FloatWithAggregatesFilter<"Category"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Category"> | Date | string
 }
@@ -232,6 +280,7 @@ export type CategoryScalarWhereWithAggregatesInput = {
 export type CategoryCreateInput = {
   id?: string
   name: string
+  vatRate?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutCategoriesInput
@@ -241,6 +290,7 @@ export type CategoryUncheckedCreateInput = {
   id?: string
   pharmacyId: string
   name: string
+  vatRate?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -248,6 +298,7 @@ export type CategoryUncheckedCreateInput = {
 export type CategoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  vatRate?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutCategoriesNestedInput
@@ -257,6 +308,7 @@ export type CategoryUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  vatRate?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -265,6 +317,7 @@ export type CategoryCreateManyInput = {
   id?: string
   pharmacyId: string
   name: string
+  vatRate?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -272,6 +325,7 @@ export type CategoryCreateManyInput = {
 export type CategoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  vatRate?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -280,6 +334,7 @@ export type CategoryUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  vatRate?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -303,14 +358,20 @@ export type CategoryCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  vatRate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type CategoryAvgOrderByAggregateInput = {
+  vatRate?: Prisma.SortOrder
 }
 
 export type CategoryMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  vatRate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -319,8 +380,13 @@ export type CategoryMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   pharmacyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  vatRate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type CategorySumOrderByAggregateInput = {
+  vatRate?: Prisma.SortOrder
 }
 
 export type CategoryCreateNestedManyWithoutPharmacyInput = {
@@ -368,6 +434,7 @@ export type CategoryUncheckedUpdateManyWithoutPharmacyNestedInput = {
 export type CategoryCreateWithoutPharmacyInput = {
   id?: string
   name: string
+  vatRate?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -375,6 +442,7 @@ export type CategoryCreateWithoutPharmacyInput = {
 export type CategoryUncheckedCreateWithoutPharmacyInput = {
   id?: string
   name: string
+  vatRate?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -412,6 +480,7 @@ export type CategoryScalarWhereInput = {
   id?: Prisma.StringFilter<"Category"> | string
   pharmacyId?: Prisma.StringFilter<"Category"> | string
   name?: Prisma.StringFilter<"Category"> | string
+  vatRate?: Prisma.FloatFilter<"Category"> | number
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
 }
@@ -419,6 +488,7 @@ export type CategoryScalarWhereInput = {
 export type CategoryCreateManyPharmacyInput = {
   id?: string
   name: string
+  vatRate?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -426,6 +496,7 @@ export type CategoryCreateManyPharmacyInput = {
 export type CategoryUpdateWithoutPharmacyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  vatRate?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -433,6 +504,7 @@ export type CategoryUpdateWithoutPharmacyInput = {
 export type CategoryUncheckedUpdateWithoutPharmacyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  vatRate?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -440,6 +512,7 @@ export type CategoryUncheckedUpdateWithoutPharmacyInput = {
 export type CategoryUncheckedUpdateManyWithoutPharmacyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  vatRate?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -450,6 +523,7 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   pharmacyId?: boolean
   name?: boolean
+  vatRate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
@@ -459,6 +533,7 @@ export type CategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   pharmacyId?: boolean
   name?: boolean
+  vatRate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
@@ -468,6 +543,7 @@ export type CategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   pharmacyId?: boolean
   name?: boolean
+  vatRate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
@@ -477,11 +553,12 @@ export type CategorySelectScalar = {
   id?: boolean
   pharmacyId?: boolean
   name?: boolean
+  vatRate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
+export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "name" | "vatRate" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
 }
@@ -501,6 +578,7 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     pharmacyId: string
     name: string
+    vatRate: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["category"]>
@@ -930,6 +1008,7 @@ export interface CategoryFieldRefs {
   readonly id: Prisma.FieldRef<"Category", 'String'>
   readonly pharmacyId: Prisma.FieldRef<"Category", 'String'>
   readonly name: Prisma.FieldRef<"Category", 'String'>
+  readonly vatRate: Prisma.FieldRef<"Category", 'Float'>
   readonly createdAt: Prisma.FieldRef<"Category", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Category", 'DateTime'>
 }

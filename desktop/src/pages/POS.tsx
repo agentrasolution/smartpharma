@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import BarcodeInput from "@/components/pos/BarcodeInput";
 import ProductCard from "@/components/pos/ProductCard";
-import CheckoutPanel from "@/components/pos/CheckoutPanel";
+import CheckoutPanel, { TenderPayload } from "@/components/pos/CheckoutPanel";
 import PrintPreviewDialog from "@/components/shared/PrintPreviewDialog";
 import { useMultiSale } from "@/hooks/useMultiSale";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -179,7 +179,7 @@ export default function POS() {
     window.open(`${window.location.origin}${window.location.pathname}#/pos?pos=1`, "_blank");
   };
 
-  const handleCheckout = async (amountPaid: number, discount: number) => {
+  const handleCheckout = async (amountPaid: number, discount: number, tenderData?: TenderPayload) => {
     setError("");
     try {
       const sale = await api.sales.create({
@@ -191,16 +191,26 @@ export default function POS() {
           quantity: item.quantity,
           unitPrice: item.unitPrice,
           subtotal: item.subtotal,
+          batchId: item.batchId,
+          batchNumber: item.batchNumber,
+          expiryDate: item.expiryDate,
         })),
         subtotal: cart.subtotal,
         discount,
         total: cart.total,
         amountPaid,
+        paymentMethod: tenderData?.paymentMethod ?? "CASH",
+        cashAmount: tenderData?.cashAmount,
+        cardAmount: tenderData?.cardAmount,
+        creditAmount: tenderData?.creditAmount,
+        prescriptionNumber: tenderData?.prescriptionNumber || undefined,
+        notes: cart.notes,
       });
 
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["dashboard-stats"] });
       queryClient.invalidateQueries({ queryKey: ["sales"] });
+      queryClient.invalidateQueries({ queryKey: ["prescriptions"] });
 
       let customerTotalArrears = 0;
       if (cart.customerId) {
@@ -212,12 +222,29 @@ export default function POS() {
         ...sale,
         customer_name: cart.customerName,
         customer_total_arrears: customerTotalArrears,
-        items: cart.items.map((item) => ({
-          product_name: item.productName,
-          quantity: item.quantity,
-          unit_price: item.unitPrice,
-          subtotal: item.subtotal,
-        })),
+        payment_method: sale.payment_method || tenderData?.paymentMethod || "CASH",
+        cash_amount: sale.cash_amount ?? tenderData?.cashAmount ?? (tenderData?.paymentMethod === "CASH" ? amountPaid : 0),
+        card_amount: sale.card_amount ?? tenderData?.cardAmount ?? (tenderData?.paymentMethod === "CARD" ? amountPaid : 0),
+        credit_amount: sale.credit_amount ?? tenderData?.creditAmount ?? 0,
+        prescription_number: sale.prescription_number || tenderData?.prescriptionNumber,
+        cashier_name: sale.cashier_name,
+        items: (sale.items && sale.items.length > 0)
+          ? sale.items.map((item) => ({
+              product_name: item.product_name,
+              quantity: item.quantity,
+              unit_price: item.unit_price,
+              subtotal: item.subtotal,
+              batch_number: item.batch_number,
+              expiry_date: item.expiry_date,
+            }))
+          : cart.items.map((item) => ({
+              product_name: item.productName,
+              quantity: item.quantity,
+              unit_price: item.unitPrice,
+              subtotal: item.subtotal,
+              batch_number: item.batchNumber,
+              expiry_date: item.expiryDate,
+            })),
       };
       setPendingPrintData(printData);
       setLastReceipt(printData);

@@ -213,6 +213,8 @@ export type DistributorWhereInput = {
   inventoryConfig?: Prisma.XOR<Prisma.DistributorInventoryConfigNullableScalarRelationFilter, Prisma.DistributorInventoryConfigWhereInput> | null
   productConfigs?: Prisma.ProductDistributorConfigListRelationFilter
   purchaseOrders?: Prisma.PurchaseOrderListRelationFilter
+  purchaseInvoices?: Prisma.PurchaseInvoiceListRelationFilter
+  distributorPayments?: Prisma.DistributorPaymentListRelationFilter
 }
 
 export type DistributorOrderByWithRelationInput = {
@@ -231,6 +233,8 @@ export type DistributorOrderByWithRelationInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigOrderByWithRelationInput
   productConfigs?: Prisma.ProductDistributorConfigOrderByRelationAggregateInput
   purchaseOrders?: Prisma.PurchaseOrderOrderByRelationAggregateInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceOrderByRelationAggregateInput
+  distributorPayments?: Prisma.DistributorPaymentOrderByRelationAggregateInput
 }
 
 export type DistributorWhereUniqueInput = Prisma.AtLeast<{
@@ -253,6 +257,8 @@ export type DistributorWhereUniqueInput = Prisma.AtLeast<{
   inventoryConfig?: Prisma.XOR<Prisma.DistributorInventoryConfigNullableScalarRelationFilter, Prisma.DistributorInventoryConfigWhereInput> | null
   productConfigs?: Prisma.ProductDistributorConfigListRelationFilter
   purchaseOrders?: Prisma.PurchaseOrderListRelationFilter
+  purchaseInvoices?: Prisma.PurchaseInvoiceListRelationFilter
+  distributorPayments?: Prisma.DistributorPaymentListRelationFilter
 }, "id" | "pharmacyId_name">
 
 export type DistributorOrderByWithAggregationInput = {
@@ -297,6 +303,8 @@ export type DistributorCreateInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorUncheckedCreateInput = {
@@ -313,6 +321,8 @@ export type DistributorUncheckedCreateInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorUpdateInput = {
@@ -329,6 +339,8 @@ export type DistributorUpdateInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorUncheckedUpdateInput = {
@@ -345,6 +357,8 @@ export type DistributorUncheckedUpdateInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorCreateManyInput = {
@@ -594,6 +608,34 @@ export type DistributorUpdateOneWithoutStockPurchasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.DistributorUpdateToOneWithWhereWithoutStockPurchasesInput, Prisma.DistributorUpdateWithoutStockPurchasesInput>, Prisma.DistributorUncheckedUpdateWithoutStockPurchasesInput>
 }
 
+export type DistributorCreateNestedOneWithoutPurchaseInvoicesInput = {
+  create?: Prisma.XOR<Prisma.DistributorCreateWithoutPurchaseInvoicesInput, Prisma.DistributorUncheckedCreateWithoutPurchaseInvoicesInput>
+  connectOrCreate?: Prisma.DistributorCreateOrConnectWithoutPurchaseInvoicesInput
+  connect?: Prisma.DistributorWhereUniqueInput
+}
+
+export type DistributorUpdateOneRequiredWithoutPurchaseInvoicesNestedInput = {
+  create?: Prisma.XOR<Prisma.DistributorCreateWithoutPurchaseInvoicesInput, Prisma.DistributorUncheckedCreateWithoutPurchaseInvoicesInput>
+  connectOrCreate?: Prisma.DistributorCreateOrConnectWithoutPurchaseInvoicesInput
+  upsert?: Prisma.DistributorUpsertWithoutPurchaseInvoicesInput
+  connect?: Prisma.DistributorWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DistributorUpdateToOneWithWhereWithoutPurchaseInvoicesInput, Prisma.DistributorUpdateWithoutPurchaseInvoicesInput>, Prisma.DistributorUncheckedUpdateWithoutPurchaseInvoicesInput>
+}
+
+export type DistributorCreateNestedOneWithoutDistributorPaymentsInput = {
+  create?: Prisma.XOR<Prisma.DistributorCreateWithoutDistributorPaymentsInput, Prisma.DistributorUncheckedCreateWithoutDistributorPaymentsInput>
+  connectOrCreate?: Prisma.DistributorCreateOrConnectWithoutDistributorPaymentsInput
+  connect?: Prisma.DistributorWhereUniqueInput
+}
+
+export type DistributorUpdateOneRequiredWithoutDistributorPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.DistributorCreateWithoutDistributorPaymentsInput, Prisma.DistributorUncheckedCreateWithoutDistributorPaymentsInput>
+  connectOrCreate?: Prisma.DistributorCreateOrConnectWithoutDistributorPaymentsInput
+  upsert?: Prisma.DistributorUpsertWithoutDistributorPaymentsInput
+  connect?: Prisma.DistributorWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DistributorUpdateToOneWithWhereWithoutDistributorPaymentsInput, Prisma.DistributorUpdateWithoutDistributorPaymentsInput>, Prisma.DistributorUncheckedUpdateWithoutDistributorPaymentsInput>
+}
+
 export type DistributorCreateWithoutPharmacyInput = {
   id?: string
   name: string
@@ -607,6 +649,8 @@ export type DistributorCreateWithoutPharmacyInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorUncheckedCreateWithoutPharmacyInput = {
@@ -622,6 +666,8 @@ export type DistributorUncheckedCreateWithoutPharmacyInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorCreateOrConnectWithoutPharmacyInput = {
@@ -677,6 +723,8 @@ export type DistributorCreateWithoutInventoryConfigInput = {
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorUncheckedCreateWithoutInventoryConfigInput = {
@@ -692,6 +740,8 @@ export type DistributorUncheckedCreateWithoutInventoryConfigInput = {
   stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorCreateOrConnectWithoutInventoryConfigInput = {
@@ -723,6 +773,8 @@ export type DistributorUpdateWithoutInventoryConfigInput = {
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorUncheckedUpdateWithoutInventoryConfigInput = {
@@ -738,6 +790,8 @@ export type DistributorUncheckedUpdateWithoutInventoryConfigInput = {
   stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorCreateWithoutProductConfigsInput = {
@@ -753,6 +807,8 @@ export type DistributorCreateWithoutProductConfigsInput = {
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
   inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorUncheckedCreateWithoutProductConfigsInput = {
@@ -768,6 +824,8 @@ export type DistributorUncheckedCreateWithoutProductConfigsInput = {
   stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutDistributorInput
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedCreateNestedOneWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorCreateOrConnectWithoutProductConfigsInput = {
@@ -799,6 +857,8 @@ export type DistributorUpdateWithoutProductConfigsInput = {
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
   inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorUncheckedUpdateWithoutProductConfigsInput = {
@@ -814,6 +874,8 @@ export type DistributorUncheckedUpdateWithoutProductConfigsInput = {
   stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutDistributorNestedInput
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedUpdateOneWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorCreateWithoutPurchaseOrdersInput = {
@@ -829,6 +891,8 @@ export type DistributorCreateWithoutPurchaseOrdersInput = {
   stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
   inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorUncheckedCreateWithoutPurchaseOrdersInput = {
@@ -844,6 +908,8 @@ export type DistributorUncheckedCreateWithoutPurchaseOrdersInput = {
   stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutDistributorInput
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorCreateOrConnectWithoutPurchaseOrdersInput = {
@@ -875,6 +941,8 @@ export type DistributorUpdateWithoutPurchaseOrdersInput = {
   stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
   inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorUncheckedUpdateWithoutPurchaseOrdersInput = {
@@ -890,6 +958,8 @@ export type DistributorUncheckedUpdateWithoutPurchaseOrdersInput = {
   stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutDistributorNestedInput
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorCreateWithoutProductsInput = {
@@ -905,6 +975,8 @@ export type DistributorCreateWithoutProductsInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorUncheckedCreateWithoutProductsInput = {
@@ -920,6 +992,8 @@ export type DistributorUncheckedCreateWithoutProductsInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorCreateOrConnectWithoutProductsInput = {
@@ -951,6 +1025,8 @@ export type DistributorUpdateWithoutProductsInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorUncheckedUpdateWithoutProductsInput = {
@@ -966,6 +1042,8 @@ export type DistributorUncheckedUpdateWithoutProductsInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorCreateWithoutCompanyInput = {
@@ -981,6 +1059,8 @@ export type DistributorCreateWithoutCompanyInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorUncheckedCreateWithoutCompanyInput = {
@@ -996,6 +1076,8 @@ export type DistributorUncheckedCreateWithoutCompanyInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorCreateOrConnectWithoutCompanyInput = {
@@ -1037,6 +1119,8 @@ export type DistributorCreateWithoutStockPurchasesInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorUncheckedCreateWithoutStockPurchasesInput = {
@@ -1052,6 +1136,8 @@ export type DistributorUncheckedCreateWithoutStockPurchasesInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedCreateNestedOneWithoutDistributorInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutDistributorInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutDistributorInput
 }
 
 export type DistributorCreateOrConnectWithoutStockPurchasesInput = {
@@ -1083,6 +1169,8 @@ export type DistributorUpdateWithoutStockPurchasesInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorUncheckedUpdateWithoutStockPurchasesInput = {
@@ -1098,6 +1186,176 @@ export type DistributorUncheckedUpdateWithoutStockPurchasesInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutDistributorNestedInput
+}
+
+export type DistributorCreateWithoutPurchaseInvoicesInput = {
+  id?: string
+  name: string
+  contact?: string
+  phone?: string
+  address?: string
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutDistributorsInput
+  company?: Prisma.CompanyCreateNestedOneWithoutDistributorsInput
+  products?: Prisma.ProductCreateNestedManyWithoutDistributorInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
+  productConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutDistributorInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutDistributorInput
+}
+
+export type DistributorUncheckedCreateWithoutPurchaseInvoicesInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  contact?: string
+  phone?: string
+  address?: string
+  companyId?: string | null
+  createdAt?: Date | string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutDistributorInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutDistributorInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedCreateNestedOneWithoutDistributorInput
+  productConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutDistributorInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutDistributorInput
+}
+
+export type DistributorCreateOrConnectWithoutPurchaseInvoicesInput = {
+  where: Prisma.DistributorWhereUniqueInput
+  create: Prisma.XOR<Prisma.DistributorCreateWithoutPurchaseInvoicesInput, Prisma.DistributorUncheckedCreateWithoutPurchaseInvoicesInput>
+}
+
+export type DistributorUpsertWithoutPurchaseInvoicesInput = {
+  update: Prisma.XOR<Prisma.DistributorUpdateWithoutPurchaseInvoicesInput, Prisma.DistributorUncheckedUpdateWithoutPurchaseInvoicesInput>
+  create: Prisma.XOR<Prisma.DistributorCreateWithoutPurchaseInvoicesInput, Prisma.DistributorUncheckedCreateWithoutPurchaseInvoicesInput>
+  where?: Prisma.DistributorWhereInput
+}
+
+export type DistributorUpdateToOneWithWhereWithoutPurchaseInvoicesInput = {
+  where?: Prisma.DistributorWhereInput
+  data: Prisma.XOR<Prisma.DistributorUpdateWithoutPurchaseInvoicesInput, Prisma.DistributorUncheckedUpdateWithoutPurchaseInvoicesInput>
+}
+
+export type DistributorUpdateWithoutPurchaseInvoicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutDistributorsNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutDistributorsNestedInput
+  products?: Prisma.ProductUpdateManyWithoutDistributorNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
+  productConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutDistributorNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutDistributorNestedInput
+}
+
+export type DistributorUncheckedUpdateWithoutPurchaseInvoicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutDistributorNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutDistributorNestedInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedUpdateOneWithoutDistributorNestedInput
+  productConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutDistributorNestedInput
+}
+
+export type DistributorCreateWithoutDistributorPaymentsInput = {
+  id?: string
+  name: string
+  contact?: string
+  phone?: string
+  address?: string
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutDistributorsInput
+  company?: Prisma.CompanyCreateNestedOneWithoutDistributorsInput
+  products?: Prisma.ProductCreateNestedManyWithoutDistributorInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutDistributorInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigCreateNestedOneWithoutDistributorInput
+  productConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutDistributorInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutDistributorInput
+}
+
+export type DistributorUncheckedCreateWithoutDistributorPaymentsInput = {
+  id?: string
+  pharmacyId: string
+  name: string
+  contact?: string
+  phone?: string
+  address?: string
+  companyId?: string | null
+  createdAt?: Date | string
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutDistributorInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutDistributorInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedCreateNestedOneWithoutDistributorInput
+  productConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutDistributorInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutDistributorInput
+}
+
+export type DistributorCreateOrConnectWithoutDistributorPaymentsInput = {
+  where: Prisma.DistributorWhereUniqueInput
+  create: Prisma.XOR<Prisma.DistributorCreateWithoutDistributorPaymentsInput, Prisma.DistributorUncheckedCreateWithoutDistributorPaymentsInput>
+}
+
+export type DistributorUpsertWithoutDistributorPaymentsInput = {
+  update: Prisma.XOR<Prisma.DistributorUpdateWithoutDistributorPaymentsInput, Prisma.DistributorUncheckedUpdateWithoutDistributorPaymentsInput>
+  create: Prisma.XOR<Prisma.DistributorCreateWithoutDistributorPaymentsInput, Prisma.DistributorUncheckedCreateWithoutDistributorPaymentsInput>
+  where?: Prisma.DistributorWhereInput
+}
+
+export type DistributorUpdateToOneWithWhereWithoutDistributorPaymentsInput = {
+  where?: Prisma.DistributorWhereInput
+  data: Prisma.XOR<Prisma.DistributorUpdateWithoutDistributorPaymentsInput, Prisma.DistributorUncheckedUpdateWithoutDistributorPaymentsInput>
+}
+
+export type DistributorUpdateWithoutDistributorPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutDistributorsNestedInput
+  company?: Prisma.CompanyUpdateOneWithoutDistributorsNestedInput
+  products?: Prisma.ProductUpdateManyWithoutDistributorNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutDistributorNestedInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
+  productConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutDistributorNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutDistributorNestedInput
+}
+
+export type DistributorUncheckedUpdateWithoutDistributorPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductUncheckedUpdateManyWithoutDistributorNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutDistributorNestedInput
+  inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedUpdateOneWithoutDistributorNestedInput
+  productConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorCreateManyPharmacyInput = {
@@ -1123,6 +1381,8 @@ export type DistributorUpdateWithoutPharmacyInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorUncheckedUpdateWithoutPharmacyInput = {
@@ -1138,6 +1398,8 @@ export type DistributorUncheckedUpdateWithoutPharmacyInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorUncheckedUpdateManyWithoutPharmacyInput = {
@@ -1173,6 +1435,8 @@ export type DistributorUpdateWithoutCompanyInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorUncheckedUpdateWithoutCompanyInput = {
@@ -1188,6 +1452,8 @@ export type DistributorUncheckedUpdateWithoutCompanyInput = {
   inventoryConfig?: Prisma.DistributorInventoryConfigUncheckedUpdateOneWithoutDistributorNestedInput
   productConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutDistributorNestedInput
   purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutDistributorNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutDistributorNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutDistributorNestedInput
 }
 
 export type DistributorUncheckedUpdateManyWithoutCompanyInput = {
@@ -1210,6 +1476,8 @@ export type DistributorCountOutputType = {
   stockPurchases: number
   productConfigs: number
   purchaseOrders: number
+  purchaseInvoices: number
+  distributorPayments: number
 }
 
 export type DistributorCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1217,6 +1485,8 @@ export type DistributorCountOutputTypeSelect<ExtArgs extends runtime.Types.Exten
   stockPurchases?: boolean | DistributorCountOutputTypeCountStockPurchasesArgs
   productConfigs?: boolean | DistributorCountOutputTypeCountProductConfigsArgs
   purchaseOrders?: boolean | DistributorCountOutputTypeCountPurchaseOrdersArgs
+  purchaseInvoices?: boolean | DistributorCountOutputTypeCountPurchaseInvoicesArgs
+  distributorPayments?: boolean | DistributorCountOutputTypeCountDistributorPaymentsArgs
 }
 
 /**
@@ -1257,6 +1527,20 @@ export type DistributorCountOutputTypeCountPurchaseOrdersArgs<ExtArgs extends ru
   where?: Prisma.PurchaseOrderWhereInput
 }
 
+/**
+ * DistributorCountOutputType without action
+ */
+export type DistributorCountOutputTypeCountPurchaseInvoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseInvoiceWhereInput
+}
+
+/**
+ * DistributorCountOutputType without action
+ */
+export type DistributorCountOutputTypeCountDistributorPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DistributorPaymentWhereInput
+}
+
 
 export type DistributorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1274,6 +1558,8 @@ export type DistributorSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   inventoryConfig?: boolean | Prisma.Distributor$inventoryConfigArgs<ExtArgs>
   productConfigs?: boolean | Prisma.Distributor$productConfigsArgs<ExtArgs>
   purchaseOrders?: boolean | Prisma.Distributor$purchaseOrdersArgs<ExtArgs>
+  purchaseInvoices?: boolean | Prisma.Distributor$purchaseInvoicesArgs<ExtArgs>
+  distributorPayments?: boolean | Prisma.Distributor$distributorPaymentsArgs<ExtArgs>
   _count?: boolean | Prisma.DistributorCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["distributor"]>
 
@@ -1323,6 +1609,8 @@ export type DistributorInclude<ExtArgs extends runtime.Types.Extensions.Internal
   inventoryConfig?: boolean | Prisma.Distributor$inventoryConfigArgs<ExtArgs>
   productConfigs?: boolean | Prisma.Distributor$productConfigsArgs<ExtArgs>
   purchaseOrders?: boolean | Prisma.Distributor$purchaseOrdersArgs<ExtArgs>
+  purchaseInvoices?: boolean | Prisma.Distributor$purchaseInvoicesArgs<ExtArgs>
+  distributorPayments?: boolean | Prisma.Distributor$distributorPaymentsArgs<ExtArgs>
   _count?: boolean | Prisma.DistributorCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DistributorIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1344,6 +1632,8 @@ export type $DistributorPayload<ExtArgs extends runtime.Types.Extensions.Interna
     inventoryConfig: Prisma.$DistributorInventoryConfigPayload<ExtArgs> | null
     productConfigs: Prisma.$ProductDistributorConfigPayload<ExtArgs>[]
     purchaseOrders: Prisma.$PurchaseOrderPayload<ExtArgs>[]
+    purchaseInvoices: Prisma.$PurchaseInvoicePayload<ExtArgs>[]
+    distributorPayments: Prisma.$DistributorPaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1755,6 +2045,8 @@ export interface Prisma__DistributorClient<T, Null = never, ExtArgs extends runt
   inventoryConfig<T extends Prisma.Distributor$inventoryConfigArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Distributor$inventoryConfigArgs<ExtArgs>>): Prisma.Prisma__DistributorInventoryConfigClient<runtime.Types.Result.GetResult<Prisma.$DistributorInventoryConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   productConfigs<T extends Prisma.Distributor$productConfigsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Distributor$productConfigsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductDistributorConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseOrders<T extends Prisma.Distributor$purchaseOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Distributor$purchaseOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseOrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  purchaseInvoices<T extends Prisma.Distributor$purchaseInvoicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Distributor$purchaseInvoicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseInvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  distributorPayments<T extends Prisma.Distributor$distributorPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Distributor$distributorPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DistributorPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2324,6 +2616,54 @@ export type Distributor$purchaseOrdersArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.PurchaseOrderScalarFieldEnum | Prisma.PurchaseOrderScalarFieldEnum[]
+}
+
+/**
+ * Distributor.purchaseInvoices
+ */
+export type Distributor$purchaseInvoicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseInvoice
+   */
+  select?: Prisma.PurchaseInvoiceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseInvoice
+   */
+  omit?: Prisma.PurchaseInvoiceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseInvoiceInclude<ExtArgs> | null
+  where?: Prisma.PurchaseInvoiceWhereInput
+  orderBy?: Prisma.PurchaseInvoiceOrderByWithRelationInput | Prisma.PurchaseInvoiceOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseInvoiceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseInvoiceScalarFieldEnum | Prisma.PurchaseInvoiceScalarFieldEnum[]
+}
+
+/**
+ * Distributor.distributorPayments
+ */
+export type Distributor$distributorPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DistributorPayment
+   */
+  select?: Prisma.DistributorPaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DistributorPayment
+   */
+  omit?: Prisma.DistributorPaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DistributorPaymentInclude<ExtArgs> | null
+  where?: Prisma.DistributorPaymentWhereInput
+  orderBy?: Prisma.DistributorPaymentOrderByWithRelationInput | Prisma.DistributorPaymentOrderByWithRelationInput[]
+  cursor?: Prisma.DistributorPaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DistributorPaymentScalarFieldEnum | Prisma.DistributorPaymentScalarFieldEnum[]
 }
 
 /**

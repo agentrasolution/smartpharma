@@ -20,8 +20,18 @@ export type CustomerModel = runtime.Types.Result.DefaultSelection<Prisma.$Custom
 
 export type AggregateCustomer = {
   _count: CustomerCountAggregateOutputType | null
+  _avg: CustomerAvgAggregateOutputType | null
+  _sum: CustomerSumAggregateOutputType | null
   _min: CustomerMinAggregateOutputType | null
   _max: CustomerMaxAggregateOutputType | null
+}
+
+export type CustomerAvgAggregateOutputType = {
+  creditLimit: number | null
+}
+
+export type CustomerSumAggregateOutputType = {
+  creditLimit: number | null
 }
 
 export type CustomerMinAggregateOutputType = {
@@ -33,7 +43,20 @@ export type CustomerMinAggregateOutputType = {
   address: string | null
   fatherName: string | null
   fatherPhone: string | null
+  nationalId: string | null
+  dateOfBirth: Date | null
+  gender: string | null
+  bloodGroup: string | null
+  emergencyContactName: string | null
+  emergencyContactPhone: string | null
+  creditLimit: number | null
+  allowCredit: boolean | null
+  notes: string | null
+  consentGiven: boolean | null
+  consentDate: Date | null
+  consentNotes: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type CustomerMaxAggregateOutputType = {
@@ -45,7 +68,20 @@ export type CustomerMaxAggregateOutputType = {
   address: string | null
   fatherName: string | null
   fatherPhone: string | null
+  nationalId: string | null
+  dateOfBirth: Date | null
+  gender: string | null
+  bloodGroup: string | null
+  emergencyContactName: string | null
+  emergencyContactPhone: string | null
+  creditLimit: number | null
+  allowCredit: boolean | null
+  notes: string | null
+  consentGiven: boolean | null
+  consentDate: Date | null
+  consentNotes: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type CustomerCountAggregateOutputType = {
@@ -57,10 +93,33 @@ export type CustomerCountAggregateOutputType = {
   address: number
   fatherName: number
   fatherPhone: number
+  nationalId: number
+  dateOfBirth: number
+  gender: number
+  bloodGroup: number
+  allergies: number
+  chronicConditions: number
+  emergencyContactName: number
+  emergencyContactPhone: number
+  creditLimit: number
+  allowCredit: number
+  notes: number
+  consentGiven: number
+  consentDate: number
+  consentNotes: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
+
+export type CustomerAvgAggregateInputType = {
+  creditLimit?: true
+}
+
+export type CustomerSumAggregateInputType = {
+  creditLimit?: true
+}
 
 export type CustomerMinAggregateInputType = {
   id?: true
@@ -71,7 +130,20 @@ export type CustomerMinAggregateInputType = {
   address?: true
   fatherName?: true
   fatherPhone?: true
+  nationalId?: true
+  dateOfBirth?: true
+  gender?: true
+  bloodGroup?: true
+  emergencyContactName?: true
+  emergencyContactPhone?: true
+  creditLimit?: true
+  allowCredit?: true
+  notes?: true
+  consentGiven?: true
+  consentDate?: true
+  consentNotes?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type CustomerMaxAggregateInputType = {
@@ -83,7 +155,20 @@ export type CustomerMaxAggregateInputType = {
   address?: true
   fatherName?: true
   fatherPhone?: true
+  nationalId?: true
+  dateOfBirth?: true
+  gender?: true
+  bloodGroup?: true
+  emergencyContactName?: true
+  emergencyContactPhone?: true
+  creditLimit?: true
+  allowCredit?: true
+  notes?: true
+  consentGiven?: true
+  consentDate?: true
+  consentNotes?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type CustomerCountAggregateInputType = {
@@ -95,7 +180,22 @@ export type CustomerCountAggregateInputType = {
   address?: true
   fatherName?: true
   fatherPhone?: true
+  nationalId?: true
+  dateOfBirth?: true
+  gender?: true
+  bloodGroup?: true
+  allergies?: true
+  chronicConditions?: true
+  emergencyContactName?: true
+  emergencyContactPhone?: true
+  creditLimit?: true
+  allowCredit?: true
+  notes?: true
+  consentGiven?: true
+  consentDate?: true
+  consentNotes?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -137,6 +237,18 @@ export type CustomerAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inter
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: CustomerAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: CustomerSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: CustomerMinAggregateInputType
@@ -167,6 +279,8 @@ export type CustomerGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   _count?: CustomerCountAggregateInputType | true
+  _avg?: CustomerAvgAggregateInputType
+  _sum?: CustomerSumAggregateInputType
   _min?: CustomerMinAggregateInputType
   _max?: CustomerMaxAggregateInputType
 }
@@ -180,8 +294,25 @@ export type CustomerGroupByOutputType = {
   address: string
   fatherName: string
   fatherPhone: string
+  nationalId: string
+  dateOfBirth: Date | null
+  gender: string
+  bloodGroup: string
+  allergies: string[]
+  chronicConditions: string[]
+  emergencyContactName: string
+  emergencyContactPhone: string
+  creditLimit: number
+  allowCredit: boolean
+  notes: string
+  consentGiven: boolean
+  consentDate: Date | null
+  consentNotes: string
   createdAt: Date
+  updatedAt: Date
   _count: CustomerCountAggregateOutputType | null
+  _avg: CustomerAvgAggregateOutputType | null
+  _sum: CustomerSumAggregateOutputType | null
   _min: CustomerMinAggregateOutputType | null
   _max: CustomerMaxAggregateOutputType | null
 }
@@ -213,11 +344,27 @@ export type CustomerWhereInput = {
   address?: Prisma.StringFilter<"Customer"> | string
   fatherName?: Prisma.StringFilter<"Customer"> | string
   fatherPhone?: Prisma.StringFilter<"Customer"> | string
+  nationalId?: Prisma.StringFilter<"Customer"> | string
+  dateOfBirth?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  gender?: Prisma.StringFilter<"Customer"> | string
+  bloodGroup?: Prisma.StringFilter<"Customer"> | string
+  allergies?: Prisma.StringNullableListFilter<"Customer">
+  chronicConditions?: Prisma.StringNullableListFilter<"Customer">
+  emergencyContactName?: Prisma.StringFilter<"Customer"> | string
+  emergencyContactPhone?: Prisma.StringFilter<"Customer"> | string
+  creditLimit?: Prisma.FloatFilter<"Customer"> | number
+  allowCredit?: Prisma.BoolFilter<"Customer"> | boolean
+  notes?: Prisma.StringFilter<"Customer"> | string
+  consentGiven?: Prisma.BoolFilter<"Customer"> | boolean
+  consentDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  consentNotes?: Prisma.StringFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   sales?: Prisma.SaleListRelationFilter
   arrears?: Prisma.ArrearListRelationFilter
+  chronicMedications?: Prisma.ChronicMedicationListRelationFilter
 }
 
 export type CustomerOrderByWithRelationInput = {
@@ -229,11 +376,27 @@ export type CustomerOrderByWithRelationInput = {
   address?: Prisma.SortOrder
   fatherName?: Prisma.SortOrder
   fatherPhone?: Prisma.SortOrder
+  nationalId?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrder
+  allergies?: Prisma.SortOrder
+  chronicConditions?: Prisma.SortOrder
+  emergencyContactName?: Prisma.SortOrder
+  emergencyContactPhone?: Prisma.SortOrder
+  creditLimit?: Prisma.SortOrder
+  allowCredit?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  consentGiven?: Prisma.SortOrder
+  consentDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  consentNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   pharmacy?: Prisma.PharmacyOrderByWithRelationInput
   branch?: Prisma.BranchOrderByWithRelationInput
   sales?: Prisma.SaleOrderByRelationAggregateInput
   arrears?: Prisma.ArrearOrderByRelationAggregateInput
+  chronicMedications?: Prisma.ChronicMedicationOrderByRelationAggregateInput
 }
 
 export type CustomerWhereUniqueInput = Prisma.AtLeast<{
@@ -248,11 +411,27 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   address?: Prisma.StringFilter<"Customer"> | string
   fatherName?: Prisma.StringFilter<"Customer"> | string
   fatherPhone?: Prisma.StringFilter<"Customer"> | string
+  nationalId?: Prisma.StringFilter<"Customer"> | string
+  dateOfBirth?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  gender?: Prisma.StringFilter<"Customer"> | string
+  bloodGroup?: Prisma.StringFilter<"Customer"> | string
+  allergies?: Prisma.StringNullableListFilter<"Customer">
+  chronicConditions?: Prisma.StringNullableListFilter<"Customer">
+  emergencyContactName?: Prisma.StringFilter<"Customer"> | string
+  emergencyContactPhone?: Prisma.StringFilter<"Customer"> | string
+  creditLimit?: Prisma.FloatFilter<"Customer"> | number
+  allowCredit?: Prisma.BoolFilter<"Customer"> | boolean
+  notes?: Prisma.StringFilter<"Customer"> | string
+  consentGiven?: Prisma.BoolFilter<"Customer"> | boolean
+  consentDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  consentNotes?: Prisma.StringFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   sales?: Prisma.SaleListRelationFilter
   arrears?: Prisma.ArrearListRelationFilter
+  chronicMedications?: Prisma.ChronicMedicationListRelationFilter
 }, "id">
 
 export type CustomerOrderByWithAggregationInput = {
@@ -264,10 +443,27 @@ export type CustomerOrderByWithAggregationInput = {
   address?: Prisma.SortOrder
   fatherName?: Prisma.SortOrder
   fatherPhone?: Prisma.SortOrder
+  nationalId?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrder
+  allergies?: Prisma.SortOrder
+  chronicConditions?: Prisma.SortOrder
+  emergencyContactName?: Prisma.SortOrder
+  emergencyContactPhone?: Prisma.SortOrder
+  creditLimit?: Prisma.SortOrder
+  allowCredit?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  consentGiven?: Prisma.SortOrder
+  consentDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  consentNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.CustomerCountOrderByAggregateInput
+  _avg?: Prisma.CustomerAvgOrderByAggregateInput
   _max?: Prisma.CustomerMaxOrderByAggregateInput
   _min?: Prisma.CustomerMinOrderByAggregateInput
+  _sum?: Prisma.CustomerSumOrderByAggregateInput
 }
 
 export type CustomerScalarWhereWithAggregatesInput = {
@@ -282,7 +478,22 @@ export type CustomerScalarWhereWithAggregatesInput = {
   address?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   fatherName?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   fatherPhone?: Prisma.StringWithAggregatesFilter<"Customer"> | string
+  nationalId?: Prisma.StringWithAggregatesFilter<"Customer"> | string
+  dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
+  gender?: Prisma.StringWithAggregatesFilter<"Customer"> | string
+  bloodGroup?: Prisma.StringWithAggregatesFilter<"Customer"> | string
+  allergies?: Prisma.StringNullableListFilter<"Customer">
+  chronicConditions?: Prisma.StringNullableListFilter<"Customer">
+  emergencyContactName?: Prisma.StringWithAggregatesFilter<"Customer"> | string
+  emergencyContactPhone?: Prisma.StringWithAggregatesFilter<"Customer"> | string
+  creditLimit?: Prisma.FloatWithAggregatesFilter<"Customer"> | number
+  allowCredit?: Prisma.BoolWithAggregatesFilter<"Customer"> | boolean
+  notes?: Prisma.StringWithAggregatesFilter<"Customer"> | string
+  consentGiven?: Prisma.BoolWithAggregatesFilter<"Customer"> | boolean
+  consentDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
+  consentNotes?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Customer"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Customer"> | Date | string
 }
 
 export type CustomerCreateInput = {
@@ -292,11 +503,27 @@ export type CustomerCreateInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutCustomersInput
   branch: Prisma.BranchCreateNestedOneWithoutCustomersInput
   sales?: Prisma.SaleCreateNestedManyWithoutCustomerInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutCustomerInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateInput = {
@@ -308,9 +535,25 @@ export type CustomerUncheckedCreateInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutCustomerInput
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutCustomerInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUpdateInput = {
@@ -320,11 +563,27 @@ export type CustomerUpdateInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutCustomersNestedInput
   branch?: Prisma.BranchUpdateOneRequiredWithoutCustomersNestedInput
   sales?: Prisma.SaleUpdateManyWithoutCustomerNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutCustomerNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateInput = {
@@ -336,9 +595,25 @@ export type CustomerUncheckedUpdateInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sales?: Prisma.SaleUncheckedUpdateManyWithoutCustomerNestedInput
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutCustomerNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyInput = {
@@ -350,7 +625,22 @@ export type CustomerCreateManyInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type CustomerUpdateManyMutationInput = {
@@ -360,7 +650,22 @@ export type CustomerUpdateManyMutationInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CustomerUncheckedUpdateManyInput = {
@@ -372,7 +677,22 @@ export type CustomerUncheckedUpdateManyInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CustomerListRelationFilter = {
@@ -385,6 +705,14 @@ export type CustomerOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type CustomerCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   pharmacyId?: Prisma.SortOrder
@@ -394,7 +722,26 @@ export type CustomerCountOrderByAggregateInput = {
   address?: Prisma.SortOrder
   fatherName?: Prisma.SortOrder
   fatherPhone?: Prisma.SortOrder
+  nationalId?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrder
+  allergies?: Prisma.SortOrder
+  chronicConditions?: Prisma.SortOrder
+  emergencyContactName?: Prisma.SortOrder
+  emergencyContactPhone?: Prisma.SortOrder
+  creditLimit?: Prisma.SortOrder
+  allowCredit?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  consentGiven?: Prisma.SortOrder
+  consentDate?: Prisma.SortOrder
+  consentNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+}
+
+export type CustomerAvgOrderByAggregateInput = {
+  creditLimit?: Prisma.SortOrder
 }
 
 export type CustomerMaxOrderByAggregateInput = {
@@ -406,7 +753,20 @@ export type CustomerMaxOrderByAggregateInput = {
   address?: Prisma.SortOrder
   fatherName?: Prisma.SortOrder
   fatherPhone?: Prisma.SortOrder
+  nationalId?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrder
+  emergencyContactName?: Prisma.SortOrder
+  emergencyContactPhone?: Prisma.SortOrder
+  creditLimit?: Prisma.SortOrder
+  allowCredit?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  consentGiven?: Prisma.SortOrder
+  consentDate?: Prisma.SortOrder
+  consentNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type CustomerMinOrderByAggregateInput = {
@@ -418,17 +778,34 @@ export type CustomerMinOrderByAggregateInput = {
   address?: Prisma.SortOrder
   fatherName?: Prisma.SortOrder
   fatherPhone?: Prisma.SortOrder
+  nationalId?: Prisma.SortOrder
+  dateOfBirth?: Prisma.SortOrder
+  gender?: Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrder
+  emergencyContactName?: Prisma.SortOrder
+  emergencyContactPhone?: Prisma.SortOrder
+  creditLimit?: Prisma.SortOrder
+  allowCredit?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  consentGiven?: Prisma.SortOrder
+  consentDate?: Prisma.SortOrder
+  consentNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
-export type CustomerNullableScalarRelationFilter = {
-  is?: Prisma.CustomerWhereInput | null
-  isNot?: Prisma.CustomerWhereInput | null
+export type CustomerSumOrderByAggregateInput = {
+  creditLimit?: Prisma.SortOrder
 }
 
 export type CustomerScalarRelationFilter = {
   is?: Prisma.CustomerWhereInput
   isNot?: Prisma.CustomerWhereInput
+}
+
+export type CustomerNullableScalarRelationFilter = {
+  is?: Prisma.CustomerWhereInput | null
+  isNot?: Prisma.CustomerWhereInput | null
 }
 
 export type CustomerCreateNestedManyWithoutPharmacyInput = {
@@ -515,6 +892,38 @@ export type CustomerUncheckedUpdateManyWithoutBranchNestedInput = {
   deleteMany?: Prisma.CustomerScalarWhereInput | Prisma.CustomerScalarWhereInput[]
 }
 
+export type CustomerCreateallergiesInput = {
+  set: string[]
+}
+
+export type CustomerCreatechronicConditionsInput = {
+  set: string[]
+}
+
+export type CustomerUpdateallergiesInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type CustomerUpdatechronicConditionsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type CustomerCreateNestedOneWithoutChronicMedicationsInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutChronicMedicationsInput, Prisma.CustomerUncheckedCreateWithoutChronicMedicationsInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutChronicMedicationsInput
+  connect?: Prisma.CustomerWhereUniqueInput
+}
+
+export type CustomerUpdateOneRequiredWithoutChronicMedicationsNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutChronicMedicationsInput, Prisma.CustomerUncheckedCreateWithoutChronicMedicationsInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutChronicMedicationsInput
+  upsert?: Prisma.CustomerUpsertWithoutChronicMedicationsInput
+  connect?: Prisma.CustomerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutChronicMedicationsInput, Prisma.CustomerUpdateWithoutChronicMedicationsInput>, Prisma.CustomerUncheckedUpdateWithoutChronicMedicationsInput>
+}
+
 export type CustomerCreateNestedOneWithoutSalesInput = {
   create?: Prisma.XOR<Prisma.CustomerCreateWithoutSalesInput, Prisma.CustomerUncheckedCreateWithoutSalesInput>
   connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutSalesInput
@@ -552,10 +961,26 @@ export type CustomerCreateWithoutPharmacyInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutCustomersInput
   sales?: Prisma.SaleCreateNestedManyWithoutCustomerInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutCustomerInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutPharmacyInput = {
@@ -566,9 +991,25 @@ export type CustomerUncheckedCreateWithoutPharmacyInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutCustomerInput
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutCustomerInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutPharmacyInput = {
@@ -609,7 +1050,22 @@ export type CustomerScalarWhereInput = {
   address?: Prisma.StringFilter<"Customer"> | string
   fatherName?: Prisma.StringFilter<"Customer"> | string
   fatherPhone?: Prisma.StringFilter<"Customer"> | string
+  nationalId?: Prisma.StringFilter<"Customer"> | string
+  dateOfBirth?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  gender?: Prisma.StringFilter<"Customer"> | string
+  bloodGroup?: Prisma.StringFilter<"Customer"> | string
+  allergies?: Prisma.StringNullableListFilter<"Customer">
+  chronicConditions?: Prisma.StringNullableListFilter<"Customer">
+  emergencyContactName?: Prisma.StringFilter<"Customer"> | string
+  emergencyContactPhone?: Prisma.StringFilter<"Customer"> | string
+  creditLimit?: Prisma.FloatFilter<"Customer"> | number
+  allowCredit?: Prisma.BoolFilter<"Customer"> | boolean
+  notes?: Prisma.StringFilter<"Customer"> | string
+  consentGiven?: Prisma.BoolFilter<"Customer"> | boolean
+  consentDate?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  consentNotes?: Prisma.StringFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
 }
 
 export type CustomerCreateWithoutBranchInput = {
@@ -619,10 +1075,26 @@ export type CustomerCreateWithoutBranchInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutCustomersInput
   sales?: Prisma.SaleCreateNestedManyWithoutCustomerInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutCustomerInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutBranchInput = {
@@ -633,9 +1105,25 @@ export type CustomerUncheckedCreateWithoutBranchInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutCustomerInput
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutCustomerInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutBranchInput = {
@@ -664,6 +1152,138 @@ export type CustomerUpdateManyWithWhereWithoutBranchInput = {
   data: Prisma.XOR<Prisma.CustomerUpdateManyMutationInput, Prisma.CustomerUncheckedUpdateManyWithoutBranchInput>
 }
 
+export type CustomerCreateWithoutChronicMedicationsInput = {
+  id?: string
+  name: string
+  phone?: string
+  address?: string
+  fatherName?: string
+  fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutCustomersInput
+  branch: Prisma.BranchCreateNestedOneWithoutCustomersInput
+  sales?: Prisma.SaleCreateNestedManyWithoutCustomerInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerUncheckedCreateWithoutChronicMedicationsInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  name: string
+  phone?: string
+  address?: string
+  fatherName?: string
+  fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutCustomerInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerCreateOrConnectWithoutChronicMedicationsInput = {
+  where: Prisma.CustomerWhereUniqueInput
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutChronicMedicationsInput, Prisma.CustomerUncheckedCreateWithoutChronicMedicationsInput>
+}
+
+export type CustomerUpsertWithoutChronicMedicationsInput = {
+  update: Prisma.XOR<Prisma.CustomerUpdateWithoutChronicMedicationsInput, Prisma.CustomerUncheckedUpdateWithoutChronicMedicationsInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutChronicMedicationsInput, Prisma.CustomerUncheckedCreateWithoutChronicMedicationsInput>
+  where?: Prisma.CustomerWhereInput
+}
+
+export type CustomerUpdateToOneWithWhereWithoutChronicMedicationsInput = {
+  where?: Prisma.CustomerWhereInput
+  data: Prisma.XOR<Prisma.CustomerUpdateWithoutChronicMedicationsInput, Prisma.CustomerUncheckedUpdateWithoutChronicMedicationsInput>
+}
+
+export type CustomerUpdateWithoutChronicMedicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  fatherName?: Prisma.StringFieldUpdateOperationsInput | string
+  fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutCustomersNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutCustomersNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutCustomerNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerUncheckedUpdateWithoutChronicMedicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  fatherName?: Prisma.StringFieldUpdateOperationsInput | string
+  fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutCustomerNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutCustomerNestedInput
+}
+
 export type CustomerCreateWithoutSalesInput = {
   id?: string
   name: string
@@ -671,10 +1291,26 @@ export type CustomerCreateWithoutSalesInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutCustomersInput
   branch: Prisma.BranchCreateNestedOneWithoutCustomersInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutCustomerInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutSalesInput = {
@@ -686,8 +1322,24 @@ export type CustomerUncheckedCreateWithoutSalesInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutCustomerInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutSalesInput = {
@@ -713,10 +1365,26 @@ export type CustomerUpdateWithoutSalesInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutCustomersNestedInput
   branch?: Prisma.BranchUpdateOneRequiredWithoutCustomersNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutCustomerNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutSalesInput = {
@@ -728,8 +1396,24 @@ export type CustomerUncheckedUpdateWithoutSalesInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutCustomerNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutArrearsInput = {
@@ -739,10 +1423,26 @@ export type CustomerCreateWithoutArrearsInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutCustomersInput
   branch: Prisma.BranchCreateNestedOneWithoutCustomersInput
   sales?: Prisma.SaleCreateNestedManyWithoutCustomerInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutArrearsInput = {
@@ -754,8 +1454,24 @@ export type CustomerUncheckedCreateWithoutArrearsInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   sales?: Prisma.SaleUncheckedCreateNestedManyWithoutCustomerInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutArrearsInput = {
@@ -781,10 +1497,26 @@ export type CustomerUpdateWithoutArrearsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutCustomersNestedInput
   branch?: Prisma.BranchUpdateOneRequiredWithoutCustomersNestedInput
   sales?: Prisma.SaleUpdateManyWithoutCustomerNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutArrearsInput = {
@@ -796,8 +1528,24 @@ export type CustomerUncheckedUpdateWithoutArrearsInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sales?: Prisma.SaleUncheckedUpdateManyWithoutCustomerNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyPharmacyInput = {
@@ -808,7 +1556,22 @@ export type CustomerCreateManyPharmacyInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type CustomerUpdateWithoutPharmacyInput = {
@@ -818,10 +1581,26 @@ export type CustomerUpdateWithoutPharmacyInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutCustomersNestedInput
   sales?: Prisma.SaleUpdateManyWithoutCustomerNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutCustomerNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutPharmacyInput = {
@@ -832,9 +1611,25 @@ export type CustomerUncheckedUpdateWithoutPharmacyInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sales?: Prisma.SaleUncheckedUpdateManyWithoutCustomerNestedInput
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutCustomerNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateManyWithoutPharmacyInput = {
@@ -845,7 +1640,22 @@ export type CustomerUncheckedUpdateManyWithoutPharmacyInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CustomerCreateManyBranchInput = {
@@ -856,7 +1666,22 @@ export type CustomerCreateManyBranchInput = {
   address?: string
   fatherName?: string
   fatherPhone?: string
+  nationalId?: string
+  dateOfBirth?: Date | string | null
+  gender?: string
+  bloodGroup?: string
+  allergies?: Prisma.CustomerCreateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerCreatechronicConditionsInput | string[]
+  emergencyContactName?: string
+  emergencyContactPhone?: string
+  creditLimit?: number
+  allowCredit?: boolean
+  notes?: string
+  consentGiven?: boolean
+  consentDate?: Date | string | null
+  consentNotes?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type CustomerUpdateWithoutBranchInput = {
@@ -866,10 +1691,26 @@ export type CustomerUpdateWithoutBranchInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutCustomersNestedInput
   sales?: Prisma.SaleUpdateManyWithoutCustomerNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutCustomerNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutBranchInput = {
@@ -880,9 +1721,25 @@ export type CustomerUncheckedUpdateWithoutBranchInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sales?: Prisma.SaleUncheckedUpdateManyWithoutCustomerNestedInput
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutCustomerNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateManyWithoutBranchInput = {
@@ -893,7 +1750,22 @@ export type CustomerUncheckedUpdateManyWithoutBranchInput = {
   address?: Prisma.StringFieldUpdateOperationsInput | string
   fatherName?: Prisma.StringFieldUpdateOperationsInput | string
   fatherPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  nationalId?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  bloodGroup?: Prisma.StringFieldUpdateOperationsInput | string
+  allergies?: Prisma.CustomerUpdateallergiesInput | string[]
+  chronicConditions?: Prisma.CustomerUpdatechronicConditionsInput | string[]
+  emergencyContactName?: Prisma.StringFieldUpdateOperationsInput | string
+  emergencyContactPhone?: Prisma.StringFieldUpdateOperationsInput | string
+  creditLimit?: Prisma.FloatFieldUpdateOperationsInput | number
+  allowCredit?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  consentGiven?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  consentDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  consentNotes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -904,11 +1776,13 @@ export type CustomerUncheckedUpdateManyWithoutBranchInput = {
 export type CustomerCountOutputType = {
   sales: number
   arrears: number
+  chronicMedications: number
 }
 
 export type CustomerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sales?: boolean | CustomerCountOutputTypeCountSalesArgs
   arrears?: boolean | CustomerCountOutputTypeCountArrearsArgs
+  chronicMedications?: boolean | CustomerCountOutputTypeCountChronicMedicationsArgs
 }
 
 /**
@@ -935,6 +1809,13 @@ export type CustomerCountOutputTypeCountArrearsArgs<ExtArgs extends runtime.Type
   where?: Prisma.ArrearWhereInput
 }
 
+/**
+ * CustomerCountOutputType without action
+ */
+export type CustomerCountOutputTypeCountChronicMedicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChronicMedicationWhereInput
+}
+
 
 export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -945,11 +1826,27 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   address?: boolean
   fatherName?: boolean
   fatherPhone?: boolean
+  nationalId?: boolean
+  dateOfBirth?: boolean
+  gender?: boolean
+  bloodGroup?: boolean
+  allergies?: boolean
+  chronicConditions?: boolean
+  emergencyContactName?: boolean
+  emergencyContactPhone?: boolean
+  creditLimit?: boolean
+  allowCredit?: boolean
+  notes?: boolean
+  consentGiven?: boolean
+  consentDate?: boolean
+  consentNotes?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sales?: boolean | Prisma.Customer$salesArgs<ExtArgs>
   arrears?: boolean | Prisma.Customer$arrearsArgs<ExtArgs>
+  chronicMedications?: boolean | Prisma.Customer$chronicMedicationsArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
 
@@ -962,7 +1859,22 @@ export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   address?: boolean
   fatherName?: boolean
   fatherPhone?: boolean
+  nationalId?: boolean
+  dateOfBirth?: boolean
+  gender?: boolean
+  bloodGroup?: boolean
+  allergies?: boolean
+  chronicConditions?: boolean
+  emergencyContactName?: boolean
+  emergencyContactPhone?: boolean
+  creditLimit?: boolean
+  allowCredit?: boolean
+  notes?: boolean
+  consentGiven?: boolean
+  consentDate?: boolean
+  consentNotes?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
@@ -976,7 +1888,22 @@ export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   address?: boolean
   fatherName?: boolean
   fatherPhone?: boolean
+  nationalId?: boolean
+  dateOfBirth?: boolean
+  gender?: boolean
+  bloodGroup?: boolean
+  allergies?: boolean
+  chronicConditions?: boolean
+  emergencyContactName?: boolean
+  emergencyContactPhone?: boolean
+  creditLimit?: boolean
+  allowCredit?: boolean
+  notes?: boolean
+  consentGiven?: boolean
+  consentDate?: boolean
+  consentNotes?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
@@ -990,15 +1917,31 @@ export type CustomerSelectScalar = {
   address?: boolean
   fatherName?: boolean
   fatherPhone?: boolean
+  nationalId?: boolean
+  dateOfBirth?: boolean
+  gender?: boolean
+  bloodGroup?: boolean
+  allergies?: boolean
+  chronicConditions?: boolean
+  emergencyContactName?: boolean
+  emergencyContactPhone?: boolean
+  creditLimit?: boolean
+  allowCredit?: boolean
+  notes?: boolean
+  consentGiven?: boolean
+  consentDate?: boolean
+  consentNotes?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "name" | "phone" | "address" | "fatherName" | "fatherPhone" | "createdAt", ExtArgs["result"]["customer"]>
+export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "name" | "phone" | "address" | "fatherName" | "fatherPhone" | "nationalId" | "dateOfBirth" | "gender" | "bloodGroup" | "allergies" | "chronicConditions" | "emergencyContactName" | "emergencyContactPhone" | "creditLimit" | "allowCredit" | "notes" | "consentGiven" | "consentDate" | "consentNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
 export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   sales?: boolean | Prisma.Customer$salesArgs<ExtArgs>
   arrears?: boolean | Prisma.Customer$arrearsArgs<ExtArgs>
+  chronicMedications?: boolean | Prisma.Customer$chronicMedicationsArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CustomerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1017,6 +1960,7 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     branch: Prisma.$BranchPayload<ExtArgs>
     sales: Prisma.$SalePayload<ExtArgs>[]
     arrears: Prisma.$ArrearPayload<ExtArgs>[]
+    chronicMedications: Prisma.$ChronicMedicationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1027,7 +1971,22 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     address: string
     fatherName: string
     fatherPhone: string
+    nationalId: string
+    dateOfBirth: Date | null
+    gender: string
+    bloodGroup: string
+    allergies: string[]
+    chronicConditions: string[]
+    emergencyContactName: string
+    emergencyContactPhone: string
+    creditLimit: number
+    allowCredit: boolean
+    notes: string
+    consentGiven: boolean
+    consentDate: Date | null
+    consentNotes: string
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["customer"]>
   composites: {}
 }
@@ -1426,6 +2385,7 @@ export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends runtime
   branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   sales<T extends Prisma.Customer$salesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$salesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   arrears<T extends Prisma.Customer$arrearsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$arrearsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArrearPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  chronicMedications<T extends Prisma.Customer$chronicMedicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$chronicMedicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChronicMedicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1463,7 +2423,22 @@ export interface CustomerFieldRefs {
   readonly address: Prisma.FieldRef<"Customer", 'String'>
   readonly fatherName: Prisma.FieldRef<"Customer", 'String'>
   readonly fatherPhone: Prisma.FieldRef<"Customer", 'String'>
+  readonly nationalId: Prisma.FieldRef<"Customer", 'String'>
+  readonly dateOfBirth: Prisma.FieldRef<"Customer", 'DateTime'>
+  readonly gender: Prisma.FieldRef<"Customer", 'String'>
+  readonly bloodGroup: Prisma.FieldRef<"Customer", 'String'>
+  readonly allergies: Prisma.FieldRef<"Customer", 'String[]'>
+  readonly chronicConditions: Prisma.FieldRef<"Customer", 'String[]'>
+  readonly emergencyContactName: Prisma.FieldRef<"Customer", 'String'>
+  readonly emergencyContactPhone: Prisma.FieldRef<"Customer", 'String'>
+  readonly creditLimit: Prisma.FieldRef<"Customer", 'Float'>
+  readonly allowCredit: Prisma.FieldRef<"Customer", 'Boolean'>
+  readonly notes: Prisma.FieldRef<"Customer", 'String'>
+  readonly consentGiven: Prisma.FieldRef<"Customer", 'Boolean'>
+  readonly consentDate: Prisma.FieldRef<"Customer", 'DateTime'>
+  readonly consentNotes: Prisma.FieldRef<"Customer", 'String'>
   readonly createdAt: Prisma.FieldRef<"Customer", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Customer", 'DateTime'>
 }
     
 
@@ -1910,6 +2885,30 @@ export type Customer$arrearsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.ArrearScalarFieldEnum | Prisma.ArrearScalarFieldEnum[]
+}
+
+/**
+ * Customer.chronicMedications
+ */
+export type Customer$chronicMedicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChronicMedication
+   */
+  select?: Prisma.ChronicMedicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChronicMedication
+   */
+  omit?: Prisma.ChronicMedicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChronicMedicationInclude<ExtArgs> | null
+  where?: Prisma.ChronicMedicationWhereInput
+  orderBy?: Prisma.ChronicMedicationOrderByWithRelationInput | Prisma.ChronicMedicationOrderByWithRelationInput[]
+  cursor?: Prisma.ChronicMedicationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChronicMedicationScalarFieldEnum | Prisma.ChronicMedicationScalarFieldEnum[]
 }
 
 /**

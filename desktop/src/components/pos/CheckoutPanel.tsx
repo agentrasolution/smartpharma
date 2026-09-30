@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { ShoppingCart, Trash2, UserPlus } from "lucide-react";
+import {
+  ShoppingCart, Trash2, UserPlus, CreditCard, Banknote,
+  ArrowRightLeft, FileText, Wallet,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,9 +15,17 @@ import { SearchableSelect } from "@/components/ui/searchable-select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import CartItem from "@/components/pos/CartItem";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, getTenantCurrency } from "@/lib/utils";
 import { api } from "@/lib/api";
 import type { SaleItemInput, DiscountType, Customer } from "@/types";
+
+export interface TenderPayload {
+  paymentMethod: "CASH" | "CARD" | "SPLIT" | "CREDIT";
+  cashAmount: number;
+  cardAmount: number;
+  creditAmount: number;
+  prescriptionNumber?: string;
+}
 
 interface CheckoutPanelProps {
   items: SaleItemInput[];
@@ -33,7 +44,7 @@ interface CheckoutPanelProps {
   onDiscountChange: (discount: number) => void;
   onToggleDiscountType: () => void;
   onClearCart: () => void;
-  onCheckout: (amountPaid: number, discount: number) => Promise<void>;
+  onCheckout: (amountPaid: number, discount: number, tenderData?: TenderPayload) => Promise<void>;
   onCustomerChange: (customerId?: string, customerName?: string) => void;
   onNotesChange?: (notes: string) => void;
   onAmountPaidChange?: (amountPaid: string) => void;
@@ -48,12 +59,20 @@ export default function CheckoutPanel({
   onClearCart, onCheckout, onCustomerChange, onNotesChange, onAmountPaidChange,
   onAddToArrearsChange, error,
 }: CheckoutPanelProps) {
+  const currency = getTenantCurrency();
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [quickName, setQuickName] = useState("");
   const [quickPhone, setQuickPhone] = useState("");
   const [quickAddress, setQuickAddress] = useState("");
   const [quickFatherName, setQuickFatherName] = useState("");
   const [quickFatherPhone, setQuickFatherPhone] = useState("");
+
+  // Tender Method
+  const [paymentMethod, setPaymentMethod] = useState<"CASH" | "CARD" | "SPLIT" | "CREDIT">("CASH");
+  const [splitCash, setSplitCash] = useState<string>("");
+  const [splitCard, setSplitCard] = useState<string>("");
+  const [prescriptionNumber, setPrescriptionNumber] = useState<string>("");
+  const [showRxInput, setShowRxInput] = useState(false);
 
   const { data: customers = [] } = useQuery({
     queryKey: ["customers"],
@@ -62,7 +81,13 @@ export default function CheckoutPanel({
 
   const queryClient = useQueryClient();
   const quickAddMutation = useMutation({
-    mutationFn: () => api.customers.create({ name: quickName, phone: quickPhone, address: quickAddress, fatherName: quickFatherName, fatherPhone: quickFatherPhone }),
+    mutationFn: () => api.customers.create({
+      name: quickName,
+      phone: quickPhone,
+      address: quickAddress,
+      fatherName: quickFatherName,
+      fatherPhone: quickFatherPhone,
+    }),
     onSuccess: (customer) => {
       toast.success("Customer added");
       queryClient.invalidateQueries({ queryKey: ["customers"] });
@@ -78,20 +103,52 @@ export default function CheckoutPanel({
       toast.error(err.message);
     },
   });
+
   const [processing, setProcessing] = useState(false);
 
-  const numPaid = Number(amountPaid) || 0;
-  const change = Math.max(0, numPaid - total);
-  const isPartial = numPaid > 0 && numPaid < total;
-  const canPay = items.length > 0 && (numPaid >= total || (isPartial && !!customerId && addToArrears));
+  // Compute effective amounts based on tender
+  let effectivePaid = Number(amountPaid) || 0;
+  let effectiveCash = 0;
+  let effectiveCard = 0;
+  let effectiveCredit = 0;
+
+  if (paymentMethod === "CARD") {
+    effectivePaid = total;
+    effectiveCard = total;
+  } else if (paymentMethod === "SPLIT") {
+    effectiveCash = Number(splitCash) || 0;
+    effectiveCard = Number(splitCard) || 0;
+    effectivePaid = effectiveCash + effectiveCard;
+  } else if (paymentMethod === "CREDIT") {
+    effectiveCredit = Math.max(0, total - (Number(amountPaid) || 0));
+    effectiveCash = Number(amountPaid) || 0;
+  } else {
+    // CASH
+    effectiveCash = effectivePaid;
+  }
+
+  const change = paymentMethod === "CASH" ? Math.max(0, effectivePaid - total) : 0;
+  const isPartial = effectivePaid > 0 && effectivePaid < total;
+  const canPay =
+    items.length > 0 &&
+    (effectivePaid >= total ||
+      (paymentMethod === "CREDIT" && !!customerId) ||
+      (isPartial && !!customerId && addToArrears));
 
   async function handleCheckout() {
     if (!canPay) return;
     setProcessing(true);
     try {
-      await onCheckout(numPaid, discount);
-      toast.success("Sale completed");
+      await onCheckout(effectivePaid, discount, {
+        paymentMethod,
+        cashAmount: effectiveCash,
+        cardAmount: effectiveCard,
+        creditAmount: effectiveCredit,
+        prescriptionNumber: prescriptionNumber.trim() || undefined,
+      });
+      toast.success("Sale completed successfully");
       onClearCart();
+      setPrescriptionNumber("");
     } catch {
       toast.error("Checkout failed");
       console.error("Checkout failed");
@@ -119,11 +176,18 @@ export default function CheckoutPanel({
           <ShoppingCart className="h-4 w-4 text-accent" />
           Cart
           {items.length > 0 && (
-            <span className="text-[10px] font-normal text-text-secondary bg-surface-2 rounded-full px-1.5 py-px">{items.length}</span>
+            <span className="text-[10px] font-normal text-text-secondary bg-surface-2 rounded-full px-1.5 py-px">
+              {items.length}
+            </span>
           )}
         </h2>
         {items.length > 0 && (
-          <Button variant="ghost" size="icon" className="h-7 w-7 text-text-secondary hover:text-danger" onClick={onClearCart}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7 text-text-secondary hover:text-danger"
+            onClick={onClearCart}
+          >
             <Trash2 className="h-3.5 w-3.5" />
           </Button>
         )}
@@ -134,12 +198,18 @@ export default function CheckoutPanel({
           <div className="flex flex-col items-center justify-center h-full text-xs text-text-secondary py-16">
             <ShoppingCart className="h-10 w-10 text-border mb-3" />
             <p className="font-medium">Cart is empty</p>
-            <p className="text-[11px] mt-0.5">Scan or search products to add</p>
+            <p className="text-[11px] mt-0.5">Scan barcode or search products to begin sale</p>
           </div>
         ) : (
           <div>
             {items.map((item) => (
-              <CartItem key={item.productId} item={item} onUpdateQuantity={onUpdateQuantity} onIncrementBy={onIncrementBy} onRemove={onRemoveItem} />
+              <CartItem
+                key={item.productId}
+                item={item}
+                onUpdateQuantity={onUpdateQuantity}
+                onIncrementBy={onIncrementBy}
+                onRemove={onRemoveItem}
+              />
             ))}
           </div>
         )}
@@ -147,10 +217,14 @@ export default function CheckoutPanel({
 
       {items.length > 0 && (
         <div className="pt-3 space-y-3">
+          {/* Customer Selection */}
           <div className="flex items-center gap-2">
             <div className="flex-1">
               <SearchableSelect
-                options={customers.map((c: Customer) => ({ value: c.id, label: `${c.name}${c.phone ? ` (${c.phone})` : ""}` }))}
+                options={customers.map((c: Customer) => ({
+                  value: c.id,
+                  label: `${c.name}${c.phone ? ` (${c.phone})` : ""}`,
+                }))}
                 value={customerId || ""}
                 onChange={(v) => {
                   const selected = customers.find((c: Customer) => c.id === v);
@@ -159,15 +233,23 @@ export default function CheckoutPanel({
                 placeholder="Customer (optional)"
               />
             </div>
-            <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" onClick={() => setQuickAddOpen(true)} title="Quick add customer">
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 shrink-0"
+              onClick={() => setQuickAddOpen(true)}
+              title="Quick add customer"
+            >
               <UserPlus className="h-3.5 w-3.5" />
             </Button>
           </div>
-          <Separator />
 
+          {/* Quick Add Customer Dialog */}
           <Dialog open={quickAddOpen} onOpenChange={setQuickAddOpen}>
             <DialogContent>
-              <DialogHeader><DialogTitle>Quick Add Customer</DialogTitle></DialogHeader>
+              <DialogHeader>
+                <DialogTitle>Quick Add Customer</DialogTitle>
+              </DialogHeader>
               <div className="px-5 pb-5 space-y-3">
                 <div className="space-y-1">
                   <Label>Name</Label>
@@ -189,37 +271,72 @@ export default function CheckoutPanel({
                   <Label>Address</Label>
                   <Input value={quickAddress} onChange={(e) => setQuickAddress(e.target.value)} />
                 </div>
-                <Button className="w-full" disabled={!quickName || quickAddMutation.isPending} onClick={() => quickAddMutation.mutate()}>
+                <Button
+                  className="w-full"
+                  disabled={!quickName || quickAddMutation.isPending}
+                  onClick={() => quickAddMutation.mutate()}
+                >
                   {quickAddMutation.isPending ? "Adding..." : "Add Customer & Select"}
                 </Button>
               </div>
             </DialogContent>
           </Dialog>
-          
+
+          {/* Prescription Linking Toggle */}
+          <div className="space-y-1">
+            <div className="flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setShowRxInput(!showRxInput)}
+                className="text-[11px] text-accent hover:underline flex items-center gap-1 font-medium"
+              >
+                <FileText className="h-3 w-3" />
+                {showRxInput ? "Hide Prescription Link" : "+ Link Prescription # (Optional)"}
+              </button>
+              {prescriptionNumber && (
+                <span className="text-[10px] font-mono bg-accent/10 text-accent px-1.5 py-0.5 rounded">
+                  Rx: {prescriptionNumber}
+                </span>
+              )}
+            </div>
+            {showRxInput && (
+              <Input
+                placeholder="e.g. RX-2609-123456"
+                value={prescriptionNumber}
+                onChange={(e) => setPrescriptionNumber(e.target.value)}
+                className="h-7 text-xs font-mono"
+              />
+            )}
+          </div>
+
+          <Separator />
+
+          {/* Notes */}
           <div>
-            <Label className="text-[10px] text-text-secondary mb-1 block">Notes</Label>
             <textarea
               id="pos-notes"
               value={notes || ""}
               onChange={(e) => onNotesChange?.(e.target.value)}
-              rows={2}
+              rows={1}
               placeholder="Sale notes (optional)"
-              className="w-full h-auto rounded-md border border-border bg-surface px-2.5 py-1.5 text-xs text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-1 resize-none"
+              className="w-full h-auto rounded-md border border-border bg-surface px-2.5 py-1 text-xs text-text-primary placeholder:text-text-secondary/50 focus:outline-none focus:ring-1 focus:ring-accent resize-none"
             />
           </div>
 
+          {/* Discount */}
           <div>
             <div className="flex items-center gap-2">
               <button
+                type="button"
                 onClick={onToggleDiscountType}
-                className="h-7 px-2 rounded-md text-[10px] font-medium border border-border bg-surface-2 hover:bg-border transition-colors shrink-0"
+                className="h-7 px-2 rounded-md text-[10px] font-semibold border border-border bg-surface-2 hover:bg-border transition-colors shrink-0"
               >
-                {discountType === "pkr" ? "PKR" : "%"}
+                {discountType === "pkr" ? currency.code : "%"}
               </button>
               <Input
                 id="pos-discount"
                 type="number"
-                placeholder={`Discount (${discountType === "pkr" ? "PKR" : "%"})`}
+                placeholder={`Discount (${discountType === "pkr" ? currency.code : "%"})`}
                 value={discountValue || ""}
                 onChange={(e) => onDiscountChange(Number(e.target.value) || 0)}
                 className="h-7 text-xs font-mono"
@@ -227,11 +344,14 @@ export default function CheckoutPanel({
             </div>
             {discountValue > 0 && (
               <p className="text-[10px] text-text-secondary text-right mt-0.5">
-                {discountType === "percent" ? `= ${formatCurrency(discount)}` : `= ${Math.round(discountValue * 100 / subtotal)}%`}
+                {discountType === "percent"
+                  ? `= ${formatCurrency(discount)}`
+                  : `= ${Math.round((discountValue * 100) / subtotal)}%`}
               </p>
             )}
           </div>
 
+          {/* Calculation Summary */}
           <div className="space-y-1 text-xs">
             <div className="flex justify-between text-text-secondary">
               <span>Subtotal</span>
@@ -245,30 +365,192 @@ export default function CheckoutPanel({
             )}
             <Separator />
             <div className="flex justify-between text-sm font-bold text-text-primary pt-0.5">
-              <span>Total</span>
+              <span>Total Bill</span>
               <span className="font-mono tabular-nums">{formatCurrency(total)}</span>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Input
-              id="pos-amount-paid"
-              type="number"
-              placeholder="Amount paid"
-              value={amountPaid}
-              onChange={(e) => onAmountPaidChange?.(e.target.value)}
-              className="h-10 text-base font-mono font-bold text-center"
-            />
-            {change > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center text-xs text-success font-semibold"
+          {/* Multi-Payment Tender Selector */}
+          <div className="space-y-2 pt-1">
+            <Label className="text-[10px] font-bold uppercase tracking-wider text-text-secondary block">
+              Payment Tender
+            </Label>
+            <div className="grid grid-cols-4 gap-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setPaymentMethod("CASH");
+                  onAmountPaidChange?.(String(total));
+                }}
+                className={`py-1.5 px-1 rounded text-center text-[10px] font-bold border transition-all flex flex-col items-center gap-0.5 ${
+                  paymentMethod === "CASH"
+                    ? "border-accent bg-accent/15 text-accent shadow-xs"
+                    : "border-border bg-surface-2 text-text-secondary hover:text-text-primary"
+                }`}
               >
-                Change: {formatCurrency(change)}
-              </motion.div>
+                <Banknote className="h-3.5 w-3.5" />
+                Cash
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setPaymentMethod("CARD");
+                  onAmountPaidChange?.(String(total));
+                }}
+                className={`py-1.5 px-1 rounded text-center text-[10px] font-bold border transition-all flex flex-col items-center gap-0.5 ${
+                  paymentMethod === "CARD"
+                    ? "border-blue-500 bg-blue-500/15 text-blue-500 shadow-xs"
+                    : "border-border bg-surface-2 text-text-secondary hover:text-text-primary"
+                }`}
+              >
+                <CreditCard className="h-3.5 w-3.5" />
+                Card
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setPaymentMethod("SPLIT");
+                  const half = Math.floor(total / 2);
+                  setSplitCash(String(half));
+                  setSplitCard(String(total - half));
+                  onAmountPaidChange?.(String(total));
+                }}
+                className={`py-1.5 px-1 rounded text-center text-[10px] font-bold border transition-all flex flex-col items-center gap-0.5 ${
+                  paymentMethod === "SPLIT"
+                    ? "border-purple-500 bg-purple-500/15 text-purple-500 shadow-xs"
+                    : "border-border bg-surface-2 text-text-secondary hover:text-text-primary"
+                }`}
+              >
+                <ArrowRightLeft className="h-3.5 w-3.5" />
+                Split
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setPaymentMethod("CREDIT");
+                  onAddToArrearsChange?.(true);
+                  onAmountPaidChange?.("0");
+                }}
+                className={`py-1.5 px-1 rounded text-center text-[10px] font-bold border transition-all flex flex-col items-center gap-0.5 ${
+                  paymentMethod === "CREDIT"
+                    ? "border-amber-500 bg-amber-500/15 text-amber-500 shadow-xs"
+                    : "border-border bg-surface-2 text-text-secondary hover:text-text-primary"
+                }`}
+              >
+                <Wallet className="h-3.5 w-3.5" />
+                Credit
+              </button>
+            </div>
+
+            {/* Cash Tender Inputs & Quick Buttons */}
+            {paymentMethod === "CASH" && (
+              <div className="space-y-1.5">
+                <Input
+                  id="pos-amount-paid"
+                  type="number"
+                  placeholder="Cash Amount received"
+                  value={amountPaid}
+                  onChange={(e) => onAmountPaidChange?.(e.target.value)}
+                  className="h-9 text-base font-mono font-bold text-center"
+                />
+                <div className="flex items-center gap-1 justify-center">
+                  <button
+                    type="button"
+                    onClick={() => onAmountPaidChange?.(String(total))}
+                    className="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-2 border border-border hover:bg-border text-text-primary"
+                  >
+                    Exact ({formatCurrency(total)})
+                  </button>
+                  {[10, 50, 100, 500].map((inc) => (
+                    <button
+                      key={inc}
+                      type="button"
+                      onClick={() => {
+                        const cur = Number(amountPaid) || 0;
+                        onAmountPaidChange?.(String(cur + inc));
+                      }}
+                      className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-2 border border-border hover:bg-border text-text-secondary"
+                    >
+                      +{inc}
+                    </button>
+                  ))}
+                </div>
+
+                {change > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center text-xs text-success font-bold"
+                  >
+                    Change Due: {formatCurrency(change)}
+                  </motion.div>
+                )}
+              </div>
             )}
-            {isPartial && (
+
+            {/* Split Tender Inputs */}
+            {paymentMethod === "SPLIT" && (
+              <div className="space-y-1.5 p-2 rounded-lg border border-purple-500/30 bg-purple-500/5">
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <Label className="text-[10px] text-text-secondary">Cash Portion</Label>
+                    <Input
+                      type="number"
+                      placeholder="Cash"
+                      value={splitCash}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setSplitCash(val);
+                        const cPaid = (Number(val) || 0) + (Number(splitCard) || 0);
+                        onAmountPaidChange?.(String(cPaid));
+                      }}
+                      className="h-8 text-xs font-mono font-bold"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-[10px] text-text-secondary">Card Portion</Label>
+                    <Input
+                      type="number"
+                      placeholder="Card"
+                      value={splitCard}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setSplitCard(val);
+                        const cPaid = (Number(splitCash) || 0) + (Number(val) || 0);
+                        onAmountPaidChange?.(String(cPaid));
+                      }}
+                      className="h-8 text-xs font-mono font-bold"
+                    />
+                  </div>
+                </div>
+                <div className="text-[10px] text-text-secondary flex justify-between">
+                  <span>Total Split: {formatCurrency((Number(splitCash) || 0) + (Number(splitCard) || 0))}</span>
+                  <span>Difference: {formatCurrency(total - ((Number(splitCash) || 0) + (Number(splitCard) || 0)))}</span>
+                </div>
+              </div>
+            )}
+
+            {/* Credit Tender Input */}
+            {paymentMethod === "CREDIT" && (
+              <div className="space-y-1.5 p-2 rounded-lg border border-amber-500/30 bg-amber-500/5">
+                <Label className="text-[10px] text-amber-500 font-semibold">Initial Payment (Optional)</Label>
+                <Input
+                  type="number"
+                  placeholder="0.00"
+                  value={amountPaid}
+                  onChange={(e) => onAmountPaidChange?.(e.target.value)}
+                  className="h-8 text-xs font-mono font-bold"
+                />
+                <p className="text-[10px] text-text-secondary">
+                  Remaining balance of <strong>{formatCurrency(Math.max(0, total - (Number(amountPaid) || 0)))}</strong> will be added to customer arrears.
+                </p>
+              </div>
+            )}
+
+            {isPartial && paymentMethod !== "CREDIT" && (
               <div className="flex items-center gap-2">
                 <Checkbox
                   id="add-to-arrears"
@@ -276,26 +558,27 @@ export default function CheckoutPanel({
                   onCheckedChange={(val) => onAddToArrearsChange?.(val === true)}
                 />
                 <Label htmlFor="add-to-arrears" className="text-[11px] cursor-pointer text-text-secondary">
-                  Add remaining to arrears
+                  Add remaining {formatCurrency(total - effectivePaid)} to customer arrears
                 </Label>
               </div>
             )}
+
             <Button
-              className="w-full h-10 text-sm gap-2"
+              className="w-full h-10 text-sm gap-2 font-bold"
               disabled={!canPay || processing}
               onClick={handleCheckout}
             >
-              {processing ? "Processing..." : `Pay ${formatCurrency(total)}`}
+              {processing
+                ? "Processing..."
+                : `Complete Sale (${formatCurrency(total)})`}
             </Button>
-            {isPartial && !customerId && (
-              <p className="text-[10px] text-center text-danger">Select a customer for partial payment</p>
+
+            {(paymentMethod === "CREDIT" || isPartial) && !customerId && (
+              <p className="text-[10px] text-center text-danger font-medium">
+                Customer account is required for credit / arrears sales.
+              </p>
             )}
-            {isPartial && !!customerId && !addToArrears && (
-              <p className="text-[10px] text-center text-text-secondary">Check the box above to add remaining to arrears</p>
-            )}
-            {error && (
-              <p className="text-[10px] text-center text-danger">{error}</p>
-            )}
+            {error && <p className="text-[10px] text-center text-danger font-medium">{error}</p>}
           </div>
         </div>
       )}

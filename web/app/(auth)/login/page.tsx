@@ -375,7 +375,7 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
           <span className="text-text-primary font-semibold text-sm">SmartPharma</span>
         </div>
         <h1 className="text-2xl font-bold text-text-primary tracking-tight">Create your account</h1>
-        <p className="text-sm text-text-secondary mt-1">Then we'll set up your pharmacy in the next step</p>
+        <p className="text-sm text-text-secondary mt-1">Then we&apos;ll set up your pharmacy in the next step</p>
       </div>
 
       {/* Step indicator */}

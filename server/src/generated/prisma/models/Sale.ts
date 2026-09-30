@@ -32,6 +32,12 @@ export type SaleAvgAggregateOutputType = {
   total: number | null
   amountPaid: number | null
   change: number | null
+  cashAmount: number | null
+  cardAmount: number | null
+  creditAmount: number | null
+  totalCogs: number | null
+  totalVat: number | null
+  grossProfit: number | null
 }
 
 export type SaleSumAggregateOutputType = {
@@ -40,6 +46,12 @@ export type SaleSumAggregateOutputType = {
   total: number | null
   amountPaid: number | null
   change: number | null
+  cashAmount: number | null
+  cardAmount: number | null
+  creditAmount: number | null
+  totalCogs: number | null
+  totalVat: number | null
+  grossProfit: number | null
 }
 
 export type SaleMinAggregateOutputType = {
@@ -53,6 +65,18 @@ export type SaleMinAggregateOutputType = {
   amountPaid: number | null
   change: number | null
   status: string | null
+  paymentMethod: string | null
+  cashAmount: number | null
+  cardAmount: number | null
+  creditAmount: number | null
+  totalCogs: number | null
+  totalVat: number | null
+  grossProfit: number | null
+  prescriptionId: string | null
+  prescriptionNumber: string | null
+  cashierId: string | null
+  cashierName: string | null
+  notes: string | null
   createdAt: Date | null
 }
 
@@ -67,6 +91,18 @@ export type SaleMaxAggregateOutputType = {
   amountPaid: number | null
   change: number | null
   status: string | null
+  paymentMethod: string | null
+  cashAmount: number | null
+  cardAmount: number | null
+  creditAmount: number | null
+  totalCogs: number | null
+  totalVat: number | null
+  grossProfit: number | null
+  prescriptionId: string | null
+  prescriptionNumber: string | null
+  cashierId: string | null
+  cashierName: string | null
+  notes: string | null
   createdAt: Date | null
 }
 
@@ -81,6 +117,18 @@ export type SaleCountAggregateOutputType = {
   amountPaid: number
   change: number
   status: number
+  paymentMethod: number
+  cashAmount: number
+  cardAmount: number
+  creditAmount: number
+  totalCogs: number
+  totalVat: number
+  grossProfit: number
+  prescriptionId: number
+  prescriptionNumber: number
+  cashierId: number
+  cashierName: number
+  notes: number
   createdAt: number
   _all: number
 }
@@ -92,6 +140,12 @@ export type SaleAvgAggregateInputType = {
   total?: true
   amountPaid?: true
   change?: true
+  cashAmount?: true
+  cardAmount?: true
+  creditAmount?: true
+  totalCogs?: true
+  totalVat?: true
+  grossProfit?: true
 }
 
 export type SaleSumAggregateInputType = {
@@ -100,6 +154,12 @@ export type SaleSumAggregateInputType = {
   total?: true
   amountPaid?: true
   change?: true
+  cashAmount?: true
+  cardAmount?: true
+  creditAmount?: true
+  totalCogs?: true
+  totalVat?: true
+  grossProfit?: true
 }
 
 export type SaleMinAggregateInputType = {
@@ -113,6 +173,18 @@ export type SaleMinAggregateInputType = {
   amountPaid?: true
   change?: true
   status?: true
+  paymentMethod?: true
+  cashAmount?: true
+  cardAmount?: true
+  creditAmount?: true
+  totalCogs?: true
+  totalVat?: true
+  grossProfit?: true
+  prescriptionId?: true
+  prescriptionNumber?: true
+  cashierId?: true
+  cashierName?: true
+  notes?: true
   createdAt?: true
 }
 
@@ -127,6 +199,18 @@ export type SaleMaxAggregateInputType = {
   amountPaid?: true
   change?: true
   status?: true
+  paymentMethod?: true
+  cashAmount?: true
+  cardAmount?: true
+  creditAmount?: true
+  totalCogs?: true
+  totalVat?: true
+  grossProfit?: true
+  prescriptionId?: true
+  prescriptionNumber?: true
+  cashierId?: true
+  cashierName?: true
+  notes?: true
   createdAt?: true
 }
 
@@ -141,6 +225,18 @@ export type SaleCountAggregateInputType = {
   amountPaid?: true
   change?: true
   status?: true
+  paymentMethod?: true
+  cashAmount?: true
+  cardAmount?: true
+  creditAmount?: true
+  totalCogs?: true
+  totalVat?: true
+  grossProfit?: true
+  prescriptionId?: true
+  prescriptionNumber?: true
+  cashierId?: true
+  cashierName?: true
+  notes?: true
   createdAt?: true
   _all?: true
 }
@@ -242,6 +338,18 @@ export type SaleGroupByOutputType = {
   amountPaid: number
   change: number
   status: string
+  paymentMethod: string
+  cashAmount: number
+  cardAmount: number
+  creditAmount: number
+  totalCogs: number
+  totalVat: number
+  grossProfit: number
+  prescriptionId: string | null
+  prescriptionNumber: string | null
+  cashierId: string | null
+  cashierName: string | null
+  notes: string
   createdAt: Date
   _count: SaleCountAggregateOutputType | null
   _avg: SaleAvgAggregateOutputType | null
@@ -279,10 +387,23 @@ export type SaleWhereInput = {
   amountPaid?: Prisma.FloatFilter<"Sale"> | number
   change?: Prisma.FloatFilter<"Sale"> | number
   status?: Prisma.StringFilter<"Sale"> | string
+  paymentMethod?: Prisma.StringFilter<"Sale"> | string
+  cashAmount?: Prisma.FloatFilter<"Sale"> | number
+  cardAmount?: Prisma.FloatFilter<"Sale"> | number
+  creditAmount?: Prisma.FloatFilter<"Sale"> | number
+  totalCogs?: Prisma.FloatFilter<"Sale"> | number
+  totalVat?: Prisma.FloatFilter<"Sale"> | number
+  grossProfit?: Prisma.FloatFilter<"Sale"> | number
+  prescriptionId?: Prisma.StringNullableFilter<"Sale"> | string | null
+  prescriptionNumber?: Prisma.StringNullableFilter<"Sale"> | string | null
+  cashierId?: Prisma.StringNullableFilter<"Sale"> | string | null
+  cashierName?: Prisma.StringNullableFilter<"Sale"> | string | null
+  notes?: Prisma.StringFilter<"Sale"> | string
   createdAt?: Prisma.DateTimeFilter<"Sale"> | Date | string
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
+  prescription?: Prisma.XOR<Prisma.PrescriptionNullableScalarRelationFilter, Prisma.PrescriptionWhereInput> | null
   items?: Prisma.SaleItemListRelationFilter
   returns?: Prisma.ReturnEntryListRelationFilter
   arrears?: Prisma.ArrearListRelationFilter
@@ -299,10 +420,23 @@ export type SaleOrderByWithRelationInput = {
   amountPaid?: Prisma.SortOrder
   change?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  cashAmount?: Prisma.SortOrder
+  cardAmount?: Prisma.SortOrder
+  creditAmount?: Prisma.SortOrder
+  totalCogs?: Prisma.SortOrder
+  totalVat?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  prescriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  prescriptionNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashierId?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashierName?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   pharmacy?: Prisma.PharmacyOrderByWithRelationInput
   branch?: Prisma.BranchOrderByWithRelationInput
   customer?: Prisma.CustomerOrderByWithRelationInput
+  prescription?: Prisma.PrescriptionOrderByWithRelationInput
   items?: Prisma.SaleItemOrderByRelationAggregateInput
   returns?: Prisma.ReturnEntryOrderByRelationAggregateInput
   arrears?: Prisma.ArrearOrderByRelationAggregateInput
@@ -322,10 +456,23 @@ export type SaleWhereUniqueInput = Prisma.AtLeast<{
   amountPaid?: Prisma.FloatFilter<"Sale"> | number
   change?: Prisma.FloatFilter<"Sale"> | number
   status?: Prisma.StringFilter<"Sale"> | string
+  paymentMethod?: Prisma.StringFilter<"Sale"> | string
+  cashAmount?: Prisma.FloatFilter<"Sale"> | number
+  cardAmount?: Prisma.FloatFilter<"Sale"> | number
+  creditAmount?: Prisma.FloatFilter<"Sale"> | number
+  totalCogs?: Prisma.FloatFilter<"Sale"> | number
+  totalVat?: Prisma.FloatFilter<"Sale"> | number
+  grossProfit?: Prisma.FloatFilter<"Sale"> | number
+  prescriptionId?: Prisma.StringNullableFilter<"Sale"> | string | null
+  prescriptionNumber?: Prisma.StringNullableFilter<"Sale"> | string | null
+  cashierId?: Prisma.StringNullableFilter<"Sale"> | string | null
+  cashierName?: Prisma.StringNullableFilter<"Sale"> | string | null
+  notes?: Prisma.StringFilter<"Sale"> | string
   createdAt?: Prisma.DateTimeFilter<"Sale"> | Date | string
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
   branch?: Prisma.XOR<Prisma.BranchScalarRelationFilter, Prisma.BranchWhereInput>
   customer?: Prisma.XOR<Prisma.CustomerNullableScalarRelationFilter, Prisma.CustomerWhereInput> | null
+  prescription?: Prisma.XOR<Prisma.PrescriptionNullableScalarRelationFilter, Prisma.PrescriptionWhereInput> | null
   items?: Prisma.SaleItemListRelationFilter
   returns?: Prisma.ReturnEntryListRelationFilter
   arrears?: Prisma.ArrearListRelationFilter
@@ -342,6 +489,18 @@ export type SaleOrderByWithAggregationInput = {
   amountPaid?: Prisma.SortOrder
   change?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  cashAmount?: Prisma.SortOrder
+  cardAmount?: Prisma.SortOrder
+  creditAmount?: Prisma.SortOrder
+  totalCogs?: Prisma.SortOrder
+  totalVat?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  prescriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  prescriptionNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashierId?: Prisma.SortOrderInput | Prisma.SortOrder
+  cashierName?: Prisma.SortOrderInput | Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.SaleCountOrderByAggregateInput
   _avg?: Prisma.SaleAvgOrderByAggregateInput
@@ -364,6 +523,18 @@ export type SaleScalarWhereWithAggregatesInput = {
   amountPaid?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
   change?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
   status?: Prisma.StringWithAggregatesFilter<"Sale"> | string
+  paymentMethod?: Prisma.StringWithAggregatesFilter<"Sale"> | string
+  cashAmount?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
+  cardAmount?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
+  creditAmount?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
+  totalCogs?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
+  totalVat?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
+  grossProfit?: Prisma.FloatWithAggregatesFilter<"Sale"> | number
+  prescriptionId?: Prisma.StringNullableWithAggregatesFilter<"Sale"> | string | null
+  prescriptionNumber?: Prisma.StringNullableWithAggregatesFilter<"Sale"> | string | null
+  cashierId?: Prisma.StringNullableWithAggregatesFilter<"Sale"> | string | null
+  cashierName?: Prisma.StringNullableWithAggregatesFilter<"Sale"> | string | null
+  notes?: Prisma.StringWithAggregatesFilter<"Sale"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Sale"> | Date | string
 }
 
@@ -375,10 +546,22 @@ export type SaleCreateInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
   branch: Prisma.BranchCreateNestedOneWithoutSalesInput
   customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
+  prescription?: Prisma.PrescriptionCreateNestedOneWithoutSalesInput
   items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
@@ -395,6 +578,18 @@ export type SaleUncheckedCreateInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionId?: string | null
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   items?: Prisma.SaleItemUncheckedCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutSaleInput
@@ -409,10 +604,22 @@ export type SaleUpdateInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
   branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
+  prescription?: Prisma.PrescriptionUpdateOneWithoutSalesNestedInput
   items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
@@ -429,6 +636,18 @@ export type SaleUncheckedUpdateInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.SaleItemUncheckedUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutSaleNestedInput
@@ -446,6 +665,18 @@ export type SaleCreateManyInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionId?: string | null
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
 }
 
@@ -457,6 +688,17 @@ export type SaleUpdateManyMutationInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -471,6 +713,18 @@ export type SaleUncheckedUpdateManyInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -495,6 +749,18 @@ export type SaleCountOrderByAggregateInput = {
   amountPaid?: Prisma.SortOrder
   change?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  cashAmount?: Prisma.SortOrder
+  cardAmount?: Prisma.SortOrder
+  creditAmount?: Prisma.SortOrder
+  totalCogs?: Prisma.SortOrder
+  totalVat?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  prescriptionId?: Prisma.SortOrder
+  prescriptionNumber?: Prisma.SortOrder
+  cashierId?: Prisma.SortOrder
+  cashierName?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -504,6 +770,12 @@ export type SaleAvgOrderByAggregateInput = {
   total?: Prisma.SortOrder
   amountPaid?: Prisma.SortOrder
   change?: Prisma.SortOrder
+  cashAmount?: Prisma.SortOrder
+  cardAmount?: Prisma.SortOrder
+  creditAmount?: Prisma.SortOrder
+  totalCogs?: Prisma.SortOrder
+  totalVat?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
 }
 
 export type SaleMaxOrderByAggregateInput = {
@@ -517,6 +789,18 @@ export type SaleMaxOrderByAggregateInput = {
   amountPaid?: Prisma.SortOrder
   change?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  cashAmount?: Prisma.SortOrder
+  cardAmount?: Prisma.SortOrder
+  creditAmount?: Prisma.SortOrder
+  totalCogs?: Prisma.SortOrder
+  totalVat?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  prescriptionId?: Prisma.SortOrder
+  prescriptionNumber?: Prisma.SortOrder
+  cashierId?: Prisma.SortOrder
+  cashierName?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -531,6 +815,18 @@ export type SaleMinOrderByAggregateInput = {
   amountPaid?: Prisma.SortOrder
   change?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  paymentMethod?: Prisma.SortOrder
+  cashAmount?: Prisma.SortOrder
+  cardAmount?: Prisma.SortOrder
+  creditAmount?: Prisma.SortOrder
+  totalCogs?: Prisma.SortOrder
+  totalVat?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
+  prescriptionId?: Prisma.SortOrder
+  prescriptionNumber?: Prisma.SortOrder
+  cashierId?: Prisma.SortOrder
+  cashierName?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -540,6 +836,12 @@ export type SaleSumOrderByAggregateInput = {
   total?: Prisma.SortOrder
   amountPaid?: Prisma.SortOrder
   change?: Prisma.SortOrder
+  cashAmount?: Prisma.SortOrder
+  cardAmount?: Prisma.SortOrder
+  creditAmount?: Prisma.SortOrder
+  totalCogs?: Prisma.SortOrder
+  totalVat?: Prisma.SortOrder
+  grossProfit?: Prisma.SortOrder
 }
 
 export type SaleScalarRelationFilter = {
@@ -722,6 +1024,48 @@ export type SaleUpdateOneRequiredWithoutReturnsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SaleUpdateToOneWithWhereWithoutReturnsInput, Prisma.SaleUpdateWithoutReturnsInput>, Prisma.SaleUncheckedUpdateWithoutReturnsInput>
 }
 
+export type SaleCreateNestedManyWithoutPrescriptionInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutPrescriptionInput, Prisma.SaleUncheckedCreateWithoutPrescriptionInput> | Prisma.SaleCreateWithoutPrescriptionInput[] | Prisma.SaleUncheckedCreateWithoutPrescriptionInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutPrescriptionInput | Prisma.SaleCreateOrConnectWithoutPrescriptionInput[]
+  createMany?: Prisma.SaleCreateManyPrescriptionInputEnvelope
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+}
+
+export type SaleUncheckedCreateNestedManyWithoutPrescriptionInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutPrescriptionInput, Prisma.SaleUncheckedCreateWithoutPrescriptionInput> | Prisma.SaleCreateWithoutPrescriptionInput[] | Prisma.SaleUncheckedCreateWithoutPrescriptionInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutPrescriptionInput | Prisma.SaleCreateOrConnectWithoutPrescriptionInput[]
+  createMany?: Prisma.SaleCreateManyPrescriptionInputEnvelope
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+}
+
+export type SaleUpdateManyWithoutPrescriptionNestedInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutPrescriptionInput, Prisma.SaleUncheckedCreateWithoutPrescriptionInput> | Prisma.SaleCreateWithoutPrescriptionInput[] | Prisma.SaleUncheckedCreateWithoutPrescriptionInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutPrescriptionInput | Prisma.SaleCreateOrConnectWithoutPrescriptionInput[]
+  upsert?: Prisma.SaleUpsertWithWhereUniqueWithoutPrescriptionInput | Prisma.SaleUpsertWithWhereUniqueWithoutPrescriptionInput[]
+  createMany?: Prisma.SaleCreateManyPrescriptionInputEnvelope
+  set?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  disconnect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  delete?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  update?: Prisma.SaleUpdateWithWhereUniqueWithoutPrescriptionInput | Prisma.SaleUpdateWithWhereUniqueWithoutPrescriptionInput[]
+  updateMany?: Prisma.SaleUpdateManyWithWhereWithoutPrescriptionInput | Prisma.SaleUpdateManyWithWhereWithoutPrescriptionInput[]
+  deleteMany?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
+}
+
+export type SaleUncheckedUpdateManyWithoutPrescriptionNestedInput = {
+  create?: Prisma.XOR<Prisma.SaleCreateWithoutPrescriptionInput, Prisma.SaleUncheckedCreateWithoutPrescriptionInput> | Prisma.SaleCreateWithoutPrescriptionInput[] | Prisma.SaleUncheckedCreateWithoutPrescriptionInput[]
+  connectOrCreate?: Prisma.SaleCreateOrConnectWithoutPrescriptionInput | Prisma.SaleCreateOrConnectWithoutPrescriptionInput[]
+  upsert?: Prisma.SaleUpsertWithWhereUniqueWithoutPrescriptionInput | Prisma.SaleUpsertWithWhereUniqueWithoutPrescriptionInput[]
+  createMany?: Prisma.SaleCreateManyPrescriptionInputEnvelope
+  set?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  disconnect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  delete?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  connect?: Prisma.SaleWhereUniqueInput | Prisma.SaleWhereUniqueInput[]
+  update?: Prisma.SaleUpdateWithWhereUniqueWithoutPrescriptionInput | Prisma.SaleUpdateWithWhereUniqueWithoutPrescriptionInput[]
+  updateMany?: Prisma.SaleUpdateManyWithWhereWithoutPrescriptionInput | Prisma.SaleUpdateManyWithWhereWithoutPrescriptionInput[]
+  deleteMany?: Prisma.SaleScalarWhereInput | Prisma.SaleScalarWhereInput[]
+}
+
 export type SaleCreateWithoutPharmacyInput = {
   id: string
   subtotal?: number
@@ -730,9 +1074,21 @@ export type SaleCreateWithoutPharmacyInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutSalesInput
   customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
+  prescription?: Prisma.PrescriptionCreateNestedOneWithoutSalesInput
   items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
@@ -748,6 +1104,18 @@ export type SaleUncheckedCreateWithoutPharmacyInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionId?: string | null
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   items?: Prisma.SaleItemUncheckedCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutSaleInput
@@ -794,6 +1162,18 @@ export type SaleScalarWhereInput = {
   amountPaid?: Prisma.FloatFilter<"Sale"> | number
   change?: Prisma.FloatFilter<"Sale"> | number
   status?: Prisma.StringFilter<"Sale"> | string
+  paymentMethod?: Prisma.StringFilter<"Sale"> | string
+  cashAmount?: Prisma.FloatFilter<"Sale"> | number
+  cardAmount?: Prisma.FloatFilter<"Sale"> | number
+  creditAmount?: Prisma.FloatFilter<"Sale"> | number
+  totalCogs?: Prisma.FloatFilter<"Sale"> | number
+  totalVat?: Prisma.FloatFilter<"Sale"> | number
+  grossProfit?: Prisma.FloatFilter<"Sale"> | number
+  prescriptionId?: Prisma.StringNullableFilter<"Sale"> | string | null
+  prescriptionNumber?: Prisma.StringNullableFilter<"Sale"> | string | null
+  cashierId?: Prisma.StringNullableFilter<"Sale"> | string | null
+  cashierName?: Prisma.StringNullableFilter<"Sale"> | string | null
+  notes?: Prisma.StringFilter<"Sale"> | string
   createdAt?: Prisma.DateTimeFilter<"Sale"> | Date | string
 }
 
@@ -805,9 +1185,21 @@ export type SaleCreateWithoutBranchInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
   customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
+  prescription?: Prisma.PrescriptionCreateNestedOneWithoutSalesInput
   items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
@@ -823,6 +1215,18 @@ export type SaleUncheckedCreateWithoutBranchInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionId?: string | null
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   items?: Prisma.SaleItemUncheckedCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutSaleInput
@@ -863,9 +1267,21 @@ export type SaleCreateWithoutCustomerInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
   branch: Prisma.BranchCreateNestedOneWithoutSalesInput
+  prescription?: Prisma.PrescriptionCreateNestedOneWithoutSalesInput
   items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
@@ -881,6 +1297,18 @@ export type SaleUncheckedCreateWithoutCustomerInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionId?: string | null
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   items?: Prisma.SaleItemUncheckedCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutSaleInput
@@ -921,10 +1349,22 @@ export type SaleCreateWithoutItemsInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
   branch: Prisma.BranchCreateNestedOneWithoutSalesInput
   customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
+  prescription?: Prisma.PrescriptionCreateNestedOneWithoutSalesInput
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
 }
@@ -940,6 +1380,18 @@ export type SaleUncheckedCreateWithoutItemsInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionId?: string | null
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutSaleInput
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutSaleInput
@@ -969,10 +1421,22 @@ export type SaleUpdateWithoutItemsInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
   branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
+  prescription?: Prisma.PrescriptionUpdateOneWithoutSalesNestedInput
   returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
 }
@@ -988,6 +1452,18 @@ export type SaleUncheckedUpdateWithoutItemsInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutSaleNestedInput
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutSaleNestedInput
@@ -1001,10 +1477,22 @@ export type SaleCreateWithoutArrearsInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
   branch: Prisma.BranchCreateNestedOneWithoutSalesInput
   customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
+  prescription?: Prisma.PrescriptionCreateNestedOneWithoutSalesInput
   items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
 }
@@ -1020,6 +1508,18 @@ export type SaleUncheckedCreateWithoutArrearsInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionId?: string | null
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   items?: Prisma.SaleItemUncheckedCreateNestedManyWithoutSaleInput
   returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutSaleInput
@@ -1049,10 +1549,22 @@ export type SaleUpdateWithoutArrearsInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
   branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
+  prescription?: Prisma.PrescriptionUpdateOneWithoutSalesNestedInput
   items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
 }
@@ -1068,6 +1580,18 @@ export type SaleUncheckedUpdateWithoutArrearsInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.SaleItemUncheckedUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutSaleNestedInput
@@ -1081,10 +1605,22 @@ export type SaleCreateWithoutReturnsInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
   branch: Prisma.BranchCreateNestedOneWithoutSalesInput
   customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
+  prescription?: Prisma.PrescriptionCreateNestedOneWithoutSalesInput
   items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
   arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
 }
@@ -1100,6 +1636,18 @@ export type SaleUncheckedCreateWithoutReturnsInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionId?: string | null
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
   items?: Prisma.SaleItemUncheckedCreateNestedManyWithoutSaleInput
   arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutSaleInput
@@ -1129,10 +1677,22 @@ export type SaleUpdateWithoutReturnsInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
   branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
+  prescription?: Prisma.PrescriptionUpdateOneWithoutSalesNestedInput
   items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
 }
@@ -1148,9 +1708,103 @@ export type SaleUncheckedUpdateWithoutReturnsInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.SaleItemUncheckedUpdateManyWithoutSaleNestedInput
   arrears?: Prisma.ArrearUncheckedUpdateManyWithoutSaleNestedInput
+}
+
+export type SaleCreateWithoutPrescriptionInput = {
+  id: string
+  subtotal?: number
+  discount?: number
+  total?: number
+  amountPaid?: number
+  change?: number
+  status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutSalesInput
+  branch: Prisma.BranchCreateNestedOneWithoutSalesInput
+  customer?: Prisma.CustomerCreateNestedOneWithoutSalesInput
+  items?: Prisma.SaleItemCreateNestedManyWithoutSaleInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutSaleInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutSaleInput
+}
+
+export type SaleUncheckedCreateWithoutPrescriptionInput = {
+  id: string
+  pharmacyId: string
+  branchId: string
+  customerId?: string | null
+  subtotal?: number
+  discount?: number
+  total?: number
+  amountPaid?: number
+  change?: number
+  status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
+  createdAt?: Date | string
+  items?: Prisma.SaleItemUncheckedCreateNestedManyWithoutSaleInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutSaleInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutSaleInput
+}
+
+export type SaleCreateOrConnectWithoutPrescriptionInput = {
+  where: Prisma.SaleWhereUniqueInput
+  create: Prisma.XOR<Prisma.SaleCreateWithoutPrescriptionInput, Prisma.SaleUncheckedCreateWithoutPrescriptionInput>
+}
+
+export type SaleCreateManyPrescriptionInputEnvelope = {
+  data: Prisma.SaleCreateManyPrescriptionInput | Prisma.SaleCreateManyPrescriptionInput[]
+  skipDuplicates?: boolean
+}
+
+export type SaleUpsertWithWhereUniqueWithoutPrescriptionInput = {
+  where: Prisma.SaleWhereUniqueInput
+  update: Prisma.XOR<Prisma.SaleUpdateWithoutPrescriptionInput, Prisma.SaleUncheckedUpdateWithoutPrescriptionInput>
+  create: Prisma.XOR<Prisma.SaleCreateWithoutPrescriptionInput, Prisma.SaleUncheckedCreateWithoutPrescriptionInput>
+}
+
+export type SaleUpdateWithWhereUniqueWithoutPrescriptionInput = {
+  where: Prisma.SaleWhereUniqueInput
+  data: Prisma.XOR<Prisma.SaleUpdateWithoutPrescriptionInput, Prisma.SaleUncheckedUpdateWithoutPrescriptionInput>
+}
+
+export type SaleUpdateManyWithWhereWithoutPrescriptionInput = {
+  where: Prisma.SaleScalarWhereInput
+  data: Prisma.XOR<Prisma.SaleUpdateManyMutationInput, Prisma.SaleUncheckedUpdateManyWithoutPrescriptionInput>
 }
 
 export type SaleCreateManyPharmacyInput = {
@@ -1163,6 +1817,18 @@ export type SaleCreateManyPharmacyInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionId?: string | null
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
 }
 
@@ -1174,9 +1840,21 @@ export type SaleUpdateWithoutPharmacyInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
+  prescription?: Prisma.PrescriptionUpdateOneWithoutSalesNestedInput
   items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
@@ -1192,6 +1870,18 @@ export type SaleUncheckedUpdateWithoutPharmacyInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.SaleItemUncheckedUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutSaleNestedInput
@@ -1208,6 +1898,18 @@ export type SaleUncheckedUpdateManyWithoutPharmacyInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1221,6 +1923,18 @@ export type SaleCreateManyBranchInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionId?: string | null
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
 }
 
@@ -1232,9 +1946,21 @@ export type SaleUpdateWithoutBranchInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
   customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
+  prescription?: Prisma.PrescriptionUpdateOneWithoutSalesNestedInput
   items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
@@ -1250,6 +1976,18 @@ export type SaleUncheckedUpdateWithoutBranchInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.SaleItemUncheckedUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutSaleNestedInput
@@ -1266,6 +2004,18 @@ export type SaleUncheckedUpdateManyWithoutBranchInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1279,6 +2029,18 @@ export type SaleCreateManyCustomerInput = {
   amountPaid?: number
   change?: number
   status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionId?: string | null
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
   createdAt?: Date | string
 }
 
@@ -1290,9 +2052,21 @@ export type SaleUpdateWithoutCustomerInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
   branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
+  prescription?: Prisma.PrescriptionUpdateOneWithoutSalesNestedInput
   items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
   arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
@@ -1308,6 +2082,18 @@ export type SaleUncheckedUpdateWithoutCustomerInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.SaleItemUncheckedUpdateManyWithoutSaleNestedInput
   returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutSaleNestedInput
@@ -1324,6 +2110,124 @@ export type SaleUncheckedUpdateManyWithoutCustomerInput = {
   amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
   change?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type SaleCreateManyPrescriptionInput = {
+  id: string
+  pharmacyId: string
+  branchId: string
+  customerId?: string | null
+  subtotal?: number
+  discount?: number
+  total?: number
+  amountPaid?: number
+  change?: number
+  status?: string
+  paymentMethod?: string
+  cashAmount?: number
+  cardAmount?: number
+  creditAmount?: number
+  totalCogs?: number
+  totalVat?: number
+  grossProfit?: number
+  prescriptionNumber?: string | null
+  cashierId?: string | null
+  cashierName?: string | null
+  notes?: string
+  createdAt?: Date | string
+}
+
+export type SaleUpdateWithoutPrescriptionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  change?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutSalesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutSalesNestedInput
+  customer?: Prisma.CustomerUpdateOneWithoutSalesNestedInput
+  items?: Prisma.SaleItemUpdateManyWithoutSaleNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutSaleNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutSaleNestedInput
+}
+
+export type SaleUncheckedUpdateWithoutPrescriptionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  change?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.SaleItemUncheckedUpdateManyWithoutSaleNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutSaleNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutSaleNestedInput
+}
+
+export type SaleUncheckedUpdateManyWithoutPrescriptionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  customerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
+  discount?: Prisma.FloatFieldUpdateOperationsInput | number
+  total?: Prisma.FloatFieldUpdateOperationsInput | number
+  amountPaid?: Prisma.FloatFieldUpdateOperationsInput | number
+  change?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.StringFieldUpdateOperationsInput | string
+  cashAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  cardAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  creditAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalCogs?: Prisma.FloatFieldUpdateOperationsInput | number
+  totalVat?: Prisma.FloatFieldUpdateOperationsInput | number
+  grossProfit?: Prisma.FloatFieldUpdateOperationsInput | number
+  prescriptionNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cashierName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1387,10 +2291,23 @@ export type SaleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   amountPaid?: boolean
   change?: boolean
   status?: boolean
+  paymentMethod?: boolean
+  cashAmount?: boolean
+  cardAmount?: boolean
+  creditAmount?: boolean
+  totalCogs?: boolean
+  totalVat?: boolean
+  grossProfit?: boolean
+  prescriptionId?: boolean
+  prescriptionNumber?: boolean
+  cashierId?: boolean
+  cashierName?: boolean
+  notes?: boolean
   createdAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
+  prescription?: boolean | Prisma.Sale$prescriptionArgs<ExtArgs>
   items?: boolean | Prisma.Sale$itemsArgs<ExtArgs>
   returns?: boolean | Prisma.Sale$returnsArgs<ExtArgs>
   arrears?: boolean | Prisma.Sale$arrearsArgs<ExtArgs>
@@ -1408,10 +2325,23 @@ export type SaleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   amountPaid?: boolean
   change?: boolean
   status?: boolean
+  paymentMethod?: boolean
+  cashAmount?: boolean
+  cardAmount?: boolean
+  creditAmount?: boolean
+  totalCogs?: boolean
+  totalVat?: boolean
+  grossProfit?: boolean
+  prescriptionId?: boolean
+  prescriptionNumber?: boolean
+  cashierId?: boolean
+  cashierName?: boolean
+  notes?: boolean
   createdAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
+  prescription?: boolean | Prisma.Sale$prescriptionArgs<ExtArgs>
 }, ExtArgs["result"]["sale"]>
 
 export type SaleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1425,10 +2355,23 @@ export type SaleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   amountPaid?: boolean
   change?: boolean
   status?: boolean
+  paymentMethod?: boolean
+  cashAmount?: boolean
+  cardAmount?: boolean
+  creditAmount?: boolean
+  totalCogs?: boolean
+  totalVat?: boolean
+  grossProfit?: boolean
+  prescriptionId?: boolean
+  prescriptionNumber?: boolean
+  cashierId?: boolean
+  cashierName?: boolean
+  notes?: boolean
   createdAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
+  prescription?: boolean | Prisma.Sale$prescriptionArgs<ExtArgs>
 }, ExtArgs["result"]["sale"]>
 
 export type SaleSelectScalar = {
@@ -1442,14 +2385,27 @@ export type SaleSelectScalar = {
   amountPaid?: boolean
   change?: boolean
   status?: boolean
+  paymentMethod?: boolean
+  cashAmount?: boolean
+  cardAmount?: boolean
+  creditAmount?: boolean
+  totalCogs?: boolean
+  totalVat?: boolean
+  grossProfit?: boolean
+  prescriptionId?: boolean
+  prescriptionNumber?: boolean
+  cashierId?: boolean
+  cashierName?: boolean
+  notes?: boolean
   createdAt?: boolean
 }
 
-export type SaleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "customerId" | "subtotal" | "discount" | "total" | "amountPaid" | "change" | "status" | "createdAt", ExtArgs["result"]["sale"]>
+export type SaleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "customerId" | "subtotal" | "discount" | "total" | "amountPaid" | "change" | "status" | "paymentMethod" | "cashAmount" | "cardAmount" | "creditAmount" | "totalCogs" | "totalVat" | "grossProfit" | "prescriptionId" | "prescriptionNumber" | "cashierId" | "cashierName" | "notes" | "createdAt", ExtArgs["result"]["sale"]>
 export type SaleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
+  prescription?: boolean | Prisma.Sale$prescriptionArgs<ExtArgs>
   items?: boolean | Prisma.Sale$itemsArgs<ExtArgs>
   returns?: boolean | Prisma.Sale$returnsArgs<ExtArgs>
   arrears?: boolean | Prisma.Sale$arrearsArgs<ExtArgs>
@@ -1459,11 +2415,13 @@ export type SaleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
+  prescription?: boolean | Prisma.Sale$prescriptionArgs<ExtArgs>
 }
 export type SaleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
   customer?: boolean | Prisma.Sale$customerArgs<ExtArgs>
+  prescription?: boolean | Prisma.Sale$prescriptionArgs<ExtArgs>
 }
 
 export type $SalePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1472,6 +2430,7 @@ export type $SalePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     pharmacy: Prisma.$PharmacyPayload<ExtArgs>
     branch: Prisma.$BranchPayload<ExtArgs>
     customer: Prisma.$CustomerPayload<ExtArgs> | null
+    prescription: Prisma.$PrescriptionPayload<ExtArgs> | null
     items: Prisma.$SaleItemPayload<ExtArgs>[]
     returns: Prisma.$ReturnEntryPayload<ExtArgs>[]
     arrears: Prisma.$ArrearPayload<ExtArgs>[]
@@ -1487,6 +2446,18 @@ export type $SalePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     amountPaid: number
     change: number
     status: string
+    paymentMethod: string
+    cashAmount: number
+    cardAmount: number
+    creditAmount: number
+    totalCogs: number
+    totalVat: number
+    grossProfit: number
+    prescriptionId: string | null
+    prescriptionNumber: string | null
+    cashierId: string | null
+    cashierName: string | null
+    notes: string
     createdAt: Date
   }, ExtArgs["result"]["sale"]>
   composites: {}
@@ -1885,6 +2856,7 @@ export interface Prisma__SaleClient<T, Null = never, ExtArgs extends runtime.Typ
   pharmacy<T extends Prisma.PharmacyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PharmacyDefaultArgs<ExtArgs>>): Prisma.Prisma__PharmacyClient<runtime.Types.Result.GetResult<Prisma.$PharmacyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   branch<T extends Prisma.BranchDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BranchDefaultArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   customer<T extends Prisma.Sale$customerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$customerArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  prescription<T extends Prisma.Sale$prescriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$prescriptionArgs<ExtArgs>>): Prisma.Prisma__PrescriptionClient<runtime.Types.Result.GetResult<Prisma.$PrescriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Sale$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SaleItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   returns<T extends Prisma.Sale$returnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$returnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReturnEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   arrears<T extends Prisma.Sale$arrearsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Sale$arrearsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ArrearPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1927,6 +2899,18 @@ export interface SaleFieldRefs {
   readonly amountPaid: Prisma.FieldRef<"Sale", 'Float'>
   readonly change: Prisma.FieldRef<"Sale", 'Float'>
   readonly status: Prisma.FieldRef<"Sale", 'String'>
+  readonly paymentMethod: Prisma.FieldRef<"Sale", 'String'>
+  readonly cashAmount: Prisma.FieldRef<"Sale", 'Float'>
+  readonly cardAmount: Prisma.FieldRef<"Sale", 'Float'>
+  readonly creditAmount: Prisma.FieldRef<"Sale", 'Float'>
+  readonly totalCogs: Prisma.FieldRef<"Sale", 'Float'>
+  readonly totalVat: Prisma.FieldRef<"Sale", 'Float'>
+  readonly grossProfit: Prisma.FieldRef<"Sale", 'Float'>
+  readonly prescriptionId: Prisma.FieldRef<"Sale", 'String'>
+  readonly prescriptionNumber: Prisma.FieldRef<"Sale", 'String'>
+  readonly cashierId: Prisma.FieldRef<"Sale", 'String'>
+  readonly cashierName: Prisma.FieldRef<"Sale", 'String'>
+  readonly notes: Prisma.FieldRef<"Sale", 'String'>
   readonly createdAt: Prisma.FieldRef<"Sale", 'DateTime'>
 }
     
@@ -2345,6 +3329,25 @@ export type Sale$customerArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   include?: Prisma.CustomerInclude<ExtArgs> | null
   where?: Prisma.CustomerWhereInput
+}
+
+/**
+ * Sale.prescription
+ */
+export type Sale$prescriptionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Prescription
+   */
+  select?: Prisma.PrescriptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Prescription
+   */
+  omit?: Prisma.PrescriptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PrescriptionInclude<ExtArgs> | null
+  where?: Prisma.PrescriptionWhereInput
 }
 
 /**

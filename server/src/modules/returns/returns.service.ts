@@ -89,6 +89,76 @@ export const returnsService = {
           },
         });
 
+        // ------------------------------------------------------------------
+        // RETURN_IN: restore units to the latest-expiry batch (LIFO on return)
+        // This keeps FEFO ordering intact for future sales.
+        // ------------------------------------------------------------------
+        const targetBatch = await tx.batch.findFirst({
+          where: {
+            pharmacyId: scope.pharmacyId,
+            branchId: scope.branchId ?? sale.branchId,
+            productId: item.productId,
+            status: { in: ["ACTIVE", "DEPLETED"] },
+            isRecalled: false,
+          },
+          orderBy: { expiryDate: "desc" }, // LIFO on return — put back into latest batch
+        });
+
+        if (targetBatch) {
+          const newQty = targetBatch.quantityInBaseUnits + item.quantity;
+
+          await tx.batch.update({
+            where: { id: targetBatch.id },
+            data: {
+              quantityInBaseUnits: newQty,
+              status: "ACTIVE",
+            },
+          });
+
+          // Compute balance after restore
+          const allActiveBatches = await tx.batch.aggregate({
+            where: {
+              pharmacyId: scope.pharmacyId,
+              branchId: scope.branchId ?? sale.branchId,
+              productId: item.productId,
+              status: "ACTIVE",
+            },
+            _sum: { quantityInBaseUnits: true },
+          });
+
+          await tx.stockMovement.create({
+            data: {
+              pharmacyId: scope.pharmacyId,
+              branchId: scope.branchId ?? sale.branchId,
+              productId: item.productId,
+              batchId: targetBatch.id,
+              movementType: "RETURN_IN",
+              quantityDelta: item.quantity,
+              balanceAfter: (allActiveBatches._sum.quantityInBaseUnits ?? 0),
+              unitCost: targetBatch.costPricePerUnit,
+              referenceNumber: sale.id,
+              reasonCode: data.reason ?? null,
+            },
+          });
+        } else {
+          // No batch found (legacy product) — log against null batch
+          await tx.stockMovement.create({
+            data: {
+              pharmacyId: scope.pharmacyId,
+              branchId: scope.branchId ?? sale.branchId,
+              productId: item.productId,
+              batchId: null,
+              movementType: "RETURN_IN",
+              quantityDelta: item.quantity,
+              balanceAfter: 0, // unknown without batch
+              unitCost: 0,
+              referenceNumber: sale.id,
+              reasonCode: data.reason ?? null,
+            },
+          });
+        }
+
+        // Keep legacy stockQty in sync
         await tx.product.update({
           where: { id: item.productId },
           data: { stockQty: { increment: item.quantity } },

@@ -40,10 +40,19 @@ export default function InvoiceDetailDialog({ open, onOpenChange, saleId }: Invo
     const printData = {
       ...sale,
       customer_total_arrears: 0,
+      payment_method: sale.payment_method || "CASH",
+      cash_amount: sale.cash_amount,
+      card_amount: sale.card_amount,
+      credit_amount: sale.credit_amount,
+      prescription_number: sale.prescription_number,
+      cashier_name: sale.cashier_name,
       items: sale.items?.map((i) => ({
         product_name: i.product_name,
         quantity: i.quantity,
+        unit_price: i.unit_price,
         subtotal: i.subtotal,
+        batch_number: i.batch_number,
+        expiry_date: i.expiry_date,
       })) || [],
     };
     const result = await window.generateReceiptHTML(printData, paperSize);
@@ -55,10 +64,19 @@ export default function InvoiceDetailDialog({ open, onOpenChange, saleId }: Invo
     const printData = {
       ...sale,
       customer_total_arrears: 0,
+      payment_method: sale.payment_method || "CASH",
+      cash_amount: sale.cash_amount,
+      card_amount: sale.card_amount,
+      credit_amount: sale.credit_amount,
+      prescription_number: sale.prescription_number,
+      cashier_name: sale.cashier_name,
       items: sale.items?.map((i) => ({
         product_name: i.product_name,
         quantity: i.quantity,
+        unit_price: i.unit_price,
         subtotal: i.subtotal,
+        batch_number: i.batch_number,
+        expiry_date: i.expiry_date,
       })) || [],
     };
     const result = await window.printReceipt(printData, config);
@@ -92,33 +110,60 @@ export default function InvoiceDetailDialog({ open, onOpenChange, saleId }: Invo
                 {formatDateTime(sale.created_at)}
               </span>
             </div>
-            <p className="font-mono text-[10px] text-text-secondary tracking-wider mb-4">
-              {sale.id}
-            </p>
-
-            <div className="text-[11px] text-text-primary mb-4 pb-3 border-b border-border">
-              {sale.customer_name ? (
-                <span>{sale.customer_name}</span>
-              ) : (
-                <span className="text-text-secondary italic">Walk-in Customer</span>
+            <div className="flex items-center justify-between gap-2 mb-3">
+              <p className="font-mono text-[10px] text-text-secondary tracking-wider">
+                {sale.id}
+              </p>
+              {sale.prescription_number && (
+                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/20">
+                  Rx: {sale.prescription_number}
+                </span>
               )}
             </div>
 
-            <div className="space-y-px mb-4">
+            <div className="flex items-center justify-between text-[11px] text-text-primary mb-3 pb-2.5 border-b border-border">
+              <div>
+                <span className="text-text-secondary text-[10px] block">Customer</span>
+                {sale.customer_name ? (
+                  <span className="font-medium">{sale.customer_name}</span>
+                ) : (
+                  <span className="text-text-secondary italic">Walk-in Customer</span>
+                )}
+              </div>
+              {sale.cashier_name && (
+                <div className="text-right">
+                  <span className="text-text-secondary text-[10px] block">Cashier</span>
+                  <span className="text-text-primary font-medium">{sale.cashier_name}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-2 mb-4">
               {(sale.items || []).map((item) => {
                 const qty = String(item.quantity);
                 const price = formatCurrency(item.unit_price);
                 const total = formatCurrency(item.subtotal);
                 const name = item.product_name || "";
                 return (
-                  <div key={item.id} className="flex items-baseline gap-2 text-[11px] leading-relaxed">
-                    <span className="text-text-primary truncate flex-1 min-w-0">{name}</span>
-                    <span className="font-mono text-text-secondary shrink-0 tabular-nums">
-                      {qty} &times; {price}
-                    </span>
-                    <span className="font-mono font-medium text-text-primary w-[72px] text-right shrink-0 tabular-nums">
-                      {total}
-                    </span>
+                  <div key={item.id} className="border-b border-border/40 pb-1.5 last:border-0 last:pb-0">
+                    <div className="flex items-baseline gap-2 text-[11px] leading-relaxed">
+                      <span className="text-text-primary truncate flex-1 min-w-0 font-medium">{name}</span>
+                      <span className="font-mono text-text-secondary shrink-0 tabular-nums">
+                        {qty} &times; {price}
+                      </span>
+                      <span className="font-mono font-medium text-text-primary w-[72px] text-right shrink-0 tabular-nums">
+                        {total}
+                      </span>
+                    </div>
+                    {(item.batch_number || item.expiry_date) && (
+                      <div className="flex items-center gap-2 text-[10px] font-mono text-text-secondary mt-0.5 pl-1">
+                        {item.batch_number && <span>Batch: {item.batch_number}</span>}
+                        {item.batch_number && item.expiry_date && <span>&bull;</span>}
+                        {item.expiry_date && (
+                          <span>Exp: {new Date(item.expiry_date).toLocaleDateString(undefined, { year: "numeric", month: "short" })}</span>
+                        )}
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -139,10 +184,34 @@ export default function InvoiceDetailDialog({ open, onOpenChange, saleId }: Invo
                 <span className="text-text-primary">Total</span>
                 <span className="font-mono tabular-nums">{formatCurrency(sale.total)}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-text-secondary">Paid</span>
-                <span className="font-mono text-success tabular-nums">{formatCurrency(sale.amount_paid)}</span>
+              <div className="flex justify-between items-center">
+                <span className="text-text-secondary">Payment Tender</span>
+                <span className="font-mono font-medium px-2 py-0.5 rounded text-[11px] bg-surface-2 border border-border">
+                  {sale.payment_method || "CASH"}
+                </span>
               </div>
+              {sale.payment_method === "SPLIT" ? (
+                <div className="pl-3 py-1 space-y-1 border-l-2 border-accent/40 my-1 bg-surface/50 text-[11px]">
+                  <div className="flex justify-between">
+                    <span className="text-text-secondary">Cash Portion</span>
+                    <span className="font-mono text-success tabular-nums">{formatCurrency(sale.cash_amount ?? 0)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-text-secondary">Card Portion</span>
+                    <span className="font-mono text-accent tabular-nums">{formatCurrency(sale.card_amount ?? 0)}</span>
+                  </div>
+                </div>
+              ) : sale.payment_method === "CREDIT" ? (
+                <div className="flex justify-between text-[11px]">
+                  <span className="text-warning">Added to Customer Arrears</span>
+                  <span className="font-mono text-warning tabular-nums">{formatCurrency(sale.credit_amount ?? sale.total)}</span>
+                </div>
+              ) : (
+                <div className="flex justify-between">
+                  <span className="text-text-secondary">Paid</span>
+                  <span className="font-mono text-success tabular-nums">{formatCurrency(sale.amount_paid)}</span>
+                </div>
+              )}
               {sale.change > 0 && (
                 <div className="flex justify-between">
                   <span className="text-text-secondary">Change</span>

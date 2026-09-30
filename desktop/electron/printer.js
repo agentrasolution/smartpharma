@@ -51,11 +51,14 @@ function generateSaleReceiptHTML(sale) {
 
   const itemsHTML = items
     .map((item) => {
-      const unitPrice = item.unit_price || item.subtotal / item.quantity;
+      const unitPrice = item.unit_price || (item.quantity > 0 ? (item.subtotal / item.quantity).toFixed(2) : 0);
+      const batchTxt = item.batch_number ? `Batch: ${item.batch_number}` : "";
+      const expTxt = item.expiry_date ? `Exp: ${new Date(item.expiry_date).toLocaleDateString()}` : "";
+      const batchLine = (batchTxt || expTxt) ? `<div style="font-size:9px;color:#555;">${[batchTxt, expTxt].filter(Boolean).join(" • ")}</div>` : "";
 
       return `
       <tr>
-          <td>${item.product_name}</td>
+          <td>${item.product_name || "Item"}${batchLine}</td>
           <td>${item.quantity}</td>
           <td>${unitPrice}</td>
           <td class="right">${item.subtotal}</td>
@@ -201,6 +204,8 @@ td{
     <div><span class="bold">Customer Name: ${
       sale.customer_name || "Walk-in Customer"
     }</span></div>
+    ${sale.prescription_number ? `<div><span class="bold">Prescription #: ${sale.prescription_number}</span></div>` : ""}
+    ${sale.cashier_name ? `<div><span class="bold">Cashier: ${sale.cashier_name}</span></div>` : ""}
     <div><span class="bold">No. of Items : ${items.length}</span> </div>
 </div>
 
@@ -279,6 +284,19 @@ ${itemsHTML}
 <span>Balance:</span>
 <span>${balance}</span>
 </div>
+
+<div class="calc-row" style="margin-top:3px;font-size:10px;">
+<span>Tender:</span>
+<span class="bold">${sale.payment_method || "CASH"}</span>
+</div>
+${sale.payment_method === "SPLIT" ? `
+<div class="calc-row" style="font-size:9px;color:#555;">
+<span>Cash:</span><span>${sale.cash_amount || 0}</span>
+</div>
+<div class="calc-row" style="font-size:9px;color:#555;">
+<span>Card:</span><span>${sale.card_amount || 0}</span>
+</div>
+` : ""}
 
 </div>
 

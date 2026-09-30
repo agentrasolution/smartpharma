@@ -138,6 +138,11 @@ export type Company = Prisma.CompanyModel
  */
 export type Customer = Prisma.CustomerModel
 /**
+ * Model ChronicMedication
+ * 
+ */
+export type ChronicMedication = Prisma.ChronicMedicationModel
+/**
  * Model Sale
  * 
  */
@@ -182,3 +187,63 @@ export type Category = Prisma.CategoryModel
  * 
  */
 export type Expense = Prisma.ExpenseModel
+/**
+ * Model Batch
+ * ---------- NEW MODELS ----------
+ */
+export type Batch = Prisma.BatchModel
+/**
+ * Model StockMovement
+ * 
+ */
+export type StockMovement = Prisma.StockMovementModel
+/**
+ * Model PurchaseInvoice
+ * 
+ */
+export type PurchaseInvoice = Prisma.PurchaseInvoiceModel
+/**
+ * Model PurchaseInvoiceItem
+ * 
+ */
+export type PurchaseInvoiceItem = Prisma.PurchaseInvoiceItemModel
+/**
+ * Model DistributorPayment
+ * 
+ */
+export type DistributorPayment = Prisma.DistributorPaymentModel
+/**
+ * Model Prescription
+ * 
+ */
+export type Prescription = Prisma.PrescriptionModel
+/**
+ * Model PrescriptionItem
+ * 
+ */
+export type PrescriptionItem = Prisma.PrescriptionItemModel
+/**
+ * Model DispenseRecord
+ * 
+ */
+export type DispenseRecord = Prisma.DispenseRecordModel
+/**
+ * Model ControlledDrugRegister
+ * 
+ */
+export type ControlledDrugRegister = Prisma.ControlledDrugRegisterModel
+/**
+ * Model BranchPriceOverride
+ * 
+ */
+export type BranchPriceOverride = Prisma.BranchPriceOverrideModel
+/**
+ * Model StockTransfer
+ * 
+ */
+export type StockTransfer = Prisma.StockTransferModel
+/**
+ * Model StockTransferItem
+ * 
+ */
+export type StockTransferItem = Prisma.StockTransferItemModel

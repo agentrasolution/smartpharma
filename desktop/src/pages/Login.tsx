@@ -126,7 +126,7 @@ function BrandPanel() {
 
         {/* Feature pills */}
         <div className="flex flex-col gap-2">
-          {["ZATCA Phase 2 Ready", "Multi-branch support", "Offline-first POS"].map((f) => (
+          {["FEFO Batch Tracking", "Multi-branch support", "Offline-first POS"].map((f) => (
             <div key={f} className="flex items-center gap-2.5">
               <div className="h-1.5 w-1.5 rounded-full bg-accent" />
               <span className="text-background/70 text-xs">{f}</span>

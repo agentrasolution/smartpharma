@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
-  LayoutDashboard, ShoppingCart, Package, Boxes, Tags, Users, CreditCard,
+  LayoutDashboard, ShoppingCart, FileText, Package, Boxes, Tags, Users, CreditCard,
   Factory, Building2, Undo2, Wallet, BarChart3, Receipt, Barcode, Settings,
-  LogOut, PanelLeftClose, BrainCircuit, ListChecks, MessageSquare, ShieldCheck, Activity,
+  LogOut, PanelLeftClose, BrainCircuit, ListChecks, MessageSquare, ShieldCheck, Activity, ScanLine,
   UserCog, KeyRound, Store, Globe,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,12 +17,14 @@ import { api } from "@/lib/api";
 const tenantNavItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/pos", label: "POS / Sales", icon: ShoppingCart },
+  { href: "/dispensing", label: "Dispensing & Rx", icon: FileText },
   { href: "/invoices", label: "Invoices", icon: Receipt },
   { href: "/returns", label: "Returns", icon: Undo2 },
   { href: "/customers", label: "Customers", icon: Users },
   { href: "/arrears", label: "Arrears", icon: CreditCard },
   { href: "/products", label: "Products", icon: Package },
-  { href: "/stock", label: "Stock", icon: Boxes },
+  { href: "/stock", label: "Purchasing", icon: Boxes },
+  { href: "/inventory", label: "Inventory", icon: ScanLine },
    { href: "/barcodes", label: "Barcodes", icon: Barcode },
   { href: "/distributors", label: "Distributors", icon: Factory },
   { href: "/companies", label: "Companies", icon: Building2 },

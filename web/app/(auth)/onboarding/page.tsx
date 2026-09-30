@@ -181,7 +181,7 @@ function StepPharmacy({
     >
       <div className="space-y-1">
         <h2 className="text-xl font-bold text-text-primary tracking-tight">Your pharmacy</h2>
-        <p className="text-sm text-text-secondary">Tell us about the business you're managing.</p>
+        <p className="text-sm text-text-secondary">Tell us about the business you&apos;re managing.</p>
       </div>
 
       <div className="space-y-4">
@@ -402,7 +402,7 @@ function StepDone({ pharmacyName }: { pharmacyName: string }) {
       </motion.div>
 
       <div className="space-y-2">
-        <h2 className="text-2xl font-bold text-text-primary tracking-tight">You're all set</h2>
+        <h2 className="text-2xl font-bold text-text-primary tracking-tight">You&apos;re all set</h2>
         <p className="text-sm text-text-secondary max-w-[280px] mx-auto leading-relaxed">
           <span className="text-text-primary font-medium">{pharmacyName}</span> is ready. Taking you to your dashboard…
         </p>
@@ -562,7 +562,7 @@ export default function OnboardingPage() {
                 <p className="text-background/40 text-xs font-medium tracking-widest uppercase">Step 1 of 2</p>
                 <h3 className="text-background text-2xl font-bold tracking-tight leading-tight">About your<br />pharmacy</h3>
                 <p className="text-background/60 text-sm leading-relaxed max-w-[260px]">
-                  Your country selection determines which tax and compliance rules apply — KSA for ZATCA, UAE for FTA.
+                  Your country selection determines your operational jurisdiction, tax rules, and local currency.
                 </p>
               </motion.div>
             )}
@@ -571,7 +571,7 @@ export default function OnboardingPage() {
                 <p className="text-background/40 text-xs font-medium tracking-widest uppercase">Step 2 of 2</p>
                 <h3 className="text-background text-2xl font-bold tracking-tight leading-tight">Your first<br />branch</h3>
                 <p className="text-background/60 text-sm leading-relaxed max-w-[260px]">
-                  Every sale and stock record is tied to a branch. You can add more branches from settings once you're set up.
+                  Every sale and stock record is tied to a branch. You can add more branches from settings once you&apos;re set up.
                 </p>
               </motion.div>
             )}
@@ -579,7 +579,7 @@ export default function OnboardingPage() {
               <motion.div key="panel-2" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.25 }} className="space-y-4">
                 <h3 className="text-background text-2xl font-bold tracking-tight leading-tight">Ready to<br />dispense.</h3>
                 <p className="text-background/60 text-sm leading-relaxed max-w-[260px]">
-                  Your pharmacy is configured. Head to settings whenever you're ready to connect ZATCA, SFDA, or NPHIES.
+                  Your pharmacy is configured. Head to settings whenever you&apos;re ready to configure advanced tax rules or hardware peripherals.
                 </p>
               </motion.div>
             )}

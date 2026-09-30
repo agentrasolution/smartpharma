@@ -56,3 +56,64 @@ export function normalizeStockPurchase(purchase: any): any {
 export function normalizeStockPurchaseList(purchases: any[]): any[] {
   return purchases.map(normalizeStockPurchase);
 }
+
+export function normalizePurchaseInvoice(invoice: any): any {
+  if (!invoice) return null;
+  return {
+    id: invoice.id,
+    pharmacyId: invoice.pharmacyId,
+    branchId: invoice.branchId,
+    distributorId: invoice.distributorId,
+    distributorName: invoice.distributor?.name ?? null,
+    distributorPhone: invoice.distributor?.phone ?? null,
+    invoiceNumber: invoice.invoiceNumber,
+    invoiceDate: invoice.invoiceDate instanceof Date ? invoice.invoiceDate.toISOString() : invoice.invoiceDate,
+    dueDate: invoice.dueDate instanceof Date ? invoice.dueDate.toISOString() : invoice.dueDate ?? null,
+    subtotal: Number(invoice.subtotal ?? 0),
+    discount: Number(invoice.discount ?? 0),
+    tax: Number(invoice.tax ?? 0),
+    totalAmount: Number(invoice.totalAmount ?? 0),
+    paidAmount: Number(invoice.paidAmount ?? 0),
+    balanceDue: Number(invoice.balanceDue ?? 0),
+    status: invoice.status,
+    paymentMethod: invoice.paymentMethod ?? null,
+    notes: invoice.notes ?? "",
+    receivedBy: invoice.receivedBy ?? null,
+    createdAt: invoice.createdAt instanceof Date ? invoice.createdAt.toISOString() : invoice.createdAt,
+    updatedAt: invoice.updatedAt instanceof Date ? invoice.updatedAt.toISOString() : invoice.updatedAt,
+    distributor: invoice.distributor ? {
+      id: invoice.distributor.id,
+      name: invoice.distributor.name,
+      phone: invoice.distributor.phone,
+      contact: invoice.distributor.contact,
+    } : undefined,
+    items: invoice.items?.map((item: any) => ({
+      id: item.id,
+      invoiceId: item.invoiceId,
+      productId: item.productId,
+      productName: item.product?.name ?? null,
+      productBarcode: item.product?.barcode ?? null,
+      batchId: item.batchId ?? null,
+      batchNumber: item.batchNumber,
+      expiryDate: item.expiryDate instanceof Date ? item.expiryDate.toISOString() : item.expiryDate,
+      quantityPacks: item.quantityPacks,
+      unitsPerPack: item.unitsPerPack,
+      quantityBaseUnits: item.quantityBaseUnits,
+      unitCost: Number(item.unitCost ?? 0),
+      salePrice: Number(item.salePrice ?? 0),
+      totalCost: Number(item.totalCost ?? 0),
+    })) ?? [],
+    payments: invoice.payments?.map((payment: any) => ({
+      id: payment.id,
+      amount: Number(payment.amount ?? 0),
+      paymentMethod: payment.paymentMethod,
+      referenceNumber: payment.referenceNumber,
+      paidAt: payment.paidAt instanceof Date ? payment.paidAt.toISOString() : payment.paidAt,
+      notes: payment.notes,
+    })) ?? [],
+  };
+}
+
+export function normalizePurchaseInvoiceList(invoices: any[]): any[] {
+  return invoices.map(normalizePurchaseInvoice);
+}

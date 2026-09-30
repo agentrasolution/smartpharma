@@ -53,4 +53,69 @@ export const customersController = {
       res.json(result);
     } catch (err) { next(err); }
   },
+
+  async getStatement(req: Request, res: Response, next: NextFunction) {
+    try {
+      const scope = branchScope(req);
+      const statement = await customersService.getStatement(scope, req.params.id);
+      res.json(statement);
+    } catch (err) { next(err); }
+  },
+
+  async getRefillQueue(req: Request, res: Response, next: NextFunction) {
+    try {
+      const scope = branchScope(req);
+      const filter = req.query.filter as "all" | "dueSoon" | "dueToday" | "overdue" | undefined;
+      const queue = await customersService.getRefillQueue(scope, filter);
+      res.json(queue);
+    } catch (err) { next(err); }
+  },
+
+  async listChronicMedications(req: Request, res: Response, next: NextFunction) {
+    try {
+      const scope = branchScope(req);
+      const meds = await customersService.listChronicMedications(scope, req.params.id);
+      res.json(meds);
+    } catch (err) { next(err); }
+  },
+
+  async addChronicMedication(req: Request, res: Response, next: NextFunction) {
+    try {
+      const scope = branchScope(req);
+      const med = await customersService.addChronicMedication(scope, req.body);
+      res.json(med);
+    } catch (err) { next(err); }
+  },
+
+  async updateChronicMedication(req: Request, res: Response, next: NextFunction) {
+    try {
+      const scope = branchScope(req);
+      const med = await customersService.updateChronicMedication(scope, req.params.medId, req.body);
+      res.json(med);
+    } catch (err) { next(err); }
+  },
+
+  async deleteChronicMedication(req: Request, res: Response, next: NextFunction) {
+    try {
+      const scope = branchScope(req);
+      const result = await customersService.deleteChronicMedication(scope, req.params.medId);
+      res.json(result);
+    } catch (err) { next(err); }
+  },
+
+  async recordContact(req: Request, res: Response, next: NextFunction) {
+    try {
+      const scope = branchScope(req);
+      const result = await customersService.recordContact(scope, req.params.medId, req.body.notes);
+      res.json(result);
+    } catch (err) { next(err); }
+  },
+
+  async recordRefill(req: Request, res: Response, next: NextFunction) {
+    try {
+      const scope = branchScope(req);
+      const result = await customersService.recordRefill(scope, req.params.medId, req.body);
+      res.json(result);
+    } catch (err) { next(err); }
+  },
 };

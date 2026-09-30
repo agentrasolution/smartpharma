@@ -32,6 +32,8 @@ export type ProductAvgAggregateOutputType = {
   markupPercent: number | null
   stockQty: number | null
   packSize: number | null
+  publicPrice: runtime.Decimal | null
+  unitsPerPack: number | null
   active: number | null
 }
 
@@ -41,6 +43,8 @@ export type ProductSumAggregateOutputType = {
   markupPercent: number | null
   stockQty: number | null
   packSize: number | null
+  publicPrice: runtime.Decimal | null
+  unitsPerPack: number | null
   active: number | null
 }
 
@@ -60,6 +64,19 @@ export type ProductMinAggregateOutputType = {
   stockQty: number | null
   expiry: string | null
   packSize: number | null
+  nameEn: string | null
+  nameAr: string | null
+  genericName: string | null
+  dosageForm: string | null
+  strength: string | null
+  sfdaCode: string | null
+  isRx: boolean | null
+  isControlled: boolean | null
+  isPriceRegulated: boolean | null
+  publicPrice: runtime.Decimal | null
+  baseUnit: string | null
+  packageUnit: string | null
+  unitsPerPack: number | null
   active: number | null
   createdAt: Date | null
 }
@@ -80,6 +97,19 @@ export type ProductMaxAggregateOutputType = {
   stockQty: number | null
   expiry: string | null
   packSize: number | null
+  nameEn: string | null
+  nameAr: string | null
+  genericName: string | null
+  dosageForm: string | null
+  strength: string | null
+  sfdaCode: string | null
+  isRx: boolean | null
+  isControlled: boolean | null
+  isPriceRegulated: boolean | null
+  publicPrice: runtime.Decimal | null
+  baseUnit: string | null
+  packageUnit: string | null
+  unitsPerPack: number | null
   active: number | null
   createdAt: Date | null
 }
@@ -100,6 +130,19 @@ export type ProductCountAggregateOutputType = {
   stockQty: number
   expiry: number
   packSize: number
+  nameEn: number
+  nameAr: number
+  genericName: number
+  dosageForm: number
+  strength: number
+  sfdaCode: number
+  isRx: number
+  isControlled: number
+  isPriceRegulated: number
+  publicPrice: number
+  baseUnit: number
+  packageUnit: number
+  unitsPerPack: number
   active: number
   createdAt: number
   _all: number
@@ -112,6 +155,8 @@ export type ProductAvgAggregateInputType = {
   markupPercent?: true
   stockQty?: true
   packSize?: true
+  publicPrice?: true
+  unitsPerPack?: true
   active?: true
 }
 
@@ -121,6 +166,8 @@ export type ProductSumAggregateInputType = {
   markupPercent?: true
   stockQty?: true
   packSize?: true
+  publicPrice?: true
+  unitsPerPack?: true
   active?: true
 }
 
@@ -140,6 +187,19 @@ export type ProductMinAggregateInputType = {
   stockQty?: true
   expiry?: true
   packSize?: true
+  nameEn?: true
+  nameAr?: true
+  genericName?: true
+  dosageForm?: true
+  strength?: true
+  sfdaCode?: true
+  isRx?: true
+  isControlled?: true
+  isPriceRegulated?: true
+  publicPrice?: true
+  baseUnit?: true
+  packageUnit?: true
+  unitsPerPack?: true
   active?: true
   createdAt?: true
 }
@@ -160,6 +220,19 @@ export type ProductMaxAggregateInputType = {
   stockQty?: true
   expiry?: true
   packSize?: true
+  nameEn?: true
+  nameAr?: true
+  genericName?: true
+  dosageForm?: true
+  strength?: true
+  sfdaCode?: true
+  isRx?: true
+  isControlled?: true
+  isPriceRegulated?: true
+  publicPrice?: true
+  baseUnit?: true
+  packageUnit?: true
+  unitsPerPack?: true
   active?: true
   createdAt?: true
 }
@@ -180,6 +253,19 @@ export type ProductCountAggregateInputType = {
   stockQty?: true
   expiry?: true
   packSize?: true
+  nameEn?: true
+  nameAr?: true
+  genericName?: true
+  dosageForm?: true
+  strength?: true
+  sfdaCode?: true
+  isRx?: true
+  isControlled?: true
+  isPriceRegulated?: true
+  publicPrice?: true
+  baseUnit?: true
+  packageUnit?: true
+  unitsPerPack?: true
   active?: true
   createdAt?: true
   _all?: true
@@ -287,6 +373,19 @@ export type ProductGroupByOutputType = {
   stockQty: number
   expiry: string | null
   packSize: number
+  nameEn: string
+  nameAr: string
+  genericName: string
+  dosageForm: string
+  strength: string
+  sfdaCode: string | null
+  isRx: boolean
+  isControlled: boolean
+  isPriceRegulated: boolean
+  publicPrice: runtime.Decimal
+  baseUnit: string
+  packageUnit: string
+  unitsPerPack: number
   active: number
   createdAt: Date
   _count: ProductCountAggregateOutputType | null
@@ -330,6 +429,19 @@ export type ProductWhereInput = {
   stockQty?: Prisma.IntFilter<"Product"> | number
   expiry?: Prisma.StringNullableFilter<"Product"> | string | null
   packSize?: Prisma.IntFilter<"Product"> | number
+  nameEn?: Prisma.StringFilter<"Product"> | string
+  nameAr?: Prisma.StringFilter<"Product"> | string
+  genericName?: Prisma.StringFilter<"Product"> | string
+  dosageForm?: Prisma.StringFilter<"Product"> | string
+  strength?: Prisma.StringFilter<"Product"> | string
+  sfdaCode?: Prisma.StringNullableFilter<"Product"> | string | null
+  isRx?: Prisma.BoolFilter<"Product"> | boolean
+  isControlled?: Prisma.BoolFilter<"Product"> | boolean
+  isPriceRegulated?: Prisma.BoolFilter<"Product"> | boolean
+  publicPrice?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFilter<"Product"> | string
+  packageUnit?: Prisma.StringFilter<"Product"> | string
+  unitsPerPack?: Prisma.IntFilter<"Product"> | number
   active?: Prisma.IntFilter<"Product"> | number
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
@@ -343,6 +455,15 @@ export type ProductWhereInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigListRelationFilter
   purchaseOrderItems?: Prisma.PurchaseOrderItemListRelationFilter
   recommendations?: Prisma.AIInventoryRecommendationListRelationFilter
+  batches?: Prisma.BatchListRelationFilter
+  movements?: Prisma.StockMovementListRelationFilter
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemListRelationFilter
+  prescriptionItems?: Prisma.PrescriptionItemListRelationFilter
+  dispensedRecords?: Prisma.DispenseRecordListRelationFilter
+  controlledRegisters?: Prisma.ControlledDrugRegisterListRelationFilter
+  chronicMedications?: Prisma.ChronicMedicationListRelationFilter
+  transferItems?: Prisma.StockTransferItemListRelationFilter
+  branchPriceOverrides?: Prisma.BranchPriceOverrideListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -361,6 +482,19 @@ export type ProductOrderByWithRelationInput = {
   stockQty?: Prisma.SortOrder
   expiry?: Prisma.SortOrderInput | Prisma.SortOrder
   packSize?: Prisma.SortOrder
+  nameEn?: Prisma.SortOrder
+  nameAr?: Prisma.SortOrder
+  genericName?: Prisma.SortOrder
+  dosageForm?: Prisma.SortOrder
+  strength?: Prisma.SortOrder
+  sfdaCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  isRx?: Prisma.SortOrder
+  isControlled?: Prisma.SortOrder
+  isPriceRegulated?: Prisma.SortOrder
+  publicPrice?: Prisma.SortOrder
+  baseUnit?: Prisma.SortOrder
+  packageUnit?: Prisma.SortOrder
+  unitsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   pharmacy?: Prisma.PharmacyOrderByWithRelationInput
@@ -374,6 +508,15 @@ export type ProductOrderByWithRelationInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigOrderByRelationAggregateInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemOrderByRelationAggregateInput
   recommendations?: Prisma.AIInventoryRecommendationOrderByRelationAggregateInput
+  batches?: Prisma.BatchOrderByRelationAggregateInput
+  movements?: Prisma.StockMovementOrderByRelationAggregateInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemOrderByRelationAggregateInput
+  prescriptionItems?: Prisma.PrescriptionItemOrderByRelationAggregateInput
+  dispensedRecords?: Prisma.DispenseRecordOrderByRelationAggregateInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterOrderByRelationAggregateInput
+  chronicMedications?: Prisma.ChronicMedicationOrderByRelationAggregateInput
+  transferItems?: Prisma.StockTransferItemOrderByRelationAggregateInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -396,6 +539,19 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   stockQty?: Prisma.IntFilter<"Product"> | number
   expiry?: Prisma.StringNullableFilter<"Product"> | string | null
   packSize?: Prisma.IntFilter<"Product"> | number
+  nameEn?: Prisma.StringFilter<"Product"> | string
+  nameAr?: Prisma.StringFilter<"Product"> | string
+  genericName?: Prisma.StringFilter<"Product"> | string
+  dosageForm?: Prisma.StringFilter<"Product"> | string
+  strength?: Prisma.StringFilter<"Product"> | string
+  sfdaCode?: Prisma.StringNullableFilter<"Product"> | string | null
+  isRx?: Prisma.BoolFilter<"Product"> | boolean
+  isControlled?: Prisma.BoolFilter<"Product"> | boolean
+  isPriceRegulated?: Prisma.BoolFilter<"Product"> | boolean
+  publicPrice?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFilter<"Product"> | string
+  packageUnit?: Prisma.StringFilter<"Product"> | string
+  unitsPerPack?: Prisma.IntFilter<"Product"> | number
   active?: Prisma.IntFilter<"Product"> | number
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
@@ -409,6 +565,15 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   distributorConfigs?: Prisma.ProductDistributorConfigListRelationFilter
   purchaseOrderItems?: Prisma.PurchaseOrderItemListRelationFilter
   recommendations?: Prisma.AIInventoryRecommendationListRelationFilter
+  batches?: Prisma.BatchListRelationFilter
+  movements?: Prisma.StockMovementListRelationFilter
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemListRelationFilter
+  prescriptionItems?: Prisma.PrescriptionItemListRelationFilter
+  dispensedRecords?: Prisma.DispenseRecordListRelationFilter
+  controlledRegisters?: Prisma.ControlledDrugRegisterListRelationFilter
+  chronicMedications?: Prisma.ChronicMedicationListRelationFilter
+  transferItems?: Prisma.StockTransferItemListRelationFilter
+  branchPriceOverrides?: Prisma.BranchPriceOverrideListRelationFilter
 }, "id" | "branchId_barcode">
 
 export type ProductOrderByWithAggregationInput = {
@@ -427,6 +592,19 @@ export type ProductOrderByWithAggregationInput = {
   stockQty?: Prisma.SortOrder
   expiry?: Prisma.SortOrderInput | Prisma.SortOrder
   packSize?: Prisma.SortOrder
+  nameEn?: Prisma.SortOrder
+  nameAr?: Prisma.SortOrder
+  genericName?: Prisma.SortOrder
+  dosageForm?: Prisma.SortOrder
+  strength?: Prisma.SortOrder
+  sfdaCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  isRx?: Prisma.SortOrder
+  isControlled?: Prisma.SortOrder
+  isPriceRegulated?: Prisma.SortOrder
+  publicPrice?: Prisma.SortOrder
+  baseUnit?: Prisma.SortOrder
+  packageUnit?: Prisma.SortOrder
+  unitsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
@@ -455,6 +633,19 @@ export type ProductScalarWhereWithAggregatesInput = {
   stockQty?: Prisma.IntWithAggregatesFilter<"Product"> | number
   expiry?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   packSize?: Prisma.IntWithAggregatesFilter<"Product"> | number
+  nameEn?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  nameAr?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  genericName?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  dosageForm?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  strength?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  sfdaCode?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
+  isRx?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
+  isControlled?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
+  isPriceRegulated?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
+  publicPrice?: Prisma.DecimalWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  packageUnit?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  unitsPerPack?: Prisma.IntWithAggregatesFilter<"Product"> | number
   active?: Prisma.IntWithAggregatesFilter<"Product"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
 }
@@ -472,6 +663,19 @@ export type ProductCreateInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -485,6 +689,15 @@ export type ProductCreateInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -503,6 +716,19 @@ export type ProductUncheckedCreateInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -513,6 +739,15 @@ export type ProductUncheckedCreateInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -528,6 +763,19 @@ export type ProductUpdateInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -541,6 +789,15 @@ export type ProductUpdateInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -559,6 +816,19 @@ export type ProductUncheckedUpdateInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -569,6 +839,15 @@ export type ProductUncheckedUpdateInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -587,6 +866,19 @@ export type ProductCreateManyInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
 }
@@ -604,6 +896,19 @@ export type ProductUpdateManyMutationInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -624,6 +929,19 @@ export type ProductUncheckedUpdateManyInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -664,6 +982,19 @@ export type ProductCountOrderByAggregateInput = {
   stockQty?: Prisma.SortOrder
   expiry?: Prisma.SortOrder
   packSize?: Prisma.SortOrder
+  nameEn?: Prisma.SortOrder
+  nameAr?: Prisma.SortOrder
+  genericName?: Prisma.SortOrder
+  dosageForm?: Prisma.SortOrder
+  strength?: Prisma.SortOrder
+  sfdaCode?: Prisma.SortOrder
+  isRx?: Prisma.SortOrder
+  isControlled?: Prisma.SortOrder
+  isPriceRegulated?: Prisma.SortOrder
+  publicPrice?: Prisma.SortOrder
+  baseUnit?: Prisma.SortOrder
+  packageUnit?: Prisma.SortOrder
+  unitsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -674,6 +1005,8 @@ export type ProductAvgOrderByAggregateInput = {
   markupPercent?: Prisma.SortOrder
   stockQty?: Prisma.SortOrder
   packSize?: Prisma.SortOrder
+  publicPrice?: Prisma.SortOrder
+  unitsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
 }
 
@@ -693,6 +1026,19 @@ export type ProductMaxOrderByAggregateInput = {
   stockQty?: Prisma.SortOrder
   expiry?: Prisma.SortOrder
   packSize?: Prisma.SortOrder
+  nameEn?: Prisma.SortOrder
+  nameAr?: Prisma.SortOrder
+  genericName?: Prisma.SortOrder
+  dosageForm?: Prisma.SortOrder
+  strength?: Prisma.SortOrder
+  sfdaCode?: Prisma.SortOrder
+  isRx?: Prisma.SortOrder
+  isControlled?: Prisma.SortOrder
+  isPriceRegulated?: Prisma.SortOrder
+  publicPrice?: Prisma.SortOrder
+  baseUnit?: Prisma.SortOrder
+  packageUnit?: Prisma.SortOrder
+  unitsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -713,6 +1059,19 @@ export type ProductMinOrderByAggregateInput = {
   stockQty?: Prisma.SortOrder
   expiry?: Prisma.SortOrder
   packSize?: Prisma.SortOrder
+  nameEn?: Prisma.SortOrder
+  nameAr?: Prisma.SortOrder
+  genericName?: Prisma.SortOrder
+  dosageForm?: Prisma.SortOrder
+  strength?: Prisma.SortOrder
+  sfdaCode?: Prisma.SortOrder
+  isRx?: Prisma.SortOrder
+  isControlled?: Prisma.SortOrder
+  isPriceRegulated?: Prisma.SortOrder
+  publicPrice?: Prisma.SortOrder
+  baseUnit?: Prisma.SortOrder
+  packageUnit?: Prisma.SortOrder
+  unitsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -723,6 +1082,8 @@ export type ProductSumOrderByAggregateInput = {
   markupPercent?: Prisma.SortOrder
   stockQty?: Prisma.SortOrder
   packSize?: Prisma.SortOrder
+  publicPrice?: Prisma.SortOrder
+  unitsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
 }
 
@@ -857,6 +1218,14 @@ export type ProductUncheckedUpdateManyWithoutBranchNestedInput = {
   deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
 }
 
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type ProductCreateNestedOneWithoutBarcodeLinkInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutBarcodeLinkInput, Prisma.ProductUncheckedCreateWithoutBarcodeLinkInput>
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutBarcodeLinkInput
@@ -929,6 +1298,22 @@ export type ProductUncheckedUpdateManyWithoutDistributorNestedInput = {
   deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
 }
 
+export type ProductCreateNestedOneWithoutChronicMedicationsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutChronicMedicationsInput, Prisma.ProductUncheckedCreateWithoutChronicMedicationsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutChronicMedicationsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneWithoutChronicMedicationsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutChronicMedicationsInput, Prisma.ProductUncheckedCreateWithoutChronicMedicationsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutChronicMedicationsInput
+  upsert?: Prisma.ProductUpsertWithoutChronicMedicationsInput
+  disconnect?: Prisma.ProductWhereInput | boolean
+  delete?: Prisma.ProductWhereInput | boolean
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutChronicMedicationsInput, Prisma.ProductUpdateWithoutChronicMedicationsInput>, Prisma.ProductUncheckedUpdateWithoutChronicMedicationsInput>
+}
+
 export type ProductCreateNestedOneWithoutSaleItemsInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutSaleItemsInput, Prisma.ProductUncheckedCreateWithoutSaleItemsInput>
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutSaleItemsInput
@@ -971,6 +1356,120 @@ export type ProductUpdateOneRequiredWithoutReturnItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutReturnItemsInput, Prisma.ProductUpdateWithoutReturnItemsInput>, Prisma.ProductUncheckedUpdateWithoutReturnItemsInput>
 }
 
+export type ProductCreateNestedOneWithoutBatchesInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutBatchesInput, Prisma.ProductUncheckedCreateWithoutBatchesInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutBatchesInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutBatchesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutBatchesInput, Prisma.ProductUncheckedCreateWithoutBatchesInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutBatchesInput
+  upsert?: Prisma.ProductUpsertWithoutBatchesInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutBatchesInput, Prisma.ProductUpdateWithoutBatchesInput>, Prisma.ProductUncheckedUpdateWithoutBatchesInput>
+}
+
+export type ProductCreateNestedOneWithoutMovementsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutMovementsInput, Prisma.ProductUncheckedCreateWithoutMovementsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutMovementsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutMovementsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutMovementsInput, Prisma.ProductUncheckedCreateWithoutMovementsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutMovementsInput
+  upsert?: Prisma.ProductUpsertWithoutMovementsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutMovementsInput, Prisma.ProductUpdateWithoutMovementsInput>, Prisma.ProductUncheckedUpdateWithoutMovementsInput>
+}
+
+export type ProductCreateNestedOneWithoutPurchaseInvoiceItemsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutPurchaseInvoiceItemsInput, Prisma.ProductUncheckedCreateWithoutPurchaseInvoiceItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutPurchaseInvoiceItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutPurchaseInvoiceItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutPurchaseInvoiceItemsInput, Prisma.ProductUncheckedCreateWithoutPurchaseInvoiceItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutPurchaseInvoiceItemsInput
+  upsert?: Prisma.ProductUpsertWithoutPurchaseInvoiceItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutPurchaseInvoiceItemsInput, Prisma.ProductUpdateWithoutPurchaseInvoiceItemsInput>, Prisma.ProductUncheckedUpdateWithoutPurchaseInvoiceItemsInput>
+}
+
+export type ProductCreateNestedOneWithoutPrescriptionItemsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutPrescriptionItemsInput, Prisma.ProductUncheckedCreateWithoutPrescriptionItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutPrescriptionItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneWithoutPrescriptionItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutPrescriptionItemsInput, Prisma.ProductUncheckedCreateWithoutPrescriptionItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutPrescriptionItemsInput
+  upsert?: Prisma.ProductUpsertWithoutPrescriptionItemsInput
+  disconnect?: Prisma.ProductWhereInput | boolean
+  delete?: Prisma.ProductWhereInput | boolean
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutPrescriptionItemsInput, Prisma.ProductUpdateWithoutPrescriptionItemsInput>, Prisma.ProductUncheckedUpdateWithoutPrescriptionItemsInput>
+}
+
+export type ProductCreateNestedOneWithoutDispensedRecordsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutDispensedRecordsInput, Prisma.ProductUncheckedCreateWithoutDispensedRecordsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutDispensedRecordsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutDispensedRecordsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutDispensedRecordsInput, Prisma.ProductUncheckedCreateWithoutDispensedRecordsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutDispensedRecordsInput
+  upsert?: Prisma.ProductUpsertWithoutDispensedRecordsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutDispensedRecordsInput, Prisma.ProductUpdateWithoutDispensedRecordsInput>, Prisma.ProductUncheckedUpdateWithoutDispensedRecordsInput>
+}
+
+export type ProductCreateNestedOneWithoutControlledRegistersInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutControlledRegistersInput, Prisma.ProductUncheckedCreateWithoutControlledRegistersInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutControlledRegistersInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutControlledRegistersNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutControlledRegistersInput, Prisma.ProductUncheckedCreateWithoutControlledRegistersInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutControlledRegistersInput
+  upsert?: Prisma.ProductUpsertWithoutControlledRegistersInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutControlledRegistersInput, Prisma.ProductUpdateWithoutControlledRegistersInput>, Prisma.ProductUncheckedUpdateWithoutControlledRegistersInput>
+}
+
+export type ProductCreateNestedOneWithoutBranchPriceOverridesInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutBranchPriceOverridesInput, Prisma.ProductUncheckedCreateWithoutBranchPriceOverridesInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutBranchPriceOverridesInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutBranchPriceOverridesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutBranchPriceOverridesInput, Prisma.ProductUncheckedCreateWithoutBranchPriceOverridesInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutBranchPriceOverridesInput
+  upsert?: Prisma.ProductUpsertWithoutBranchPriceOverridesInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutBranchPriceOverridesInput, Prisma.ProductUpdateWithoutBranchPriceOverridesInput>, Prisma.ProductUncheckedUpdateWithoutBranchPriceOverridesInput>
+}
+
+export type ProductCreateNestedOneWithoutTransferItemsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutTransferItemsInput, Prisma.ProductUncheckedCreateWithoutTransferItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutTransferItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutTransferItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutTransferItemsInput, Prisma.ProductUncheckedCreateWithoutTransferItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutTransferItemsInput
+  upsert?: Prisma.ProductUpsertWithoutTransferItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutTransferItemsInput, Prisma.ProductUpdateWithoutTransferItemsInput>, Prisma.ProductUncheckedUpdateWithoutTransferItemsInput>
+}
+
 export type ProductCreateWithoutPharmacyInput = {
   id?: string
   barcode: string
@@ -984,6 +1483,19 @@ export type ProductCreateWithoutPharmacyInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutProductsInput
@@ -996,6 +1508,15 @@ export type ProductCreateWithoutPharmacyInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutPharmacyInput = {
@@ -1013,6 +1534,19 @@ export type ProductUncheckedCreateWithoutPharmacyInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -1023,6 +1557,15 @@ export type ProductUncheckedCreateWithoutPharmacyInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutPharmacyInput = {
@@ -1070,6 +1613,19 @@ export type ProductScalarWhereInput = {
   stockQty?: Prisma.IntFilter<"Product"> | number
   expiry?: Prisma.StringNullableFilter<"Product"> | string | null
   packSize?: Prisma.IntFilter<"Product"> | number
+  nameEn?: Prisma.StringFilter<"Product"> | string
+  nameAr?: Prisma.StringFilter<"Product"> | string
+  genericName?: Prisma.StringFilter<"Product"> | string
+  dosageForm?: Prisma.StringFilter<"Product"> | string
+  strength?: Prisma.StringFilter<"Product"> | string
+  sfdaCode?: Prisma.StringNullableFilter<"Product"> | string | null
+  isRx?: Prisma.BoolFilter<"Product"> | boolean
+  isControlled?: Prisma.BoolFilter<"Product"> | boolean
+  isPriceRegulated?: Prisma.BoolFilter<"Product"> | boolean
+  publicPrice?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFilter<"Product"> | string
+  packageUnit?: Prisma.StringFilter<"Product"> | string
+  unitsPerPack?: Prisma.IntFilter<"Product"> | number
   active?: Prisma.IntFilter<"Product"> | number
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
 }
@@ -1087,6 +1643,19 @@ export type ProductCreateWithoutDistributorConfigsInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -1099,6 +1668,15 @@ export type ProductCreateWithoutDistributorConfigsInput = {
   barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutDistributorConfigsInput = {
@@ -1117,6 +1695,19 @@ export type ProductUncheckedCreateWithoutDistributorConfigsInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -1126,6 +1717,15 @@ export type ProductUncheckedCreateWithoutDistributorConfigsInput = {
   barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutDistributorConfigsInput = {
@@ -1157,6 +1757,19 @@ export type ProductUpdateWithoutDistributorConfigsInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -1169,6 +1782,15 @@ export type ProductUpdateWithoutDistributorConfigsInput = {
   barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutDistributorConfigsInput = {
@@ -1187,6 +1809,19 @@ export type ProductUncheckedUpdateWithoutDistributorConfigsInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -1196,6 +1831,15 @@ export type ProductUncheckedUpdateWithoutDistributorConfigsInput = {
   barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutPurchaseOrderItemsInput = {
@@ -1211,6 +1855,19 @@ export type ProductCreateWithoutPurchaseOrderItemsInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -1223,6 +1880,15 @@ export type ProductCreateWithoutPurchaseOrderItemsInput = {
   barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
   distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutPurchaseOrderItemsInput = {
@@ -1241,6 +1907,19 @@ export type ProductUncheckedCreateWithoutPurchaseOrderItemsInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -1250,6 +1929,15 @@ export type ProductUncheckedCreateWithoutPurchaseOrderItemsInput = {
   barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutPurchaseOrderItemsInput = {
@@ -1281,6 +1969,19 @@ export type ProductUpdateWithoutPurchaseOrderItemsInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -1293,6 +1994,15 @@ export type ProductUpdateWithoutPurchaseOrderItemsInput = {
   barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
   distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutPurchaseOrderItemsInput = {
@@ -1311,6 +2021,19 @@ export type ProductUncheckedUpdateWithoutPurchaseOrderItemsInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -1320,6 +2043,15 @@ export type ProductUncheckedUpdateWithoutPurchaseOrderItemsInput = {
   barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutRecommendationsInput = {
@@ -1335,6 +2067,19 @@ export type ProductCreateWithoutRecommendationsInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -1347,6 +2092,15 @@ export type ProductCreateWithoutRecommendationsInput = {
   barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
   distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutRecommendationsInput = {
@@ -1365,6 +2119,19 @@ export type ProductUncheckedCreateWithoutRecommendationsInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -1374,6 +2141,15 @@ export type ProductUncheckedCreateWithoutRecommendationsInput = {
   barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutRecommendationsInput = {
@@ -1405,6 +2181,19 @@ export type ProductUpdateWithoutRecommendationsInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -1417,6 +2206,15 @@ export type ProductUpdateWithoutRecommendationsInput = {
   barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
   distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutRecommendationsInput = {
@@ -1435,6 +2233,19 @@ export type ProductUncheckedUpdateWithoutRecommendationsInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -1444,6 +2255,15 @@ export type ProductUncheckedUpdateWithoutRecommendationsInput = {
   barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutBranchInput = {
@@ -1459,6 +2279,19 @@ export type ProductCreateWithoutBranchInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -1471,6 +2304,15 @@ export type ProductCreateWithoutBranchInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutBranchInput = {
@@ -1488,6 +2330,19 @@ export type ProductUncheckedCreateWithoutBranchInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -1498,6 +2353,15 @@ export type ProductUncheckedCreateWithoutBranchInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutBranchInput = {
@@ -1539,6 +2403,19 @@ export type ProductCreateWithoutBarcodeLinkInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -1551,6 +2428,15 @@ export type ProductCreateWithoutBarcodeLinkInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutBarcodeLinkInput = {
@@ -1569,6 +2455,19 @@ export type ProductUncheckedCreateWithoutBarcodeLinkInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -1578,6 +2477,15 @@ export type ProductUncheckedCreateWithoutBarcodeLinkInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutBarcodeLinkInput = {
@@ -1609,6 +2517,19 @@ export type ProductUpdateWithoutBarcodeLinkInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -1621,6 +2542,15 @@ export type ProductUpdateWithoutBarcodeLinkInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutBarcodeLinkInput = {
@@ -1639,6 +2569,19 @@ export type ProductUncheckedUpdateWithoutBarcodeLinkInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -1648,6 +2591,15 @@ export type ProductUncheckedUpdateWithoutBarcodeLinkInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutPricesInput = {
@@ -1663,6 +2615,19 @@ export type ProductCreateWithoutPricesInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -1675,6 +2640,15 @@ export type ProductCreateWithoutPricesInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutPricesInput = {
@@ -1693,6 +2667,19 @@ export type ProductUncheckedCreateWithoutPricesInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -1702,6 +2689,15 @@ export type ProductUncheckedCreateWithoutPricesInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutPricesInput = {
@@ -1733,6 +2729,19 @@ export type ProductUpdateWithoutPricesInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -1745,6 +2754,15 @@ export type ProductUpdateWithoutPricesInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutPricesInput = {
@@ -1763,6 +2781,19 @@ export type ProductUncheckedUpdateWithoutPricesInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -1772,6 +2803,15 @@ export type ProductUncheckedUpdateWithoutPricesInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutDistributorInput = {
@@ -1787,6 +2827,19 @@ export type ProductCreateWithoutDistributorInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -1799,6 +2852,15 @@ export type ProductCreateWithoutDistributorInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutDistributorInput = {
@@ -1816,6 +2878,19 @@ export type ProductUncheckedCreateWithoutDistributorInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -1826,6 +2901,15 @@ export type ProductUncheckedCreateWithoutDistributorInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutDistributorInput = {
@@ -1854,6 +2938,218 @@ export type ProductUpdateManyWithWhereWithoutDistributorInput = {
   data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutDistributorInput>
 }
 
+export type ProductCreateWithoutChronicMedicationsInput = {
+  id?: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
+  branch: Prisma.BranchCreateNestedOneWithoutProductsInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutProductsInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutChronicMedicationsInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  distributorId?: string | null
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutChronicMedicationsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutChronicMedicationsInput, Prisma.ProductUncheckedCreateWithoutChronicMedicationsInput>
+}
+
+export type ProductUpsertWithoutChronicMedicationsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutChronicMedicationsInput, Prisma.ProductUncheckedUpdateWithoutChronicMedicationsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutChronicMedicationsInput, Prisma.ProductUncheckedCreateWithoutChronicMedicationsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutChronicMedicationsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutChronicMedicationsInput, Prisma.ProductUncheckedUpdateWithoutChronicMedicationsInput>
+}
+
+export type ProductUpdateWithoutChronicMedicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutProductsNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutChronicMedicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUncheckedUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+}
+
 export type ProductCreateWithoutSaleItemsInput = {
   id?: string
   barcode: string
@@ -1867,6 +3163,19 @@ export type ProductCreateWithoutSaleItemsInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -1879,6 +3188,15 @@ export type ProductCreateWithoutSaleItemsInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutSaleItemsInput = {
@@ -1897,6 +3215,19 @@ export type ProductUncheckedCreateWithoutSaleItemsInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
@@ -1906,6 +3237,15 @@ export type ProductUncheckedCreateWithoutSaleItemsInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutSaleItemsInput = {
@@ -1937,6 +3277,19 @@ export type ProductUpdateWithoutSaleItemsInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -1949,6 +3302,15 @@ export type ProductUpdateWithoutSaleItemsInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutSaleItemsInput = {
@@ -1967,6 +3329,19 @@ export type ProductUncheckedUpdateWithoutSaleItemsInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
@@ -1976,6 +3351,15 @@ export type ProductUncheckedUpdateWithoutSaleItemsInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutStockPurchasesInput = {
@@ -1991,6 +3375,19 @@ export type ProductCreateWithoutStockPurchasesInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -2003,6 +3400,15 @@ export type ProductCreateWithoutStockPurchasesInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutStockPurchasesInput = {
@@ -2021,6 +3427,19 @@ export type ProductUncheckedCreateWithoutStockPurchasesInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -2030,6 +3449,15 @@ export type ProductUncheckedCreateWithoutStockPurchasesInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutStockPurchasesInput = {
@@ -2061,6 +3489,19 @@ export type ProductUpdateWithoutStockPurchasesInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -2073,6 +3514,15 @@ export type ProductUpdateWithoutStockPurchasesInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutStockPurchasesInput = {
@@ -2091,6 +3541,19 @@ export type ProductUncheckedUpdateWithoutStockPurchasesInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2100,6 +3563,15 @@ export type ProductUncheckedUpdateWithoutStockPurchasesInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutReturnItemsInput = {
@@ -2115,6 +3587,19 @@ export type ProductCreateWithoutReturnItemsInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -2127,6 +3612,15 @@ export type ProductCreateWithoutReturnItemsInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutReturnItemsInput = {
@@ -2145,6 +3639,19 @@ export type ProductUncheckedCreateWithoutReturnItemsInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -2154,6 +3661,15 @@ export type ProductUncheckedCreateWithoutReturnItemsInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutReturnItemsInput = {
@@ -2185,6 +3701,19 @@ export type ProductUpdateWithoutReturnItemsInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -2197,6 +3726,15 @@ export type ProductUpdateWithoutReturnItemsInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutReturnItemsInput = {
@@ -2215,6 +3753,19 @@ export type ProductUncheckedUpdateWithoutReturnItemsInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2224,6 +3775,1711 @@ export type ProductUncheckedUpdateWithoutReturnItemsInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutBatchesInput = {
+  id?: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
+  branch: Prisma.BranchCreateNestedOneWithoutProductsInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutProductsInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutBatchesInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  distributorId?: string | null
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutBatchesInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutBatchesInput, Prisma.ProductUncheckedCreateWithoutBatchesInput>
+}
+
+export type ProductUpsertWithoutBatchesInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutBatchesInput, Prisma.ProductUncheckedUpdateWithoutBatchesInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutBatchesInput, Prisma.ProductUncheckedCreateWithoutBatchesInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutBatchesInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutBatchesInput, Prisma.ProductUncheckedUpdateWithoutBatchesInput>
+}
+
+export type ProductUpdateWithoutBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutProductsNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutBatchesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUncheckedUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutMovementsInput = {
+  id?: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
+  branch: Prisma.BranchCreateNestedOneWithoutProductsInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutProductsInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutMovementsInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  distributorId?: string | null
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutMovementsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutMovementsInput, Prisma.ProductUncheckedCreateWithoutMovementsInput>
+}
+
+export type ProductUpsertWithoutMovementsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutMovementsInput, Prisma.ProductUncheckedUpdateWithoutMovementsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutMovementsInput, Prisma.ProductUncheckedCreateWithoutMovementsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutMovementsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutMovementsInput, Prisma.ProductUncheckedUpdateWithoutMovementsInput>
+}
+
+export type ProductUpdateWithoutMovementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutProductsNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutMovementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUncheckedUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutPurchaseInvoiceItemsInput = {
+  id?: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
+  branch: Prisma.BranchCreateNestedOneWithoutProductsInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutProductsInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutPurchaseInvoiceItemsInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  distributorId?: string | null
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutPurchaseInvoiceItemsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutPurchaseInvoiceItemsInput, Prisma.ProductUncheckedCreateWithoutPurchaseInvoiceItemsInput>
+}
+
+export type ProductUpsertWithoutPurchaseInvoiceItemsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutPurchaseInvoiceItemsInput, Prisma.ProductUncheckedUpdateWithoutPurchaseInvoiceItemsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutPurchaseInvoiceItemsInput, Prisma.ProductUncheckedCreateWithoutPurchaseInvoiceItemsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutPurchaseInvoiceItemsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutPurchaseInvoiceItemsInput, Prisma.ProductUncheckedUpdateWithoutPurchaseInvoiceItemsInput>
+}
+
+export type ProductUpdateWithoutPurchaseInvoiceItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutProductsNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutPurchaseInvoiceItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUncheckedUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutPrescriptionItemsInput = {
+  id?: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
+  branch: Prisma.BranchCreateNestedOneWithoutProductsInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutProductsInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutPrescriptionItemsInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  distributorId?: string | null
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutPrescriptionItemsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutPrescriptionItemsInput, Prisma.ProductUncheckedCreateWithoutPrescriptionItemsInput>
+}
+
+export type ProductUpsertWithoutPrescriptionItemsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutPrescriptionItemsInput, Prisma.ProductUncheckedUpdateWithoutPrescriptionItemsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutPrescriptionItemsInput, Prisma.ProductUncheckedCreateWithoutPrescriptionItemsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutPrescriptionItemsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutPrescriptionItemsInput, Prisma.ProductUncheckedUpdateWithoutPrescriptionItemsInput>
+}
+
+export type ProductUpdateWithoutPrescriptionItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutProductsNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutPrescriptionItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUncheckedUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutDispensedRecordsInput = {
+  id?: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
+  branch: Prisma.BranchCreateNestedOneWithoutProductsInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutProductsInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutDispensedRecordsInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  distributorId?: string | null
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutDispensedRecordsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutDispensedRecordsInput, Prisma.ProductUncheckedCreateWithoutDispensedRecordsInput>
+}
+
+export type ProductUpsertWithoutDispensedRecordsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutDispensedRecordsInput, Prisma.ProductUncheckedUpdateWithoutDispensedRecordsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutDispensedRecordsInput, Prisma.ProductUncheckedCreateWithoutDispensedRecordsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutDispensedRecordsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutDispensedRecordsInput, Prisma.ProductUncheckedUpdateWithoutDispensedRecordsInput>
+}
+
+export type ProductUpdateWithoutDispensedRecordsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutProductsNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutDispensedRecordsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUncheckedUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutControlledRegistersInput = {
+  id?: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
+  branch: Prisma.BranchCreateNestedOneWithoutProductsInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutProductsInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutControlledRegistersInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  distributorId?: string | null
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutControlledRegistersInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutControlledRegistersInput, Prisma.ProductUncheckedCreateWithoutControlledRegistersInput>
+}
+
+export type ProductUpsertWithoutControlledRegistersInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutControlledRegistersInput, Prisma.ProductUncheckedUpdateWithoutControlledRegistersInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutControlledRegistersInput, Prisma.ProductUncheckedCreateWithoutControlledRegistersInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutControlledRegistersInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutControlledRegistersInput, Prisma.ProductUncheckedUpdateWithoutControlledRegistersInput>
+}
+
+export type ProductUpdateWithoutControlledRegistersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutProductsNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutControlledRegistersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUncheckedUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutBranchPriceOverridesInput = {
+  id?: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
+  branch: Prisma.BranchCreateNestedOneWithoutProductsInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutProductsInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutBranchPriceOverridesInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  distributorId?: string | null
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutBranchPriceOverridesInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutBranchPriceOverridesInput, Prisma.ProductUncheckedCreateWithoutBranchPriceOverridesInput>
+}
+
+export type ProductUpsertWithoutBranchPriceOverridesInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutBranchPriceOverridesInput, Prisma.ProductUncheckedUpdateWithoutBranchPriceOverridesInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutBranchPriceOverridesInput, Prisma.ProductUncheckedCreateWithoutBranchPriceOverridesInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutBranchPriceOverridesInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutBranchPriceOverridesInput, Prisma.ProductUncheckedUpdateWithoutBranchPriceOverridesInput>
+}
+
+export type ProductUpdateWithoutBranchPriceOverridesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutProductsNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutBranchPriceOverridesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUncheckedUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutTransferItemsInput = {
+  id?: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
+  branch: Prisma.BranchCreateNestedOneWithoutProductsInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutProductsInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutTransferItemsInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  distributorId?: string | null
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutTransferItemsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutTransferItemsInput, Prisma.ProductUncheckedCreateWithoutTransferItemsInput>
+}
+
+export type ProductUpsertWithoutTransferItemsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutTransferItemsInput, Prisma.ProductUncheckedUpdateWithoutTransferItemsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutTransferItemsInput, Prisma.ProductUncheckedCreateWithoutTransferItemsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutTransferItemsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutTransferItemsInput, Prisma.ProductUncheckedUpdateWithoutTransferItemsInput>
+}
+
+export type ProductUpdateWithoutTransferItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutProductsNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutTransferItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUncheckedUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyPharmacyInput = {
@@ -2241,6 +5497,19 @@ export type ProductCreateManyPharmacyInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
 }
@@ -2258,6 +5527,19 @@ export type ProductUpdateWithoutPharmacyInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
@@ -2270,6 +5552,15 @@ export type ProductUpdateWithoutPharmacyInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutPharmacyInput = {
@@ -2287,6 +5578,19 @@ export type ProductUncheckedUpdateWithoutPharmacyInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2297,6 +5601,15 @@ export type ProductUncheckedUpdateWithoutPharmacyInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutPharmacyInput = {
@@ -2314,6 +5627,19 @@ export type ProductUncheckedUpdateManyWithoutPharmacyInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2333,6 +5659,19 @@ export type ProductCreateManyBranchInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
 }
@@ -2350,6 +5689,19 @@ export type ProductUpdateWithoutBranchInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -2362,6 +5714,15 @@ export type ProductUpdateWithoutBranchInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutBranchInput = {
@@ -2379,6 +5740,19 @@ export type ProductUncheckedUpdateWithoutBranchInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2389,6 +5763,15 @@ export type ProductUncheckedUpdateWithoutBranchInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutBranchInput = {
@@ -2406,6 +5789,19 @@ export type ProductUncheckedUpdateManyWithoutBranchInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2425,6 +5821,19 @@ export type ProductCreateManyDistributorInput = {
   stockQty?: number
   expiry?: string | null
   packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
   active?: number
   createdAt?: Date | string
 }
@@ -2442,6 +5851,19 @@ export type ProductUpdateWithoutDistributorInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -2454,6 +5876,15 @@ export type ProductUpdateWithoutDistributorInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutDistributorInput = {
@@ -2471,6 +5902,19 @@ export type ProductUncheckedUpdateWithoutDistributorInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2481,6 +5925,15 @@ export type ProductUncheckedUpdateWithoutDistributorInput = {
   distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
   purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
   recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutDistributorInput = {
@@ -2498,6 +5951,19 @@ export type ProductUncheckedUpdateManyWithoutDistributorInput = {
   stockQty?: Prisma.IntFieldUpdateOperationsInput | number
   expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2515,6 +5981,15 @@ export type ProductCountOutputType = {
   distributorConfigs: number
   purchaseOrderItems: number
   recommendations: number
+  batches: number
+  movements: number
+  purchaseInvoiceItems: number
+  prescriptionItems: number
+  dispensedRecords: number
+  controlledRegisters: number
+  chronicMedications: number
+  transferItems: number
+  branchPriceOverrides: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2525,6 +6000,15 @@ export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   distributorConfigs?: boolean | ProductCountOutputTypeCountDistributorConfigsArgs
   purchaseOrderItems?: boolean | ProductCountOutputTypeCountPurchaseOrderItemsArgs
   recommendations?: boolean | ProductCountOutputTypeCountRecommendationsArgs
+  batches?: boolean | ProductCountOutputTypeCountBatchesArgs
+  movements?: boolean | ProductCountOutputTypeCountMovementsArgs
+  purchaseInvoiceItems?: boolean | ProductCountOutputTypeCountPurchaseInvoiceItemsArgs
+  prescriptionItems?: boolean | ProductCountOutputTypeCountPrescriptionItemsArgs
+  dispensedRecords?: boolean | ProductCountOutputTypeCountDispensedRecordsArgs
+  controlledRegisters?: boolean | ProductCountOutputTypeCountControlledRegistersArgs
+  chronicMedications?: boolean | ProductCountOutputTypeCountChronicMedicationsArgs
+  transferItems?: boolean | ProductCountOutputTypeCountTransferItemsArgs
+  branchPriceOverrides?: boolean | ProductCountOutputTypeCountBranchPriceOverridesArgs
 }
 
 /**
@@ -2586,6 +6070,69 @@ export type ProductCountOutputTypeCountRecommendationsArgs<ExtArgs extends runti
   where?: Prisma.AIInventoryRecommendationWhereInput
 }
 
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountBatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BatchWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountMovementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockMovementWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountPurchaseInvoiceItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseInvoiceItemWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountPrescriptionItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PrescriptionItemWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountDispensedRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DispenseRecordWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountControlledRegistersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ControlledDrugRegisterWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountChronicMedicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChronicMedicationWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountTransferItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StockTransferItemWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountBranchPriceOverridesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.BranchPriceOverrideWhereInput
+}
+
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2603,6 +6150,19 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   stockQty?: boolean
   expiry?: boolean
   packSize?: boolean
+  nameEn?: boolean
+  nameAr?: boolean
+  genericName?: boolean
+  dosageForm?: boolean
+  strength?: boolean
+  sfdaCode?: boolean
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: boolean
+  baseUnit?: boolean
+  packageUnit?: boolean
+  unitsPerPack?: boolean
   active?: boolean
   createdAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
@@ -2616,6 +6176,15 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   distributorConfigs?: boolean | Prisma.Product$distributorConfigsArgs<ExtArgs>
   purchaseOrderItems?: boolean | Prisma.Product$purchaseOrderItemsArgs<ExtArgs>
   recommendations?: boolean | Prisma.Product$recommendationsArgs<ExtArgs>
+  batches?: boolean | Prisma.Product$batchesArgs<ExtArgs>
+  movements?: boolean | Prisma.Product$movementsArgs<ExtArgs>
+  purchaseInvoiceItems?: boolean | Prisma.Product$purchaseInvoiceItemsArgs<ExtArgs>
+  prescriptionItems?: boolean | Prisma.Product$prescriptionItemsArgs<ExtArgs>
+  dispensedRecords?: boolean | Prisma.Product$dispensedRecordsArgs<ExtArgs>
+  controlledRegisters?: boolean | Prisma.Product$controlledRegistersArgs<ExtArgs>
+  chronicMedications?: boolean | Prisma.Product$chronicMedicationsArgs<ExtArgs>
+  transferItems?: boolean | Prisma.Product$transferItemsArgs<ExtArgs>
+  branchPriceOverrides?: boolean | Prisma.Product$branchPriceOverridesArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -2635,6 +6204,19 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   stockQty?: boolean
   expiry?: boolean
   packSize?: boolean
+  nameEn?: boolean
+  nameAr?: boolean
+  genericName?: boolean
+  dosageForm?: boolean
+  strength?: boolean
+  sfdaCode?: boolean
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: boolean
+  baseUnit?: boolean
+  packageUnit?: boolean
+  unitsPerPack?: boolean
   active?: boolean
   createdAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
@@ -2658,6 +6240,19 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   stockQty?: boolean
   expiry?: boolean
   packSize?: boolean
+  nameEn?: boolean
+  nameAr?: boolean
+  genericName?: boolean
+  dosageForm?: boolean
+  strength?: boolean
+  sfdaCode?: boolean
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: boolean
+  baseUnit?: boolean
+  packageUnit?: boolean
+  unitsPerPack?: boolean
   active?: boolean
   createdAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
@@ -2681,11 +6276,24 @@ export type ProductSelectScalar = {
   stockQty?: boolean
   expiry?: boolean
   packSize?: boolean
+  nameEn?: boolean
+  nameAr?: boolean
+  genericName?: boolean
+  dosageForm?: boolean
+  strength?: boolean
+  sfdaCode?: boolean
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: boolean
+  baseUnit?: boolean
+  packageUnit?: boolean
+  unitsPerPack?: boolean
   active?: boolean
   createdAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "barcode" | "name" | "company" | "category" | "location" | "distributorId" | "salePrice" | "purchasePrice" | "markupPercent" | "stockQty" | "expiry" | "packSize" | "active" | "createdAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "barcode" | "name" | "company" | "category" | "location" | "distributorId" | "salePrice" | "purchasePrice" | "markupPercent" | "stockQty" | "expiry" | "packSize" | "nameEn" | "nameAr" | "genericName" | "dosageForm" | "strength" | "sfdaCode" | "isRx" | "isControlled" | "isPriceRegulated" | "publicPrice" | "baseUnit" | "packageUnit" | "unitsPerPack" | "active" | "createdAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
@@ -2698,6 +6306,15 @@ export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   distributorConfigs?: boolean | Prisma.Product$distributorConfigsArgs<ExtArgs>
   purchaseOrderItems?: boolean | Prisma.Product$purchaseOrderItemsArgs<ExtArgs>
   recommendations?: boolean | Prisma.Product$recommendationsArgs<ExtArgs>
+  batches?: boolean | Prisma.Product$batchesArgs<ExtArgs>
+  movements?: boolean | Prisma.Product$movementsArgs<ExtArgs>
+  purchaseInvoiceItems?: boolean | Prisma.Product$purchaseInvoiceItemsArgs<ExtArgs>
+  prescriptionItems?: boolean | Prisma.Product$prescriptionItemsArgs<ExtArgs>
+  dispensedRecords?: boolean | Prisma.Product$dispensedRecordsArgs<ExtArgs>
+  controlledRegisters?: boolean | Prisma.Product$controlledRegistersArgs<ExtArgs>
+  chronicMedications?: boolean | Prisma.Product$chronicMedicationsArgs<ExtArgs>
+  transferItems?: boolean | Prisma.Product$transferItemsArgs<ExtArgs>
+  branchPriceOverrides?: boolean | Prisma.Product$branchPriceOverridesArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2725,6 +6342,15 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     distributorConfigs: Prisma.$ProductDistributorConfigPayload<ExtArgs>[]
     purchaseOrderItems: Prisma.$PurchaseOrderItemPayload<ExtArgs>[]
     recommendations: Prisma.$AIInventoryRecommendationPayload<ExtArgs>[]
+    batches: Prisma.$BatchPayload<ExtArgs>[]
+    movements: Prisma.$StockMovementPayload<ExtArgs>[]
+    purchaseInvoiceItems: Prisma.$PurchaseInvoiceItemPayload<ExtArgs>[]
+    prescriptionItems: Prisma.$PrescriptionItemPayload<ExtArgs>[]
+    dispensedRecords: Prisma.$DispenseRecordPayload<ExtArgs>[]
+    controlledRegisters: Prisma.$ControlledDrugRegisterPayload<ExtArgs>[]
+    chronicMedications: Prisma.$ChronicMedicationPayload<ExtArgs>[]
+    transferItems: Prisma.$StockTransferItemPayload<ExtArgs>[]
+    branchPriceOverrides: Prisma.$BranchPriceOverridePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2742,6 +6368,19 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     stockQty: number
     expiry: string | null
     packSize: number
+    nameEn: string
+    nameAr: string
+    genericName: string
+    dosageForm: string
+    strength: string
+    sfdaCode: string | null
+    isRx: boolean
+    isControlled: boolean
+    isPriceRegulated: boolean
+    publicPrice: runtime.Decimal
+    baseUnit: string
+    packageUnit: string
+    unitsPerPack: number
     active: number
     createdAt: Date
   }, ExtArgs["result"]["product"]>
@@ -3149,6 +6788,15 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   distributorConfigs<T extends Prisma.Product$distributorConfigsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$distributorConfigsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductDistributorConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   purchaseOrderItems<T extends Prisma.Product$purchaseOrderItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$purchaseOrderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseOrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   recommendations<T extends Prisma.Product$recommendationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$recommendationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AIInventoryRecommendationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  batches<T extends Prisma.Product$batchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$batchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  movements<T extends Prisma.Product$movementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$movementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  purchaseInvoiceItems<T extends Prisma.Product$purchaseInvoiceItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$purchaseInvoiceItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseInvoiceItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  prescriptionItems<T extends Prisma.Product$prescriptionItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$prescriptionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PrescriptionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  dispensedRecords<T extends Prisma.Product$dispensedRecordsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$dispensedRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DispenseRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  controlledRegisters<T extends Prisma.Product$controlledRegistersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$controlledRegistersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ControlledDrugRegisterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  chronicMedications<T extends Prisma.Product$chronicMedicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$chronicMedicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChronicMedicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transferItems<T extends Prisma.Product$transferItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$transferItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockTransferItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  branchPriceOverrides<T extends Prisma.Product$branchPriceOverridesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$branchPriceOverridesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BranchPriceOverridePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3193,6 +6841,19 @@ export interface ProductFieldRefs {
   readonly stockQty: Prisma.FieldRef<"Product", 'Int'>
   readonly expiry: Prisma.FieldRef<"Product", 'String'>
   readonly packSize: Prisma.FieldRef<"Product", 'Int'>
+  readonly nameEn: Prisma.FieldRef<"Product", 'String'>
+  readonly nameAr: Prisma.FieldRef<"Product", 'String'>
+  readonly genericName: Prisma.FieldRef<"Product", 'String'>
+  readonly dosageForm: Prisma.FieldRef<"Product", 'String'>
+  readonly strength: Prisma.FieldRef<"Product", 'String'>
+  readonly sfdaCode: Prisma.FieldRef<"Product", 'String'>
+  readonly isRx: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly isControlled: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly isPriceRegulated: Prisma.FieldRef<"Product", 'Boolean'>
+  readonly publicPrice: Prisma.FieldRef<"Product", 'Decimal'>
+  readonly baseUnit: Prisma.FieldRef<"Product", 'String'>
+  readonly packageUnit: Prisma.FieldRef<"Product", 'String'>
+  readonly unitsPerPack: Prisma.FieldRef<"Product", 'Int'>
   readonly active: Prisma.FieldRef<"Product", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
 }
@@ -3799,6 +7460,222 @@ export type Product$recommendationsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.AIInventoryRecommendationScalarFieldEnum | Prisma.AIInventoryRecommendationScalarFieldEnum[]
+}
+
+/**
+ * Product.batches
+ */
+export type Product$batchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Batch
+   */
+  select?: Prisma.BatchSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Batch
+   */
+  omit?: Prisma.BatchOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BatchInclude<ExtArgs> | null
+  where?: Prisma.BatchWhereInput
+  orderBy?: Prisma.BatchOrderByWithRelationInput | Prisma.BatchOrderByWithRelationInput[]
+  cursor?: Prisma.BatchWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BatchScalarFieldEnum | Prisma.BatchScalarFieldEnum[]
+}
+
+/**
+ * Product.movements
+ */
+export type Product$movementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockMovement
+   */
+  select?: Prisma.StockMovementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockMovement
+   */
+  omit?: Prisma.StockMovementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockMovementInclude<ExtArgs> | null
+  where?: Prisma.StockMovementWhereInput
+  orderBy?: Prisma.StockMovementOrderByWithRelationInput | Prisma.StockMovementOrderByWithRelationInput[]
+  cursor?: Prisma.StockMovementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockMovementScalarFieldEnum | Prisma.StockMovementScalarFieldEnum[]
+}
+
+/**
+ * Product.purchaseInvoiceItems
+ */
+export type Product$purchaseInvoiceItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseInvoiceItem
+   */
+  select?: Prisma.PurchaseInvoiceItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseInvoiceItem
+   */
+  omit?: Prisma.PurchaseInvoiceItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseInvoiceItemInclude<ExtArgs> | null
+  where?: Prisma.PurchaseInvoiceItemWhereInput
+  orderBy?: Prisma.PurchaseInvoiceItemOrderByWithRelationInput | Prisma.PurchaseInvoiceItemOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseInvoiceItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseInvoiceItemScalarFieldEnum | Prisma.PurchaseInvoiceItemScalarFieldEnum[]
+}
+
+/**
+ * Product.prescriptionItems
+ */
+export type Product$prescriptionItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PrescriptionItem
+   */
+  select?: Prisma.PrescriptionItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PrescriptionItem
+   */
+  omit?: Prisma.PrescriptionItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PrescriptionItemInclude<ExtArgs> | null
+  where?: Prisma.PrescriptionItemWhereInput
+  orderBy?: Prisma.PrescriptionItemOrderByWithRelationInput | Prisma.PrescriptionItemOrderByWithRelationInput[]
+  cursor?: Prisma.PrescriptionItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PrescriptionItemScalarFieldEnum | Prisma.PrescriptionItemScalarFieldEnum[]
+}
+
+/**
+ * Product.dispensedRecords
+ */
+export type Product$dispensedRecordsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DispenseRecord
+   */
+  select?: Prisma.DispenseRecordSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DispenseRecord
+   */
+  omit?: Prisma.DispenseRecordOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DispenseRecordInclude<ExtArgs> | null
+  where?: Prisma.DispenseRecordWhereInput
+  orderBy?: Prisma.DispenseRecordOrderByWithRelationInput | Prisma.DispenseRecordOrderByWithRelationInput[]
+  cursor?: Prisma.DispenseRecordWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DispenseRecordScalarFieldEnum | Prisma.DispenseRecordScalarFieldEnum[]
+}
+
+/**
+ * Product.controlledRegisters
+ */
+export type Product$controlledRegistersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ControlledDrugRegister
+   */
+  select?: Prisma.ControlledDrugRegisterSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ControlledDrugRegister
+   */
+  omit?: Prisma.ControlledDrugRegisterOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ControlledDrugRegisterInclude<ExtArgs> | null
+  where?: Prisma.ControlledDrugRegisterWhereInput
+  orderBy?: Prisma.ControlledDrugRegisterOrderByWithRelationInput | Prisma.ControlledDrugRegisterOrderByWithRelationInput[]
+  cursor?: Prisma.ControlledDrugRegisterWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ControlledDrugRegisterScalarFieldEnum | Prisma.ControlledDrugRegisterScalarFieldEnum[]
+}
+
+/**
+ * Product.chronicMedications
+ */
+export type Product$chronicMedicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChronicMedication
+   */
+  select?: Prisma.ChronicMedicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChronicMedication
+   */
+  omit?: Prisma.ChronicMedicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChronicMedicationInclude<ExtArgs> | null
+  where?: Prisma.ChronicMedicationWhereInput
+  orderBy?: Prisma.ChronicMedicationOrderByWithRelationInput | Prisma.ChronicMedicationOrderByWithRelationInput[]
+  cursor?: Prisma.ChronicMedicationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChronicMedicationScalarFieldEnum | Prisma.ChronicMedicationScalarFieldEnum[]
+}
+
+/**
+ * Product.transferItems
+ */
+export type Product$transferItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StockTransferItem
+   */
+  select?: Prisma.StockTransferItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StockTransferItem
+   */
+  omit?: Prisma.StockTransferItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StockTransferItemInclude<ExtArgs> | null
+  where?: Prisma.StockTransferItemWhereInput
+  orderBy?: Prisma.StockTransferItemOrderByWithRelationInput | Prisma.StockTransferItemOrderByWithRelationInput[]
+  cursor?: Prisma.StockTransferItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StockTransferItemScalarFieldEnum | Prisma.StockTransferItemScalarFieldEnum[]
+}
+
+/**
+ * Product.branchPriceOverrides
+ */
+export type Product$branchPriceOverridesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BranchPriceOverride
+   */
+  select?: Prisma.BranchPriceOverrideSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the BranchPriceOverride
+   */
+  omit?: Prisma.BranchPriceOverrideOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.BranchPriceOverrideInclude<ExtArgs> | null
+  where?: Prisma.BranchPriceOverrideWhereInput
+  orderBy?: Prisma.BranchPriceOverrideOrderByWithRelationInput | Prisma.BranchPriceOverrideOrderByWithRelationInput[]
+  cursor?: Prisma.BranchPriceOverrideWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.BranchPriceOverrideScalarFieldEnum | Prisma.BranchPriceOverrideScalarFieldEnum[]
 }
 
 /**

@@ -88,7 +88,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (state.refreshToken) return;
-    refreshAccessToken();
+    const timer = setTimeout(() => {
+      void refreshAccessToken();
+    }, 0);
+    return () => clearTimeout(timer);
   }, [refreshAccessToken, state.refreshToken]);
 
   useEffect(() => {

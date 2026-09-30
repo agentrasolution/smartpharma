@@ -16,11 +16,13 @@ import Billing from "@/pages/Billing";
 import PlatformAdmin from "@/pages/PlatformAdmin";
 import Dashboard from "@/pages/Dashboard";
 import POS from "@/pages/POS";
+import Dispensing from "@/pages/Dispensing";
 import Products from "@/pages/Products";
 import Customers from "@/pages/Customers";
 import CustomerDetail from "@/pages/CustomerDetail";
 import Arrears from "@/pages/Arrears";
 import Stock from "@/pages/Stock";
+import Inventory from "@/pages/Inventory";
 import Distributors from "@/pages/Distributors";
 import Companies from "@/pages/Companies";
 import Returns from "@/pages/Returns";
@@ -204,11 +206,13 @@ function AppShell() {
           <>
             <Route path="/dashboard" element={<AnimatedPage><Dashboard /></AnimatedPage>} />
             <Route path="/pos" element={<AnimatedPage><POS /></AnimatedPage>} />
+            <Route path="/dispensing" element={<AnimatedPage><Dispensing /></AnimatedPage>} />
             <Route path="/products" element={<AnimatedPage><Products /></AnimatedPage>} />
             <Route path="/customers" element={<AnimatedPage><Customers /></AnimatedPage>} />
             <Route path="/customers/:id" element={<AnimatedPage><CustomerDetail /></AnimatedPage>} />
             <Route path="/arrears" element={<AnimatedPage><Arrears /></AnimatedPage>} />
             <Route path="/stock" element={<AnimatedPage><Stock /></AnimatedPage>} />
+            <Route path="/inventory" element={<AnimatedPage><Inventory /></AnimatedPage>} />
             <Route path="/distributors" element={<AnimatedPage><Distributors /></AnimatedPage>} />
             <Route path="/companies" element={<AnimatedPage><Companies /></AnimatedPage>} />
             <Route path="/barcodes" element={<AnimatedPage><Barcodes /></AnimatedPage>} />

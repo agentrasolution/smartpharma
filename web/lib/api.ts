@@ -6,11 +6,20 @@ import type {
   AISummary, AIReorderCandidate, RiskLevel, AIRecommendation,
   AIRecommendationSummary, AIChatReply, AIConversation, AIConversationDetail,
   AIAuditLog, PurchaseOrder, PurchaseOrderStatus,
+  PurchaseInvoice, CreatePurchaseInvoiceInput, DistributorPaymentRecord,
+  RecordSupplierPaymentInput, DistributorLedger, SuppliersLedgerSummary,
   AIConfig, AITestResult,
   AuthUser, RegisterInput, Pharmacy, SubscriptionInfo,
   Permission, RoleListItem, RoleInput,
   UserListItem, UserInput, UpdateUserInput,
   Branch, BranchInput,
+  DrugMasterProduct, DrugMasterDetail, DrugMasterSearchParams,
+  DrugMasterSearchResult, DrugMasterUpdateInput, BulkImportRow,
+  BulkImportResult, ExpiryScanResult,
+  Prescription, ControlledDrugRegister, SubstitutionSuggestionResult,
+  ChronicMedication, ChronicMedicationInput, RefillQueueItem, CustomerStatement,
+  StockTransfer, CreateTransferInput, BranchPriceOverride, BranchPriceOverrideInput, CrossBranchStockResponse,
+  MarginReport, LossReport, StockValuation, ProfitAndLoss,
 } from "@/types";
 import type { BackupResult, BackupEntry, GDriveConfig } from "@/types/electron";
 
@@ -57,6 +66,23 @@ async function fetchJson<T>(method: string, path: string, body?: unknown, auth =
     throw new ApiError(err.error || `API error: ${res.status}`, res.status, err.code);
   }
   return res.json();
+}
+
+async function fetchText(path: string, auth = true): Promise<string> {
+  const headers: Record<string, string> = {};
+  if (auth) {
+    const token = getToken();
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+  }
+  const res = await fetch(`${getApiUrl()}${path}`, {
+    method: "GET",
+    headers,
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+    throw new ApiError(err.error || `API error: ${res.status}`, res.status);
+  }
+  return res.text();
 }
 
 const api = {
@@ -157,6 +183,21 @@ const api = {
     delete: (id: string, opts?: { force?: boolean }): Promise<{ success: boolean }> =>
       fetchJson("DELETE", `/api/customers/${id}${opts?.force ? "?force=true" : ""}`),
     getById: (id: string): Promise<Customer | null> => fetchJson("GET", `/api/customers/${id}`),
+    getStatement: (id: string): Promise<CustomerStatement> => fetchJson("GET", `/api/customers/${id}/statement`),
+    refillQueue: (filter?: "all" | "dueSoon" | "dueToday" | "overdue"): Promise<RefillQueueItem[]> =>
+      fetchJson("GET", `/api/customers/refills/queue${filter ? `?filter=${filter}` : ""}`),
+    listChronic: (customerId: string): Promise<ChronicMedication[]> =>
+      fetchJson("GET", `/api/customers/${customerId}/chronic-medications`),
+    addChronic: (med: ChronicMedicationInput): Promise<ChronicMedication> =>
+      fetchJson("POST", "/api/customers/chronic-medications", med),
+    updateChronic: (medId: string, med: Partial<ChronicMedicationInput> & { status?: string }): Promise<ChronicMedication> =>
+      fetchJson("PUT", `/api/customers/chronic-medications/${medId}`, med),
+    deleteChronic: (medId: string): Promise<{ success: boolean }> =>
+      fetchJson("DELETE", `/api/customers/chronic-medications/${medId}`),
+    recordContact: (medId: string, notes: string): Promise<ChronicMedication> =>
+      fetchJson("POST", `/api/customers/chronic-medications/${medId}/contact`, { notes }),
+    recordRefill: (medId: string, data: { dispensedDate?: string; daysSupply?: number; notes?: string }): Promise<ChronicMedication> =>
+      fetchJson("POST", `/api/customers/chronic-medications/${medId}/refill`, data),
   },
   arrears: {
     list: (status?: string): Promise<Arrear[]> => fetchJson("GET", `/api/arrears${status ? `?status=${status}` : ""}`),
@@ -173,11 +214,31 @@ const api = {
     update: (id: string, p: StockInput): Promise<StockPurchase> => fetchJson("PUT", `/api/stock/${id}`, p),
     delete: (id: string): Promise<{ success: boolean }> => fetchJson("DELETE", `/api/stock/${id}`),
   },
+  purchaseInvoices: {
+    list: (opts?: { distributorId?: string; status?: string; dateFrom?: string; dateTo?: string; search?: string }): Promise<PurchaseInvoice[]> => {
+      const params = new URLSearchParams();
+      if (opts?.distributorId) params.set("distributorId", opts.distributorId);
+      if (opts?.status) params.set("status", opts.status);
+      if (opts?.dateFrom) params.set("dateFrom", opts.dateFrom);
+      if (opts?.dateTo) params.set("dateTo", opts.dateTo);
+      if (opts?.search) params.set("search", opts.search);
+      const qs = params.toString();
+      return fetchJson("GET", `/api/purchase-invoices${qs ? `?${qs}` : ""}`);
+    },
+    getById: (id: string): Promise<PurchaseInvoice> => fetchJson("GET", `/api/purchase-invoices/${id}`),
+    create: (data: CreatePurchaseInvoiceInput): Promise<PurchaseInvoice> => fetchJson("POST", "/api/purchase-invoices", data),
+    recordPayment: (distributorId: string, data: RecordSupplierPaymentInput): Promise<{ payment: DistributorPaymentRecord; invoice: PurchaseInvoice | null }> =>
+      fetchJson("POST", `/api/distributors/${distributorId}/payments`, data),
+  },
   distributors: {
     list: (): Promise<Distributor[]> => fetchJson("GET", "/api/distributors"),
     create: (d: DistributorInput): Promise<Distributor> => fetchJson("POST", "/api/distributors", d),
     update: (id: string, d: DistributorInput): Promise<Distributor> => fetchJson("PUT", `/api/distributors/${id}`, d),
     delete: (id: string): Promise<{ success: boolean }> => fetchJson("DELETE", `/api/distributors/${id}`),
+    getLedger: (id: string): Promise<DistributorLedger> => fetchJson("GET", `/api/distributors/${id}/ledger`),
+    getSummary: (): Promise<SuppliersLedgerSummary> => fetchJson("GET", "/api/distributors/ledger/summary"),
+    recordPayment: (id: string, data: RecordSupplierPaymentInput): Promise<{ payment: DistributorPaymentRecord; invoice: PurchaseInvoice | null }> =>
+      fetchJson("POST", `/api/distributors/${id}/payments`, data),
   },
   companies: {
     list: (): Promise<Company[]> => fetchJson("GET", "/api/companies"),
@@ -204,6 +265,52 @@ const api = {
   },
   dashboard: {
     stats: (): Promise<DashboardStats> => fetchJson("GET", "/api/dashboard/stats"),
+  },
+  reports: {
+    stats: (): Promise<DashboardStats> => fetchJson("GET", "/api/reports/stats"),
+    margins: (params?: { startDate?: string; endDate?: string; branchId?: string; groupBy?: "drug" | "category" | "supplier" | "branch" }): Promise<MarginReport> => {
+      const q = new URLSearchParams();
+      if (params?.startDate) q.append("startDate", params.startDate);
+      if (params?.endDate) q.append("endDate", params.endDate);
+      if (params?.branchId) q.append("branchId", params.branchId);
+      if (params?.groupBy) q.append("groupBy", params.groupBy);
+      const queryStr = q.toString() ? `?${q.toString()}` : "";
+      return fetchJson("GET", `/api/reports/margins${queryStr}`);
+    },
+    losses: (params?: { startDate?: string; endDate?: string; branchId?: string }): Promise<LossReport> => {
+      const q = new URLSearchParams();
+      if (params?.startDate) q.append("startDate", params.startDate);
+      if (params?.endDate) q.append("endDate", params.endDate);
+      if (params?.branchId) q.append("branchId", params.branchId);
+      const queryStr = q.toString() ? `?${q.toString()}` : "";
+      return fetchJson("GET", `/api/reports/losses${queryStr}`);
+    },
+    valuation: (branchId?: string): Promise<StockValuation> => {
+      const queryStr = branchId ? `?branchId=${branchId}` : "";
+      return fetchJson("GET", `/api/reports/valuation${queryStr}`);
+    },
+    profitAndLoss: (params?: { startDate?: string; endDate?: string; branchId?: string }): Promise<ProfitAndLoss> => {
+      const q = new URLSearchParams();
+      if (params?.startDate) q.append("startDate", params.startDate);
+      if (params?.endDate) q.append("endDate", params.endDate);
+      if (params?.branchId) q.append("branchId", params.branchId);
+      const queryStr = q.toString() ? `?${q.toString()}` : "";
+      return fetchJson("GET", `/api/reports/profit-loss${queryStr}`);
+    },
+    exportCsv: async (params: { type: "sales_cogs" | "margin" | "valuation" | "pnl"; startDate?: string; endDate?: string; branchId?: string; groupBy?: string }): Promise<{ filename: string; csv: string }> => {
+      const q = new URLSearchParams();
+      q.append("type", params.type);
+      q.append("format", "csv");
+      if (params.startDate) q.append("startDate", params.startDate);
+      if (params.endDate) q.append("endDate", params.endDate);
+      if (params.branchId) q.append("branchId", params.branchId);
+      if (params.groupBy) q.append("groupBy", params.groupBy);
+      const text = await fetchText(`/api/reports/export?${q.toString()}`);
+      return {
+        filename: `${params.type}-report-${Date.now()}.csv`,
+        csv: text,
+      };
+    },
   },
   settings: {
     backupCreate: (): Promise<BackupResult> => fetchJson("POST", "/api/settings/backup"),
@@ -322,6 +429,131 @@ const api = {
       fetchJson("PATCH", `/api/branches/${id}`, input),
     remove: (id: string): Promise<{ success: boolean }> =>
       fetchJson("DELETE", `/api/branches/${id}`),
+    getPriceOverrides: (branchId: string): Promise<{ branch: { id: string; name: string; allowPriceOverride: boolean }; overrides: BranchPriceOverride[] }> =>
+      fetchJson("GET", `/api/branches/${branchId}/price-overrides`),
+    setPriceOverride: (branchId: string, input: BranchPriceOverrideInput): Promise<BranchPriceOverride> =>
+      fetchJson("POST", `/api/branches/${branchId}/price-overrides`, input),
+    deletePriceOverride: (branchId: string, productId: string): Promise<{ success: boolean }> =>
+      fetchJson("DELETE", `/api/branches/${branchId}/price-overrides/${productId}`),
+    crossBranchStock: (params: { productId?: string; barcode?: string }): Promise<CrossBranchStockResponse> => {
+      const qs = new URLSearchParams();
+      if (params.productId) qs.set("productId", params.productId);
+      if (params.barcode) qs.set("barcode", params.barcode);
+      return fetchJson("GET", `/api/branches/cross-stock?${qs.toString()}`);
+    },
+  },
+  transfers: {
+    list: (params?: { branchId?: string; direction?: string; status?: string; search?: string; page?: number; pageSize?: number }): Promise<{ data: StockTransfer[]; total: number; page: number; pageSize: number }> => {
+      const qs = new URLSearchParams();
+      if (params?.branchId) qs.set("branchId", params.branchId);
+      if (params?.direction) qs.set("direction", params.direction);
+      if (params?.status) qs.set("status", params.status);
+      if (params?.search) qs.set("search", params.search);
+      if (params?.page) qs.set("page", String(params.page));
+      if (params?.pageSize) qs.set("pageSize", String(params.pageSize));
+      return fetchJson("GET", `/api/transfers?${qs.toString()}`);
+    },
+    getById: (id: string): Promise<StockTransfer> => fetchJson("GET", `/api/transfers/${id}`),
+    create: (input: CreateTransferInput): Promise<StockTransfer> => fetchJson("POST", "/api/transfers", input),
+    send: (id: string): Promise<StockTransfer> => fetchJson("POST", `/api/transfers/${id}/send`),
+    receive: (id: string): Promise<StockTransfer> => fetchJson("POST", `/api/transfers/${id}/receive`),
+    reject: (id: string, reason?: string): Promise<StockTransfer> =>
+      fetchJson("POST", `/api/transfers/${id}/reject`, { reason }),
+    cancel: (id: string): Promise<StockTransfer> => fetchJson("POST", `/api/transfers/${id}/cancel`),
+    crossBranchStock: (params: { productId?: string; barcode?: string }): Promise<CrossBranchStockResponse> => {
+      const qs = new URLSearchParams();
+      if (params.productId) qs.set("productId", params.productId);
+      if (params.barcode) qs.set("barcode", params.barcode);
+      return fetchJson("GET", `/api/transfers/cross-stock?${qs.toString()}`);
+    },
+  },
+  drugMaster: {
+    search: (params?: DrugMasterSearchParams): Promise<DrugMasterSearchResult> => {
+      const qs = new URLSearchParams();
+      if (params?.q) qs.set("q", params.q);
+      if (params?.isRx !== undefined) qs.set("isRx", String(params.isRx));
+      if (params?.isControlled !== undefined) qs.set("isControlled", String(params.isControlled));
+      if (params?.dosageForm) qs.set("dosageForm", params.dosageForm);
+      if (params?.category) qs.set("category", params.category);
+      if (params?.page) qs.set("page", String(params.page));
+      if (params?.limit) qs.set("limit", String(params.limit));
+      const qStr = qs.toString();
+      return fetchJson("GET", `/api/products/drug-master${qStr ? `?${qStr}` : ""}`);
+    },
+    getById: (id: string): Promise<DrugMasterDetail> =>
+      fetchJson("GET", `/api/products/drug-master/${id}`),
+    update: (id: string, input: DrugMasterUpdateInput): Promise<DrugMasterProduct> =>
+      fetchJson("PATCH", `/api/products/drug-master/${id}`, input),
+    bulkImport: (rows: BulkImportRow[]): Promise<BulkImportResult> =>
+      fetchJson("POST", "/api/products/drug-master/bulk-import", rows),
+    listIncomplete: (page = 1, limit = 50): Promise<DrugMasterSearchResult> =>
+      fetchJson("GET", `/api/products/drug-master/incomplete?page=${page}&limit=${limit}`),
+    listDosageForms: (): Promise<string[]> =>
+      fetchJson("GET", "/api/products/drug-master/dosage-forms"),
+    runExpiryScan: (days?: number): Promise<ExpiryScanResult> =>
+      fetchJson("POST", `/api/products/drug-master/run-expiry-scan${days ? `?days=${days}` : ""}`),
+  },
+  prescriptions: {
+    list: (params?: { status?: string; search?: string; patientIdentifier?: string; dateFrom?: string; dateTo?: string }): Promise<Prescription[]> => {
+      const qs = new URLSearchParams();
+      if (params?.status) qs.set("status", params.status);
+      if (params?.search) qs.set("search", params.search);
+      if (params?.patientIdentifier) qs.set("patientIdentifier", params.patientIdentifier);
+      if (params?.dateFrom) qs.set("dateFrom", params.dateFrom);
+      if (params?.dateTo) qs.set("dateTo", params.dateTo);
+      return fetchJson("GET", `/api/v1/prescriptions${qs.toString() ? `?${qs}` : ""}`);
+    },
+    getById: (id: string): Promise<Prescription> =>
+      fetchJson("GET", `/api/v1/prescriptions/${id}`),
+    create: (data: {
+      prescriptionNumber?: string;
+      patientName: string;
+      patientIdentifier?: string;
+      patientPhone?: string;
+      patientAge?: number | null;
+      patientGender?: string | null;
+      doctorName: string;
+      doctorLicense?: string;
+      clinicOrHospital?: string;
+      diagnosis?: string;
+      prescribedDate?: string;
+      notes?: string;
+      items: Array<{
+        prescribedDrugName: string;
+        productId?: string | null;
+        dosage?: string;
+        frequency?: string;
+        duration?: string;
+        instructions?: string;
+        quantityPrescribed: number;
+        isControlled?: boolean;
+      }>;
+    }): Promise<Prescription> => fetchJson("POST", "/api/v1/prescriptions", data),
+    verify: (id: string, data: { verified: boolean; notes?: string }): Promise<Prescription> =>
+      fetchJson("POST", `/api/v1/prescriptions/${id}/verify`, data),
+    dispense: (id: string, data: {
+      items: Array<{
+        prescriptionItemId: string;
+        dispensedProductId: string;
+        batchId?: string | null;
+        quantity: number;
+        isSubstitution?: boolean;
+        substitutionReason?: string | null;
+        notes?: string;
+        witnessName?: string | null;
+      }>;
+      notes?: string;
+    }): Promise<Prescription> => fetchJson("POST", `/api/v1/prescriptions/${id}/dispense`, data),
+    suggestSubstitutions: (productId: string): Promise<SubstitutionSuggestionResult> =>
+      fetchJson("GET", `/api/v1/prescriptions/substitutions/suggest?productId=${productId}`),
+    controlledRegister: (params?: { productId?: string; search?: string; dateFrom?: string; dateTo?: string }): Promise<ControlledDrugRegister[]> => {
+      const qs = new URLSearchParams();
+      if (params?.productId) qs.set("productId", params.productId);
+      if (params?.search) qs.set("search", params.search);
+      if (params?.dateFrom) qs.set("dateFrom", params.dateFrom);
+      if (params?.dateTo) qs.set("dateTo", params.dateTo);
+      return fetchJson("GET", `/api/v1/prescriptions/controlled-register${qs.toString() ? `?${qs}` : ""}`);
+    },
   },
 };
 

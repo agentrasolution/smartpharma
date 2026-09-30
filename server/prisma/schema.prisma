@@ -39,6 +39,13 @@ model Pharmacy {
   arrears      Arrear[]
   expenses     Expense[]
   purchaseOrders PurchaseOrder[]
+  purchaseInvoices PurchaseInvoice[]
+  distributorPayments DistributorPayment[]
+  prescriptions Prescription[]
+  controlledRegisters ControlledDrugRegister[]
+  chronicMedications ChronicMedication[]
+  stockTransfers     StockTransfer[]
+  branchPriceOverrides BranchPriceOverride[]
 
   @@map("pharmacies")
 }
@@ -271,6 +278,17 @@ model Branch {
   arrears    Arrear[]
   expenses   Expense[]
   purchaseOrders PurchaseOrder[]
+  batches        Batch[]
+  stockMovements StockMovement[]
+  purchaseInvoices PurchaseInvoice[]
+  distributorPayments DistributorPayment[]
+  prescriptions Prescription[]
+  controlledRegisters ControlledDrugRegister[]
+  chronicMedications ChronicMedication[]
+  allowPriceOverride  Boolean               @default(true) @map("allow_price_override")
+  transfersSent       StockTransfer[]       @relation("TransfersSent")
+  transfersReceived   StockTransfer[]       @relation("TransfersReceived")
+  branchPriceOverrides BranchPriceOverride[]
 
   @@index([pharmacyId])
   @@map("branches")
@@ -352,6 +370,20 @@ model Product {
   stockQty       Int              @default(0) @map("stock_qty")
   expiry         String?
   packSize       Int              @default(1) @map("pack_size")
+  // ---- Drug Master Data ----
+  nameEn                String   @default("") @map("name_en")
+  nameAr                String   @default("") @map("name_ar")
+  genericName           String   @default("") @map("generic_name")
+  dosageForm            String   @default("TABLET") @map("dosage_form")
+  strength              String   @default("") @map("strength")
+  sfdaCode              String?  @map("sfda_code")
+  isRx                  Boolean  @default(false) @map("is_rx")
+  isControlled          Boolean  @default(false) @map("is_controlled")
+  isPriceRegulated      Boolean  @default(false) @map("is_price_regulated")
+  publicPrice           Decimal  @default(0) @db.Decimal(12,4) @map("public_price")
+  baseUnit              String   @default("TABLET") @map("base_unit")
+  packageUnit           String   @default("BOX") @map("package_unit")
+  unitsPerPack          Int      @default(1) @map("units_per_pack")
   active         Int              @default(1)
   createdAt      DateTime         @default(now()) @map("created_at")
   pharmacy       Pharmacy         @relation(fields: [pharmacyId], references: [id])
@@ -365,6 +397,15 @@ model Product {
   distributorConfigs ProductDistributorConfig[]
   purchaseOrderItems PurchaseOrderItem[]
   recommendations    AIInventoryRecommendation[]
+  batches            Batch[]
+  movements          StockMovement[]
+  purchaseInvoiceItems PurchaseInvoiceItem[]
+  prescriptionItems    PrescriptionItem[]
+  dispensedRecords     DispenseRecord[] @relation("DispensedProduct")
+  controlledRegisters  ControlledDrugRegister[]
+  chronicMedications   ChronicMedication[]
+  transferItems        StockTransferItem[]
+  branchPriceOverrides BranchPriceOverride[]
 
   @@unique([branchId, barcode])
   @@index([pharmacyId])
@@ -414,6 +455,8 @@ model Distributor {
   inventoryConfig DistributorInventoryConfig?
   productConfigs ProductDistributorConfig[]
   purchaseOrders PurchaseOrder[]
+  purchaseInvoices PurchaseInvoice[]
+  distributorPayments DistributorPayment[]
 
   @@unique([pharmacyId, name])
   @@index([pharmacyId])
@@ -440,61 +483,132 @@ model Company {
 }
 
 model Customer {
-  id         String    @id @default(uuid())
-  pharmacyId String    @map("pharmacy_id")
-  branchId   String    @map("branch_id")
-  name       String
-  phone      String    @default("")
-  address    String    @default("")
-  fatherName String    @default("") @map("father_name")
-  fatherPhone String   @default("") @map("father_phone")
-  createdAt  DateTime  @default(now()) @map("created_at")
-  pharmacy   Pharmacy  @relation(fields: [pharmacyId], references: [id])
-  branch     Branch    @relation(fields: [branchId], references: [id])
-  sales      Sale[]
-  arrears    Arrear[]
+  id                    String              @id @default(uuid())
+  pharmacyId            String              @map("pharmacy_id")
+  branchId              String              @map("branch_id")
+  name                  String
+  phone                 String              @default("")
+  address               String              @default("")
+  fatherName            String              @default("") @map("father_name")
+  fatherPhone           String              @default("") @map("father_phone")
+  nationalId            String              @default("") @map("national_id")
+  dateOfBirth           DateTime?           @map("date_of_birth")
+  gender                String              @default("") @map("gender") // MALE, FEMALE, OTHER
+  bloodGroup            String              @default("") @map("blood_group")
+  allergies             String[]            @default([]) @map("allergies")
+  chronicConditions     String[]            @default([]) @map("chronic_conditions")
+  emergencyContactName  String              @default("") @map("emergency_contact_name")
+  emergencyContactPhone String              @default("") @map("emergency_contact_phone")
+  creditLimit           Float               @default(0) @map("credit_limit")
+  allowCredit           Boolean             @default(true) @map("allow_credit")
+  notes                 String              @default("")
+  consentGiven          Boolean             @default(false) @map("consent_given")
+  consentDate           DateTime?           @map("consent_date")
+  consentNotes          String              @default("") @map("consent_notes")
+  createdAt             DateTime            @default(now()) @map("created_at")
+  updatedAt             DateTime            @default(now()) @updatedAt @map("updated_at")
+  pharmacy              Pharmacy            @relation(fields: [pharmacyId], references: [id])
+  branch                Branch              @relation(fields: [branchId], references: [id])
+  sales                 Sale[]
+  arrears               Arrear[]
+  chronicMedications    ChronicMedication[]
 
   @@index([pharmacyId])
   @@index([branchId])
   @@map("customers")
 }
 
-model Sale {
-  id         String     @id
-  pharmacyId String     @map("pharmacy_id")
-  branchId   String     @map("branch_id")
-  customerId String?    @map("customer_id")
-  subtotal   Float      @default(0)
-  discount   Float      @default(0)
-  total      Float      @default(0)
-  amountPaid Float      @default(0) @map("amount_paid")
-  change     Float      @default(0)
-  status     String     @default("paid")
-  createdAt  DateTime   @default(now()) @map("created_at")
-  pharmacy   Pharmacy   @relation(fields: [pharmacyId], references: [id])
-  branch     Branch     @relation(fields: [branchId], references: [id])
-  customer   Customer?  @relation(fields: [customerId], references: [id])
-  items      SaleItem[]
-  returns    ReturnEntry[]
-  arrears    Arrear[]
+model ChronicMedication {
+  id                String    @id @default(uuid())
+  pharmacyId        String    @map("pharmacy_id")
+  branchId          String    @map("branch_id")
+  customerId        String    @map("customer_id")
+  productId         String?   @map("product_id")
+  medicationName    String    @map("medication_name")
+  dosage            String    @default("")
+  frequency         String    @default("")
+  daysSupply        Int       @default(30) @map("days_supply")
+  lastDispensedDate DateTime  @default(now()) @map("last_dispensed_date")
+  nextRefillDate    DateTime  @map("next_refill_date")
+  reminderActive    Boolean   @default(true) @map("reminder_active")
+  status            String    @default("ACTIVE") // ACTIVE, PAUSED, DISCONTINUED
+  notes             String    @default("")
+  lastContactedAt   DateTime? @map("last_contacted_at")
+  contactNotes      String    @default("") @map("contact_notes")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  pharmacy          Pharmacy  @relation(fields: [pharmacyId], references: [id])
+  branch            Branch    @relation(fields: [branchId], references: [id])
+  customer          Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product           Product?  @relation(fields: [productId], references: [id])
 
   @@index([pharmacyId])
   @@index([branchId])
+  @@index([customerId])
+  @@index([nextRefillDate])
+  @@map("chronic_medications")
+}
+
+model Sale {
+  id                 String        @id
+  pharmacyId         String        @map("pharmacy_id")
+  branchId           String        @map("branch_id")
+  customerId         String?       @map("customer_id")
+  subtotal           Float         @default(0)
+  discount           Float         @default(0)
+  total              Float         @default(0)
+  amountPaid         Float         @default(0) @map("amount_paid")
+  change             Float         @default(0)
+  status             String        @default("paid")
+  paymentMethod      String        @default("CASH") @map("payment_method") // CASH, CARD, SPLIT, CREDIT
+  cashAmount         Float         @default(0) @map("cash_amount")
+  cardAmount         Float         @default(0) @map("card_amount")
+  creditAmount       Float         @default(0) @map("credit_amount")
+  totalCogs          Float         @default(0) @map("total_cogs")
+  totalVat           Float         @default(0) @map("total_vat")
+  grossProfit        Float         @default(0) @map("gross_profit")
+  prescriptionId     String?       @map("prescription_id")
+  prescriptionNumber String?       @map("prescription_number")
+  cashierId          String?       @map("cashier_id")
+  cashierName        String?       @map("cashier_name")
+  notes              String        @default("")
+  createdAt          DateTime      @default(now()) @map("created_at")
+  pharmacy           Pharmacy      @relation(fields: [pharmacyId], references: [id])
+  branch             Branch        @relation(fields: [branchId], references: [id])
+  customer           Customer?     @relation(fields: [customerId], references: [id])
+  prescription       Prescription? @relation(fields: [prescriptionId], references: [id])
+  items              SaleItem[]
+  returns            ReturnEntry[]
+  arrears            Arrear[]
+
+  @@index([pharmacyId])
+  @@index([branchId])
+  @@index([prescriptionId])
   @@map("sales")
 }
 
 model SaleItem {
-  id          String  @id @default(uuid())
-  saleId      String  @map("sale_id")
-  productId   String  @map("product_id")
-  productName String  @map("product_name")
+  id          String    @id @default(uuid())
+  saleId      String    @map("sale_id")
+  productId   String    @map("product_id")
+  productName String    @map("product_name")
   barcode     String
-  quantity    Int     @default(1)
-  unitPrice   Float   @default(0) @map("unit_price")
-  subtotal    Float   @default(0)
-  sale        Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
-  product     Product @relation(fields: [productId], references: [id])
+  quantity    Int       @default(1)
+  unitPrice   Float     @default(0) @map("unit_price")
+  subtotal    Float     @default(0)
+  unitCost    Float     @default(0) @map("unit_cost")
+  cogs        Float     @default(0)
+  vatRate     Float     @default(0) @map("vat_rate")
+  vatAmount   Float     @default(0) @map("vat_amount")
+  batchId     String?   @map("batch_id")
+  batchNumber String?   @map("batch_number")
+  expiryDate  DateTime? @map("expiry_date")
+  sale        Sale      @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  product     Product   @relation(fields: [productId], references: [id])
+  batch       Batch?    @relation(fields: [batchId], references: [id])
 
+  @@index([batchId])
   @@map("sale_items")
 }
 
@@ -592,6 +706,7 @@ model Category {
   id         String    @id @default(uuid())
   pharmacyId String    @map("pharmacy_id")
   name       String
+  vatRate    Float     @default(0) @map("vat_rate")
   createdAt  DateTime  @default(now()) @map("created_at")
   updatedAt  DateTime  @updatedAt @map("updated_at")
   pharmacy   Pharmacy  @relation(fields: [pharmacyId], references: [id])
@@ -618,3 +733,342 @@ model Expense {
   @@index([branchId])
   @@map("expenses")
 }
+/// ---------- NEW MODELS ----------
+model Batch {
+  id                  String   @id @default(uuid())
+  pharmacyId          String   @map("pharmacy_id")
+  branchId            String   @map("branch_id")
+  productId           String   @map("product_id")
+  batchNumber         String   @map("batch_number")
+  expiryDate          DateTime @map("expiry_date")
+  quantityInBaseUnits Int      @default(0) @map("quantity_in_base_units")
+  costPricePerUnit    Decimal  @default(0) @db.Decimal(12,4) @map("cost_price_per_unit")
+  salePricePerUnit    Decimal  @default(0) @db.Decimal(12,4) @map("sale_price_per_unit")
+  status              String   @default("ACTIVE") // ACTIVE, QUARANTINED, RECALLED, DEPLETED
+  isRecalled          Boolean  @default(false) @map("is_recalled")
+  recallReason        String?  @map("recall_reason")
+  gtin                String?  // optional GS1 GTIN
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+  product             Product  @relation(fields: [productId], references: [id])
+  branch              Branch   @relation(fields: [branchId], references: [id])
+  movements           StockMovement[]
+  purchaseInvoiceItems PurchaseInvoiceItem[]
+  dispenseRecords      DispenseRecord[]
+  controlledRegisters  ControlledDrugRegister[]
+  saleItems            SaleItem[]
+  transferItems        StockTransferItem[]   @relation("TransferSourceBatch")
+
+  @@unique([branchId, productId, batchNumber])
+  @@index([branchId, productId, expiryDate])
+  @@index([isRecalled, status])
+  @@map("batches")
+}
+
+model StockMovement {
+  id              String   @id @default(uuid())
+  pharmacyId      String   @map("pharmacy_id")
+  branchId        String   @map("branch_id")
+  productId       String   @map("product_id")
+  batchId         String?  @map("batch_id")
+  movementType    String   @map("movement_type") // PURCHASE_RECEIPT, SALE, RETURN, ADJUSTMENT, EXPIRED_DISCARD
+  quantityDelta   Int      @map("quantity_delta") // + or -
+  balanceAfter    Int      @map("balance_after")
+  unitCost        Decimal  @default(0) @db.Decimal(12,4) @map("unit_cost")
+  referenceNumber String?  @map("reference_number")
+  reasonCode      String?  @map("reason_code")
+  createdById     String?  @map("created_by_id")
+  createdAt       DateTime @default(now()) @map("created_at")
+  batch           Batch?   @relation(fields: [batchId], references: [id])
+  product         Product  @relation(fields: [productId], references: [id])
+  branch          Branch   @relation(fields: [branchId], references: [id])
+
+  @@index([branchId, productId, createdAt])
+  @@map("stock_movements")
+}
+
+model PurchaseInvoice {
+  id              String                  @id @default(uuid())
+  pharmacyId      String                  @map("pharmacy_id")
+  branchId        String                  @map("branch_id")
+  distributorId   String                  @map("distributor_id")
+  invoiceNumber   String                  @map("invoice_number")
+  invoiceDate     DateTime                @default(now()) @map("invoice_date")
+  dueDate         DateTime?               @map("due_date")
+  subtotal        Decimal                 @default(0) @db.Decimal(12, 4)
+  discount        Decimal                 @default(0) @db.Decimal(12, 4)
+  tax             Decimal                 @default(0) @db.Decimal(12, 4)
+  totalAmount     Decimal                 @default(0) @db.Decimal(12, 4) @map("total_amount")
+  paidAmount      Decimal                 @default(0) @db.Decimal(12, 4) @map("paid_amount")
+  balanceDue      Decimal                 @default(0) @db.Decimal(12, 4) @map("balance_due")
+  status          String                  @default("UNPAID") // UNPAID, PARTIAL, PAID, VOID
+  paymentMethod   String?                 @map("payment_method") // CASH, BANK_TRANSFER, CHEQUE, CREDIT
+  notes           String                  @default("")
+  receivedBy      String?                 @map("received_by")
+  createdAt       DateTime                @default(now()) @map("created_at")
+  updatedAt       DateTime                @updatedAt @map("updated_at")
+  pharmacy        Pharmacy                @relation(fields: [pharmacyId], references: [id])
+  branch          Branch                  @relation(fields: [branchId], references: [id])
+  distributor     Distributor             @relation(fields: [distributorId], references: [id])
+  items           PurchaseInvoiceItem[]
+  payments        DistributorPayment[]
+
+  @@unique([pharmacyId, distributorId, invoiceNumber])
+  @@index([pharmacyId])
+  @@index([branchId])
+  @@index([distributorId])
+  @@index([status])
+  @@map("purchase_invoices")
+}
+
+model PurchaseInvoiceItem {
+  id                 String          @id @default(uuid())
+  invoiceId          String          @map("invoice_id")
+  productId          String          @map("product_id")
+  batchId            String?         @map("batch_id")
+  batchNumber        String          @map("batch_number")
+  expiryDate         DateTime        @map("expiry_date")
+  quantityPacks      Int             @default(1) @map("quantity_packs")
+  unitsPerPack       Int             @default(1) @map("units_per_pack")
+  quantityBaseUnits  Int             @default(1) @map("quantity_base_units")
+  unitCost           Decimal         @default(0) @db.Decimal(12, 4) @map("unit_cost")
+  salePrice          Decimal         @default(0) @db.Decimal(12, 4) @map("sale_price")
+  totalCost          Decimal         @default(0) @db.Decimal(12, 4) @map("total_cost")
+  createdAt          DateTime        @default(now()) @map("created_at")
+  invoice            PurchaseInvoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  product            Product         @relation(fields: [productId], references: [id])
+  batch              Batch?          @relation(fields: [batchId], references: [id])
+
+  @@index([invoiceId])
+  @@index([productId])
+  @@index([batchNumber])
+  @@map("purchase_invoice_items")
+}
+
+model DistributorPayment {
+  id              String           @id @default(uuid())
+  pharmacyId      String           @map("pharmacy_id")
+  branchId        String           @map("branch_id")
+  distributorId   String           @map("distributor_id")
+  invoiceId       String?          @map("invoice_id")
+  amount          Decimal          @db.Decimal(12, 4)
+  paymentMethod   String           @default("CASH") @map("payment_method") // CASH, BANK_TRANSFER, CHEQUE
+  referenceNumber String           @default("") @map("reference_number")
+  paidAt          DateTime         @default(now()) @map("paid_at")
+  notes           String           @default("")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  pharmacy        Pharmacy         @relation(fields: [pharmacyId], references: [id])
+  branch          Branch           @relation(fields: [branchId], references: [id])
+  distributor     Distributor      @relation(fields: [distributorId], references: [id])
+  invoice         PurchaseInvoice? @relation(fields: [invoiceId], references: [id])
+
+  @@index([pharmacyId])
+  @@index([branchId])
+  @@index([distributorId])
+  @@index([invoiceId])
+  @@map("distributor_payments")
+}
+
+model Prescription {
+  id                  String             @id @default(uuid())
+  pharmacyId          String             @map("pharmacy_id")
+  branchId            String             @map("branch_id")
+  prescriptionNumber  String             @map("prescription_number")
+  patientName         String             @map("patient_name")
+  patientIdentifier   String             @default("") @map("patient_identifier") // National ID / Iqama / Passport / Phone
+  patientPhone        String             @default("") @map("patient_phone")
+  patientAge          Int?               @map("patient_age")
+  patientGender       String?            @map("patient_gender") // MALE, FEMALE, OTHER
+  doctorName          String             @map("doctor_name")
+  doctorLicense       String             @default("") @map("doctor_license")
+  clinicOrHospital    String             @default("") @map("clinic_or_hospital")
+  diagnosis           String             @default("")
+  prescribedDate      DateTime           @default(now()) @map("prescribed_date")
+  status              String             @default("PENDING") // PENDING, VERIFIED, PARTIALLY_DISPENSED, FULLY_DISPENSED, CANCELLED
+  verifiedById        String?            @map("verified_by_id")
+  verifiedByName      String?            @map("verified_by_name")
+  verifiedAt          DateTime?          @map("verified_at")
+  notes               String             @default("")
+  createdAt           DateTime           @default(now()) @map("created_at")
+  updatedAt           DateTime           @updatedAt @map("updated_at")
+  pharmacy            Pharmacy           @relation(fields: [pharmacyId], references: [id])
+  branch              Branch             @relation(fields: [branchId], references: [id])
+  items               PrescriptionItem[]
+  dispenseRecords     DispenseRecord[]
+  controlledRegisters ControlledDrugRegister[]
+  sales               Sale[]
+
+  @@unique([pharmacyId, prescriptionNumber])
+  @@index([pharmacyId])
+  @@index([branchId])
+  @@index([status])
+  @@index([patientIdentifier])
+  @@map("prescriptions")
+}
+
+model PrescriptionItem {
+  id                 String           @id @default(uuid())
+  prescriptionId     String           @map("prescription_id")
+  prescribedDrugName String           @map("prescribed_drug_name")
+  productId          String?          @map("product_id")
+  dosage             String           @default("")
+  frequency          String           @default("")
+  duration           String           @default("")
+  instructions       String           @default("")
+  quantityPrescribed Int              @map("quantity_prescribed")
+  quantityDispensed  Int              @default(0) @map("quantity_dispensed")
+  quantityRemaining  Int              @default(0) @map("quantity_remaining")
+  status             String           @default("PENDING") // PENDING, PARTIAL, COMPLETED
+  isControlled       Boolean          @default(false) @map("is_controlled")
+  createdAt          DateTime         @default(now()) @map("created_at")
+  updatedAt          DateTime         @updatedAt @map("updated_at")
+  prescription       Prescription     @relation(fields: [prescriptionId], references: [id], onDelete: Cascade)
+  product            Product?         @relation(fields: [productId], references: [id])
+  dispenseRecords    DispenseRecord[]
+
+  @@index([prescriptionId])
+  @@index([productId])
+  @@map("prescription_items")
+}
+
+model DispenseRecord {
+  id                 String           @id @default(uuid())
+  prescriptionId     String           @map("prescription_id")
+  prescriptionItemId String           @map("prescription_item_id")
+  dispensedProductId String           @map("dispensed_product_id")
+  batchId            String?          @map("batch_id")
+  quantity           Int              @map("quantity")
+  isPartialFill      Boolean          @default(false) @map("is_partial_fill")
+  isSubstitution     Boolean          @default(false) @map("is_substitution")
+  originalProductId  String?          @map("original_product_id")
+  substitutionReason String?          @map("substitution_reason")
+  pharmacistId       String?          @map("pharmacist_id")
+  pharmacistName     String?          @map("pharmacist_name")
+  dispensedAt        DateTime         @default(now()) @map("dispensed_at")
+  notes              String           @default("")
+  prescription       Prescription     @relation(fields: [prescriptionId], references: [id], onDelete: Cascade)
+  prescriptionItem   PrescriptionItem @relation(fields: [prescriptionItemId], references: [id], onDelete: Cascade)
+  dispensedProduct   Product          @relation("DispensedProduct", fields: [dispensedProductId], references: [id])
+  batch              Batch?           @relation(fields: [batchId], references: [id])
+  controlledRegisters ControlledDrugRegister[]
+
+  @@index([prescriptionId])
+  @@index([prescriptionItemId])
+  @@index([dispensedProductId])
+  @@index([dispensedAt])
+  @@map("dispense_records")
+}
+
+model ControlledDrugRegister {
+  id                 String           @id @default(uuid())
+  pharmacyId         String           @map("pharmacy_id")
+  branchId           String           @map("branch_id")
+  productId          String           @map("product_id")
+  batchId            String?          @map("batch_id")
+  prescriptionId     String?          @map("prescription_id")
+  dispenseRecordId   String?          @map("dispense_record_id")
+  patientName        String           @map("patient_name")
+  patientIdentifier  String           @map("patient_identifier")
+  doctorName         String           @map("doctor_name")
+  doctorLicense      String           @map("doctor_license")
+  transactionType    String           @map("transaction_type") // DISPENSE, RECEIPT, ADJUSTMENT, DISCARD
+  quantity           Int              @map("quantity")
+  balanceAfter       Int              @map("balance_after")
+  pharmacistId       String?          @map("pharmacist_id")
+  pharmacistName     String           @map("pharmacist_name")
+  witnessName        String?          @map("witness_name")
+  notes              String           @default("")
+  recordedAt         DateTime         @default(now()) @map("recorded_at")
+  pharmacy           Pharmacy         @relation(fields: [pharmacyId], references: [id])
+  branch             Branch           @relation(fields: [branchId], references: [id])
+  product            Product          @relation(fields: [productId], references: [id])
+  batch              Batch?           @relation(fields: [batchId], references: [id])
+  prescription       Prescription?    @relation(fields: [prescriptionId], references: [id])
+  dispenseRecord     DispenseRecord?  @relation(fields: [dispenseRecordId], references: [id])
+
+  @@index([pharmacyId])
+  @@index([branchId])
+  @@index([productId])
+  @@index([recordedAt])
+  @@map("controlled_drug_registers")
+}
+
+model BranchPriceOverride {
+  id            String   @id @default(uuid())
+  pharmacyId    String   @map("pharmacy_id")
+  branchId      String   @map("branch_id")
+  productId     String   @map("product_id")
+  salePrice     Float    @map("sale_price")
+  reason        String   @default("")
+  effectiveDate DateTime @default(now()) @map("effective_date")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  pharmacy      Pharmacy @relation(fields: [pharmacyId], references: [id])
+  branch        Branch   @relation(fields: [branchId], references: [id])
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([branchId, productId])
+  @@index([pharmacyId])
+  @@map("branch_price_overrides")
+}
+
+model StockTransfer {
+  id                   String              @id @default(uuid())
+  transferNumber       String              @unique @map("transfer_number")
+  pharmacyId           String              @map("pharmacy_id")
+  sourceBranchId       String              @map("source_branch_id")
+  destinationBranchId  String              @map("destination_branch_id")
+  status               String              @default("PENDING") // PENDING, APPROVED, IN_TRANSIT, RECEIVED, REJECTED, CANCELLED
+  requestedById        String?             @map("requested_by_id")
+  requestedByName      String?             @map("requested_by_name")
+  approvedById         String?             @map("approved_by_id")
+  approvedByName       String?             @map("approved_by_name")
+  approvedAt           DateTime?           @map("approved_at")
+  receivedById         String?             @map("received_by_id")
+  receivedByName       String?             @map("received_by_name")
+  receivedAt           DateTime?           @map("received_at")
+  rejectionReason      String?             @map("rejection_reason")
+  notes                String              @default("")
+  createdAt            DateTime            @default(now()) @map("created_at")
+  updatedAt            DateTime            @updatedAt @map("updated_at")
+
+  pharmacy             Pharmacy            @relation(fields: [pharmacyId], references: [id])
+  sourceBranch         Branch              @relation("TransfersSent", fields: [sourceBranchId], references: [id])
+  destinationBranch    Branch              @relation("TransfersReceived", fields: [destinationBranchId], references: [id])
+  items                StockTransferItem[]
+
+  @@index([pharmacyId])
+  @@index([sourceBranchId])
+  @@index([destinationBranchId])
+  @@index([status])
+  @@map("stock_transfers")
+}
+
+model StockTransferItem {
+  id                   String        @id @default(uuid())
+  transferId           String        @map("transfer_id")
+  productId            String        @map("product_id")
+  productName          String        @map("product_name")
+  barcode              String
+  sourceBatchId        String?       @map("source_batch_id")
+  batchNumber          String        @map("batch_number")
+  expiryDate           DateTime      @map("expiry_date")
+  quantity             Int           @default(1)
+  unitCost             Float         @default(0) @map("unit_cost")
+  salePrice            Float         @default(0) @map("sale_price")
+  destinationBatchId   String?       @map("destination_batch_id")
+  createdAt            DateTime      @default(now()) @map("created_at")
+
+  transfer             StockTransfer @relation(fields: [transferId], references: [id], onDelete: Cascade)
+  product              Product       @relation(fields: [productId], references: [id])
+  sourceBatch          Batch?        @relation("TransferSourceBatch", fields: [sourceBatchId], references: [id])
+
+  @@index([transferId])
+  @@index([productId])
+  @@map("stock_transfer_items")
+}
+
+
+
+
