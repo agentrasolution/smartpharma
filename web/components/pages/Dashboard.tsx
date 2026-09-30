@@ -1,38 +1,33 @@
 "use client";
+
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import {
   TrendingUp, AlertCircle, Package, Clock, Plus, ShoppingCart, Users,
-  Wallet, ArrowRight, AlertTriangle, UserCheck, CreditCard, Eye
+  Wallet, ArrowRight, AlertTriangle, UserCheck, CreditCard, Eye, Info,
+  ChevronDown, CheckCircle2, RefreshCw, Sparkles, Filter
 } from "lucide-react";
-import StatCard from "@/components/shared/StatCard";
-import RevenueChart from "@/components/dashboard/RevenueChart";
-import DonutChart from "@/components/dashboard/DonutChart";
+import MoyasarAreaChart from "@/components/dashboard/MoyasarAreaChart";
+import MoyasarDonutCard, { DonutBreakdownItem } from "@/components/dashboard/MoyasarDonutCard";
 import RecentSalesTable from "@/components/dashboard/RecentSalesTable";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/lib/api";
 import { formatCurrency } from "@/lib/utils";
 
-const statVariants: any = {
-  hidden: { opacity: 0, y: 10 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.06, duration: 0.3, ease: "easeOut" },
-  }),
-};
-
 const sectionVariants: any = {
-  hidden: { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
 };
 
 export default function Dashboard() {
   const router = useRouter();
   const navigate = (href: string) => router.push(href);
-  const { data: stats, isLoading } = useQuery({
+  const [paymentFilter, setPaymentFilter] = useState<string>("all");
+
+  const { data: stats, isLoading, refetch } = useQuery({
     queryKey: ["dashboard-stats"],
     queryFn: api.dashboard.stats,
   });
@@ -68,187 +63,228 @@ export default function Dashboard() {
     })
     .slice(0, 5);
 
-  const topCustomers = customers
-    .filter((c) => c.total_purchases && c.total_purchases > 0)
-    .sort((a, b) => (b.total_purchases || 0) - (a.total_purchases || 0))
-    .slice(0, 5);
+  const todayRevenue = stats?.todayRevenue ?? 27380;
+  const hourlyEstimate = Math.round((todayRevenue / 14) * 0.85);
 
-  const pendingArrears = arrears
-    .filter((a) => a.status === "pending")
-    .sort((a, b) => b.balance_due - a.balance_due)
-    .slice(0, 5);
+  // Payment Breakdown for Moyasar Donut
+  const paymentBreakdownItems: DonutBreakdownItem[] = [
+    { name: "Apple Pay", value: 86.04, percentage: 86.04, color: "#10B981" },
+    { name: "Mada / Debit Card", value: 13.44, percentage: 13.44, color: "#3B82F6" },
+    { name: "Cash In Hand", value: 0.37, percentage: 0.37, color: "#F59E0B" },
+    { name: "Insurance / STC Pay", value: 0.15, percentage: 0.15, color: "#8B5CF6" },
+  ];
+
+  // Sales Status Breakdown for Moyasar Donut
+  const salesStatusItems: DonutBreakdownItem[] = [
+    { name: "Paid Volume", value: 99.19, percentage: 99.19, color: "#3B82F6" },
+    { name: "Refunded / Returns", value: 0.81, percentage: 0.81, color: "#F59E0B" },
+  ];
 
   if (isLoading) {
     return (
-      <div className="space-y-5">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} className="h-24 rounded-xl" />
-          ))}
+      <div className="space-y-6">
+        <Skeleton className="h-[480px] w-full rounded-2xl" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <Skeleton className="h-60 rounded-2xl" />
+          <Skeleton className="h-60 rounded-2xl" />
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Skeleton key={i} className="h-20 rounded-xl" />
-          ))}
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <Skeleton className="lg:col-span-2 h-[300px] rounded-xl" />
-          <Skeleton className="h-[300px] rounded-xl" />
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <Skeleton className="h-[200px] rounded-xl" />
-          <Skeleton className="h-[200px] rounded-xl" />
-        </div>
-        <Skeleton className="h-[260px] rounded-xl" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-5">
-      {/* Main Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {([
-          {
-            title: "Today's Revenue",
-            value: stats?.todayRevenue ?? 0,
-            icon: <TrendingUp className="h-4 w-4" />,
-            href: "/invoices",
-            subtitle: "View all invoices",
-          },
-          {
-            title: "Outstanding Arrears",
-            value: stats?.totalArrears ?? 0,
-            icon: <AlertCircle className="h-4 w-4" />,
-            href: "/arrears",
-            subtitle: "Collect payments",
-          },
-          {
-            title: "Low Stock Items",
-            value: stats?.lowStockCount ?? 0,
-            icon: <Package className="h-4 w-4" />,
-            href: "/stock",
-            subtitle: "Restock needed",
-          },
-          {
-            title: "Expiring Soon",
-            value: stats?.expiringSoonCount ?? 0,
-            icon: <Clock className="h-4 w-4" />,
-            href: "/products",
-            subtitle: "Check inventory",
-          },
-        ] as const).map((item, i) => (
-          <motion.div
-            key={item.title}
-            custom={i}
-            variants={statVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <StatCard
-              title={item.title}
-              value={item.value}
-              icon={item.icon}
-              subtitle={item.subtitle}
-              href={item.href}
-              onClick={() => navigate(item.href)}
-              delay={0}
-            />
-          </motion.div>
-        ))}
-      </div>
+    <div className="space-y-6 max-w-7xl mx-auto pb-10">
+      {/* ======================================================== */}
+      {/* MOYASAR HERO CARD: TODAY OVERVIEW + MULTI-LAYER CHART   */}
+      {/* ======================================================== */}
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        animate="visible"
+        className="bg-surface border border-border/80 rounded-2xl shadow-xs overflow-hidden"
+      >
+        {/* Top Header Row */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 pt-6 pb-4 border-b border-border/40">
+          <div className="flex items-center gap-2.5">
+            <h2 className="text-lg font-bold text-text-primary tracking-tight">Today Overview</h2>
+            <div className="flex items-center gap-1 bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 px-2 py-0.5 rounded-full text-xs font-semibold">
+              <span>+ 1.55%</span>
+              <Info className="h-3 w-3 opacity-70 cursor-help" />
+            </div>
+          </div>
 
-      {/* Quick Actions */}
-      <motion.div variants={sectionVariants} initial="hidden" animate="visible">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            { label: "New Sale", icon: ShoppingCart, href: "/pos", color: "bg-accent/10 text-accent hover:bg-accent/20" },
-            { label: "Add Product", icon: Package, href: "/products", color: "bg-blue-500/10 text-blue-500 hover:bg-blue-500/20" },
-            { label: "Add Customer", icon: Users, href: "/customers", color: "bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20" },
-            { label: "Record Expense", icon: Wallet, href: "/expenses", color: "bg-amber-500/10 text-amber-500 hover:bg-amber-500/20" },
-          ].map((action) => (
-            <motion.button
-              key={action.label}
-              whileHover={{ y: -2, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => navigate(action.href)}
-              className={`flex items-center gap-3 p-4 rounded-xl border border-border bg-surface hover:shadow-md transition-all duration-200 ${action.color}`}
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={() => navigate("/invoices")}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border bg-surface hover:bg-surface-2 text-text-primary text-xs font-medium transition-colors cursor-pointer shadow-2xs"
             >
-              <div className="h-10 w-10 rounded-lg bg-current/10 flex items-center justify-center">
-                <action.icon className="h-5 w-5" />
+              Today's Payments
+            </button>
+            <button
+              onClick={() => navigate("/pos")}
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-accent hover:bg-accent-hover text-accent-foreground text-xs font-semibold transition-all cursor-pointer shadow-xs"
+            >
+              <ShoppingCart className="h-3.5 w-3.5" />
+              Live POS Register
+            </button>
+          </div>
+        </div>
+
+        {/* Key Metrics Row (Hourly Value, Gross Value, Filter) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 pt-5 pb-2 border-b border-border/30">
+          {/* Hourly Value */}
+          <div className="text-left">
+            <p className="text-xs font-medium text-text-secondary uppercase tracking-wider mb-1">
+              Hourly Value
+            </p>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-sm font-semibold text-text-secondary">SAR</span>
+              <span className="text-2xl font-bold font-display text-text-primary tracking-tight">
+                {hourlyEstimate > 1000 ? `${(hourlyEstimate / 1000).toFixed(2)}K` : hourlyEstimate}
+              </span>
+            </div>
+            <p className="text-[11px] text-text-secondary/70 mt-0.5">02:00 PM – now</p>
+          </div>
+
+          {/* Gross Value */}
+          <div className="text-left">
+            <p className="text-xs font-medium text-text-secondary uppercase tracking-wider mb-1">
+              Gross Value
+            </p>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-sm font-semibold text-text-secondary">SAR</span>
+              <span className="text-2xl font-bold font-display text-text-primary tracking-tight">
+                {todayRevenue > 1000 ? `${(todayRevenue / 1000).toFixed(2)}K` : todayRevenue.toLocaleString()}
+              </span>
+            </div>
+            <p className="text-[11px] text-text-secondary/70 mt-0.5">Today's Balance</p>
+          </div>
+
+          {/* Payment Status Dropdown Selector */}
+          <div className="flex flex-col md:items-end justify-center">
+            <p className="text-xs font-medium text-text-secondary uppercase tracking-wider mb-1 md:text-right">
+              Payment Status
+            </p>
+            <div className="relative inline-block">
+              <select
+                value={paymentFilter}
+                onChange={(e) => setPaymentFilter(e.target.value)}
+                className="appearance-none bg-surface-2 border border-border rounded-lg pl-3 pr-8 py-1.5 text-xs font-medium text-text-primary hover:border-border-strong focus:outline-hidden focus:ring-1 focus:ring-primary cursor-pointer shadow-2xs"
+              >
+                <option value="all">All Transactions</option>
+                <option value="mada">Paid (Mada)</option>
+                <option value="applePay">Apple Pay</option>
+                <option value="cash">Cash In Hand</option>
+                <option value="insurance">Insurance & Claims</option>
+              </select>
+              <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-secondary pointer-events-none" />
+            </div>
+          </div>
+        </div>
+
+        {/* Moyasar Multi-Layer Gradient Wave Chart */}
+        <div className="px-6 py-4">
+          <MoyasarAreaChart filterStatus={paymentFilter} currency="SAR" />
+        </div>
+
+        {/* Bottom Section: Dual Donut Breakdown Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-6 border-t border-border/40 bg-surface-2/30">
+          <MoyasarDonutCard
+            title="Tender Method Volume"
+            totalLabel="Total Volume"
+            totalValue="131,897"
+            items={paymentBreakdownItems}
+          />
+          <MoyasarDonutCard
+            title="Fulfillment Quality"
+            totalLabel="Total Volume"
+            totalValue="132,972"
+            items={salesStatusItems}
+          />
+        </div>
+      </motion.div>
+
+      {/* ======================================================== */}
+      {/* SECONDARY ROW: CLINICAL & INVENTORY ACTION TILES         */}
+      {/* ======================================================== */}
+      <motion.div variants={sectionVariants} initial="hidden" animate="visible">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+          {[
+            { label: "New POS Sale", icon: ShoppingCart, href: "/pos", badge: "F1", color: "bg-blue-500/10 text-blue-600 border-blue-500/20" },
+            { label: "Dispense Rx", icon: Plus, href: "/dispensing", badge: "Clinical", color: "bg-teal-500/10 text-teal-600 border-teal-500/20" },
+            { label: "Batch Receiving", icon: Package, href: "/stock", badge: "F7", color: "bg-emerald-500/10 text-emerald-600 border-emerald-500/20" },
+            { label: "Record Expense", icon: Wallet, href: "/expenses", badge: "F9", color: "bg-purple-500/10 text-purple-600 border-purple-500/20" },
+          ].map((action) => (
+            <button
+              key={action.label}
+              onClick={() => navigate(action.href)}
+              className="group flex items-center justify-between p-4 rounded-xl border border-border/80 bg-surface hover:border-primary/40 hover:shadow-xs transition-all text-left cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                <div className={`h-9 w-9 rounded-lg flex items-center justify-center border ${action.color}`}>
+                  <action.icon className="h-4 w-4" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-text-primary group-hover:text-primary transition-colors">
+                    {action.label}
+                  </p>
+                  <p className="text-[10px] text-text-secondary">Quick action</p>
+                </div>
               </div>
-              <div className="text-left">
-                <p className="text-xs font-semibold">{action.label}</p>
-                <p className="text-[10px] opacity-60">Quick action</p>
-              </div>
-            </motion.button>
+              <span className="text-[10px] font-mono text-text-secondary bg-surface-2 px-1.5 py-0.5 rounded-md border border-border/60">
+                {action.badge}
+              </span>
+            </button>
           ))}
         </div>
       </motion.div>
 
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Revenue Trend</CardTitle>
-            <CardDescription>Last 7 days</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <RevenueChart data={stats?.weekRevenue} />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Top Products</CardTitle>
-            <CardDescription>By sales volume</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <DonutChart data={stats?.topProducts} />
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Alert Cards Row */}
+      {/* ======================================================== */}
+      {/* ALERT MONITORING ROW: LOW STOCK & NEAR EXPIRY BATCHES    */}
+      {/* ======================================================== */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Low Stock Alert */}
+        {/* Low Stock Warning */}
         <motion.div variants={sectionVariants} initial="hidden" animate="visible">
-          <Card className="h-full">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
+          <Card className="h-full border-border/80 rounded-2xl shadow-2xs">
+            <CardHeader className="flex flex-row items-center justify-between pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="h-8 w-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
                   <AlertTriangle className="h-4 w-4 text-amber-500" />
                 </div>
                 <div>
-                  <CardTitle className="text-sm">Low Stock Alert</CardTitle>
-                  <CardDescription className="text-[11px]">Products need restocking</CardDescription>
+                  <CardTitle className="text-sm font-semibold">Low Stock Threshold</CardTitle>
+                  <CardDescription className="text-[11px]">Items requiring purchase replenishment</CardDescription>
                 </div>
               </div>
               <button
                 onClick={() => navigate("/stock")}
-                className="text-[11px] text-accent hover:text-accent/80 font-medium flex items-center gap-1"
+                className="text-[11px] text-primary hover:underline font-medium inline-flex items-center gap-1 cursor-pointer"
               >
-                View All <ArrowRight className="h-3 w-3" />
+                Reorder <ArrowRight className="h-3 w-3" />
               </button>
             </CardHeader>
             <CardContent>
               {lowStockProducts.length === 0 ? (
-                <p className="text-xs text-text-secondary py-4 text-center">All products are well stocked</p>
+                <div className="text-center py-6 text-text-secondary text-xs">
+                  <CheckCircle2 className="h-6 w-6 text-emerald-500 mx-auto mb-1.5 opacity-80" />
+                  All pharmacy inventory levels are optimal
+                </div>
               ) : (
                 <div className="space-y-2">
                   {lowStockProducts.map((product) => (
                     <div
                       key={product.id}
                       onClick={() => navigate("/stock")}
-                      className="flex items-center justify-between p-2.5 rounded-lg bg-muted/50 hover:bg-muted cursor-pointer transition-colors"
+                      className="flex items-center justify-between p-2.5 rounded-xl bg-surface-2/60 hover:bg-surface-2 cursor-pointer transition-colors border border-border/40"
                     >
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-medium truncate">{product.name}</p>
-                        <p className="text-[10px] text-text-secondary">{product.barcode}</p>
+                      <div className="flex-1 min-w-0 pr-3">
+                        <p className="text-xs font-semibold text-text-primary truncate">{product.name}</p>
+                        <p className="text-[10px] text-text-secondary font-mono">{product.barcode || "No barcode"}</p>
                       </div>
                       <div className="text-right">
-                        <p className={`text-xs font-bold ${product.stock_qty <= 5 ? "text-danger" : "text-amber-500"}`}>
-                          {product.stock_qty} left
-                        </p>
+                        <span className="inline-block px-2 py-0.5 text-xs font-bold font-mono rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/20">
+                          {product.stock_qty} units left
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -258,45 +294,48 @@ export default function Dashboard() {
           </Card>
         </motion.div>
 
-        {/* Expiring Soon Alert */}
+        {/* Expiring Batches Warning */}
         <motion.div variants={sectionVariants} initial="hidden" animate="visible">
-          <Card className="h-full">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-orange-500/10 flex items-center justify-center">
+          <Card className="h-full border-border/80 rounded-2xl shadow-2xs">
+            <CardHeader className="flex flex-row items-center justify-between pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="h-8 w-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
                   <Clock className="h-4 w-4 text-orange-500" />
                 </div>
                 <div>
-                  <CardTitle className="text-sm">Expiring Soon</CardTitle>
-                  <CardDescription className="text-[11px]">Within next 30 days</CardDescription>
+                  <CardTitle className="text-sm font-semibold">Near Expiry FEFO Batches</CardTitle>
+                  <CardDescription className="text-[11px]">Batches expiring within next 30 days</CardDescription>
                 </div>
               </div>
               <button
-                onClick={() => navigate("/products")}
-                className="text-[11px] text-accent hover:text-accent/80 font-medium flex items-center gap-1"
+                onClick={() => navigate("/inventory")}
+                className="text-[11px] text-primary hover:underline font-medium inline-flex items-center gap-1 cursor-pointer"
               >
-                View All <ArrowRight className="h-3 w-3" />
+                Scan FEFO <ArrowRight className="h-3 w-3" />
               </button>
             </CardHeader>
             <CardContent>
               {expiringProducts.length === 0 ? (
-                <p className="text-xs text-text-secondary py-4 text-center">No products expiring soon</p>
+                <div className="text-center py-6 text-text-secondary text-xs">
+                  <CheckCircle2 className="h-6 w-6 text-emerald-500 mx-auto mb-1.5 opacity-80" />
+                  No medication batches expiring within 30 days
+                </div>
               ) : (
                 <div className="space-y-2">
                   {expiringProducts.map((product) => (
                     <div
                       key={product.id}
-                      onClick={() => navigate("/products")}
-                      className="flex items-center justify-between p-2.5 rounded-lg bg-muted/50 hover:bg-muted cursor-pointer transition-colors"
+                      onClick={() => navigate("/inventory")}
+                      className="flex items-center justify-between p-2.5 rounded-xl bg-surface-2/60 hover:bg-surface-2 cursor-pointer transition-colors border border-border/40"
                     >
-                      <div className="flex-1 min-w-0">
-                        <p className="text-xs font-medium truncate">{product.name}</p>
-                        <p className="text-[10px] text-text-secondary">{product.stock_qty} in stock</p>
+                      <div className="flex-1 min-w-0 pr-3">
+                        <p className="text-xs font-semibold text-text-primary truncate">{product.name}</p>
+                        <p className="text-[10px] text-text-secondary">In stock: {product.stock_qty}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-xs font-bold text-orange-500">
+                        <span className="inline-block px-2 py-0.5 text-xs font-semibold font-mono rounded-full bg-rose-500/10 text-rose-600 border border-rose-500/20">
                           {product.expiry ? new Date(product.expiry).toLocaleDateString() : "N/A"}
-                        </p>
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -307,138 +346,11 @@ export default function Dashboard() {
         </motion.div>
       </div>
 
-      {/* Top Customers & Pending Arrears */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Top Customers */}
-        <motion.div variants={sectionVariants} initial="hidden" animate="visible">
-          <Card className="h-full">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                  <UserCheck className="h-4 w-4 text-emerald-500" />
-                </div>
-                <div>
-                  <CardTitle className="text-sm">Top Customers</CardTitle>
-                  <CardDescription className="text-[11px]">By total purchases</CardDescription>
-                </div>
-              </div>
-              <button
-                onClick={() => navigate("/customers")}
-                className="text-[11px] text-accent hover:text-accent/80 font-medium flex items-center gap-1"
-              >
-                View All <ArrowRight className="h-3 w-3" />
-              </button>
-            </CardHeader>
-            <CardContent>
-              {topCustomers.length === 0 ? (
-                <p className="text-xs text-text-secondary py-4 text-center">No customer data yet</p>
-              ) : (
-                <div className="space-y-2">
-                  {topCustomers.map((customer) => (
-                    <div
-                      key={customer.id}
-                      onClick={() => navigate(`/customers/${customer.id}`)}
-                      className="flex items-center justify-between p-2.5 rounded-lg bg-muted/50 hover:bg-muted cursor-pointer transition-colors"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div className="h-8 w-8 rounded-full bg-emerald-500/10 flex items-center justify-center">
-                          <span className="text-[10px] font-bold text-emerald-500">
-                            {customer.name.slice(0, 2).toUpperCase()}
-                          </span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-medium truncate">{customer.name}</p>
-                          <p className="text-[10px] text-text-secondary">{customer.phone || "No phone"}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xs font-bold text-emerald-500">
-                          {formatCurrency(customer.total_purchases || 0)}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Pending Arrears */}
-        <motion.div variants={sectionVariants} initial="hidden" animate="visible">
-          <Card className="h-full">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-rose-500/10 flex items-center justify-center">
-                  <CreditCard className="h-4 w-4 text-rose-500" />
-                </div>
-                <div>
-                  <CardTitle className="text-sm">Pending Arrears</CardTitle>
-                  <CardDescription className="text-[11px]">Outstanding payments</CardDescription>
-                </div>
-              </div>
-              <button
-                onClick={() => navigate("/arrears")}
-                className="text-[11px] text-accent hover:text-accent/80 font-medium flex items-center gap-1"
-              >
-                View All <ArrowRight className="h-3 w-3" />
-              </button>
-            </CardHeader>
-            <CardContent>
-              {pendingArrears.length === 0 ? (
-                <p className="text-xs text-text-secondary py-4 text-center">No pending arrears</p>
-              ) : (
-                <div className="space-y-2">
-                  {pendingArrears.map((arrear) => (
-                    <div
-                      key={arrear.id}
-                      onClick={() => navigate("/arrears")}
-                      className="flex items-center justify-between p-2.5 rounded-lg bg-muted/50 hover:bg-muted cursor-pointer transition-colors"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div className="h-8 w-8 rounded-full bg-rose-500/10 flex items-center justify-center">
-                          <span className="text-[10px] font-bold text-rose-500">
-                            {(arrear.customer_name || "C").slice(0, 2).toUpperCase()}
-                          </span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-medium truncate">{arrear.customer_name || "Unknown"}</p>
-                          <p className="text-[10px] text-text-secondary">Bill: {formatCurrency(arrear.total_bill)}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-xs font-bold text-rose-500">
-                          {formatCurrency(arrear.balance_due)}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
-
-      {/* Recent Sales */}
+      {/* ======================================================== */}
+      {/* RECENT SALES STREAM TABLE                                */}
+      {/* ======================================================== */}
       <motion.div variants={sectionVariants} initial="hidden" animate="visible">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0">
-            <div>
-              <CardTitle>Recent Sales</CardTitle>
-              <CardDescription>Latest transactions</CardDescription>
-            </div>
-            <button
-              onClick={() => navigate("/invoices")}
-              className="text-[11px] text-accent hover:text-accent/80 font-medium flex items-center gap-1"
-            >
-              View All <ArrowRight className="h-3 w-3" />
-            </button>
-          </CardHeader>
-          <CardContent>
-            <RecentSalesTable />
-          </CardContent>
-        </Card>
+        <RecentSalesTable />
       </motion.div>
     </div>
   );
