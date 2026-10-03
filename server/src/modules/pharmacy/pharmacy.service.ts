@@ -1,16 +1,6 @@
 import { prisma } from "../../services/prisma";
 import { BadRequestError, NotFoundError } from "../../utils/errors";
-import type { UpdatePharmacyInput, UpdateSubscriptionInput } from "./pharmacy.schema";
-
-interface OnboardingInput {
-  pharmacyName: string;
-  country: string;
-  city: string;
-  phone?: string;
-  branchName: string;
-  branchAddress?: string;
-  licenceNumber?: string;
-}
+import type { UpdatePharmacyInput, UpdateSubscriptionInput, OnboardingInput } from "./pharmacy.schema";
 
 export interface SerializableSubscription {
   id: string;
@@ -55,9 +45,15 @@ export const pharmacyService = {
       },
     });
     if (!pharmacy) throw new NotFoundError("Pharmacy");
-    if (pharmacy.subscription) {
-      void serializeSubscription(pharmacy.subscription);
-    }
+
+    const isEmailVerified = Boolean(pharmacy.isEmailVerified);
+    const elapsedMs = Date.now() - (pharmacy.createdAt ? new Date(pharmacy.createdAt).getTime() : Date.now());
+    const daysElapsed = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
+    const graceDaysTotal = 7;
+    const daysRemaining = Math.max(0, graceDaysTotal - daysElapsed);
+    const isGracePeriodActive = daysElapsed <= graceDaysTotal;
+    const isRestricted = !isEmailVerified && !isGracePeriodActive;
+
     return {
       id: pharmacy.id,
       name: pharmacy.name,
@@ -66,6 +62,21 @@ export const pharmacyService = {
       phone: pharmacy.phone,
       email: pharmacy.email,
       address: pharmacy.address,
+      countryCode: pharmacy.countryCode || "",
+      countryName: pharmacy.countryName || "",
+      city: pharmacy.city || "",
+      currency: pharmacy.currency || "SAR",
+      timezone: pharmacy.timezone || "UTC",
+      isEmailVerified,
+      emailVerifiedAt: pharmacy.emailVerifiedAt?.toISOString() ?? null,
+      isPhoneVerified: Boolean(pharmacy.isPhoneVerified),
+      phoneVerifiedAt: pharmacy.phoneVerifiedAt?.toISOString() ?? null,
+      gracePeriod: {
+        daysRemaining,
+        isRestricted,
+        isGracePeriodActive,
+        isEmailVerified,
+      },
       isActive: pharmacy.isActive,
       createdAt: pharmacy.createdAt.toISOString(),
       counts: pharmacy._count,
@@ -74,9 +85,25 @@ export const pharmacyService = {
   },
 
   async updateOwn(pharmacyId: string, input: UpdatePharmacyInput) {
-    const data: Record<string, string> = {};
-    for (const key of ["name", "contact", "phone", "email", "address"] as const) {
+    const data: Record<string, any> = {};
+    for (const key of [
+      "name",
+      "contact",
+      "phone",
+      "email",
+      "address",
+      "countryCode",
+      "countryName",
+      "city",
+      "currency",
+      "timezone",
+    ] as const) {
       if (input[key] !== undefined) data[key] = input[key];
+    }
+
+    if (input.isPhoneVerified !== undefined) {
+      data.isPhoneVerified = input.isPhoneVerified;
+      data.phoneVerifiedAt = input.isPhoneVerified ? new Date() : null;
     }
 
     if (data.name) {
@@ -86,11 +113,26 @@ export const pharmacyService = {
       if (clash) throw new BadRequestError("Another pharmacy already uses this name");
     }
 
+    // If email is explicitly updated to a new value, reset verification
+    const existing = await prisma.pharmacy.findUnique({ where: { id: pharmacyId } });
+    if (data.email && existing && data.email.toLowerCase() !== existing.email.toLowerCase()) {
+      data.isEmailVerified = false;
+      data.emailVerifiedAt = null;
+    }
+
     const pharmacy = await prisma.pharmacy.update({
       where: { id: pharmacyId },
       data,
       include: { subscription: true, _count: { select: { branches: true, users: true, products: true } } },
     });
+
+    const isEmailVerified = Boolean(pharmacy.isEmailVerified);
+    const elapsedMs = Date.now() - (pharmacy.createdAt ? new Date(pharmacy.createdAt).getTime() : Date.now());
+    const daysElapsed = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
+    const graceDaysTotal = 7;
+    const daysRemaining = Math.max(0, graceDaysTotal - daysElapsed);
+    const isGracePeriodActive = daysElapsed <= graceDaysTotal;
+    const isRestricted = !isEmailVerified && !isGracePeriodActive;
 
     return {
       id: pharmacy.id,
@@ -100,6 +142,21 @@ export const pharmacyService = {
       phone: pharmacy.phone,
       email: pharmacy.email,
       address: pharmacy.address,
+      countryCode: pharmacy.countryCode || "",
+      countryName: pharmacy.countryName || "",
+      city: pharmacy.city || "",
+      currency: pharmacy.currency || "SAR",
+      timezone: pharmacy.timezone || "UTC",
+      isEmailVerified,
+      emailVerifiedAt: pharmacy.emailVerifiedAt?.toISOString() ?? null,
+      isPhoneVerified: Boolean(pharmacy.isPhoneVerified),
+      phoneVerifiedAt: pharmacy.phoneVerifiedAt?.toISOString() ?? null,
+      gracePeriod: {
+        daysRemaining,
+        isRestricted,
+        isGracePeriodActive,
+        isEmailVerified,
+      },
       isActive: pharmacy.isActive,
       createdAt: pharmacy.createdAt.toISOString(),
       counts: pharmacy._count,
@@ -137,8 +194,11 @@ export const pharmacyService = {
           name: input.pharmacyName.trim(),
           slug,
           phone: input.phone?.trim() ?? "",
-          // Store country + city in address field until schema gets dedicated columns
-          address: [input.city?.trim(), input.country].filter(Boolean).join(", "),
+          countryCode: input.country?.trim() ?? "",
+          countryName: input.countryName?.trim() ?? "",
+          city: input.city?.trim() ?? "",
+          currency: input.currency?.trim() ?? "SAR",
+          address: [input.city?.trim(), input.countryName || input.country].filter(Boolean).join(", "),
           contact: input.licenceNumber?.trim() ?? "",
         },
       });

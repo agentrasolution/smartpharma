@@ -1,17 +1,21 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, Check, Building2, MapPin, FlaskConical } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Building2, MapPin, FlaskConical, Coins } from "lucide-react";
 import { api } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
 import { cn } from "@/lib/utils";
+import CountrySelect from "@/components/shared/CountrySelect";
+import { CURRENCIES, type Country } from "@/lib/countries";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
 interface OnboardingData {
   pharmacyName: string;
   country: string;
+  countryName: string;
   city: string;
   phone: string;
+  currency: string;
   branchName: string;
   branchAddress: string;
   licenceNumber: string;
@@ -191,35 +195,58 @@ function StepPharmacy({
           autoFocus
         />
 
-        <Select
-          id="country"
-          label="Country"
+        <CountrySelect
           value={data.country}
-          onChange={(v) => onChange({ country: v })}
-          options={[
-            { value: "SA", label: "🇸🇦 Saudi Arabia" },
-            { value: "AE", label: "🇦🇪 United Arab Emirates" },
-          ]}
+          onChange={(c: Country) =>
+            onChange({
+              country: c.code,
+              countryName: c.name,
+              currency: data.currency || c.currency,
+              phone: !data.phone || data.phone.startsWith("+") ? c.dialCode + " " : data.phone,
+            })
+          }
+          label="Country *"
         />
 
         <div className="grid grid-cols-2 gap-3">
           <Field
             id="city"
-            label="City"
+            label="City *"
             value={data.city}
             onChange={(v) => onChange({ city: v })}
             placeholder="e.g. Riyadh"
           />
-          <Field
-            id="phone"
-            label="Phone"
-            type="tel"
-            value={data.phone}
-            onChange={(v) => onChange({ phone: v })}
-            placeholder={data.country === "AE" ? "+971 50 000 0000" : "+966 50 000 0000"}
-            optional
-          />
+          <div className="space-y-1.5">
+            <label htmlFor="currency" className="block text-[11px] font-medium tracking-wide uppercase text-text-secondary select-none">
+              Base Currency *
+            </label>
+            <div className="relative">
+              <Coins className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-secondary" />
+              <select
+                id="currency"
+                value={data.currency}
+                onChange={(e) => onChange({ currency: e.target.value })}
+                className="w-full h-10 pl-8 pr-3 text-xs rounded-xl border border-border bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent/60 transition-all appearance-none cursor-pointer"
+              >
+                {CURRENCIES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
+
+        <Field
+          id="phone"
+          label="Pharmacy Phone"
+          type="tel"
+          value={data.phone}
+          onChange={(v) => onChange({ phone: v })}
+          placeholder="+966 50 000 0000"
+          optional
+        />
       </div>
 
       {error && (
@@ -429,8 +456,10 @@ export default function Onboarding({ onComplete }: { onComplete?: () => void }) 
   const [data, setData] = useState<OnboardingData>({
     pharmacyName: "",
     country: "SA",
+    countryName: "Saudi Arabia",
     city: "",
-    phone: "",
+    currency: "SAR",
+    phone: "+966 ",
     branchName: "Main Branch",
     branchAddress: "",
     licenceNumber: "",
@@ -442,8 +471,8 @@ export default function Onboarding({ onComplete }: { onComplete?: () => void }) 
   }
 
   function handleStep1Next() {
-    if (!data.pharmacyName.trim() || !data.country) {
-      setError("Pharmacy name and country are required.");
+    if (!data.pharmacyName.trim() || !data.country || !data.city.trim()) {
+      setError("Pharmacy name, country, and city are required.");
       return;
     }
     setError("");
@@ -459,17 +488,19 @@ export default function Onboarding({ onComplete }: { onComplete?: () => void }) 
     setLoading(true);
 
     try {
-      // Update the pharmacy that was auto-created during registration
       await api.pharmacy.updateOnboarding({
         pharmacyName: data.pharmacyName.trim(),
         country: data.country,
+        countryName: data.countryName,
         city: data.city.trim(),
+        currency: data.currency,
         phone: data.phone.trim(),
         branchName: data.branchName.trim(),
         branchAddress: data.branchAddress.trim(),
         licenceNumber: data.licenceNumber.trim() || undefined,
       });
 
+      localStorage.setItem("smartpharma_currency", data.currency);
       await refreshUser();
       setStep(2);
 

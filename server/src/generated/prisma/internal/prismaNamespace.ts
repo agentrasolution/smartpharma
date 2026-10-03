@@ -433,7 +433,8 @@ export const ModelName = {
   PosShift: 'PosShift',
   CashDrop: 'CashDrop',
   SupplierReturn: 'SupplierReturn',
-  SupplierReturnItem: 'SupplierReturnItem'
+  SupplierReturnItem: 'SupplierReturnItem',
+  VerificationCode: 'VerificationCode'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -449,7 +450,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "pharmacy" | "subscription" | "inventoryConfig" | "distributorInventoryConfig" | "productDistributorConfig" | "purchaseOrder" | "purchaseOrderItem" | "aIInventoryRecommendation" | "aIAuditLog" | "aIConversation" | "aIMessage" | "user" | "branch" | "authToken" | "recoveryKey" | "role" | "permission" | "rolePermission" | "product" | "barcode" | "productPrice" | "distributor" | "company" | "customer" | "chronicMedication" | "sale" | "saleItem" | "arrear" | "arrearPayment" | "stockPurchase" | "returnEntry" | "returnItem" | "category" | "expense" | "batch" | "stockMovement" | "purchaseInvoice" | "purchaseInvoiceItem" | "distributorPayment" | "prescription" | "prescriptionItem" | "dispenseRecord" | "controlledDrugRegister" | "branchPriceOverride" | "stockTransfer" | "stockTransferItem" | "posShift" | "cashDrop" | "supplierReturn" | "supplierReturnItem"
+    modelProps: "pharmacy" | "subscription" | "inventoryConfig" | "distributorInventoryConfig" | "productDistributorConfig" | "purchaseOrder" | "purchaseOrderItem" | "aIInventoryRecommendation" | "aIAuditLog" | "aIConversation" | "aIMessage" | "user" | "branch" | "authToken" | "recoveryKey" | "role" | "permission" | "rolePermission" | "product" | "barcode" | "productPrice" | "distributor" | "company" | "customer" | "chronicMedication" | "sale" | "saleItem" | "arrear" | "arrearPayment" | "stockPurchase" | "returnEntry" | "returnItem" | "category" | "expense" | "batch" | "stockMovement" | "purchaseInvoice" | "purchaseInvoiceItem" | "distributorPayment" | "prescription" | "prescriptionItem" | "dispenseRecord" | "controlledDrugRegister" | "branchPriceOverride" | "stockTransfer" | "stockTransferItem" | "posShift" | "cashDrop" | "supplierReturn" | "supplierReturnItem" | "verificationCode"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -4153,6 +4154,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    VerificationCode: {
+      payload: Prisma.$VerificationCodePayload<ExtArgs>
+      fields: Prisma.VerificationCodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.VerificationCodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.VerificationCodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+        }
+        findFirst: {
+          args: Prisma.VerificationCodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.VerificationCodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+        }
+        findMany: {
+          args: Prisma.VerificationCodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>[]
+        }
+        create: {
+          args: Prisma.VerificationCodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+        }
+        createMany: {
+          args: Prisma.VerificationCodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.VerificationCodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>[]
+        }
+        delete: {
+          args: Prisma.VerificationCodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+        }
+        update: {
+          args: Prisma.VerificationCodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+        }
+        deleteMany: {
+          args: Prisma.VerificationCodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.VerificationCodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.VerificationCodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>[]
+        }
+        upsert: {
+          args: Prisma.VerificationCodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+        }
+        aggregate: {
+          args: Prisma.VerificationCodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateVerificationCode>
+        }
+        groupBy: {
+          args: Prisma.VerificationCodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VerificationCodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.VerificationCodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.VerificationCodeCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -4200,6 +4275,15 @@ export const PharmacyScalarFieldEnum = {
   phone: 'phone',
   email: 'email',
   address: 'address',
+  countryCode: 'countryCode',
+  countryName: 'countryName',
+  city: 'city',
+  currency: 'currency',
+  timezone: 'timezone',
+  isEmailVerified: 'isEmailVerified',
+  emailVerifiedAt: 'emailVerifiedAt',
+  isPhoneVerified: 'isPhoneVerified',
+  phoneVerifiedAt: 'phoneVerifiedAt',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -4380,6 +4464,8 @@ export const UserScalarFieldEnum = {
   branchId: 'branchId',
   jobRole: 'jobRole',
   isActive: 'isActive',
+  isEmailVerified: 'isEmailVerified',
+  emailVerifiedAt: 'emailVerifiedAt',
   mustChangePassword: 'mustChangePassword',
   passwordChangedAt: 'passwordChangedAt',
   lastLoginAt: 'lastLoginAt',
@@ -5098,6 +5184,20 @@ export const SupplierReturnItemScalarFieldEnum = {
 export type SupplierReturnItemScalarFieldEnum = (typeof SupplierReturnItemScalarFieldEnum)[keyof typeof SupplierReturnItemScalarFieldEnum]
 
 
+export const VerificationCodeScalarFieldEnum = {
+  id: 'id',
+  pharmacyId: 'pharmacyId',
+  target: 'target',
+  type: 'type',
+  codeHash: 'codeHash',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type VerificationCodeScalarFieldEnum = (typeof VerificationCodeScalarFieldEnum)[keyof typeof VerificationCodeScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -5395,6 +5495,7 @@ export type GlobalOmitConfig = {
   cashDrop?: Prisma.CashDropOmit
   supplierReturn?: Prisma.SupplierReturnOmit
   supplierReturnItem?: Prisma.SupplierReturnItemOmit
+  verificationCode?: Prisma.VerificationCodeOmit
 }
 
 /* Types for Logging */

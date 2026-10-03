@@ -100,7 +100,8 @@ export const ModelName = {
   PosShift: 'PosShift',
   CashDrop: 'CashDrop',
   SupplierReturn: 'SupplierReturn',
-  SupplierReturnItem: 'SupplierReturnItem'
+  SupplierReturnItem: 'SupplierReturnItem',
+  VerificationCode: 'VerificationCode'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -127,6 +128,15 @@ export const PharmacyScalarFieldEnum = {
   phone: 'phone',
   email: 'email',
   address: 'address',
+  countryCode: 'countryCode',
+  countryName: 'countryName',
+  city: 'city',
+  currency: 'currency',
+  timezone: 'timezone',
+  isEmailVerified: 'isEmailVerified',
+  emailVerifiedAt: 'emailVerifiedAt',
+  isPhoneVerified: 'isPhoneVerified',
+  phoneVerifiedAt: 'phoneVerifiedAt',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -307,6 +317,8 @@ export const UserScalarFieldEnum = {
   branchId: 'branchId',
   jobRole: 'jobRole',
   isActive: 'isActive',
+  isEmailVerified: 'isEmailVerified',
+  emailVerifiedAt: 'emailVerifiedAt',
   mustChangePassword: 'mustChangePassword',
   passwordChangedAt: 'passwordChangedAt',
   lastLoginAt: 'lastLoginAt',
@@ -1023,6 +1035,20 @@ export const SupplierReturnItemScalarFieldEnum = {
 } as const
 
 export type SupplierReturnItemScalarFieldEnum = (typeof SupplierReturnItemScalarFieldEnum)[keyof typeof SupplierReturnItemScalarFieldEnum]
+
+
+export const VerificationCodeScalarFieldEnum = {
+  id: 'id',
+  pharmacyId: 'pharmacyId',
+  target: 'target',
+  type: 'type',
+  codeHash: 'codeHash',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type VerificationCodeScalarFieldEnum = (typeof VerificationCodeScalarFieldEnum)[keyof typeof VerificationCodeScalarFieldEnum]
 
 
 export const SortOrder = {

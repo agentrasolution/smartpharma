@@ -24,4 +24,8 @@ export const config = {
     model: process.env.AI_MODEL || "gemini-3.6-flash",
   },
   workerEnabled: process.env.AI_WORKER_ENABLED !== "false",
+  resend: {
+    apiKey: process.env.RESEND_API_KEY || "",
+    fromEmail: process.env.RESEND_FROM_EMAIL || "SmartPharma <onboarding@resend.dev>",
+  },
 };

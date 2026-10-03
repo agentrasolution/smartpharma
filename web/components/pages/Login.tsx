@@ -1,10 +1,25 @@
 "use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
-import { Eye, EyeOff, ArrowRight, ChevronRight } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  ArrowRight,
+  ChevronRight,
+  Mail,
+  KeyRound,
+  Users,
+  ShieldAlert,
+  CheckCircle2,
+  Building2,
+  RefreshCw,
+} from "lucide-react";
 import { api } from "@/lib/api";
 import { cn } from "@/lib/utils";
+import CountrySelect from "@/components/shared/CountrySelect";
+import { type Country } from "@/lib/countries";
 
 // ─── Tiny primitives ───────────────────────────────────────────────────────────
 
@@ -17,6 +32,8 @@ function Field({
   placeholder,
   autoFocus,
   suffix,
+  hint,
+  optional,
 }: {
   id: string;
   label: string;
@@ -26,12 +43,17 @@ function Field({
   placeholder?: string;
   autoFocus?: boolean;
   suffix?: React.ReactNode;
+  hint?: string;
+  optional?: boolean;
 }) {
   return (
     <div className="space-y-1.5">
-      <label htmlFor={id} className="block text-[11px] font-medium tracking-wide uppercase text-text-secondary select-none">
-        {label}
-      </label>
+      <div className="flex items-baseline justify-between">
+        <label htmlFor={id} className="block text-[11px] font-medium tracking-wide uppercase text-text-secondary select-none">
+          {label}
+        </label>
+        {optional && <span className="text-[10px] text-text-secondary/60">Optional</span>}
+      </div>
       <div className="relative">
         <input
           id={id}
@@ -42,7 +64,7 @@ function Field({
           autoFocus={autoFocus}
           autoComplete="off"
           className={cn(
-            "w-full h-10 rounded-xl border border-border bg-surface px-3.5 text-sm text-text-primary placeholder:text-text-secondary/50",
+            "w-full h-11 rounded-xl border border-border bg-surface px-3.5 text-sm text-text-primary placeholder:text-text-secondary/40",
             "focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent/60",
             "transition-all duration-150",
             suffix && "pr-10",
@@ -54,6 +76,7 @@ function Field({
           </div>
         )}
       </div>
+      {hint && <p className="text-[11px] text-text-secondary/70">{hint}</p>}
     </div>
   );
 }
@@ -91,7 +114,6 @@ function SubmitButton({ loading, label, loadingLabel }: { loading: boolean; labe
 function BrandPanel() {
   return (
     <div className="hidden lg:flex w-[420px] shrink-0 flex-col justify-between bg-foreground p-10 relative overflow-hidden">
-      {/* Subtle grid texture */}
       <div
         className="absolute inset-0 opacity-[0.04]"
         style={{
@@ -99,11 +121,8 @@ function BrandPanel() {
           backgroundSize: "40px 40px",
         }}
       />
-
-      {/* Glowing orb */}
       <div className="absolute top-0 right-0 w-72 h-72 bg-accent/20 rounded-full blur-3xl -translate-y-1/3 translate-x-1/3" />
 
-      {/* Logo */}
       <div className="relative z-10">
         <div className="flex items-center gap-2.5">
           <div className="h-7 w-7 rounded-lg bg-background/10 flex items-center justify-center">
@@ -113,7 +132,6 @@ function BrandPanel() {
         </div>
       </div>
 
-      {/* Center content */}
       <div className="relative z-10 space-y-6">
         <div className="space-y-3">
           <p className="text-background/40 text-xs font-medium tracking-widest uppercase">Pharmacy Management</p>
@@ -121,13 +139,12 @@ function BrandPanel() {
             Built for<br />modern pharmacy.
           </h2>
           <p className="text-background/60 text-sm leading-relaxed max-w-[260px]">
-            Full inventory control, compliance-ready, and designed to run your entire pharmacy from one screen.
+            Full inventory control, compliance-ready, automated Resend email notifications, and offline POS shifts.
           </p>
         </div>
 
-        {/* Feature pills */}
         <div className="flex flex-col gap-2">
-          {["FEFO Batch Tracking", "Multi-branch support", "Offline-first POS"].map((f) => (
+          {["FEFO Batch & Expiry Tracking", "Automated Resend Email Delivery", "Multi-Currency & Regional Tax", "Role-Based Staff Access"].map((f) => (
             <div key={f} className="flex items-center gap-2.5">
               <div className="h-1.5 w-1.5 rounded-full bg-accent" />
               <span className="text-background/70 text-xs">{f}</span>
@@ -136,7 +153,6 @@ function BrandPanel() {
         </div>
       </div>
 
-      {/* Bottom */}
       <div className="relative z-10">
         <p className="text-background/30 text-[11px]">© {new Date().getFullYear()} SmartPharma</p>
       </div>
@@ -144,7 +160,7 @@ function BrandPanel() {
   );
 }
 
-// ─── Login view ────────────────────────────────────────────────────────────────
+// ─── Login & Recovery view ─────────────────────────────────────────────────────
 
 function LoginView({ onSwitch }: { onSwitch: () => void }) {
   const { login } = useAuth();
@@ -155,7 +171,20 @@ function LoginView({ onSwitch }: { onSwitch: () => void }) {
   const [loading, setLoading] = useState(false);
   const [recovery, setRecovery] = useState(false);
 
-  // Recovery state
+  // Recovery Sub-Modes: "otp" | "staff" | "phrase"
+  const [recoveryMode, setRecoveryMode] = useState<"otp" | "staff" | "phrase">("otp");
+
+  // OTP Recovery State
+  const [otpIdentifier, setOtpIdentifier] = useState("");
+  const [otpCode, setOtpCode] = useState("");
+  const [otpNewPw, setOtpNewPw] = useState("");
+  const [otpConfirmPw, setOtpConfirmPw] = useState("");
+  const [otpStep, setOtpStep] = useState<"request" | "verify">("request");
+  const [maskedEmail, setMaskedEmail] = useState("");
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [otpError, setOtpError] = useState("");
+
+  // Recovery Key State
   const [recUsername, setRecUsername] = useState("");
   const [recKey, setRecKey] = useState("");
   const [recNewPw, setRecNewPw] = useState("");
@@ -174,6 +203,64 @@ function LoginView({ onSwitch }: { onSwitch: () => void }) {
     setLoading(false);
   }
 
+  // OTP: Step 1 - Send OTP via Resend
+  async function handleSendOtp(e: React.FormEvent) {
+    e.preventDefault();
+    if (!otpIdentifier.trim()) {
+      setOtpError("Username or administrator email is required");
+      return;
+    }
+    setOtpError("");
+    setOtpLoading(true);
+    try {
+      const res = await api.auth.forgotPassword(otpIdentifier.trim());
+      setMaskedEmail(res.maskedEmail);
+      setOtpStep("verify");
+    } catch (err: unknown) {
+      setOtpError(err instanceof Error ? err.message : "Failed to send reset code");
+    } finally {
+      setOtpLoading(false);
+    }
+  }
+
+  // OTP: Step 2 - Verify OTP and set new password
+  async function handleResetWithOtp(e: React.FormEvent) {
+    e.preventDefault();
+    setOtpError("");
+    if (!otpCode.trim() || !otpNewPw || !otpConfirmPw) {
+      setOtpError("All fields are required");
+      return;
+    }
+    if (otpNewPw !== otpConfirmPw) {
+      setOtpError("Passwords do not match");
+      return;
+    }
+    if (otpNewPw.length < 8) {
+      setOtpError("Password must be at least 8 characters");
+      return;
+    }
+
+    setOtpLoading(true);
+    try {
+      await api.auth.resetPasswordOtp(otpIdentifier.trim(), otpCode.trim(), otpNewPw);
+      setRecDone(true);
+      setTimeout(() => {
+        setRecovery(false);
+        setRecDone(false);
+        setOtpStep("request");
+        setOtpIdentifier("");
+        setOtpCode("");
+        setOtpNewPw("");
+        setOtpConfirmPw("");
+      }, 2500);
+    } catch (err: unknown) {
+      setOtpError(err instanceof Error ? err.message : "Password reset failed");
+    } finally {
+      setOtpLoading(false);
+    }
+  }
+
+  // 12-Word Recovery Phrase
   async function handleRecovery(e: React.FormEvent) {
     e.preventDefault();
     setRecError("");
@@ -181,19 +268,32 @@ function LoginView({ onSwitch }: { onSwitch: () => void }) {
       setRecError("All fields are required");
       return;
     }
-    if (recNewPw !== recConfirm) { setRecError("Passwords do not match"); return; }
-    if (recNewPw.length < 8) { setRecError("Password must be at least 8 characters"); return; }
+    if (recNewPw !== recConfirm) {
+      setRecError("Passwords do not match");
+      return;
+    }
+    if (recNewPw.length < 8) {
+      setRecError("Password must be at least 8 characters");
+      return;
+    }
     setRecLoading(true);
     try {
       const res = await api.auth.recoverPassword(recKey.trim(), recNewPw, recUsername.trim());
-      if (res.error) { setRecError(res.error); }
-      else { setRecDone(true); setTimeout(() => setRecovery(false), 2500); }
-    } catch { setRecError("Recovery failed. Check your key and try again."); }
-    finally { setRecLoading(false); }
+      if (res.error) {
+        setRecError(res.error);
+      } else {
+        setRecDone(true);
+        setTimeout(() => setRecovery(false), 2500);
+      }
+    } catch {
+      setRecError("Recovery failed. Check your key and try again.");
+    } finally {
+      setRecLoading(false);
+    }
   }
 
   return (
-    <div className="w-full max-w-[360px] mx-auto space-y-8">
+    <div className="w-full max-w-[380px] mx-auto space-y-6">
       {/* Header */}
       <div className="space-y-1">
         <div className="lg:hidden flex items-center gap-2 mb-6">
@@ -210,14 +310,13 @@ function LoginView({ onSwitch }: { onSwitch: () => void }) {
             </motion.div>
           ) : (
             <motion.div key="recovery-header" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.2 }}>
-              <h1 className="text-2xl font-bold text-text-primary tracking-tight">Reset password</h1>
-              <p className="text-sm text-text-secondary mt-1">Use your recovery key to set a new password</p>
+              <h1 className="text-2xl font-bold text-text-primary tracking-tight">Account Recovery</h1>
+              <p className="text-sm text-text-secondary mt-1">Reset your password or learn how to recover access</p>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* Forms */}
       <AnimatePresence mode="wait">
         {!recovery ? (
           <motion.form
@@ -271,43 +370,195 @@ function LoginView({ onSwitch }: { onSwitch: () => void }) {
           </motion.form>
         ) : (
           <motion.div
-            key="recovery-form"
+            key="recovery-container"
             initial={{ opacity: 0, x: 16 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -16 }}
             transition={{ duration: 0.2 }}
+            className="space-y-4"
           >
             {recDone ? (
               <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-8 space-y-3">
                 <div className="h-12 w-12 rounded-2xl bg-success/10 flex items-center justify-center mx-auto">
-                  <span className="text-success text-xl">✓</span>
+                  <CheckCircle2 className="h-6 w-6 text-success" />
                 </div>
                 <p className="text-sm font-semibold text-text-primary">Password reset successfully</p>
                 <p className="text-xs text-text-secondary">You can now sign in with your new password.</p>
               </motion.div>
             ) : (
-              <form onSubmit={handleRecovery} className="space-y-4">
-                <Field id="rec-username" label="Username" value={recUsername} onChange={setRecUsername} placeholder="Your username" autoFocus />
-                <Field id="rec-key" label="Recovery key" value={recKey} onChange={setRecKey} placeholder="Paste your recovery key" />
-                <Field id="rec-new-pw" label="New password" type="password" value={recNewPw} onChange={setRecNewPw} placeholder="Min 8 characters" />
-                <Field id="rec-confirm" label="Confirm password" type="password" value={recConfirm} onChange={setRecConfirm} placeholder="Repeat new password" />
+              <>
+                {/* Recovery Mode Tabs */}
+                <div className="grid grid-cols-3 gap-1 p-1 rounded-xl bg-surface border border-border text-xs">
+                  <button
+                    type="button"
+                    onClick={() => { setRecoveryMode("otp"); setOtpError(""); }}
+                    className={cn(
+                      "py-1.5 rounded-lg font-medium transition-all text-center flex items-center justify-center gap-1.5",
+                      recoveryMode === "otp"
+                        ? "bg-foreground text-background shadow-sm"
+                        : "text-text-secondary hover:text-text-primary",
+                    )}
+                  >
+                    <Mail className="h-3 w-3" />
+                    <span>Email OTP</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setRecoveryMode("staff"); setOtpError(""); }}
+                    className={cn(
+                      "py-1.5 rounded-lg font-medium transition-all text-center flex items-center justify-center gap-1.5",
+                      recoveryMode === "staff"
+                        ? "bg-foreground text-background shadow-sm"
+                        : "text-text-secondary hover:text-text-primary",
+                    )}
+                  >
+                    <Users className="h-3 w-3" />
+                    <span>Staff Help</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setRecoveryMode("phrase"); setRecError(""); }}
+                    className={cn(
+                      "py-1.5 rounded-lg font-medium transition-all text-center flex items-center justify-center gap-1.5",
+                      recoveryMode === "phrase"
+                        ? "bg-foreground text-background shadow-sm"
+                        : "text-text-secondary hover:text-text-primary",
+                    )}
+                  >
+                    <KeyRound className="h-3 w-3" />
+                    <span>12 Words</span>
+                  </button>
+                </div>
 
-                {recError && (
-                  <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-xs text-danger bg-danger/5 border border-danger/15 rounded-lg px-3 py-2.5 text-center">
-                    {recError}
-                  </motion.p>
+                {/* Sub-mode 1: Email OTP (Resend) */}
+                {recoveryMode === "otp" && (
+                  <div>
+                    {otpStep === "request" ? (
+                      <form onSubmit={handleSendOtp} className="space-y-4 pt-1">
+                        <Field
+                          id="otp-ident"
+                          label="Username or Administrator Email"
+                          value={otpIdentifier}
+                          onChange={setOtpIdentifier}
+                          placeholder="e.g. admin or pharmacy@domain.com"
+                          autoFocus
+                          hint="We will send a 6-digit OTP code to your registered pharmacy email via Resend."
+                        />
+
+                        {otpError && (
+                          <p className="text-xs text-danger bg-danger/5 border border-danger/15 rounded-lg p-2.5 text-center">
+                            {otpError}
+                          </p>
+                        )}
+
+                        <SubmitButton loading={otpLoading} label="Send Code via Resend" loadingLabel="Sending code..." />
+                      </form>
+                    ) : (
+                      <form onSubmit={handleResetWithOtp} className="space-y-3 pt-1">
+                        <div className="bg-accent/10 border border-accent/20 rounded-xl p-3 text-xs text-accent space-y-1">
+                          <p className="font-semibold">Reset code sent!</p>
+                          <p className="text-[11px] text-text-secondary">
+                            A 6-digit code has been delivered to <span className="font-mono text-text-primary">{maskedEmail}</span>.
+                          </p>
+                        </div>
+
+                        <Field
+                          id="otp-code"
+                          label="6-Digit OTP Code"
+                          value={otpCode}
+                          onChange={(v) => setOtpCode(v.replace(/\D/g, ""))}
+                          placeholder="123456"
+                          autoFocus
+                        />
+
+                        <Field
+                          id="otp-new-pw"
+                          label="New Password"
+                          type="password"
+                          value={otpNewPw}
+                          onChange={setOtpNewPw}
+                          placeholder="Min 8 characters"
+                        />
+
+                        <Field
+                          id="otp-confirm-pw"
+                          label="Confirm Password"
+                          type="password"
+                          value={otpConfirmPw}
+                          onChange={setOtpConfirmPw}
+                          placeholder="Repeat new password"
+                        />
+
+                        {otpError && (
+                          <p className="text-xs text-danger bg-danger/5 border border-danger/15 rounded-lg p-2.5 text-center">
+                            {otpError}
+                          </p>
+                        )}
+
+                        <SubmitButton loading={otpLoading} label="Update Password & Sign In" loadingLabel="Resetting..." />
+
+                        <button
+                          type="button"
+                          onClick={() => setOtpStep("request")}
+                          className="w-full text-xs text-accent hover:underline text-center pt-1"
+                        >
+                          Didn't get the code? Change email / Resend
+                        </button>
+                      </form>
+                    )}
+                  </div>
                 )}
 
-                <SubmitButton loading={recLoading} label="Reset password" loadingLabel="Resetting..." />
+                {/* Sub-mode 2: Staff Help Card */}
+                {recoveryMode === "staff" && (
+                  <div className="space-y-4 pt-1">
+                    <div className="bg-surface border border-border rounded-xl p-4 space-y-3">
+                      <div className="flex items-center gap-2 text-text-primary font-semibold text-xs">
+                        <Users className="h-4 w-4 text-accent" />
+                        <span>Staff Password Reset (Cashiers & Dispensers)</span>
+                      </div>
+                      <p className="text-xs text-text-secondary leading-relaxed">
+                        In enterprise pharmacy operations, staff members (cashiers, technicians, inventory handlers) do not possess individual billing email addresses.
+                      </p>
+                      <div className="rounded-lg bg-surface-2/60 p-3 space-y-1.5 border border-border/50 text-[11px] text-text-secondary">
+                        <strong className="text-text-primary block font-medium">How to get your password reset:</strong>
+                        <ol className="list-decimal list-inside space-y-1 pl-1">
+                          <li>Contact your <strong>Pharmacy Administrator</strong> or <strong>Store Manager</strong>.</li>
+                          <li>They can open <strong>Settings &gt; Users &amp; Roles</strong>.</li>
+                          <li>Clicking <strong>&quot;Reset Password&quot;</strong> on your profile generates a temporary password.</li>
+                          <li>Sign in with that temporary password—you will be prompted to set your new private password immediately.</li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Sub-mode 3: 12-Word Recovery Key */}
+                {recoveryMode === "phrase" && (
+                  <form onSubmit={handleRecovery} className="space-y-4 pt-1">
+                    <Field id="rec-username" label="Username" value={recUsername} onChange={setRecUsername} placeholder="Your username" autoFocus />
+                    <Field id="rec-key" label="Recovery key" value={recKey} onChange={setRecKey} placeholder="Paste your 12-word recovery phrase" />
+                    <Field id="rec-new-pw" label="New password" type="password" value={recNewPw} onChange={setRecNewPw} placeholder="Min 8 characters" />
+                    <Field id="rec-confirm" label="Confirm password" type="password" value={recConfirm} onChange={setRecConfirm} placeholder="Repeat new password" />
+
+                    {recError && (
+                      <p className="text-xs text-danger bg-danger/5 border border-danger/15 rounded-lg px-3 py-2 text-center">
+                        {recError}
+                      </p>
+                    )}
+
+                    <SubmitButton loading={recLoading} label="Reset password" loadingLabel="Resetting..." />
+                  </form>
+                )}
 
                 <button
                   type="button"
-                  onClick={() => { setRecovery(false); setRecError(""); setRecUsername(""); setRecKey(""); setRecNewPw(""); setRecConfirm(""); }}
-                  className="w-full text-xs text-text-secondary hover:text-text-primary transition-colors text-center pt-1"
+                  onClick={() => { setRecovery(false); setRecError(""); setOtpError(""); setOtpStep("request"); }}
+                  className="w-full text-xs text-text-secondary hover:text-text-primary transition-colors text-center pt-2"
                 >
                   ← Back to sign in
                 </button>
-              </form>
+              </>
             )}
           </motion.div>
         )}
@@ -322,11 +573,23 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
   const { register } = useAuth();
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [countryCode, setCountryCode] = useState("SA");
+  const [countryName, setCountryName] = useState("Saudi Arabia");
+  const [currency, setCurrency] = useState("SAR");
+  const [phone, setPhone] = useState("+966 ");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  function handleCountrySelect(c: Country) {
+    setCountryCode(c.code);
+    setCountryName(c.name);
+    setCurrency(c.currency);
+    setPhone(c.dialCode + " ");
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -336,7 +599,6 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
     if (password !== confirm) { setError("Passwords do not match"); return; }
 
     setLoading(true);
-    // Pass a temporary pharmacy name — onboarding will update it
     const tempPharmacyName = `${name.trim()} Pharmacy ${Date.now().toString().slice(-4)}`;
     const err = await register({
       pharmacyName: tempPharmacyName,
@@ -344,18 +606,23 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
       name: name.trim(),
       username: username.trim(),
       password,
+      email: email.trim() || undefined,
+      phone: phone.trim() || undefined,
+      countryCode,
+      countryName,
+      currency,
     });
     if (err) {
       setError(err);
       setLoading(false);
     } else {
-      // Trigger onboarding flow
+      localStorage.setItem("smartpharma_currency", currency);
       onRegistered();
     }
   }
 
   return (
-    <div className="w-full max-w-[360px] mx-auto space-y-8">
+    <div className="w-full max-w-[380px] mx-auto space-y-6">
       {/* Header */}
       <div className="space-y-1">
         <div className="lg:hidden flex items-center gap-2 mb-6">
@@ -365,36 +632,31 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
           <span className="text-text-primary font-semibold text-sm">SmartPharma</span>
         </div>
         <h1 className="text-2xl font-bold text-text-primary tracking-tight">Create your account</h1>
-        <p className="text-sm text-text-secondary mt-1">Then we'll set up your pharmacy in the next step</p>
+        <p className="text-sm text-text-secondary mt-1">Start your 30-day trial with full ERP access</p>
       </div>
 
-      {/* Step indicator */}
-      <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1.5">
-          <div className="h-5 w-5 rounded-full bg-foreground flex items-center justify-center">
-            <span className="text-[10px] font-bold text-background">1</span>
-          </div>
-          <span className="text-xs font-medium text-text-primary">Account</span>
-        </div>
-        <div className="flex-1 h-px bg-border" />
-        <div className="flex items-center gap-1.5 opacity-40">
-          <div className="h-5 w-5 rounded-full border border-border flex items-center justify-center">
-            <span className="text-[10px] text-text-secondary">2</span>
-          </div>
-          <span className="text-xs text-text-secondary">Pharmacy</span>
-        </div>
-        <div className="flex-1 h-px bg-border" />
-        <div className="flex items-center gap-1.5 opacity-40">
-          <div className="h-5 w-5 rounded-full border border-border flex items-center justify-center">
-            <span className="text-[10px] text-text-secondary">3</span>
-          </div>
-          <span className="text-xs text-text-secondary">Branch</span>
-        </div>
-      </div>
+      <form onSubmit={handleSubmit} className="space-y-3.5">
+        <Field id="reg-name" label="Your Full Name" value={name} onChange={setName} placeholder="e.g. Dr. Ahmed Al-Rashid" autoFocus />
+        <Field id="reg-username" label="Username" value={username} onChange={setUsername} placeholder="Unique username to sign in" />
+        
+        {/* Email field for Resend verification & 7-day grace period */}
+        <Field
+          id="reg-email"
+          label="Administrator Email"
+          type="email"
+          value={email}
+          onChange={setEmail}
+          placeholder="admin@pharmacy.com"
+          hint="Used for password recovery and 7-day email verification via Resend."
+        />
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Field id="reg-name" label="Your full name" value={name} onChange={setName} placeholder="e.g. Ahmed Al-Rashid" autoFocus />
-        <Field id="reg-username" label="Username" value={username} onChange={setUsername} placeholder="Used to sign in — no spaces" />
+        {/* Country combobox */}
+        <CountrySelect
+          value={countryCode}
+          onChange={handleCountrySelect}
+          label="Country & Regional Currency"
+        />
+
         <Field
           id="reg-password"
           label="Password"
@@ -411,12 +673,12 @@ function RegisterView({ onSwitch, onRegistered }: { onSwitch: () => void; onRegi
         <Field id="reg-confirm" label="Confirm password" type="password" value={confirm} onChange={setConfirm} placeholder="Repeat your password" />
 
         {error && (
-          <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-xs text-danger bg-danger/5 border border-danger/15 rounded-lg px-3 py-2.5 text-center">
+          <motion.p initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="text-xs text-danger bg-danger/5 border border-danger/15 rounded-lg px-3 py-2 text-center">
             {error}
           </motion.p>
         )}
 
-        <SubmitButton loading={loading} label="Continue" loadingLabel="Creating account..." />
+        <SubmitButton loading={loading} label="Create Account & Continue" loadingLabel="Setting up..." />
 
         <button
           type="button"

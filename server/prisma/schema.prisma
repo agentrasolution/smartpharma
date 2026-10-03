@@ -19,6 +19,15 @@ model Pharmacy {
   phone        String        @default("")
   email        String        @default("")
   address      String        @default("")
+  countryCode  String        @default("") @map("country_code")
+  countryName  String        @default("") @map("country_name")
+  city         String        @default("")
+  currency     String        @default("SAR")
+  timezone     String        @default("UTC")
+  isEmailVerified Boolean    @default(false) @map("is_email_verified")
+  emailVerifiedAt DateTime?  @map("email_verified_at")
+  isPhoneVerified Boolean    @default(false) @map("is_phone_verified")
+  phoneVerifiedAt DateTime?  @map("phone_verified_at")
   isActive     Boolean       @default(true) @map("is_active")
   createdAt    DateTime      @default(now()) @map("created_at")
   updatedAt    DateTime      @updatedAt @map("updated_at")
@@ -48,6 +57,7 @@ model Pharmacy {
   branchPriceOverrides BranchPriceOverride[]
   posShifts          PosShift[]
   supplierReturns    SupplierReturn[]
+  verificationCodes  VerificationCode[]
 
   @@map("pharmacies")
 }
@@ -244,6 +254,8 @@ model User {
   branchId            String?     @map("branch_id")
   jobRole             String      @default("") @map("job_role")
   isActive            Boolean     @default(true) @map("is_active")
+  isEmailVerified     Boolean     @default(false) @map("is_email_verified")
+  emailVerifiedAt     DateTime?   @map("email_verified_at")
   mustChangePassword  Boolean     @default(true) @map("must_change_password")
   passwordChangedAt   DateTime?   @map("password_changed_at")
   lastLoginAt         DateTime?   @map("last_login_at")
@@ -1207,6 +1219,22 @@ model SupplierReturnItem {
   @@index([productId])
   @@index([batchId])
   @@map("supplier_return_items")
+}
+
+model VerificationCode {
+  id          String    @id @default(uuid())
+  pharmacyId  String?   @map("pharmacy_id")
+  target      String    // email address or phone number
+  type        String    // "EMAIL_VERIFY" | "PASSWORD_RESET" | "PHONE_VERIFY"
+  codeHash    String    @map("code_hash")
+  expiresAt   DateTime  @map("expires_at")
+  usedAt      DateTime? @map("used_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  pharmacy    Pharmacy? @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+
+  @@index([target, type])
+  @@index([pharmacyId])
+  @@map("verification_codes")
 }
 
 

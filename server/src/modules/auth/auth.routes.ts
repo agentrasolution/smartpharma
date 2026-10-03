@@ -8,6 +8,10 @@ import {
   registerSchema,
   verifyPasswordSchema,
   recoverPasswordSchema,
+  sendVerificationEmailSchema,
+  verifyEmailSchema,
+  forgotPasswordSchema,
+  resetPasswordOtpSchema,
   refreshSchema,
   logoutSchema,
 } from "./auth.schema";
@@ -23,5 +27,13 @@ router.get("/me", authenticate, authController.me);
 router.post("/verify-password", authenticate, validate(verifyPasswordSchema), authController.verifyPassword);
 router.post("/generate-recovery-key", authenticate, authController.generateRecoveryKey);
 router.post("/recover-password", validate(recoverPasswordSchema), authController.recoverPassword);
+
+// Email verification routes
+router.post("/send-verification-email", authenticate, validate(sendVerificationEmailSchema), authController.sendVerificationEmail);
+router.post("/verify-email", authenticate, validate(verifyEmailSchema), authController.verifyEmail);
+
+// Password recovery via OTP (Resend email)
+router.post("/forgot-password", validate(forgotPasswordSchema), authController.forgotPassword);
+router.post("/reset-password-otp", validate(resetPasswordOtpSchema), authController.resetPasswordOtp);
 
 export { router as authRoutes };

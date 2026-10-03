@@ -52,6 +52,38 @@ export const authController = {
     } catch (err) { next(err); }
   },
 
+  async sendVerificationEmail(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await authService.sendVerificationEmail(req.user!.pharmacyId, req.body.email);
+      res.json(result);
+    } catch (err) { next(err); }
+  },
+
+  async verifyEmail(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await authService.verifyEmail(req.user!.pharmacyId, req.body.code);
+      res.json(result);
+    } catch (err) { next(err); }
+  },
+
+  async forgotPassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await authService.requestPasswordReset(req.body.identifier);
+      res.json(result);
+    } catch (err) { next(err); }
+  },
+
+  async resetPasswordOtp(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await authService.resetPasswordWithOtp(
+        req.body.identifier,
+        req.body.code,
+        req.body.newPassword,
+      );
+      res.json(result);
+    } catch (err) { next(err); }
+  },
+
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
       const result = await authService.refresh(req.body.refreshToken);

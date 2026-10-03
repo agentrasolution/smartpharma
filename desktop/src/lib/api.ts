@@ -114,16 +114,26 @@ const api = {
       fetchJson("POST", "/api/auth/generate-recovery-key"),
     recoverPassword: (phrase: string, newPassword: string, username: string): Promise<{ success: boolean; error?: string }> =>
       fetchJson("POST", "/api/auth/recover-password", { phrase, newPassword, username }, false),
+    sendVerificationEmail: (email?: string): Promise<{ success: boolean; email: string; message: string }> =>
+      fetchJson("POST", "/api/auth/send-verification-email", { email }),
+    verifyEmail: (code: string): Promise<{ success: boolean; isEmailVerified: boolean; verifiedAt: string }> =>
+      fetchJson("POST", "/api/auth/verify-email", { code }),
+    forgotPassword: (identifier: string): Promise<{ success: boolean; maskedEmail: string; message: string }> =>
+      fetchJson("POST", "/api/auth/forgot-password", { identifier }, false),
+    resetPasswordOtp: (identifier: string, code: string, newPassword: string): Promise<{ success: boolean; message: string }> =>
+      fetchJson("POST", "/api/auth/reset-password-otp", { identifier, code, newPassword }, false),
   },
   pharmacy: {
     get: (): Promise<Pharmacy> => fetchJson("GET", "/api/pharmacy"),
-    update: (input: Partial<Pick<Pharmacy, "name" | "contact" | "phone" | "email" | "address">>): Promise<Pharmacy> =>
+    update: (input: Partial<Pick<Pharmacy, "name" | "contact" | "phone" | "email" | "address" | "countryCode" | "countryName" | "city" | "currency" | "timezone" | "isPhoneVerified">>): Promise<Pharmacy> =>
       fetchJson("PATCH", "/api/pharmacy", input),
     updateOnboarding: (input: {
       pharmacyName: string;
       country: string;
+      countryName?: string;
       city: string;
       phone?: string;
+      currency?: string;
       branchName: string;
       branchAddress?: string;
       licenceNumber?: string;

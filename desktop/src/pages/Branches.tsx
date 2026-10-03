@@ -426,7 +426,7 @@ export default function Branches() {
                             <h3 className="font-semibold text-text-primary text-base leading-tight">{b.name}</h3>
                             <div className="flex items-center gap-1.5 mt-1">
                               <Badge
-                                variant={b.isActive ? "default" : "secondary"}
+                                variant={b.isActive ? "default" : "neutral"}
                                 className={`text-[10px] px-1.5 py-0 ${b.isActive ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20" : ""}`}
                               >
                                 {b.isActive ? "Active" : "Inactive"}
@@ -918,7 +918,7 @@ export default function Branches() {
                     <SelectContent>
                       {availableProducts.map((p) => (
                         <SelectItem key={p.id} value={p.id}>
-                          {p.name} (${p.salePrice.toFixed(2)})
+                          {p.name} (${Number(p.salePrice ?? p.sale_price ?? 0).toFixed(2)})
                         </SelectItem>
                       ))}
                     </SelectContent>

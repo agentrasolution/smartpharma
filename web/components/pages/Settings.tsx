@@ -6,9 +6,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Database, HardDrive, Trash2, RefreshCw, CheckCircle2, XCircle,
   Cloud, CloudOff, Loader2, Link2, Link2Off, Lock, FolderOpen, RotateCcw,
-  Bot, Sparkles,
+  Bot, Sparkles, Building2, ShieldCheck, Mail, Phone, MapPin, AlertCircle, Coins,
 } from "lucide-react";
 import PageHeader from "@/components/shared/PageHeader";
+import CountrySelect from "@/components/shared/CountrySelect";
+import EmailVerificationModal from "@/components/shared/EmailVerificationModal";
+import { CURRENCIES, type Country } from "@/lib/countries";
+import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,7 +20,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { formatDateTime, formatFileSize } from "@/lib/utils";
+import { cn, formatDateTime, formatFileSize } from "@/lib/utils";
 import { api } from "@/lib/api";
 import ConfirmDialog from "@/components/shared/ConfirmDialog";
 import { AI_PRESETS, normalizeProvider } from "@/lib/aiProviders";
@@ -43,6 +47,7 @@ const defaultGDriveConfig: GDriveConfig = {
 export default function Settings() {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { user, refreshUser } = useAuth();
   const navigate = (href: string) => router.push(href);
   const [locked, setLocked] = useState(true);
   const [adminUser, setAdminUser] = useState("");
@@ -57,6 +62,54 @@ export default function Settings() {
   const [backupDirectory, setBackupDirectory] = useState("");
   const [recoveryDialog, setRecoveryDialog] = useState<{ open: boolean; phrase: string }>({ open: false, phrase: "" });
   const [deleteBackup, setDeleteBackup] = useState<string | null>(null);
+
+  // Pharmacy Profile Settings
+  const [verifyModalOpen, setVerifyModalOpen] = useState(false);
+  const [pharmacyForm, setPharmacyForm] = useState({
+    name: "",
+    countryCode: "SA",
+    countryName: "Saudi Arabia",
+    city: "",
+    currency: "SAR",
+    phone: "",
+    email: "",
+    address: "",
+    isPhoneVerified: false,
+  });
+
+  const { data: pharmacyData, isLoading: pharmacyLoading } = useQuery({
+    queryKey: ["pharmacy", "profile"],
+    queryFn: api.pharmacy.get,
+  });
+
+  useEffect(() => {
+    if (pharmacyData) {
+      setPharmacyForm({
+        name: pharmacyData.name || "",
+        countryCode: pharmacyData.countryCode || "SA",
+        countryName: pharmacyData.countryName || "Saudi Arabia",
+        city: pharmacyData.city || "",
+        currency: pharmacyData.currency || "SAR",
+        phone: pharmacyData.phone || "",
+        email: pharmacyData.email || "",
+        address: pharmacyData.address || "",
+        isPhoneVerified: Boolean(pharmacyData.isPhoneVerified),
+      });
+    }
+  }, [pharmacyData]);
+
+  const updatePharmacyMutation = useMutation({
+    mutationFn: (data: typeof pharmacyForm) => api.pharmacy.update(data),
+    onSuccess: async () => {
+      toast.success("Pharmacy settings saved successfully");
+      localStorage.setItem("smartpharma_currency", pharmacyForm.currency);
+      queryClient.invalidateQueries({ queryKey: ["pharmacy", "profile"] });
+      await refreshUser();
+    },
+    onError: (err: Error) => {
+      toast.error(err.message || "Failed to update pharmacy settings");
+    },
+  });
 
   const { data: backups = [], isLoading: backupsLoading } = useQuery({
     queryKey: ["settings", "backups"],
@@ -229,8 +282,12 @@ export default function Settings() {
     <div>
       <PageHeader title="Settings" description="Manage database backups and Google Drive integration" />
 
-      <Tabs defaultValue="backup">
+      <Tabs defaultValue="pharmacy">
         <TabsList className="mb-6">
+          <TabsTrigger value="pharmacy" className="gap-2">
+            <Building2 className="h-4 w-4" />
+            Pharmacy Profile
+          </TabsTrigger>
           <TabsTrigger value="backup" className="gap-2">
             <Database className="h-4 w-4" />
             Database Backup
@@ -244,6 +301,256 @@ export default function Settings() {
             AI Provider
           </TabsTrigger>
         </TabsList>
+
+        <TabsContent value="pharmacy">
+          <div className="space-y-6">
+            {/* Header Card with Verification Badges */}
+            <Card>
+              <CardHeader className="pb-3">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div className="space-y-1">
+                    <CardTitle className="flex items-center gap-2 text-lg">
+                      <Building2 className="h-5 w-5 text-accent" />
+                      Pharmacy Details & Compliance
+                    </CardTitle>
+                    <CardDescription>
+                      Configure your pharmacy name, location, operating currency, and contact verification status.
+                    </CardDescription>
+                  </div>
+
+                  {/* Verification Status Badges */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    {pharmacyData?.isEmailVerified ? (
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-semibold">
+                        <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                        <span>Email Verified</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-medium">
+                          <AlertCircle className="h-4 w-4 text-amber-500 shrink-0" />
+                          <span>
+                            Email Unverified ({pharmacyData?.gracePeriod?.daysRemaining ?? 7}d grace)
+                          </span>
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setVerifyModalOpen(true)}
+                          className="h-8 text-xs font-semibold border-amber-500/30 text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/20"
+                        >
+                          Verify Now
+                        </Button>
+                      </div>
+                    )}
+
+                    {/* Phone Verification Badge */}
+                    <div
+                      onClick={() =>
+                        setPharmacyForm((prev) => ({
+                          ...prev,
+                          isPhoneVerified: !prev.isPhoneVerified,
+                        }))
+                      }
+                      className={cn(
+                        "flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold cursor-pointer transition-all select-none",
+                        pharmacyForm.isPhoneVerified
+                          ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-300"
+                          : "bg-surface border-border text-text-secondary hover:text-text-primary",
+                      )}
+                      title="Click to toggle phone verification status"
+                    >
+                      {pharmacyForm.isPhoneVerified ? (
+                        <>
+                          <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                          <span>Phone Verified</span>
+                        </>
+                      ) : (
+                        <>
+                          <Phone className="h-4 w-4 opacity-50" />
+                          <span>Phone Unverified (Click to verify)</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </CardHeader>
+
+              <Separator />
+
+              <CardContent className="pt-6">
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    updatePharmacyMutation.mutate(pharmacyForm);
+                  }}
+                  className="space-y-6"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Pharmacy Name */}
+                    <div className="space-y-1.5">
+                      <Label htmlFor="pharmacy-name" className="text-xs font-medium">
+                        Pharmacy Name *
+                      </Label>
+                      <Input
+                        id="pharmacy-name"
+                        value={pharmacyForm.name}
+                        onChange={(e) =>
+                          setPharmacyForm((prev) => ({ ...prev, name: e.target.value }))
+                        }
+                        placeholder="e.g. Al Shifa Pharmacy"
+                        required
+                        className="h-10 text-xs"
+                      />
+                    </div>
+
+                    {/* Country Combobox */}
+                    <CountrySelect
+                      value={pharmacyForm.countryCode}
+                      onChange={(c: Country) =>
+                        setPharmacyForm((prev) => ({
+                          ...prev,
+                          countryCode: c.code,
+                          countryName: c.name,
+                          currency: prev.currency || c.currency,
+                          phone:
+                            !prev.phone || prev.phone.startsWith("+")
+                              ? c.dialCode + " "
+                              : prev.phone,
+                        }))
+                      }
+                      label="Country *"
+                    />
+
+                    {/* City */}
+                    <div className="space-y-1.5">
+                      <Label htmlFor="pharmacy-city" className="text-xs font-medium">
+                        City *
+                      </Label>
+                      <div className="relative">
+                        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-secondary" />
+                        <Input
+                          id="pharmacy-city"
+                          value={pharmacyForm.city}
+                          onChange={(e) =>
+                            setPharmacyForm((prev) => ({ ...prev, city: e.target.value }))
+                          }
+                          placeholder="e.g. Riyadh"
+                          className="pl-8 h-10 text-xs"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    {/* Base Currency */}
+                    <div className="space-y-1.5">
+                      <Label htmlFor="pharmacy-currency" className="text-xs font-medium">
+                        Base Operating Currency *
+                      </Label>
+                      <div className="relative">
+                        <Coins className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-secondary" />
+                        <select
+                          id="pharmacy-currency"
+                          value={pharmacyForm.currency}
+                          onChange={(e) =>
+                            setPharmacyForm((prev) => ({ ...prev, currency: e.target.value }))
+                          }
+                          className="w-full h-10 pl-8 pr-3 text-xs rounded-xl border border-border bg-surface text-text-primary focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent/60 transition-all appearance-none cursor-pointer"
+                        >
+                          {CURRENCIES.map((c) => (
+                            <option key={c.code} value={c.code}>
+                              {c.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Registered Email */}
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="pharmacy-email" className="text-xs font-medium">
+                          Registered Email (Resend Notifications)
+                        </Label>
+                        {!pharmacyData?.isEmailVerified && (
+                          <button
+                            type="button"
+                            onClick={() => setVerifyModalOpen(true)}
+                            className="text-[11px] text-accent hover:underline font-semibold"
+                          >
+                            Verify with OTP →
+                          </button>
+                        )}
+                      </div>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-secondary" />
+                        <Input
+                          id="pharmacy-email"
+                          type="email"
+                          value={pharmacyForm.email}
+                          onChange={(e) =>
+                            setPharmacyForm((prev) => ({ ...prev, email: e.target.value }))
+                          }
+                          placeholder="admin@pharmacy.com"
+                          className="pl-8 h-10 text-xs"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Contact Phone */}
+                    <div className="space-y-1.5">
+                      <Label htmlFor="pharmacy-phone" className="text-xs font-medium">
+                        Contact Phone
+                      </Label>
+                      <div className="relative">
+                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-secondary" />
+                        <Input
+                          id="pharmacy-phone"
+                          type="tel"
+                          value={pharmacyForm.phone}
+                          onChange={(e) =>
+                            setPharmacyForm((prev) => ({ ...prev, phone: e.target.value }))
+                          }
+                          placeholder="+966 50 000 0000"
+                          className="pl-8 h-10 text-xs"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Physical Address */}
+                  <div className="space-y-1.5">
+                    <Label htmlFor="pharmacy-address" className="text-xs font-medium">
+                      Physical Street Address
+                    </Label>
+                    <Input
+                      id="pharmacy-address"
+                      value={pharmacyForm.address}
+                      onChange={(e) =>
+                        setPharmacyForm((prev) => ({ ...prev, address: e.target.value }))
+                      }
+                      placeholder="e.g. Building 14, King Fahd Road, Al Olaya District"
+                      className="h-10 text-xs"
+                    />
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <Button
+                      type="submit"
+                      disabled={updatePharmacyMutation.isPending || !pharmacyForm.name.trim()}
+                      className="gap-2 font-semibold"
+                    >
+                      {updatePharmacyMutation.isPending && (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      )}
+                      Save Pharmacy Configuration
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        </TabsContent>
 
         <TabsContent value="backup">
           <div className="space-y-6">
@@ -612,6 +919,11 @@ export default function Settings() {
         confirmLabel="Delete"
         onConfirm={() => { if (deleteBackup) deleteBackupMutation.mutate(deleteBackup); }}
         loading={deleteBackupMutation.isPending}
+      />
+
+      <EmailVerificationModal
+        open={verifyModalOpen}
+        onOpenChange={setVerifyModalOpen}
       />
     </div>
   );

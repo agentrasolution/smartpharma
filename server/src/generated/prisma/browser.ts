@@ -267,3 +267,8 @@ export type SupplierReturn = Prisma.SupplierReturnModel
  * 
  */
 export type SupplierReturnItem = Prisma.SupplierReturnItemModel
+/**
+ * Model VerificationCode
+ * 
+ */
+export type VerificationCode = Prisma.VerificationCodeModel

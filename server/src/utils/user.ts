@@ -28,6 +28,30 @@ export interface PublicPharmacies {
   subscription: PublicSubscription | null;
 }
 
+export interface PublicPharmacyProfile {
+  id: string;
+  name: string;
+  slug: string;
+  contact: string;
+  phone: string;
+  email: string;
+  address: string;
+  countryCode: string;
+  countryName: string;
+  city: string;
+  currency: string;
+  isEmailVerified: boolean;
+  emailVerifiedAt: string | null;
+  isPhoneVerified: boolean;
+  phoneVerifiedAt: string | null;
+  gracePeriod: {
+    daysRemaining: number;
+    isRestricted: boolean;
+    isGracePeriodActive: boolean;
+    isEmailVerified: boolean;
+  };
+}
+
 export interface PublicUser {
   id: string;
   username: string;
@@ -43,6 +67,7 @@ export interface PublicUser {
   pharmacyId: string;
   pharmacyName: string;
   pharmacySlug: string;
+  pharmacyProfile: PublicPharmacyProfile | null;
   subscription: PublicSubscription | null;
   permissions: string[];
   mustChangePassword: boolean;
@@ -65,6 +90,42 @@ const userWithRoleInclude = {
 export function serializeUser(user: UserSource): PublicUser {
   const pharmacy = user.pharmacy ?? null;
   const subscription = pharmacy?.subscription ?? null;
+
+  let pharmacyProfile: PublicPharmacyProfile | null = null;
+  if (pharmacy) {
+    const isEmailVerified = Boolean(pharmacy.isEmailVerified);
+    const elapsedMs = Date.now() - (pharmacy.createdAt ? new Date(pharmacy.createdAt).getTime() : Date.now());
+    const daysElapsed = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
+    const graceDaysTotal = 7;
+    const daysRemaining = Math.max(0, graceDaysTotal - daysElapsed);
+    const isGracePeriodActive = daysElapsed <= graceDaysTotal;
+    const isRestricted = !isEmailVerified && !isGracePeriodActive;
+
+    pharmacyProfile = {
+      id: pharmacy.id,
+      name: pharmacy.name,
+      slug: pharmacy.slug,
+      contact: pharmacy.contact,
+      phone: pharmacy.phone,
+      email: pharmacy.email,
+      address: pharmacy.address,
+      countryCode: pharmacy.countryCode || "",
+      countryName: pharmacy.countryName || "",
+      city: pharmacy.city || "",
+      currency: pharmacy.currency || "SAR",
+      isEmailVerified,
+      emailVerifiedAt: pharmacy.emailVerifiedAt?.toISOString() ?? null,
+      isPhoneVerified: Boolean(pharmacy.isPhoneVerified),
+      phoneVerifiedAt: pharmacy.phoneVerifiedAt?.toISOString() ?? null,
+      gracePeriod: {
+        daysRemaining,
+        isRestricted,
+        isGracePeriodActive,
+        isEmailVerified,
+      },
+    };
+  }
+
   return {
     id: user.id,
     username: user.username,
@@ -80,6 +141,7 @@ export function serializeUser(user: UserSource): PublicUser {
     pharmacyId: pharmacy?.id ?? "",
     pharmacyName: pharmacy?.name ?? "",
     pharmacySlug: pharmacy?.slug ?? "",
+    pharmacyProfile,
     subscription: subscription
       ? {
           status: subscription.status,

@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/lib/api";
 import { formatCurrency } from "@/lib/utils";
 
-const sectionVariants = {
+const sectionVariants: any = {
   hidden: { opacity: 0, y: 12 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
 };

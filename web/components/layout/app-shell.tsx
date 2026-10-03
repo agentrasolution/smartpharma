@@ -5,6 +5,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Sidebar from "@/components/layout/sidebar";
 import Topbar from "@/components/layout/topbar";
 import OfflineBanner from "@/components/shared/OfflineBanner";
+import EmailGracePeriodBanner from "@/components/shared/EmailGracePeriodBanner";
+import PharmacySetupModal from "@/components/shared/PharmacySetupModal";
 import PrintPreviewDialog from "@/components/shared/PrintPreviewDialog";
 import { getLastReceipt } from "@/lib/receiptStore";
 import { useAuth } from "@/contexts/AuthContext";
@@ -136,9 +138,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
     return (
       <div className="flex h-screen overflow-hidden bg-background">
         <div className="flex flex-1 flex-col overflow-hidden">
+          <EmailGracePeriodBanner />
           <OfflineBanner />
           <main className="flex-1 overflow-y-auto p-4 lg:p-6">{children}</main>
         </div>
+        <PharmacySetupModal />
         <PrintPreviewDialog
           open={reprintOpen}
           onOpenChange={(v) => {
@@ -158,9 +162,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden min-w-0">
         <Topbar />
+        <EmailGracePeriodBanner />
         <OfflineBanner />
         <main className="flex-1 overflow-y-auto p-5 lg:p-6 min-w-0">{children}</main>
       </div>
+      <PharmacySetupModal />
       <PrintPreviewDialog
         open={reprintOpen}
         onOpenChange={(v) => {

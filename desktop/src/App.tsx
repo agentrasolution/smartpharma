@@ -10,6 +10,8 @@ import type { PrinterConfig } from "@/types";
 import Sidebar from "@/components/layout/Sidebar";
 import Topbar from "@/components/layout/Topbar";
 import OfflineBanner from "@/components/shared/OfflineBanner";
+import EmailGracePeriodBanner from "@/components/shared/EmailGracePeriodBanner";
+import PharmacySetupModal from "@/components/shared/PharmacySetupModal";
 import Login from "@/pages/Login";
 import Onboarding from "@/pages/Onboarding";
 import Billing from "@/pages/Billing";
@@ -257,9 +259,11 @@ function AppShell() {
     return (
       <div className="flex h-screen overflow-hidden">
         <div className="flex flex-1 flex-col overflow-hidden">
+          <EmailGracePeriodBanner />
           <OfflineBanner />
           <main className="flex-1 overflow-y-auto p-5 lg:p-6">{routes}</main>
         </div>
+        <PharmacySetupModal />
         <PrintPreviewDialog
           open={reprintOpen}
           onOpenChange={(v) => {
@@ -279,9 +283,11 @@ function AppShell() {
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Topbar />
+        <EmailGracePeriodBanner />
         <OfflineBanner />
         <main className="flex-1 overflow-y-auto p-5 lg:p-6">{routes}</main>
       </div>
+      <PharmacySetupModal />
       <PrintPreviewDialog
         open={reprintOpen}
         onOpenChange={(v) => {

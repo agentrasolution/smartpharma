@@ -100,7 +100,7 @@ export default function DispensingPage() {
 
   const { data: productsData } = useQuery({
     queryKey: ["products-select"],
-    queryFn: () => api.products.list({ limit: 100 }),
+    queryFn: () => api.products.list({ pageSize: 100 }),
   });
   const products: Product[] = Array.isArray(productsData)
     ? productsData
@@ -499,7 +499,7 @@ export default function DispensingPage() {
                           {rx.items?.slice(0, 2).map((i) => (
                             <Badge
                               key={i.id}
-                              variant="secondary"
+                              variant="neutral"
                               className="text-[10px] px-1.5 py-0 max-w-[140px] truncate"
                             >
                               {i.prescribedDrugName} ({i.quantityRemaining}/{i.quantityPrescribed})

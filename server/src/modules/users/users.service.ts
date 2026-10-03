@@ -272,7 +272,7 @@ export const usersService = {
         where: { id },
         data: {
           passwordHash,
-          mustChangePassword: false,
+          mustChangePassword: true,
           passwordChangedAt: null,
         },
       }),

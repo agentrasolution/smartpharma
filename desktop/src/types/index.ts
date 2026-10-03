@@ -46,6 +46,7 @@ export interface Product {
   branch_id?: string;
   distributor_id?: string;
   sale_price: number;
+  salePrice?: number;
   purchase_price: number;
   markup_percent: number;
   stock_qty: number;
@@ -243,6 +244,7 @@ export interface Sale {
   total_vat?: number;
   gross_profit?: number;
   return_count?: number;
+  item_count?: number;
   items?: SaleItem[];
 }
 
@@ -1069,6 +1071,21 @@ export interface Pharmacy {
   phone: string;
   email: string;
   address: string;
+  countryCode?: string;
+  countryName?: string;
+  city?: string;
+  currency?: string;
+  timezone?: string;
+  isEmailVerified?: boolean;
+  emailVerifiedAt?: string | null;
+  isPhoneVerified?: boolean;
+  phoneVerifiedAt?: string | null;
+  gracePeriod?: {
+    daysRemaining: number;
+    isRestricted: boolean;
+    isGracePeriodActive: boolean;
+    isEmailVerified: boolean;
+  };
   isActive: boolean;
   createdAt: string;
   counts?: {
@@ -1090,6 +1107,34 @@ export interface RegisterInput {
   phone?: string;
   contact?: string;
   address?: string;
+  countryCode?: string;
+  countryName?: string;
+  city?: string;
+  currency?: string;
+}
+
+export interface PharmacyProfile {
+  id: string;
+  name: string;
+  slug: string;
+  contact: string;
+  phone: string;
+  email: string;
+  address: string;
+  countryCode: string;
+  countryName: string;
+  city: string;
+  currency: string;
+  isEmailVerified: boolean;
+  emailVerifiedAt: string | null;
+  isPhoneVerified: boolean;
+  phoneVerifiedAt: string | null;
+  gracePeriod: {
+    daysRemaining: number;
+    isRestricted: boolean;
+    isGracePeriodActive: boolean;
+    isEmailVerified: boolean;
+  };
 }
 
 export interface AuthUser {
@@ -1107,6 +1152,7 @@ export interface AuthUser {
   pharmacyId: string;
   pharmacyName: string;
   pharmacySlug: string;
+  pharmacyProfile?: PharmacyProfile | null;
   subscription: SubscriptionInfo | null;
   permissions: string[];
   isActive: boolean;

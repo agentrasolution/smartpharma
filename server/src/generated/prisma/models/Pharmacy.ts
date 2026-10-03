@@ -32,6 +32,15 @@ export type PharmacyMinAggregateOutputType = {
   phone: string | null
   email: string | null
   address: string | null
+  countryCode: string | null
+  countryName: string | null
+  city: string | null
+  currency: string | null
+  timezone: string | null
+  isEmailVerified: boolean | null
+  emailVerifiedAt: Date | null
+  isPhoneVerified: boolean | null
+  phoneVerifiedAt: Date | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -45,6 +54,15 @@ export type PharmacyMaxAggregateOutputType = {
   phone: string | null
   email: string | null
   address: string | null
+  countryCode: string | null
+  countryName: string | null
+  city: string | null
+  currency: string | null
+  timezone: string | null
+  isEmailVerified: boolean | null
+  emailVerifiedAt: Date | null
+  isPhoneVerified: boolean | null
+  phoneVerifiedAt: Date | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -58,6 +76,15 @@ export type PharmacyCountAggregateOutputType = {
   phone: number
   email: number
   address: number
+  countryCode: number
+  countryName: number
+  city: number
+  currency: number
+  timezone: number
+  isEmailVerified: number
+  emailVerifiedAt: number
+  isPhoneVerified: number
+  phoneVerifiedAt: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -73,6 +100,15 @@ export type PharmacyMinAggregateInputType = {
   phone?: true
   email?: true
   address?: true
+  countryCode?: true
+  countryName?: true
+  city?: true
+  currency?: true
+  timezone?: true
+  isEmailVerified?: true
+  emailVerifiedAt?: true
+  isPhoneVerified?: true
+  phoneVerifiedAt?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -86,6 +122,15 @@ export type PharmacyMaxAggregateInputType = {
   phone?: true
   email?: true
   address?: true
+  countryCode?: true
+  countryName?: true
+  city?: true
+  currency?: true
+  timezone?: true
+  isEmailVerified?: true
+  emailVerifiedAt?: true
+  isPhoneVerified?: true
+  phoneVerifiedAt?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -99,6 +144,15 @@ export type PharmacyCountAggregateInputType = {
   phone?: true
   email?: true
   address?: true
+  countryCode?: true
+  countryName?: true
+  city?: true
+  currency?: true
+  timezone?: true
+  isEmailVerified?: true
+  emailVerifiedAt?: true
+  isPhoneVerified?: true
+  phoneVerifiedAt?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -185,6 +239,15 @@ export type PharmacyGroupByOutputType = {
   phone: string
   email: string
   address: string
+  countryCode: string
+  countryName: string
+  city: string
+  currency: string
+  timezone: string
+  isEmailVerified: boolean
+  emailVerifiedAt: Date | null
+  isPhoneVerified: boolean
+  phoneVerifiedAt: Date | null
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -219,6 +282,15 @@ export type PharmacyWhereInput = {
   phone?: Prisma.StringFilter<"Pharmacy"> | string
   email?: Prisma.StringFilter<"Pharmacy"> | string
   address?: Prisma.StringFilter<"Pharmacy"> | string
+  countryCode?: Prisma.StringFilter<"Pharmacy"> | string
+  countryName?: Prisma.StringFilter<"Pharmacy"> | string
+  city?: Prisma.StringFilter<"Pharmacy"> | string
+  currency?: Prisma.StringFilter<"Pharmacy"> | string
+  timezone?: Prisma.StringFilter<"Pharmacy"> | string
+  isEmailVerified?: Prisma.BoolFilter<"Pharmacy"> | boolean
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"Pharmacy"> | Date | string | null
+  isPhoneVerified?: Prisma.BoolFilter<"Pharmacy"> | boolean
+  phoneVerifiedAt?: Prisma.DateTimeNullableFilter<"Pharmacy"> | Date | string | null
   isActive?: Prisma.BoolFilter<"Pharmacy"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Pharmacy"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Pharmacy"> | Date | string
@@ -248,6 +320,7 @@ export type PharmacyWhereInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideListRelationFilter
   posShifts?: Prisma.PosShiftListRelationFilter
   supplierReturns?: Prisma.SupplierReturnListRelationFilter
+  verificationCodes?: Prisma.VerificationCodeListRelationFilter
 }
 
 export type PharmacyOrderByWithRelationInput = {
@@ -258,6 +331,15 @@ export type PharmacyOrderByWithRelationInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  countryCode?: Prisma.SortOrder
+  countryName?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  isEmailVerified?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPhoneVerified?: Prisma.SortOrder
+  phoneVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -287,6 +369,7 @@ export type PharmacyOrderByWithRelationInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideOrderByRelationAggregateInput
   posShifts?: Prisma.PosShiftOrderByRelationAggregateInput
   supplierReturns?: Prisma.SupplierReturnOrderByRelationAggregateInput
+  verificationCodes?: Prisma.VerificationCodeOrderByRelationAggregateInput
 }
 
 export type PharmacyWhereUniqueInput = Prisma.AtLeast<{
@@ -300,6 +383,15 @@ export type PharmacyWhereUniqueInput = Prisma.AtLeast<{
   phone?: Prisma.StringFilter<"Pharmacy"> | string
   email?: Prisma.StringFilter<"Pharmacy"> | string
   address?: Prisma.StringFilter<"Pharmacy"> | string
+  countryCode?: Prisma.StringFilter<"Pharmacy"> | string
+  countryName?: Prisma.StringFilter<"Pharmacy"> | string
+  city?: Prisma.StringFilter<"Pharmacy"> | string
+  currency?: Prisma.StringFilter<"Pharmacy"> | string
+  timezone?: Prisma.StringFilter<"Pharmacy"> | string
+  isEmailVerified?: Prisma.BoolFilter<"Pharmacy"> | boolean
+  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"Pharmacy"> | Date | string | null
+  isPhoneVerified?: Prisma.BoolFilter<"Pharmacy"> | boolean
+  phoneVerifiedAt?: Prisma.DateTimeNullableFilter<"Pharmacy"> | Date | string | null
   isActive?: Prisma.BoolFilter<"Pharmacy"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Pharmacy"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Pharmacy"> | Date | string
@@ -329,6 +421,7 @@ export type PharmacyWhereUniqueInput = Prisma.AtLeast<{
   branchPriceOverrides?: Prisma.BranchPriceOverrideListRelationFilter
   posShifts?: Prisma.PosShiftListRelationFilter
   supplierReturns?: Prisma.SupplierReturnListRelationFilter
+  verificationCodes?: Prisma.VerificationCodeListRelationFilter
 }, "id" | "name" | "slug">
 
 export type PharmacyOrderByWithAggregationInput = {
@@ -339,6 +432,15 @@ export type PharmacyOrderByWithAggregationInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  countryCode?: Prisma.SortOrder
+  countryName?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  isEmailVerified?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPhoneVerified?: Prisma.SortOrder
+  phoneVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -358,6 +460,15 @@ export type PharmacyScalarWhereWithAggregatesInput = {
   phone?: Prisma.StringWithAggregatesFilter<"Pharmacy"> | string
   email?: Prisma.StringWithAggregatesFilter<"Pharmacy"> | string
   address?: Prisma.StringWithAggregatesFilter<"Pharmacy"> | string
+  countryCode?: Prisma.StringWithAggregatesFilter<"Pharmacy"> | string
+  countryName?: Prisma.StringWithAggregatesFilter<"Pharmacy"> | string
+  city?: Prisma.StringWithAggregatesFilter<"Pharmacy"> | string
+  currency?: Prisma.StringWithAggregatesFilter<"Pharmacy"> | string
+  timezone?: Prisma.StringWithAggregatesFilter<"Pharmacy"> | string
+  isEmailVerified?: Prisma.BoolWithAggregatesFilter<"Pharmacy"> | boolean
+  emailVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Pharmacy"> | Date | string | null
+  isPhoneVerified?: Prisma.BoolWithAggregatesFilter<"Pharmacy"> | boolean
+  phoneVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Pharmacy"> | Date | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Pharmacy"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Pharmacy"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Pharmacy"> | Date | string
@@ -371,6 +482,15 @@ export type PharmacyCreateInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -400,6 +520,7 @@ export type PharmacyCreateInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateInput = {
@@ -410,6 +531,15 @@ export type PharmacyUncheckedCreateInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -439,6 +569,7 @@ export type PharmacyUncheckedCreateInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUpdateInput = {
@@ -449,6 +580,15 @@ export type PharmacyUpdateInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -478,6 +618,7 @@ export type PharmacyUpdateInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateInput = {
@@ -488,6 +629,15 @@ export type PharmacyUncheckedUpdateInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -517,6 +667,7 @@ export type PharmacyUncheckedUpdateInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateManyInput = {
@@ -527,6 +678,15 @@ export type PharmacyCreateManyInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -540,6 +700,15 @@ export type PharmacyUpdateManyMutationInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -553,6 +722,15 @@ export type PharmacyUncheckedUpdateManyInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -566,6 +744,15 @@ export type PharmacyCountOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  countryCode?: Prisma.SortOrder
+  countryName?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  isEmailVerified?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
+  isPhoneVerified?: Prisma.SortOrder
+  phoneVerifiedAt?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -579,6 +766,15 @@ export type PharmacyMaxOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  countryCode?: Prisma.SortOrder
+  countryName?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  isEmailVerified?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
+  isPhoneVerified?: Prisma.SortOrder
+  phoneVerifiedAt?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -592,6 +788,15 @@ export type PharmacyMinOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  countryCode?: Prisma.SortOrder
+  countryName?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  isEmailVerified?: Prisma.SortOrder
+  emailVerifiedAt?: Prisma.SortOrder
+  isPhoneVerified?: Prisma.SortOrder
+  phoneVerifiedAt?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -613,6 +818,10 @@ export type StringFieldUpdateOperationsInput = {
 
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -985,6 +1194,22 @@ export type PharmacyUpdateOneRequiredWithoutSupplierReturnsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PharmacyUpdateToOneWithWhereWithoutSupplierReturnsInput, Prisma.PharmacyUpdateWithoutSupplierReturnsInput>, Prisma.PharmacyUncheckedUpdateWithoutSupplierReturnsInput>
 }
 
+export type PharmacyCreateNestedOneWithoutVerificationCodesInput = {
+  create?: Prisma.XOR<Prisma.PharmacyCreateWithoutVerificationCodesInput, Prisma.PharmacyUncheckedCreateWithoutVerificationCodesInput>
+  connectOrCreate?: Prisma.PharmacyCreateOrConnectWithoutVerificationCodesInput
+  connect?: Prisma.PharmacyWhereUniqueInput
+}
+
+export type PharmacyUpdateOneWithoutVerificationCodesNestedInput = {
+  create?: Prisma.XOR<Prisma.PharmacyCreateWithoutVerificationCodesInput, Prisma.PharmacyUncheckedCreateWithoutVerificationCodesInput>
+  connectOrCreate?: Prisma.PharmacyCreateOrConnectWithoutVerificationCodesInput
+  upsert?: Prisma.PharmacyUpsertWithoutVerificationCodesInput
+  disconnect?: Prisma.PharmacyWhereInput | boolean
+  delete?: Prisma.PharmacyWhereInput | boolean
+  connect?: Prisma.PharmacyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PharmacyUpdateToOneWithWhereWithoutVerificationCodesInput, Prisma.PharmacyUpdateWithoutVerificationCodesInput>, Prisma.PharmacyUncheckedUpdateWithoutVerificationCodesInput>
+}
+
 export type PharmacyCreateWithoutSubscriptionInput = {
   id?: string
   name: string
@@ -993,6 +1218,15 @@ export type PharmacyCreateWithoutSubscriptionInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1021,6 +1255,7 @@ export type PharmacyCreateWithoutSubscriptionInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutSubscriptionInput = {
@@ -1031,6 +1266,15 @@ export type PharmacyUncheckedCreateWithoutSubscriptionInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1059,6 +1303,7 @@ export type PharmacyUncheckedCreateWithoutSubscriptionInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutSubscriptionInput = {
@@ -1085,6 +1330,15 @@ export type PharmacyUpdateWithoutSubscriptionInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1113,6 +1367,7 @@ export type PharmacyUpdateWithoutSubscriptionInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutSubscriptionInput = {
@@ -1123,6 +1378,15 @@ export type PharmacyUncheckedUpdateWithoutSubscriptionInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1151,6 +1415,7 @@ export type PharmacyUncheckedUpdateWithoutSubscriptionInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutPurchaseOrdersInput = {
@@ -1161,6 +1426,15 @@ export type PharmacyCreateWithoutPurchaseOrdersInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1189,6 +1463,7 @@ export type PharmacyCreateWithoutPurchaseOrdersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutPurchaseOrdersInput = {
@@ -1199,6 +1474,15 @@ export type PharmacyUncheckedCreateWithoutPurchaseOrdersInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1227,6 +1511,7 @@ export type PharmacyUncheckedCreateWithoutPurchaseOrdersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutPurchaseOrdersInput = {
@@ -1253,6 +1538,15 @@ export type PharmacyUpdateWithoutPurchaseOrdersInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1281,6 +1575,7 @@ export type PharmacyUpdateWithoutPurchaseOrdersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutPurchaseOrdersInput = {
@@ -1291,6 +1586,15 @@ export type PharmacyUncheckedUpdateWithoutPurchaseOrdersInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1319,6 +1623,7 @@ export type PharmacyUncheckedUpdateWithoutPurchaseOrdersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutUsersInput = {
@@ -1329,6 +1634,15 @@ export type PharmacyCreateWithoutUsersInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1357,6 +1671,7 @@ export type PharmacyCreateWithoutUsersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutUsersInput = {
@@ -1367,6 +1682,15 @@ export type PharmacyUncheckedCreateWithoutUsersInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1395,6 +1719,7 @@ export type PharmacyUncheckedCreateWithoutUsersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutUsersInput = {
@@ -1421,6 +1746,15 @@ export type PharmacyUpdateWithoutUsersInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1449,6 +1783,7 @@ export type PharmacyUpdateWithoutUsersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutUsersInput = {
@@ -1459,6 +1794,15 @@ export type PharmacyUncheckedUpdateWithoutUsersInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1487,6 +1831,7 @@ export type PharmacyUncheckedUpdateWithoutUsersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutBranchesInput = {
@@ -1497,6 +1842,15 @@ export type PharmacyCreateWithoutBranchesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1525,6 +1879,7 @@ export type PharmacyCreateWithoutBranchesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutBranchesInput = {
@@ -1535,6 +1890,15 @@ export type PharmacyUncheckedCreateWithoutBranchesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1563,6 +1927,7 @@ export type PharmacyUncheckedCreateWithoutBranchesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutBranchesInput = {
@@ -1589,6 +1954,15 @@ export type PharmacyUpdateWithoutBranchesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1617,6 +1991,7 @@ export type PharmacyUpdateWithoutBranchesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutBranchesInput = {
@@ -1627,6 +2002,15 @@ export type PharmacyUncheckedUpdateWithoutBranchesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1655,6 +2039,7 @@ export type PharmacyUncheckedUpdateWithoutBranchesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutRecoveryKeysInput = {
@@ -1665,6 +2050,15 @@ export type PharmacyCreateWithoutRecoveryKeysInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1693,6 +2087,7 @@ export type PharmacyCreateWithoutRecoveryKeysInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutRecoveryKeysInput = {
@@ -1703,6 +2098,15 @@ export type PharmacyUncheckedCreateWithoutRecoveryKeysInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1731,6 +2135,7 @@ export type PharmacyUncheckedCreateWithoutRecoveryKeysInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutRecoveryKeysInput = {
@@ -1757,6 +2162,15 @@ export type PharmacyUpdateWithoutRecoveryKeysInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1785,6 +2199,7 @@ export type PharmacyUpdateWithoutRecoveryKeysInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutRecoveryKeysInput = {
@@ -1795,6 +2210,15 @@ export type PharmacyUncheckedUpdateWithoutRecoveryKeysInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1823,6 +2247,7 @@ export type PharmacyUncheckedUpdateWithoutRecoveryKeysInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutRolesInput = {
@@ -1833,6 +2258,15 @@ export type PharmacyCreateWithoutRolesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1861,6 +2295,7 @@ export type PharmacyCreateWithoutRolesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutRolesInput = {
@@ -1871,6 +2306,15 @@ export type PharmacyUncheckedCreateWithoutRolesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1899,6 +2343,7 @@ export type PharmacyUncheckedCreateWithoutRolesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutRolesInput = {
@@ -1925,6 +2370,15 @@ export type PharmacyUpdateWithoutRolesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1953,6 +2407,7 @@ export type PharmacyUpdateWithoutRolesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutRolesInput = {
@@ -1963,6 +2418,15 @@ export type PharmacyUncheckedUpdateWithoutRolesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1991,6 +2455,7 @@ export type PharmacyUncheckedUpdateWithoutRolesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutProductsInput = {
@@ -2001,6 +2466,15 @@ export type PharmacyCreateWithoutProductsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2029,6 +2503,7 @@ export type PharmacyCreateWithoutProductsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutProductsInput = {
@@ -2039,6 +2514,15 @@ export type PharmacyUncheckedCreateWithoutProductsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2067,6 +2551,7 @@ export type PharmacyUncheckedCreateWithoutProductsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutProductsInput = {
@@ -2093,6 +2578,15 @@ export type PharmacyUpdateWithoutProductsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2121,6 +2615,7 @@ export type PharmacyUpdateWithoutProductsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutProductsInput = {
@@ -2131,6 +2626,15 @@ export type PharmacyUncheckedUpdateWithoutProductsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2159,6 +2663,7 @@ export type PharmacyUncheckedUpdateWithoutProductsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutBarcodesInput = {
@@ -2169,6 +2674,15 @@ export type PharmacyCreateWithoutBarcodesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2197,6 +2711,7 @@ export type PharmacyCreateWithoutBarcodesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutBarcodesInput = {
@@ -2207,6 +2722,15 @@ export type PharmacyUncheckedCreateWithoutBarcodesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2235,6 +2759,7 @@ export type PharmacyUncheckedCreateWithoutBarcodesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutBarcodesInput = {
@@ -2261,6 +2786,15 @@ export type PharmacyUpdateWithoutBarcodesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2289,6 +2823,7 @@ export type PharmacyUpdateWithoutBarcodesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutBarcodesInput = {
@@ -2299,6 +2834,15 @@ export type PharmacyUncheckedUpdateWithoutBarcodesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2327,6 +2871,7 @@ export type PharmacyUncheckedUpdateWithoutBarcodesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutDistributorsInput = {
@@ -2337,6 +2882,15 @@ export type PharmacyCreateWithoutDistributorsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2365,6 +2919,7 @@ export type PharmacyCreateWithoutDistributorsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutDistributorsInput = {
@@ -2375,6 +2930,15 @@ export type PharmacyUncheckedCreateWithoutDistributorsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2403,6 +2967,7 @@ export type PharmacyUncheckedCreateWithoutDistributorsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutDistributorsInput = {
@@ -2429,6 +2994,15 @@ export type PharmacyUpdateWithoutDistributorsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2457,6 +3031,7 @@ export type PharmacyUpdateWithoutDistributorsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutDistributorsInput = {
@@ -2467,6 +3042,15 @@ export type PharmacyUncheckedUpdateWithoutDistributorsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2495,6 +3079,7 @@ export type PharmacyUncheckedUpdateWithoutDistributorsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutCompaniesInput = {
@@ -2505,6 +3090,15 @@ export type PharmacyCreateWithoutCompaniesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2533,6 +3127,7 @@ export type PharmacyCreateWithoutCompaniesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutCompaniesInput = {
@@ -2543,6 +3138,15 @@ export type PharmacyUncheckedCreateWithoutCompaniesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2571,6 +3175,7 @@ export type PharmacyUncheckedCreateWithoutCompaniesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutCompaniesInput = {
@@ -2597,6 +3202,15 @@ export type PharmacyUpdateWithoutCompaniesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2625,6 +3239,7 @@ export type PharmacyUpdateWithoutCompaniesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutCompaniesInput = {
@@ -2635,6 +3250,15 @@ export type PharmacyUncheckedUpdateWithoutCompaniesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2663,6 +3287,7 @@ export type PharmacyUncheckedUpdateWithoutCompaniesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutCustomersInput = {
@@ -2673,6 +3298,15 @@ export type PharmacyCreateWithoutCustomersInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2701,6 +3335,7 @@ export type PharmacyCreateWithoutCustomersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutCustomersInput = {
@@ -2711,6 +3346,15 @@ export type PharmacyUncheckedCreateWithoutCustomersInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2739,6 +3383,7 @@ export type PharmacyUncheckedCreateWithoutCustomersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutCustomersInput = {
@@ -2765,6 +3410,15 @@ export type PharmacyUpdateWithoutCustomersInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2793,6 +3447,7 @@ export type PharmacyUpdateWithoutCustomersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutCustomersInput = {
@@ -2803,6 +3458,15 @@ export type PharmacyUncheckedUpdateWithoutCustomersInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2831,6 +3495,7 @@ export type PharmacyUncheckedUpdateWithoutCustomersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutChronicMedicationsInput = {
@@ -2841,6 +3506,15 @@ export type PharmacyCreateWithoutChronicMedicationsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2869,6 +3543,7 @@ export type PharmacyCreateWithoutChronicMedicationsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutChronicMedicationsInput = {
@@ -2879,6 +3554,15 @@ export type PharmacyUncheckedCreateWithoutChronicMedicationsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2907,6 +3591,7 @@ export type PharmacyUncheckedCreateWithoutChronicMedicationsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutChronicMedicationsInput = {
@@ -2933,6 +3618,15 @@ export type PharmacyUpdateWithoutChronicMedicationsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2961,6 +3655,7 @@ export type PharmacyUpdateWithoutChronicMedicationsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutChronicMedicationsInput = {
@@ -2971,6 +3666,15 @@ export type PharmacyUncheckedUpdateWithoutChronicMedicationsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2999,6 +3703,7 @@ export type PharmacyUncheckedUpdateWithoutChronicMedicationsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutSalesInput = {
@@ -3009,6 +3714,15 @@ export type PharmacyCreateWithoutSalesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3037,6 +3751,7 @@ export type PharmacyCreateWithoutSalesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutSalesInput = {
@@ -3047,6 +3762,15 @@ export type PharmacyUncheckedCreateWithoutSalesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3075,6 +3799,7 @@ export type PharmacyUncheckedCreateWithoutSalesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutSalesInput = {
@@ -3101,6 +3826,15 @@ export type PharmacyUpdateWithoutSalesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3129,6 +3863,7 @@ export type PharmacyUpdateWithoutSalesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutSalesInput = {
@@ -3139,6 +3874,15 @@ export type PharmacyUncheckedUpdateWithoutSalesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3167,6 +3911,7 @@ export type PharmacyUncheckedUpdateWithoutSalesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutArrearsInput = {
@@ -3177,6 +3922,15 @@ export type PharmacyCreateWithoutArrearsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3205,6 +3959,7 @@ export type PharmacyCreateWithoutArrearsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutArrearsInput = {
@@ -3215,6 +3970,15 @@ export type PharmacyUncheckedCreateWithoutArrearsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3243,6 +4007,7 @@ export type PharmacyUncheckedCreateWithoutArrearsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutArrearsInput = {
@@ -3269,6 +4034,15 @@ export type PharmacyUpdateWithoutArrearsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3297,6 +4071,7 @@ export type PharmacyUpdateWithoutArrearsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutArrearsInput = {
@@ -3307,6 +4082,15 @@ export type PharmacyUncheckedUpdateWithoutArrearsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3335,6 +4119,7 @@ export type PharmacyUncheckedUpdateWithoutArrearsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutStockPurchasesInput = {
@@ -3345,6 +4130,15 @@ export type PharmacyCreateWithoutStockPurchasesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3373,6 +4167,7 @@ export type PharmacyCreateWithoutStockPurchasesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutStockPurchasesInput = {
@@ -3383,6 +4178,15 @@ export type PharmacyUncheckedCreateWithoutStockPurchasesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3411,6 +4215,7 @@ export type PharmacyUncheckedCreateWithoutStockPurchasesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutStockPurchasesInput = {
@@ -3437,6 +4242,15 @@ export type PharmacyUpdateWithoutStockPurchasesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3465,6 +4279,7 @@ export type PharmacyUpdateWithoutStockPurchasesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutStockPurchasesInput = {
@@ -3475,6 +4290,15 @@ export type PharmacyUncheckedUpdateWithoutStockPurchasesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3503,6 +4327,7 @@ export type PharmacyUncheckedUpdateWithoutStockPurchasesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutReturnsInput = {
@@ -3513,6 +4338,15 @@ export type PharmacyCreateWithoutReturnsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3541,6 +4375,7 @@ export type PharmacyCreateWithoutReturnsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutReturnsInput = {
@@ -3551,6 +4386,15 @@ export type PharmacyUncheckedCreateWithoutReturnsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3579,6 +4423,7 @@ export type PharmacyUncheckedCreateWithoutReturnsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutReturnsInput = {
@@ -3605,6 +4450,15 @@ export type PharmacyUpdateWithoutReturnsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3633,6 +4487,7 @@ export type PharmacyUpdateWithoutReturnsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutReturnsInput = {
@@ -3643,6 +4498,15 @@ export type PharmacyUncheckedUpdateWithoutReturnsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3671,6 +4535,7 @@ export type PharmacyUncheckedUpdateWithoutReturnsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutCategoriesInput = {
@@ -3681,6 +4546,15 @@ export type PharmacyCreateWithoutCategoriesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3709,6 +4583,7 @@ export type PharmacyCreateWithoutCategoriesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutCategoriesInput = {
@@ -3719,6 +4594,15 @@ export type PharmacyUncheckedCreateWithoutCategoriesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3747,6 +4631,7 @@ export type PharmacyUncheckedCreateWithoutCategoriesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutCategoriesInput = {
@@ -3773,6 +4658,15 @@ export type PharmacyUpdateWithoutCategoriesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3801,6 +4695,7 @@ export type PharmacyUpdateWithoutCategoriesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutCategoriesInput = {
@@ -3811,6 +4706,15 @@ export type PharmacyUncheckedUpdateWithoutCategoriesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3839,6 +4743,7 @@ export type PharmacyUncheckedUpdateWithoutCategoriesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutExpensesInput = {
@@ -3849,6 +4754,15 @@ export type PharmacyCreateWithoutExpensesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3877,6 +4791,7 @@ export type PharmacyCreateWithoutExpensesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutExpensesInput = {
@@ -3887,6 +4802,15 @@ export type PharmacyUncheckedCreateWithoutExpensesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3915,6 +4839,7 @@ export type PharmacyUncheckedCreateWithoutExpensesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutExpensesInput = {
@@ -3941,6 +4866,15 @@ export type PharmacyUpdateWithoutExpensesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3969,6 +4903,7 @@ export type PharmacyUpdateWithoutExpensesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutExpensesInput = {
@@ -3979,6 +4914,15 @@ export type PharmacyUncheckedUpdateWithoutExpensesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4007,6 +4951,7 @@ export type PharmacyUncheckedUpdateWithoutExpensesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutPurchaseInvoicesInput = {
@@ -4017,6 +4962,15 @@ export type PharmacyCreateWithoutPurchaseInvoicesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4045,6 +4999,7 @@ export type PharmacyCreateWithoutPurchaseInvoicesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutPurchaseInvoicesInput = {
@@ -4055,6 +5010,15 @@ export type PharmacyUncheckedCreateWithoutPurchaseInvoicesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4083,6 +5047,7 @@ export type PharmacyUncheckedCreateWithoutPurchaseInvoicesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutPurchaseInvoicesInput = {
@@ -4109,6 +5074,15 @@ export type PharmacyUpdateWithoutPurchaseInvoicesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4137,6 +5111,7 @@ export type PharmacyUpdateWithoutPurchaseInvoicesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutPurchaseInvoicesInput = {
@@ -4147,6 +5122,15 @@ export type PharmacyUncheckedUpdateWithoutPurchaseInvoicesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4175,6 +5159,7 @@ export type PharmacyUncheckedUpdateWithoutPurchaseInvoicesInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutDistributorPaymentsInput = {
@@ -4185,6 +5170,15 @@ export type PharmacyCreateWithoutDistributorPaymentsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4213,6 +5207,7 @@ export type PharmacyCreateWithoutDistributorPaymentsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutDistributorPaymentsInput = {
@@ -4223,6 +5218,15 @@ export type PharmacyUncheckedCreateWithoutDistributorPaymentsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4251,6 +5255,7 @@ export type PharmacyUncheckedCreateWithoutDistributorPaymentsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutDistributorPaymentsInput = {
@@ -4277,6 +5282,15 @@ export type PharmacyUpdateWithoutDistributorPaymentsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4305,6 +5319,7 @@ export type PharmacyUpdateWithoutDistributorPaymentsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutDistributorPaymentsInput = {
@@ -4315,6 +5330,15 @@ export type PharmacyUncheckedUpdateWithoutDistributorPaymentsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4343,6 +5367,7 @@ export type PharmacyUncheckedUpdateWithoutDistributorPaymentsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutPrescriptionsInput = {
@@ -4353,6 +5378,15 @@ export type PharmacyCreateWithoutPrescriptionsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4381,6 +5415,7 @@ export type PharmacyCreateWithoutPrescriptionsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutPrescriptionsInput = {
@@ -4391,6 +5426,15 @@ export type PharmacyUncheckedCreateWithoutPrescriptionsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4419,6 +5463,7 @@ export type PharmacyUncheckedCreateWithoutPrescriptionsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutPrescriptionsInput = {
@@ -4445,6 +5490,15 @@ export type PharmacyUpdateWithoutPrescriptionsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4473,6 +5527,7 @@ export type PharmacyUpdateWithoutPrescriptionsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutPrescriptionsInput = {
@@ -4483,6 +5538,15 @@ export type PharmacyUncheckedUpdateWithoutPrescriptionsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4511,6 +5575,7 @@ export type PharmacyUncheckedUpdateWithoutPrescriptionsInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutControlledRegistersInput = {
@@ -4521,6 +5586,15 @@ export type PharmacyCreateWithoutControlledRegistersInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4549,6 +5623,7 @@ export type PharmacyCreateWithoutControlledRegistersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutControlledRegistersInput = {
@@ -4559,6 +5634,15 @@ export type PharmacyUncheckedCreateWithoutControlledRegistersInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4587,6 +5671,7 @@ export type PharmacyUncheckedCreateWithoutControlledRegistersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutControlledRegistersInput = {
@@ -4613,6 +5698,15 @@ export type PharmacyUpdateWithoutControlledRegistersInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4641,6 +5735,7 @@ export type PharmacyUpdateWithoutControlledRegistersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutControlledRegistersInput = {
@@ -4651,6 +5746,15 @@ export type PharmacyUncheckedUpdateWithoutControlledRegistersInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4679,6 +5783,7 @@ export type PharmacyUncheckedUpdateWithoutControlledRegistersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutBranchPriceOverridesInput = {
@@ -4689,6 +5794,15 @@ export type PharmacyCreateWithoutBranchPriceOverridesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4717,6 +5831,7 @@ export type PharmacyCreateWithoutBranchPriceOverridesInput = {
   stockTransfers?: Prisma.StockTransferCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutBranchPriceOverridesInput = {
@@ -4727,6 +5842,15 @@ export type PharmacyUncheckedCreateWithoutBranchPriceOverridesInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4755,6 +5879,7 @@ export type PharmacyUncheckedCreateWithoutBranchPriceOverridesInput = {
   stockTransfers?: Prisma.StockTransferUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutBranchPriceOverridesInput = {
@@ -4781,6 +5906,15 @@ export type PharmacyUpdateWithoutBranchPriceOverridesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4809,6 +5943,7 @@ export type PharmacyUpdateWithoutBranchPriceOverridesInput = {
   stockTransfers?: Prisma.StockTransferUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutBranchPriceOverridesInput = {
@@ -4819,6 +5954,15 @@ export type PharmacyUncheckedUpdateWithoutBranchPriceOverridesInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4847,6 +5991,7 @@ export type PharmacyUncheckedUpdateWithoutBranchPriceOverridesInput = {
   stockTransfers?: Prisma.StockTransferUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutStockTransfersInput = {
@@ -4857,6 +6002,15 @@ export type PharmacyCreateWithoutStockTransfersInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4885,6 +6039,7 @@ export type PharmacyCreateWithoutStockTransfersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutStockTransfersInput = {
@@ -4895,6 +6050,15 @@ export type PharmacyUncheckedCreateWithoutStockTransfersInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4923,6 +6087,7 @@ export type PharmacyUncheckedCreateWithoutStockTransfersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutStockTransfersInput = {
@@ -4949,6 +6114,15 @@ export type PharmacyUpdateWithoutStockTransfersInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4977,6 +6151,7 @@ export type PharmacyUpdateWithoutStockTransfersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutStockTransfersInput = {
@@ -4987,6 +6162,15 @@ export type PharmacyUncheckedUpdateWithoutStockTransfersInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5015,6 +6199,7 @@ export type PharmacyUncheckedUpdateWithoutStockTransfersInput = {
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutPosShiftsInput = {
@@ -5025,6 +6210,15 @@ export type PharmacyCreateWithoutPosShiftsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -5053,6 +6247,7 @@ export type PharmacyCreateWithoutPosShiftsInput = {
   stockTransfers?: Prisma.StockTransferCreateNestedManyWithoutPharmacyInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutPosShiftsInput = {
@@ -5063,6 +6258,15 @@ export type PharmacyUncheckedCreateWithoutPosShiftsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -5091,6 +6295,7 @@ export type PharmacyUncheckedCreateWithoutPosShiftsInput = {
   stockTransfers?: Prisma.StockTransferUncheckedCreateNestedManyWithoutPharmacyInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutPosShiftsInput = {
@@ -5117,6 +6322,15 @@ export type PharmacyUpdateWithoutPosShiftsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5145,6 +6359,7 @@ export type PharmacyUpdateWithoutPosShiftsInput = {
   stockTransfers?: Prisma.StockTransferUpdateManyWithoutPharmacyNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutPosShiftsInput = {
@@ -5155,6 +6370,15 @@ export type PharmacyUncheckedUpdateWithoutPosShiftsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5183,6 +6407,7 @@ export type PharmacyUncheckedUpdateWithoutPosShiftsInput = {
   stockTransfers?: Prisma.StockTransferUncheckedUpdateManyWithoutPharmacyNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyCreateWithoutSupplierReturnsInput = {
@@ -5193,6 +6418,15 @@ export type PharmacyCreateWithoutSupplierReturnsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -5221,6 +6455,7 @@ export type PharmacyCreateWithoutSupplierReturnsInput = {
   stockTransfers?: Prisma.StockTransferCreateNestedManyWithoutPharmacyInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyUncheckedCreateWithoutSupplierReturnsInput = {
@@ -5231,6 +6466,15 @@ export type PharmacyUncheckedCreateWithoutSupplierReturnsInput = {
   phone?: string
   email?: string
   address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -5259,6 +6503,7 @@ export type PharmacyUncheckedCreateWithoutSupplierReturnsInput = {
   stockTransfers?: Prisma.StockTransferUncheckedCreateNestedManyWithoutPharmacyInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
   posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedCreateNestedManyWithoutPharmacyInput
 }
 
 export type PharmacyCreateOrConnectWithoutSupplierReturnsInput = {
@@ -5285,6 +6530,15 @@ export type PharmacyUpdateWithoutSupplierReturnsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5313,6 +6567,7 @@ export type PharmacyUpdateWithoutSupplierReturnsInput = {
   stockTransfers?: Prisma.StockTransferUpdateManyWithoutPharmacyNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUpdateManyWithoutPharmacyNestedInput
 }
 
 export type PharmacyUncheckedUpdateWithoutSupplierReturnsInput = {
@@ -5323,6 +6578,15 @@ export type PharmacyUncheckedUpdateWithoutSupplierReturnsInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -5351,6 +6615,215 @@ export type PharmacyUncheckedUpdateWithoutSupplierReturnsInput = {
   stockTransfers?: Prisma.StockTransferUncheckedUpdateManyWithoutPharmacyNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
   posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
+  verificationCodes?: Prisma.VerificationCodeUncheckedUpdateManyWithoutPharmacyNestedInput
+}
+
+export type PharmacyCreateWithoutVerificationCodesInput = {
+  id?: string
+  name: string
+  slug: string
+  contact?: string
+  phone?: string
+  email?: string
+  address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutPharmacyInput
+  users?: Prisma.UserCreateNestedManyWithoutPharmacyInput
+  branches?: Prisma.BranchCreateNestedManyWithoutPharmacyInput
+  roles?: Prisma.RoleCreateNestedManyWithoutPharmacyInput
+  products?: Prisma.ProductCreateNestedManyWithoutPharmacyInput
+  categories?: Prisma.CategoryCreateNestedManyWithoutPharmacyInput
+  distributors?: Prisma.DistributorCreateNestedManyWithoutPharmacyInput
+  companies?: Prisma.CompanyCreateNestedManyWithoutPharmacyInput
+  barcodes?: Prisma.BarcodeCreateNestedManyWithoutPharmacyInput
+  recoveryKeys?: Prisma.RecoveryKeyCreateNestedManyWithoutPharmacyInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutPharmacyInput
+  sales?: Prisma.SaleCreateNestedManyWithoutPharmacyInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutPharmacyInput
+  returns?: Prisma.ReturnEntryCreateNestedManyWithoutPharmacyInput
+  arrears?: Prisma.ArrearCreateNestedManyWithoutPharmacyInput
+  expenses?: Prisma.ExpenseCreateNestedManyWithoutPharmacyInput
+  purchaseOrders?: Prisma.PurchaseOrderCreateNestedManyWithoutPharmacyInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceCreateNestedManyWithoutPharmacyInput
+  distributorPayments?: Prisma.DistributorPaymentCreateNestedManyWithoutPharmacyInput
+  prescriptions?: Prisma.PrescriptionCreateNestedManyWithoutPharmacyInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutPharmacyInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutPharmacyInput
+  stockTransfers?: Prisma.StockTransferCreateNestedManyWithoutPharmacyInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutPharmacyInput
+  posShifts?: Prisma.PosShiftCreateNestedManyWithoutPharmacyInput
+  supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutPharmacyInput
+}
+
+export type PharmacyUncheckedCreateWithoutVerificationCodesInput = {
+  id?: string
+  name: string
+  slug: string
+  contact?: string
+  phone?: string
+  email?: string
+  address?: string
+  countryCode?: string
+  countryName?: string
+  city?: string
+  currency?: string
+  timezone?: string
+  isEmailVerified?: boolean
+  emailVerifiedAt?: Date | string | null
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: Date | string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutPharmacyInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutPharmacyInput
+  branches?: Prisma.BranchUncheckedCreateNestedManyWithoutPharmacyInput
+  roles?: Prisma.RoleUncheckedCreateNestedManyWithoutPharmacyInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutPharmacyInput
+  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutPharmacyInput
+  distributors?: Prisma.DistributorUncheckedCreateNestedManyWithoutPharmacyInput
+  companies?: Prisma.CompanyUncheckedCreateNestedManyWithoutPharmacyInput
+  barcodes?: Prisma.BarcodeUncheckedCreateNestedManyWithoutPharmacyInput
+  recoveryKeys?: Prisma.RecoveryKeyUncheckedCreateNestedManyWithoutPharmacyInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutPharmacyInput
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutPharmacyInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutPharmacyInput
+  returns?: Prisma.ReturnEntryUncheckedCreateNestedManyWithoutPharmacyInput
+  arrears?: Prisma.ArrearUncheckedCreateNestedManyWithoutPharmacyInput
+  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutPharmacyInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedCreateNestedManyWithoutPharmacyInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedCreateNestedManyWithoutPharmacyInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutPharmacyInput
+  prescriptions?: Prisma.PrescriptionUncheckedCreateNestedManyWithoutPharmacyInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutPharmacyInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutPharmacyInput
+  stockTransfers?: Prisma.StockTransferUncheckedCreateNestedManyWithoutPharmacyInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutPharmacyInput
+  posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutPharmacyInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutPharmacyInput
+}
+
+export type PharmacyCreateOrConnectWithoutVerificationCodesInput = {
+  where: Prisma.PharmacyWhereUniqueInput
+  create: Prisma.XOR<Prisma.PharmacyCreateWithoutVerificationCodesInput, Prisma.PharmacyUncheckedCreateWithoutVerificationCodesInput>
+}
+
+export type PharmacyUpsertWithoutVerificationCodesInput = {
+  update: Prisma.XOR<Prisma.PharmacyUpdateWithoutVerificationCodesInput, Prisma.PharmacyUncheckedUpdateWithoutVerificationCodesInput>
+  create: Prisma.XOR<Prisma.PharmacyCreateWithoutVerificationCodesInput, Prisma.PharmacyUncheckedCreateWithoutVerificationCodesInput>
+  where?: Prisma.PharmacyWhereInput
+}
+
+export type PharmacyUpdateToOneWithWhereWithoutVerificationCodesInput = {
+  where?: Prisma.PharmacyWhereInput
+  data: Prisma.XOR<Prisma.PharmacyUpdateWithoutVerificationCodesInput, Prisma.PharmacyUncheckedUpdateWithoutVerificationCodesInput>
+}
+
+export type PharmacyUpdateWithoutVerificationCodesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscription?: Prisma.SubscriptionUpdateOneWithoutPharmacyNestedInput
+  users?: Prisma.UserUpdateManyWithoutPharmacyNestedInput
+  branches?: Prisma.BranchUpdateManyWithoutPharmacyNestedInput
+  roles?: Prisma.RoleUpdateManyWithoutPharmacyNestedInput
+  products?: Prisma.ProductUpdateManyWithoutPharmacyNestedInput
+  categories?: Prisma.CategoryUpdateManyWithoutPharmacyNestedInput
+  distributors?: Prisma.DistributorUpdateManyWithoutPharmacyNestedInput
+  companies?: Prisma.CompanyUpdateManyWithoutPharmacyNestedInput
+  barcodes?: Prisma.BarcodeUpdateManyWithoutPharmacyNestedInput
+  recoveryKeys?: Prisma.RecoveryKeyUpdateManyWithoutPharmacyNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutPharmacyNestedInput
+  sales?: Prisma.SaleUpdateManyWithoutPharmacyNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutPharmacyNestedInput
+  returns?: Prisma.ReturnEntryUpdateManyWithoutPharmacyNestedInput
+  arrears?: Prisma.ArrearUpdateManyWithoutPharmacyNestedInput
+  expenses?: Prisma.ExpenseUpdateManyWithoutPharmacyNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUpdateManyWithoutPharmacyNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUpdateManyWithoutPharmacyNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUpdateManyWithoutPharmacyNestedInput
+  prescriptions?: Prisma.PrescriptionUpdateManyWithoutPharmacyNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutPharmacyNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutPharmacyNestedInput
+  stockTransfers?: Prisma.StockTransferUpdateManyWithoutPharmacyNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutPharmacyNestedInput
+  posShifts?: Prisma.PosShiftUpdateManyWithoutPharmacyNestedInput
+  supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutPharmacyNestedInput
+}
+
+export type PharmacyUncheckedUpdateWithoutVerificationCodesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  countryCode?: Prisma.StringFieldUpdateOperationsInput | string
+  countryName?: Prisma.StringFieldUpdateOperationsInput | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isPhoneVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutPharmacyNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutPharmacyNestedInput
+  branches?: Prisma.BranchUncheckedUpdateManyWithoutPharmacyNestedInput
+  roles?: Prisma.RoleUncheckedUpdateManyWithoutPharmacyNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutPharmacyNestedInput
+  categories?: Prisma.CategoryUncheckedUpdateManyWithoutPharmacyNestedInput
+  distributors?: Prisma.DistributorUncheckedUpdateManyWithoutPharmacyNestedInput
+  companies?: Prisma.CompanyUncheckedUpdateManyWithoutPharmacyNestedInput
+  barcodes?: Prisma.BarcodeUncheckedUpdateManyWithoutPharmacyNestedInput
+  recoveryKeys?: Prisma.RecoveryKeyUncheckedUpdateManyWithoutPharmacyNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutPharmacyNestedInput
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutPharmacyNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutPharmacyNestedInput
+  returns?: Prisma.ReturnEntryUncheckedUpdateManyWithoutPharmacyNestedInput
+  arrears?: Prisma.ArrearUncheckedUpdateManyWithoutPharmacyNestedInput
+  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutPharmacyNestedInput
+  purchaseOrders?: Prisma.PurchaseOrderUncheckedUpdateManyWithoutPharmacyNestedInput
+  purchaseInvoices?: Prisma.PurchaseInvoiceUncheckedUpdateManyWithoutPharmacyNestedInput
+  distributorPayments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutPharmacyNestedInput
+  prescriptions?: Prisma.PrescriptionUncheckedUpdateManyWithoutPharmacyNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutPharmacyNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutPharmacyNestedInput
+  stockTransfers?: Prisma.StockTransferUncheckedUpdateManyWithoutPharmacyNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutPharmacyNestedInput
+  posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutPharmacyNestedInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutPharmacyNestedInput
 }
 
 
@@ -5384,6 +6857,7 @@ export type PharmacyCountOutputType = {
   branchPriceOverrides: number
   posShifts: number
   supplierReturns: number
+  verificationCodes: number
 }
 
 export type PharmacyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5412,6 +6886,7 @@ export type PharmacyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   branchPriceOverrides?: boolean | PharmacyCountOutputTypeCountBranchPriceOverridesArgs
   posShifts?: boolean | PharmacyCountOutputTypeCountPosShiftsArgs
   supplierReturns?: boolean | PharmacyCountOutputTypeCountSupplierReturnsArgs
+  verificationCodes?: boolean | PharmacyCountOutputTypeCountVerificationCodesArgs
 }
 
 /**
@@ -5599,6 +7074,13 @@ export type PharmacyCountOutputTypeCountSupplierReturnsArgs<ExtArgs extends runt
   where?: Prisma.SupplierReturnWhereInput
 }
 
+/**
+ * PharmacyCountOutputType without action
+ */
+export type PharmacyCountOutputTypeCountVerificationCodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VerificationCodeWhereInput
+}
+
 
 export type PharmacySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -5608,6 +7090,15 @@ export type PharmacySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   phone?: boolean
   email?: boolean
   address?: boolean
+  countryCode?: boolean
+  countryName?: boolean
+  city?: boolean
+  currency?: boolean
+  timezone?: boolean
+  isEmailVerified?: boolean
+  emailVerifiedAt?: boolean
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -5637,6 +7128,7 @@ export type PharmacySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   branchPriceOverrides?: boolean | Prisma.Pharmacy$branchPriceOverridesArgs<ExtArgs>
   posShifts?: boolean | Prisma.Pharmacy$posShiftsArgs<ExtArgs>
   supplierReturns?: boolean | Prisma.Pharmacy$supplierReturnsArgs<ExtArgs>
+  verificationCodes?: boolean | Prisma.Pharmacy$verificationCodesArgs<ExtArgs>
   _count?: boolean | Prisma.PharmacyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pharmacy"]>
 
@@ -5648,6 +7140,15 @@ export type PharmacySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   phone?: boolean
   email?: boolean
   address?: boolean
+  countryCode?: boolean
+  countryName?: boolean
+  city?: boolean
+  currency?: boolean
+  timezone?: boolean
+  isEmailVerified?: boolean
+  emailVerifiedAt?: boolean
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -5661,6 +7162,15 @@ export type PharmacySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   phone?: boolean
   email?: boolean
   address?: boolean
+  countryCode?: boolean
+  countryName?: boolean
+  city?: boolean
+  currency?: boolean
+  timezone?: boolean
+  isEmailVerified?: boolean
+  emailVerifiedAt?: boolean
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -5674,12 +7184,21 @@ export type PharmacySelectScalar = {
   phone?: boolean
   email?: boolean
   address?: boolean
+  countryCode?: boolean
+  countryName?: boolean
+  city?: boolean
+  currency?: boolean
+  timezone?: boolean
+  isEmailVerified?: boolean
+  emailVerifiedAt?: boolean
+  isPhoneVerified?: boolean
+  phoneVerifiedAt?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PharmacyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "contact" | "phone" | "email" | "address" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["pharmacy"]>
+export type PharmacyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "contact" | "phone" | "email" | "address" | "countryCode" | "countryName" | "city" | "currency" | "timezone" | "isEmailVerified" | "emailVerifiedAt" | "isPhoneVerified" | "phoneVerifiedAt" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["pharmacy"]>
 export type PharmacyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subscription?: boolean | Prisma.Pharmacy$subscriptionArgs<ExtArgs>
   users?: boolean | Prisma.Pharmacy$usersArgs<ExtArgs>
@@ -5707,6 +7226,7 @@ export type PharmacyInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   branchPriceOverrides?: boolean | Prisma.Pharmacy$branchPriceOverridesArgs<ExtArgs>
   posShifts?: boolean | Prisma.Pharmacy$posShiftsArgs<ExtArgs>
   supplierReturns?: boolean | Prisma.Pharmacy$supplierReturnsArgs<ExtArgs>
+  verificationCodes?: boolean | Prisma.Pharmacy$verificationCodesArgs<ExtArgs>
   _count?: boolean | Prisma.PharmacyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PharmacyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -5741,6 +7261,7 @@ export type $PharmacyPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     branchPriceOverrides: Prisma.$BranchPriceOverridePayload<ExtArgs>[]
     posShifts: Prisma.$PosShiftPayload<ExtArgs>[]
     supplierReturns: Prisma.$SupplierReturnPayload<ExtArgs>[]
+    verificationCodes: Prisma.$VerificationCodePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -5750,6 +7271,15 @@ export type $PharmacyPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     phone: string
     email: string
     address: string
+    countryCode: string
+    countryName: string
+    city: string
+    currency: string
+    timezone: string
+    isEmailVerified: boolean
+    emailVerifiedAt: Date | null
+    isPhoneVerified: boolean
+    phoneVerifiedAt: Date | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -6173,6 +7703,7 @@ export interface Prisma__PharmacyClient<T, Null = never, ExtArgs extends runtime
   branchPriceOverrides<T extends Prisma.Pharmacy$branchPriceOverridesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pharmacy$branchPriceOverridesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BranchPriceOverridePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   posShifts<T extends Prisma.Pharmacy$posShiftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pharmacy$posShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PosShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   supplierReturns<T extends Prisma.Pharmacy$supplierReturnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pharmacy$supplierReturnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierReturnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  verificationCodes<T extends Prisma.Pharmacy$verificationCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Pharmacy$verificationCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VerificationCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6209,6 +7740,15 @@ export interface PharmacyFieldRefs {
   readonly phone: Prisma.FieldRef<"Pharmacy", 'String'>
   readonly email: Prisma.FieldRef<"Pharmacy", 'String'>
   readonly address: Prisma.FieldRef<"Pharmacy", 'String'>
+  readonly countryCode: Prisma.FieldRef<"Pharmacy", 'String'>
+  readonly countryName: Prisma.FieldRef<"Pharmacy", 'String'>
+  readonly city: Prisma.FieldRef<"Pharmacy", 'String'>
+  readonly currency: Prisma.FieldRef<"Pharmacy", 'String'>
+  readonly timezone: Prisma.FieldRef<"Pharmacy", 'String'>
+  readonly isEmailVerified: Prisma.FieldRef<"Pharmacy", 'Boolean'>
+  readonly emailVerifiedAt: Prisma.FieldRef<"Pharmacy", 'DateTime'>
+  readonly isPhoneVerified: Prisma.FieldRef<"Pharmacy", 'Boolean'>
+  readonly phoneVerifiedAt: Prisma.FieldRef<"Pharmacy", 'DateTime'>
   readonly isActive: Prisma.FieldRef<"Pharmacy", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Pharmacy", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Pharmacy", 'DateTime'>
@@ -7221,6 +8761,30 @@ export type Pharmacy$supplierReturnsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.SupplierReturnScalarFieldEnum | Prisma.SupplierReturnScalarFieldEnum[]
+}
+
+/**
+ * Pharmacy.verificationCodes
+ */
+export type Pharmacy$verificationCodesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the VerificationCode
+   */
+  select?: Prisma.VerificationCodeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the VerificationCode
+   */
+  omit?: Prisma.VerificationCodeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VerificationCodeInclude<ExtArgs> | null
+  where?: Prisma.VerificationCodeWhereInput
+  orderBy?: Prisma.VerificationCodeOrderByWithRelationInput | Prisma.VerificationCodeOrderByWithRelationInput[]
+  cursor?: Prisma.VerificationCodeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.VerificationCodeScalarFieldEnum | Prisma.VerificationCodeScalarFieldEnum[]
 }
 
 /**

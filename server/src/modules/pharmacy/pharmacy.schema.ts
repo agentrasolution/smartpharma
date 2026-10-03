@@ -6,6 +6,12 @@ export const updatePharmacySchema = z.object({
   phone: z.string().optional(),
   email: z.string().email().optional().or(z.literal("")),
   address: z.string().optional(),
+  countryCode: z.string().optional(),
+  countryName: z.string().optional(),
+  city: z.string().optional(),
+  currency: z.string().optional(),
+  timezone: z.string().optional(),
+  isPhoneVerified: z.boolean().optional(),
 });
 
 export const updateSubscriptionSchema = z.object({
@@ -19,8 +25,10 @@ export const updateSubscriptionSchema = z.object({
 export const onboardingSchema = z.object({
   pharmacyName: z.string().min(1, "Pharmacy name is required").max(100),
   country: z.string().min(1, "Country is required"),
+  countryName: z.string().optional(),
   city: z.string().min(1, "City is required").max(100),
   phone: z.string().optional(),
+  currency: z.string().optional(),
   branchName: z.string().min(1, "Branch name is required").max(100),
   branchAddress: z.string().optional(),
   licenceNumber: z.string().optional(),

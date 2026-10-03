@@ -3,10 +3,12 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { prisma } from "../../services/prisma";
 import { config } from "../../config/env";
-import { BadRequestError, UnauthorizedError } from "../../utils/errors";
+import { BadRequestError, UnauthorizedError, NotFoundError } from "../../utils/errors";
 import { validatePassword, PASSWORD_MIN_LENGTH } from "../../utils/password";
 import { serializeUser, userWithRoleInclude } from "../../utils/user";
 import { DEFAULT_ROLES } from "../../constants/permissions";
+import { emailService } from "../../services/email.service";
+import { verificationService } from "../../services/verification.service";
 
 const WORDS = [
   "apple", "bridge", "cloud", "dragon", "eagle", "forest", "garden",
@@ -98,6 +100,10 @@ export const authService = {
     phone?: string;
     email?: string;
     address?: string;
+    countryCode?: string;
+    countryName?: string;
+    city?: string;
+    currency?: string;
     name: string;
     username: string;
     password: string;
@@ -135,6 +141,10 @@ export const authService = {
           phone: input.phone ?? "",
           email: input.email ?? "",
           address: input.address ?? "",
+          countryCode: input.countryCode ?? "",
+          countryName: input.countryName ?? "",
+          city: input.city ?? "",
+          currency: input.currency ?? "SAR",
           subscription: {
             create: {
               plan: config.subscription.plan,
@@ -199,6 +209,15 @@ export const authService = {
       include: userWithRoleInclude,
     });
     if (!user) throw new Error("Registration failed");
+
+    if (input.email && input.email.includes("@")) {
+      try {
+        const otp = await verificationService.createOtp(input.email, "EMAIL_VERIFY", pharmacy.id);
+        void emailService.sendVerificationCodeEmail(input.email, otp, pharmacyName);
+      } catch (err) {
+        console.error("Failed to send welcome verification email:", err);
+      }
+    }
 
     const tokens = await signTokens(user);
     return { ...tokens, user: serializeUser(user) };
@@ -367,5 +386,144 @@ export const authService = {
     if (!user) throw new UnauthorizedError("User not found");
     if (!user.isActive) throw new UnauthorizedError("Your account has been deactivated. Contact your administrator.");
     return serializeUser(user);
+  },
+
+  async sendVerificationEmail(pharmacyId: string, email?: string) {
+    const pharmacy = await prisma.pharmacy.findUnique({ where: { id: pharmacyId } });
+    if (!pharmacy) throw new NotFoundError("Pharmacy");
+
+    const targetEmail = (email || pharmacy.email).trim().toLowerCase();
+    if (!targetEmail || !targetEmail.includes("@")) {
+      throw new BadRequestError("A valid email address is required for verification");
+    }
+
+    if (email && email.trim().toLowerCase() !== pharmacy.email.toLowerCase()) {
+      await prisma.$transaction([
+        prisma.pharmacy.update({
+          where: { id: pharmacyId },
+          data: { email: targetEmail, isEmailVerified: false, emailVerifiedAt: null },
+        }),
+        prisma.user.updateMany({
+          where: { pharmacyId, role: "admin" },
+          data: { email: targetEmail, isEmailVerified: false, emailVerifiedAt: null },
+        }),
+      ]);
+    }
+
+    const otp = await verificationService.createOtp(targetEmail, "EMAIL_VERIFY", pharmacyId);
+    const emailRes = await emailService.sendVerificationCodeEmail(targetEmail, otp, pharmacy.name);
+
+    return {
+      success: true,
+      email: targetEmail,
+      message: emailRes.success
+        ? `Verification code sent to ${targetEmail}`
+        : `Verification code generated. Email delivery status: ${emailRes.error || "queued"}`,
+    };
+  },
+
+  async verifyEmail(pharmacyId: string, code: string) {
+    const pharmacy = await prisma.pharmacy.findUnique({ where: { id: pharmacyId } });
+    if (!pharmacy) throw new NotFoundError("Pharmacy");
+    if (!pharmacy.email) throw new BadRequestError("No email address configured for this pharmacy");
+
+    await verificationService.verifyOtp(pharmacy.email, "EMAIL_VERIFY", code);
+
+    const now = new Date();
+    await prisma.$transaction([
+      prisma.pharmacy.update({
+        where: { id: pharmacyId },
+        data: { isEmailVerified: true, emailVerifiedAt: now },
+      }),
+      prisma.user.updateMany({
+        where: { pharmacyId, role: "admin" },
+        data: { isEmailVerified: true, emailVerifiedAt: now },
+      }),
+    ]);
+
+    return { success: true, isEmailVerified: true, verifiedAt: now.toISOString() };
+  },
+
+  async requestPasswordReset(identifier: string) {
+    const trimmed = identifier.trim();
+    if (!trimmed) throw new BadRequestError("Username or email is required");
+
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { username: trimmed },
+          { email: trimmed.toLowerCase() },
+        ],
+      },
+      include: { pharmacy: true },
+    });
+
+    if (!user) {
+      throw new BadRequestError("No account found matching this username or email");
+    }
+
+    if (user.role !== "admin") {
+      throw new BadRequestError(
+        "Staff accounts (cashiers, technicians, dispensers) cannot reset passwords via email. Please contact your pharmacy administrator or manager to reset your credentials.",
+      );
+    }
+
+    const targetEmail = user.email || user.pharmacy.email;
+    if (!targetEmail || !targetEmail.includes("@")) {
+      throw new BadRequestError("No email address is registered for this administrator account. Please use the 12-word emergency recovery phrase.");
+    }
+
+    const otp = await verificationService.createOtp(targetEmail, "PASSWORD_RESET", user.pharmacyId);
+    await emailService.sendPasswordResetOtpEmail(targetEmail, otp, user.pharmacy.name);
+
+    const [local, domain] = targetEmail.split("@");
+    const maskedLocal = local!.length > 2 ? `${local![0]}***${local![local!.length - 1]}` : `${local![0]}*`;
+    const maskedEmail = `${maskedLocal}@${domain}`;
+
+    return {
+      success: true,
+      maskedEmail,
+      message: `Password reset code sent to ${maskedEmail}`,
+    };
+  },
+
+  async resetPasswordWithOtp(identifier: string, code: string, newPassword: string) {
+    const trimmed = identifier.trim();
+    if (!trimmed) throw new BadRequestError("Username or email is required");
+
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { username: trimmed },
+          { email: trimmed.toLowerCase() },
+        ],
+      },
+      include: { pharmacy: true },
+    });
+    if (!user) throw new BadRequestError("User not found");
+
+    const targetEmail = user.email || user.pharmacy.email;
+    if (!targetEmail) throw new BadRequestError("No email associated with this account");
+
+    await verificationService.verifyOtp(targetEmail, "PASSWORD_RESET", code);
+
+    const passwordError = validatePassword(newPassword);
+    if (passwordError) throw new BadRequestError(passwordError);
+
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+
+    await prisma.$transaction([
+      prisma.user.update({
+        where: { id: user.id },
+        data: {
+          passwordHash,
+          mustChangePassword: false,
+          passwordChangedAt: new Date(),
+        },
+      }),
+      prisma.authToken.deleteMany({ where: { userId: user.id } }),
+    ]);
+
+    return { success: true, message: "Password reset successful. Please sign in with your new password." };
   },
 };
