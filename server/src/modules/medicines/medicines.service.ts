@@ -110,6 +110,8 @@ export const medicinesService = {
           salePrice: p.salePrice && p.salePrice > 0
             ? p.salePrice
             : Math.round(p.purchasePrice * (1 + (data.markupPercent ?? 20) / 100)),
+          unitType: p.unitType ?? "UNIT",
+          conversionRatio: p.conversionRatio ?? 1,
         }))
       : [];
 
@@ -129,6 +131,10 @@ export const medicinesService = {
         stockQty: data.stockQty ?? 0,
         expiry: data.expiry ?? null,
         packSize: data.packSize ?? 1,
+        baseUnit: data.baseUnit ?? "TABLET",
+        packageUnit: data.packageUnit ?? "BOX",
+        unitsPerPack: data.unitsPerPack ?? 1,
+        stripsPerPack: data.stripsPerPack ?? 1,
         prices: { createMany: { data: pricesData } },
         barcodeLink: {
           connectOrCreate: {
@@ -167,6 +173,10 @@ export const medicinesService = {
       stockQty: data.stockQty ?? 0,
       expiry: data.expiry ?? null,
       packSize: data.packSize ?? old.packSize,
+      baseUnit: data.baseUnit ?? old.baseUnit,
+      packageUnit: data.packageUnit ?? old.packageUnit,
+      unitsPerPack: data.unitsPerPack ?? old.unitsPerPack,
+      stripsPerPack: data.stripsPerPack ?? old.stripsPerPack,
     };
 
     if (data.prices) {
@@ -176,6 +186,8 @@ export const medicinesService = {
         salePrice: p.salePrice && p.salePrice > 0
           ? p.salePrice
           : Math.round(p.purchasePrice * (1 + (data.markupPercent ?? old.markupPercent) / 100)),
+        unitType: p.unitType ?? "UNIT",
+        conversionRatio: p.conversionRatio ?? 1,
       }));
 
       await prisma.productPrice.deleteMany({ where: { productId: id } });

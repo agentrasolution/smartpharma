@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
-import { PortalNav } from "@/components/portal-nav";
 import { api } from "@/lib/api";
 import { formatCurrency, formatDate, getTenantCurrency, cn } from "@/lib/utils";
 import type {
@@ -250,11 +249,7 @@ export default function DrugMasterPage() {
   const totalPages = Math.max(1, Math.ceil(totalCount / limit));
 
   return (
-    <div className="min-h-screen bg-background text-text-primary flex flex-col antialiased">
-      <PortalNav />
-
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="space-y-6">
         {/* Toast Notification */}
         <AnimatePresence>
           {notification && (
@@ -762,7 +757,6 @@ export default function DrugMasterPage() {
             </div>
           )}
         </div>
-      </main>
 
       {/* ────────────────────────────────────────────────────────────────────────── */}
       {/* Drawer: Batch Details Inspector */}

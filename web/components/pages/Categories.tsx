@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Tags, Search, Plus, Pencil, Trash2, Download } from "lucide-react";
+import { Tags, Search, Plus, Pencil, Trash2, Download, FolderTree, CheckCircle2 } from "lucide-react";
 import PageHeader from "@/components/shared/PageHeader";
+import StatCard from "@/components/shared/StatCard";
+import EmptyState from "@/components/shared/EmptyState";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -78,54 +80,131 @@ export default function Categories() {
   }
 
   return (
-    <div>
-      <PageHeader title="Categories" description="Manage product categories" action={{ label: "Add Category", onClick: openAdd }} />
-      <div className="flex items-center gap-2 mb-6">
+    <div className="space-y-6">
+      <PageHeader
+        title="Drug & Product Categories"
+        description="Organize medication inventory into therapeutic classifications, departments, and retail segments."
+        badge={
+          <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-accent/10 text-accent font-semibold border border-accent/20">
+            {categories.length} Categories
+          </span>
+        }
+        action={{ label: "Add Category", onClick: openAdd, icon: <Plus className="h-3.5 w-3.5" /> }}
+      />
+
+      {/* Metric Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <StatCard
+          title="Total Categories"
+          value={categories.length}
+          icon={<Tags className="h-5 w-5" />}
+          color="accent"
+          loading={isLoading}
+          subtitle="Active catalog segments"
+        />
+        <StatCard
+          title="Active Classifications"
+          value={filtered.length}
+          icon={<FolderTree className="h-5 w-5" />}
+          color="purple"
+          loading={isLoading}
+          subtitle={search ? `Matching "${search}"` : "Therapeutic groups"}
+        />
+        <StatCard
+          title="Taxonomy Status"
+          value="Standardized"
+          icon={<CheckCircle2 className="h-5 w-5" />}
+          color="success"
+          subtitle="Catalog taxonomy active"
+        />
+      </div>
+
+      {/* Toolbar */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-surface p-2.5 rounded-2xl border border-border/80 shadow-xs">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
-          <Input autoFocus placeholder="Search categories..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+          <Input
+            placeholder="Search category name..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9 h-9 rounded-xl text-xs bg-surface-2/40 border-border/80 focus:bg-surface"
+          />
         </div>
-        <Button variant="outline" size="sm" onClick={() => downloadCSV(`categories_${new Date().toISOString().split("T")[0]}.csv`, ["Name"], filtered.map((c: Category) => [c.name]))}>
-          <Download className="h-4 w-4 mr-1" /> CSV
-        </Button>
-        <Button variant="outline" size="sm" onClick={() => downloadPDF(`categories_${new Date().toISOString().split("T")[0]}.pdf`, "Categories List", ["Name"], filtered.map((c: Category) => [c.name]))}>
-          <Download className="h-4 w-4 mr-1" /> PDF
-        </Button>
+
+        <div className="flex items-center gap-1.5">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
+            onClick={() => downloadCSV(`categories_${new Date().toISOString().split("T")[0]}.csv`, ["Name"], filtered.map((c: Category) => [c.name]))}
+          >
+            <Download className="h-3.5 w-3.5" /> CSV
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
+            onClick={() => downloadPDF(`categories_${new Date().toISOString().split("T")[0]}.pdf`, "Categories List", ["Name"], filtered.map((c: Category) => [c.name]))}
+          >
+            <Download className="h-3.5 w-3.5" /> PDF
+          </Button>
+        </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {isLoading ? (
-          Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-20 rounded-xl" />)
-        ) : filtered.length === 0 ? (
-          <div className="col-span-full text-center py-12 text-sm text-text-secondary">
-            {search ? "No categories match your search" : "No categories yet. Add your first category to get started."}
-          </div>
-        ) : (
-          filtered.map((cat: Category) => (
-            <Card key={cat.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className="h-9 w-9 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                      <Tags className="h-4 w-4 text-accent" />
-                    </div>
-                    <div className="min-w-0">
-                      <h3 className="font-medium text-sm text-text-primary truncate">{cat.name}</h3>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 shrink-0">
-                    <button onClick={() => openEdit(cat)} className="h-7 w-7 rounded-md flex items-center justify-center text-text-secondary hover:text-accent hover:bg-accent/5 transition-colors" title="Edit">
-                      <Pencil className="h-3.5 w-3.5" />
-                    </button>
-                    <button onClick={() => setDeleteId(cat.id)} className="h-7 w-7 rounded-md flex items-center justify-center text-text-secondary hover:text-danger hover:bg-danger/5 transition-colors" title="Delete">
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
+
+      {/* Content */}
+      {isLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="h-20 rounded-2xl" />)}
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="rounded-2xl border border-border/80 bg-surface p-8 shadow-xs">
+          <EmptyState
+            title="No categories found"
+            description={search ? `No categories match "${search}". Try adjusting your search query.` : "Create categories such as Antibiotics, Analgesics, or Supplements to organize medicines."}
+            icon={<Tags className="h-6 w-6 text-accent" />}
+            action={
+              <Button onClick={openAdd} size="sm" className="h-9 rounded-xl text-xs gap-1.5 font-medium shadow-xs">
+                <Plus className="h-3.5 w-3.5" /> Add First Category
+              </Button>
+            }
+          />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filtered.map((cat: Category) => (
+            <div
+              key={cat.id}
+              className="group rounded-2xl border border-border/80 bg-surface p-4 shadow-xs hover:shadow-md hover:border-accent/30 transition-all duration-200 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3 min-w-0 flex-1">
+                <div className="h-10 w-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-200">
+                  <Tags className="h-5 w-5" />
                 </div>
-              </CardContent>
-            </Card>
-          ))
-        )}
-      </div>
+                <div className="min-w-0">
+                  <h3 className="font-semibold text-sm text-text-primary truncate">{cat.name}</h3>
+                  <p className="text-[11px] text-text-secondary mt-0.5">Therapeutic classification</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-0.5 shrink-0">
+                <button
+                  onClick={() => openEdit(cat)}
+                  className="h-7 w-7 rounded-lg flex items-center justify-center text-text-secondary hover:text-accent hover:bg-accent/5 transition-colors"
+                  title="Edit"
+                >
+                  <Pencil className="h-3.5 w-3.5" />
+                </button>
+                <button
+                  onClick={() => setDeleteId(cat.id)}
+                  className="h-7 w-7 rounded-lg flex items-center justify-center text-text-secondary hover:text-danger hover:bg-danger/5 transition-colors"
+                  title="Delete"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <Dialog open={open} onOpenChange={(v) => { if (!v) { setEditingId(null); } setOpen(v); }}>
         <DialogContent>

@@ -1,3 +1,4 @@
+"use client";
 import { useState, useCallback, useEffect } from "react";
 import { toast } from "sonner";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -13,9 +14,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { formatCurrency, formatDateTime } from "@/lib/utils";
 import { api } from "@/lib/api";
 import { downloadCSV, downloadPDF } from "@/lib/export";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import SupplierReturnsHub from "@/components/returns/SupplierReturnsHub";
+import { UserCheck, Truck } from "lucide-react";
 import type { ReturnEntry, Sale, SaleItem, PrinterConfig } from "@/types";
 
 export default function Returns() {
+  const [activeTab, setActiveTab] = useState<"customer" | "supplier">("customer");
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -161,20 +166,45 @@ export default function Returns() {
   ];
 
   return (
-    <div>
-      <PageHeader title="Returns" description="Process and track product returns" action={{ label: "New Return", onClick: () => setOpen(true) }} />
-      <div className="flex items-center gap-2 mb-4">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
-          <Input autoFocus placeholder="Search returns..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+    <div className="space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border/50 pb-3">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight text-text-primary">Returns & Credit Notes</h1>
+          <p className="text-xs text-text-secondary">Process customer sales returns and distributor return to vendor (RTV) vouchers</p>
         </div>
-        <Button variant="outline" size="sm" onClick={() => downloadCSV(`returns_${new Date().toISOString().split("T")[0]}.csv`, ["Date","Sale ID","Customer","Refund Amount","Reason"], filtered.map((r: ReturnEntry) => [r.created_at, r.sale_id, r.customer_name || "", r.refund_amount, r.reason]))}>
-          <Download className="h-4 w-4 mr-1" /> CSV
-        </Button>
-        <Button variant="outline" size="sm" onClick={() => downloadPDF(`returns_${new Date().toISOString().split("T")[0]}.pdf`, "Returns List", ["Date","Sale ID","Customer","Refund Amount","Reason"], filtered.map((r: ReturnEntry) => [r.created_at, r.sale_id, r.customer_name || "", r.refund_amount, r.reason]))}>
-          <Download className="h-4 w-4 mr-1" /> PDF
-        </Button>
       </div>
+
+      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="space-y-4">
+        <TabsList className="grid w-full sm:w-[460px] grid-cols-2">
+          <TabsTrigger value="customer" className="gap-2 text-xs">
+            <UserCheck className="w-3.5 h-3.5" />
+            Customer Sales Returns
+          </TabsTrigger>
+          <TabsTrigger value="supplier" className="gap-2 text-xs">
+            <Truck className="w-3.5 h-3.5" />
+            Supplier Returns (RTV)
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="customer" className="space-y-4 m-0">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 flex-1">
+              <div className="relative flex-1 max-w-sm">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
+                <Input autoFocus placeholder="Search returns..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9 h-8 text-xs" />
+              </div>
+              <Button variant="outline" size="sm" onClick={() => downloadCSV(`returns_${new Date().toISOString().split("T")[0]}.csv`, ["Date","Sale ID","Customer","Refund Amount","Reason"], filtered.map((r: ReturnEntry) => [r.created_at, r.sale_id, r.customer_name || "", r.refund_amount, r.reason]))} className="h-8 text-xs">
+                <Download className="h-3.5 w-3.5 mr-1" /> CSV
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => downloadPDF(`returns_${new Date().toISOString().split("T")[0]}.pdf`, "Returns List", ["Date","Sale ID","Customer","Refund Amount","Reason"], filtered.map((r: ReturnEntry) => [r.created_at, r.sale_id, r.customer_name || "", r.refund_amount, r.reason]))} className="h-8 text-xs">
+                <Download className="h-3.5 w-3.5 mr-1" /> PDF
+              </Button>
+            </div>
+            <Button size="sm" onClick={() => setOpen(true)} className="h-8 text-xs bg-accent text-accent-foreground hover:bg-accent-hover shrink-0">
+              <Plus className="h-3.5 w-3.5 mr-1" />
+              New Customer Return
+            </Button>
+          </div>
       <div className="rounded-xl border border-border">
         <DataTable
           columns={columns}
@@ -422,6 +452,12 @@ export default function Returns() {
           )}
         </DialogContent>
       </Dialog>
+    </TabsContent>
+
+    <TabsContent value="supplier" className="space-y-4 m-0">
+          <SupplierReturnsHub />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

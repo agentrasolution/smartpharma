@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { PortalNav } from "@/components/portal-nav";
 import {
   HeartPulse, UserCheck, RefreshCw, Search, ShieldCheck,
   AlertTriangle, CheckCircle2, MessageSquare,
@@ -156,10 +155,7 @@ export default function PatientsPage() {
   const totalArrears = customers.reduce((sum, c) => sum + (c.outstanding_arrear ?? 0), 0);
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
-      <PortalNav />
-
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
@@ -695,7 +691,6 @@ export default function PatientsPage() {
             </div>
           </div>
         )}
-      </main>
     </div>
   );
 }

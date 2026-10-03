@@ -16,12 +16,16 @@ export interface ProductPrice {
   label: string;
   purchasePrice: number;
   salePrice: number;
+  unitType?: string;
+  conversionRatio?: number;
 }
 
 export interface ProductPriceInput {
   label?: string;
   purchasePrice: number;
   salePrice?: number;
+  unitType?: string;
+  conversionRatio?: number;
 }
 
 export interface Paginated<T> {
@@ -46,7 +50,10 @@ export interface Product {
   markup_percent: number;
   stock_qty: number;
   pack_size: number;
+  baseUnit?: string;
+  packageUnit?: string;
   unitsPerPack?: number;
+  stripsPerPack?: number;
   expiry?: string;
   active: number;
   created_at: string;
@@ -65,6 +72,10 @@ export interface ProductInput {
   location?: string;
   expiry?: string;
   packSize?: number;
+  baseUnit?: string;
+  packageUnit?: string;
+  unitsPerPack?: number;
+  stripsPerPack?: number;
   prices?: ProductPriceInput[];
   branchId?: string;
 }
@@ -242,6 +253,12 @@ export interface SaleItem {
   product_name: string;
   barcode: string;
   quantity: number;
+  packagingUnit?: string;
+  packaging_unit?: string;
+  conversionRatio?: number;
+  conversion_ratio?: number;
+  quantityBaseUnits?: number;
+  quantity_base_units?: number;
   returned_qty?: number;
   unit_price: number;
   subtotal: number;
@@ -281,6 +298,9 @@ export interface SaleItemInput {
   productName: string;
   barcode: string;
   quantity: number;
+  packagingUnit?: string;
+  conversionRatio?: number;
+  quantityBaseUnits?: number;
   unitPrice: number;
   subtotal: number;
   batchId?: string | null;
@@ -1464,6 +1484,194 @@ export interface ProfitAndLoss {
     totalPurchases: number;
   };
 }
+
+export interface PosShift {
+  id: string;
+  pharmacyId: string;
+  branchId: string;
+  cashierId: string;
+  cashierName: string;
+  shiftNumber: number;
+  openedAt: string;
+  closedAt?: string | null;
+  status: "OPEN" | "CLOSED";
+  openingCash: number;
+  expectedCash: number;
+  actualCash?: number | null;
+  cashVariance?: number | null;
+  totalCashSales: number;
+  totalCardSales: number;
+  totalCreditSales: number;
+  totalSalesCount: number;
+  totalReturns: number;
+  totalCashDrops: number;
+  closingNotes?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  branch?: { id: string; name: string };
+  cashDrops?: CashDrop[];
+  liveExpectedCash?: number;
+  metrics?: XReportData;
+}
+
+export interface CashDrop {
+  id: string;
+  shiftId: string;
+  pharmacyId: string;
+  branchId: string;
+  userId: string;
+  userName: string;
+  type: "DROP" | "PAYOUT" | "FLOAT_ADD";
+  amount: number;
+  reason: string;
+  createdAt: string;
+}
+
+export interface XReportData {
+  shiftId: string;
+  shiftNumber: number;
+  status: string;
+  cashierName: string;
+  branchName: string;
+  openedAt: string;
+  readingAt: string;
+  openingCash: number;
+  salesSummary: {
+    totalTransactions: number;
+    grossSales: number;
+    cashSales: { count: number; amount: number };
+    cardSales: { count: number; amount: number };
+    creditSales: { count: number; amount: number };
+    splitSales: { count: number; amount: number };
+  };
+  returnsSummary: {
+    totalReturns: number;
+    cashRefunds: number;
+    nonCashRefunds: number;
+  };
+  cashMovements: {
+    dropsToSafe: { count: number; total: number };
+    payouts: { count: number; total: number };
+    floatAdds: { count: number; total: number };
+    list: Array<{
+      id: string;
+      type: string;
+      amount: number;
+      reason: string;
+      createdAt: string;
+    }>;
+  };
+  cashDrawerSummary: {
+    openingFloat: number;
+    totalCashIn: number;
+    totalCashOut: number;
+    expectedCashInDrawer: number;
+  };
+}
+
+export interface ZReportData extends XReportData {
+  closedAt: string;
+  actualCash: number;
+  cashVariance: number;
+  varianceStatus: "BALANCED" | "OVER" | "SHORT";
+  closingNotes: string;
+}
+
+export type ReturnReason =
+  | "NEAR_EXPIRY"
+  | "DAMAGED"
+  | "RECALLED"
+  | "EXCESS_STOCK"
+  | "EXPIRED"
+  | "WRONG_ITEM"
+  | "OTHER";
+
+export interface SupplierReturnItem {
+  id: string;
+  returnId: string;
+  productId: string;
+  productName: string;
+  batchId?: string | null;
+  batchNumber: string;
+  expiryDate?: string | null;
+  quantityPacks: number;
+  unitsPerPack: number;
+  quantityBaseUnits: number;
+  unitCost: number;
+  totalCost: number;
+  reason?: string;
+  product?: { id: string; name: string; barcode: string; category?: string };
+  batch?: { id: string; batchNumber: string; expiryDate: string; quantity: number };
+}
+
+export interface SupplierReturn {
+  id: string;
+  pharmacyId: string;
+  branchId: string;
+  distributorId: string;
+  returnNumber: string;
+  returnDate: string;
+  invoiceId?: string | null;
+  status: "PENDING" | "APPROVED" | "REJECTED" | "COMPLETED";
+  totalAmount: number;
+  creditNoteNumber?: string | null;
+  creditNoteDate?: string | null;
+  reason: ReturnReason;
+  notes?: string;
+  createdById?: string | null;
+  createdByName?: string | null;
+  approvedById?: string | null;
+  approvedByName?: string | null;
+  approvedAt?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  distributor?: { id: string; name: string; phone?: string; address?: string };
+  branch?: { id: string; name: string };
+  invoice?: { id: string; invoiceNumber: string; totalAmount: number; balanceDue?: number; status?: string };
+  items: SupplierReturnItem[];
+}
+
+export interface ReturnCandidate {
+  batchId: string;
+  batchNumber: string;
+  expiryDate: string;
+  daysToExpiry: number;
+  quantityAvailable: number;
+  unitCost: number;
+  suggestedReason: ReturnReason;
+  productId: string;
+  productName: string;
+  barcode: string;
+  packSize: number;
+  distributorId?: string | null;
+  distributorName?: string;
+}
+
+export interface CreateSupplierReturnInput {
+  distributorId: string;
+  invoiceId?: string | null;
+  reason: ReturnReason;
+  notes?: string;
+  autoApprove?: boolean;
+  creditNoteNumber?: string | null;
+  items: Array<{
+    productId: string;
+    batchId?: string | null;
+    batchNumber: string;
+    expiryDate?: string | null;
+    quantityPacks: number;
+    unitsPerPack?: number;
+    unitCost: number;
+    reason?: string;
+  }>;
+}
+
+export interface ApproveSupplierReturnInput {
+  creditNoteNumber?: string | null;
+  creditNoteDate?: string | null;
+  notes?: string;
+}
+
 
 
 

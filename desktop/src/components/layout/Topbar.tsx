@@ -91,9 +91,11 @@ export default function Topbar() {
             initial={{ opacity: 0, x: -4 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.15 }}
+            className="flex items-center gap-2 text-xs"
           >
-            <h1 className="text-sm font-display font-semibold text-text-primary tracking-tight">{page.title}</h1>
-            <p className="text-[11px] text-text-secondary leading-none mt-0.5">{page.subtitle}</p>
+            <span className="font-medium text-text-secondary/70">SmartPharma</span>
+            <span className="text-text-secondary/40 font-mono">/</span>
+            <span className="font-semibold text-text-primary">{page.title}</span>
           </motion.div>
 
           {!isPlatform && <GlobalSearch />}

@@ -2,9 +2,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Plus, Search, Archive, RotateCcw, Pencil, Download, Upload, Trash2, Tags, Barcode } from "lucide-react";
+import { Plus, Search, Archive, RotateCcw, Pencil, Download, Upload, Trash2, Tags, Barcode, Package, AlertTriangle, CheckCircle2, XCircle } from "lucide-react";
 import PageHeader from "@/components/shared/PageHeader";
 import DataTable from "@/components/shared/DataTable";
+import StatCard from "@/components/shared/StatCard";
 import StatusBadge from "@/components/shared/StatusBadge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -53,6 +54,7 @@ interface PriceTierForm {
 interface ProductForm {
   barcode: string; name: string; category: string; location: string;
   purchasePrice: string; salePrice: string; packSize: string; branchId: string;
+  baseUnit: string; packageUnit: string; unitsPerPack: string; stripsPerPack: string;
   prices: PriceTierForm[];
 }
 
@@ -63,6 +65,7 @@ const emptyPriceTier = (): PriceTierForm => ({
 const emptyForm = (): ProductForm => ({
   barcode: generateBarcode(), name: "", category: "", location: "",
   purchasePrice: "", salePrice: "", packSize: "1", branchId: "",
+  baseUnit: "TABLET", packageUnit: "BOX", unitsPerPack: "1", stripsPerPack: "1",
   prices: [],
 });
 
@@ -121,6 +124,11 @@ export default function Products() {
     enabled: isCrossBranchAdmin,
   });
 
+  const { data: dashStats } = useQuery({
+    queryKey: ["dashboard-stats"],
+    queryFn: api.dashboard.stats,
+  });
+
   useEffect(() => {
     if (isCrossBranchAdmin && branches.length > 0 && !form.branchId) {
       setForm((prev) => ({ ...prev, branchId: branches[0]!.id }));
@@ -170,6 +178,10 @@ export default function Products() {
       barcode: form.barcode, name: form.name, category: form.category,
       location: form.location, purchasePrice: Number(form.purchasePrice),
       salePrice: Number(form.salePrice) || 0, packSize: Number(form.packSize),
+      baseUnit: form.baseUnit || "TABLET",
+      packageUnit: form.packageUnit || "BOX",
+      unitsPerPack: Number(form.unitsPerPack) || Number(form.packSize) || 1,
+      stripsPerPack: Number(form.stripsPerPack) || 1,
       prices: buildPricesPayload(),
       branchId: isCrossBranchAdmin ? form.branchId : user?.branchId ?? undefined,
     }),
@@ -190,6 +202,10 @@ export default function Products() {
       barcode: form.barcode, name: form.name, category: form.category,
       location: form.location, purchasePrice: Number(form.purchasePrice),
       salePrice: Number(form.salePrice) || 0, packSize: Number(form.packSize),
+      baseUnit: form.baseUnit || "TABLET",
+      packageUnit: form.packageUnit || "BOX",
+      unitsPerPack: Number(form.unitsPerPack) || Number(form.packSize) || 1,
+      stripsPerPack: Number(form.stripsPerPack) || 1,
       prices: buildPricesPayload(),
     }),
     onSuccess: () => {
@@ -275,6 +291,10 @@ export default function Products() {
       location: product.location, purchasePrice: String(product.purchase_price),
       salePrice: String(product.sale_price), packSize: String(product.pack_size),
       branchId: product.branch_id || user?.branchId || "",
+      baseUnit: (product as any).baseUnit || (product as any).base_unit || "TABLET",
+      packageUnit: (product as any).packageUnit || (product as any).package_unit || "BOX",
+      unitsPerPack: String((product as any).unitsPerPack || (product as any).units_per_pack || product.pack_size || "1"),
+      stripsPerPack: String((product as any).stripsPerPack || (product as any).strips_per_pack || "1"),
       prices: p
         ? p.map((pt) => ({ purchasePrice: String(pt.purchasePrice), salePrice: String(pt.salePrice) }))
         : [],
@@ -561,47 +581,94 @@ export default function Products() {
   ];
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-5">
-        <div className="space-y-0.5">
-          <h1 className="text-base font-semibold text-text-primary tracking-tight">Products</h1>
-          <p className="text-xs text-text-secondary">Manage your pharmacy inventory</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={() => { setCatEditingId(null); setCatName(""); setCatSearch(""); setCatOpen(true); }}>
-            <Tags className="h-3.5 w-3.5 mr-1" /> Categories
-          </Button>
-          <Button onClick={openAdd} className="gap-1.5" size="sm">
-            <Plus className="h-3.5 w-3.5" /> Add Product
-          </Button>
-        </div>
+    <div className="space-y-6">
+      <PageHeader
+        title="Products Master"
+        description="Comprehensive catalog management, pricing tiers, barcodes, and inventory thresholds."
+        badge={
+          <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-accent/10 text-accent font-semibold border border-accent/20">
+            {total.toLocaleString()} Products
+          </span>
+        }
+        actions={
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => { setCatEditingId(null); setCatName(""); setCatSearch(""); setCatOpen(true); }}
+              className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
+            >
+              <Tags className="h-3.5 w-3.5" />
+              Categories
+            </Button>
+            <Button
+              onClick={openAdd}
+              className="h-9 rounded-xl text-xs gap-1.5 font-medium shadow-xs"
+              size="sm"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              Add Product
+            </Button>
+          </div>
+        }
+      />
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <StatCard
+          title="Total Products"
+          value={total}
+          icon={<Package className="h-5 w-5" />}
+          color="accent"
+          subtitle="Catalog entries"
+        />
+        <StatCard
+          title="In Stock"
+          value={products.filter((p) => p.stock_qty > 5 && p.active).length}
+          icon={<CheckCircle2 className="h-5 w-5" />}
+          color="success"
+          subtitle="Healthy supply"
+        />
+        <StatCard
+          title="Low Stock"
+          value={dashStats?.lowStockCount ?? products.filter((p) => p.stock_qty > 0 && p.stock_qty <= 5).length}
+          icon={<AlertTriangle className="h-5 w-5" />}
+          color="warning"
+          subtitle="<= 5 units threshold"
+        />
+        <StatCard
+          title="Out of Stock / Inactive"
+          value={products.filter((p) => p.stock_qty <= 0 || !p.active).length}
+          icon={<XCircle className="h-5 w-5" />}
+          color="danger"
+          subtitle="Requires replenishment"
+        />
       </div>
 
       {addedId && (
-        <div className="mb-4 p-3 rounded-lg border border-success/20 bg-success/5 flex items-center justify-between">
+        <div className="p-3.5 rounded-2xl border border-success/30 bg-success/5 flex items-center justify-between shadow-xs">
           <div className="flex items-center gap-2.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-success" />
-            <p className="text-xs text-text-primary font-medium">Product added successfully</p>
+            <span className="h-2 w-2 rounded-full bg-success animate-pulse" />
+            <p className="text-xs text-text-primary font-medium">Product registered successfully into the catalog</p>
           </div>
           <div className="flex items-center gap-2">
             {lastAddedProduct && (
-              <Button size="sm" variant="outline" onClick={() => { setPrintBarcode(lastAddedProduct); }}>
-                <Barcode className="h-3.5 w-3.5 mr-1" /> Print Barcode
+              <Button size="sm" variant="outline" className="h-8 rounded-xl text-xs gap-1.5" onClick={() => { setPrintBarcode(lastAddedProduct); }}>
+                <Barcode className="h-3.5 w-3.5" /> Print Barcode
               </Button>
             )}
-            <Button size="sm" variant="outline" onClick={() => { setAddedId(null); openAdd(); }}>Add Another</Button>
-            <Button size="sm" onClick={() => setAddedId(null)}>Done</Button>
+            <Button size="sm" variant="outline" className="h-8 rounded-xl text-xs" onClick={() => { setAddedId(null); openAdd(); }}>Add Another</Button>
+            <Button size="sm" className="h-8 rounded-xl text-xs" onClick={() => setAddedId(null)}>Done</Button>
           </div>
         </div>
       )}
 
-      <div className="flex items-center gap-2 mb-4">
-        <div className="relative flex-1 max-w-xs">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-secondary" />
+      {/* Modernized Toolbar */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-surface p-2.5 rounded-2xl border border-border/80 shadow-xs">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
           <Input
             ref={searchRef}
-            autoFocus
-            placeholder="Search or scan barcode..."
+            placeholder="Search name, barcode, company, or category..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={async (e) => {
@@ -613,44 +680,79 @@ export default function Products() {
                 }
               }
             }}
-            className="pl-8"
+            className="pl-9 h-9 rounded-xl text-xs bg-surface-2/40 border-border/80 focus:bg-surface"
           />
         </div>
-        <div className="flex items-center gap-1.5 ml-auto">
-          <Button variant="outline" size="sm" className={showArchived ? "border-accent text-accent" : ""} onClick={() => { setShowArchived(!showArchived); setPage(1); }}>
-            <Archive className="h-3.5 w-3.5 mr-1" />
-            Archived
+
+        <div className="flex items-center gap-1.5 flex-wrap sm:flex-nowrap">
+          <Button
+            variant={showArchived ? "default" : "outline"}
+            size="sm"
+            className="h-9 rounded-xl text-xs gap-1.5 border-border/80"
+            onClick={() => { setShowArchived(!showArchived); setPage(1); }}
+          >
+            <Archive className="h-3.5 w-3.5" />
+            {showArchived ? "Showing Archived" : "Archived"}
           </Button>
-          <Button variant="outline" size="sm" onClick={() => downloadCSV(`products_${new Date().toISOString().split("T")[0]}.csv`, ["Barcode","Name","Company","Category","Location","Sale Price","Purchase Price","Stock","Expiry","Status"], products.map((p: Product) => [p.barcode, p.name, p.company, p.category, p.location, p.sale_price, p.purchase_price, p.stock_qty, p.expiry||"", p.active?"Active":"Archived"]))}>
-            <Download className="h-3.5 w-3.5 mr-1" /> CSV
+
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
+            onClick={() => downloadCSV(`products_${new Date().toISOString().split("T")[0]}.csv`, ["Barcode","Name","Company","Category","Location","Sale Price","Purchase Price","Stock","Expiry","Status"], products.map((p: Product) => [p.barcode, p.name, p.company, p.category, p.location, p.sale_price, p.purchase_price, p.stock_qty, p.expiry||"", p.active?"Active":"Archived"]))}
+          >
+            <Download className="h-3.5 w-3.5" /> CSV
           </Button>
-          <Button variant="outline" size="sm" onClick={() => downloadPDF(`products_${new Date().toISOString().split("T")[0]}.pdf`, "Products List", ["Barcode","Name","Company","Category","Location","Sale Price","Purchase Price","Stock","Expiry","Status"], products.map((p: Product) => [p.barcode, p.name, p.company, p.category, p.location, p.sale_price, p.purchase_price, p.stock_qty, p.expiry||"", p.active?"Active":"Archived"]))}>
-            <Download className="h-3.5 w-3.5 mr-1" /> PDF
+
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
+            onClick={() => downloadPDF(`products_${new Date().toISOString().split("T")[0]}.pdf`, "Products List", ["Barcode","Name","Company","Category","Location","Sale Price","Purchase Price","Stock","Expiry","Status"], products.map((p: Product) => [p.barcode, p.name, p.company, p.category, p.location, p.sale_price, p.purchase_price, p.stock_qty, p.expiry||"", p.active?"Active":"Archived"]))}
+          >
+            <Download className="h-3.5 w-3.5" /> PDF
           </Button>
+
           <input ref={fileInputRef} type="file" accept=".csv" onChange={handleFileChange} className="hidden" />
-          <Button variant="primary" size="sm" onClick={() => { setImportOpen(true); setImportRows([]); }}>
-            <Upload className="h-3.5 w-3.5 mr-1" /> Import CSV
+
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
+            onClick={() => { setImportOpen(true); setImportRows([]); }}
+          >
+            <Upload className="h-3.5 w-3.5" /> Import CSV
           </Button>
-          <Button variant="outline" size="sm" onClick={() => setPrintBarcode({})}>
-            <Barcode className="h-3.5 w-3.5 mr-1" /> Generate Barcode
+
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
+            onClick={() => setPrintBarcode({})}
+          >
+            <Barcode className="h-3.5 w-3.5" /> Barcode
           </Button>
         </div>
       </div>
 
-      <div className="rounded-lg border border-border">
-        <DataTable columns={columns} data={products} loading={isLoading} keyExtractor={(p: Product) => p.id} />
-      </div>
-      <div className="flex items-center justify-between mt-3 text-xs text-text-secondary">
-        <span>{total.toLocaleString()} product(s) · page {page} of {totalPages}</span>
-        <div className="flex items-center gap-2">
-          <Button size="sm" variant="outline" disabled={page <= 1 || isLoading} onClick={() => setPage((p) => Math.max(1, p - 1))}>
-            Previous
+      <DataTable
+        columns={columns}
+        data={products}
+        loading={isLoading}
+        keyExtractor={(p: Product) => p.id}
+        emptyTitle={search ? "No matching products found" : "No products registered"}
+        emptyDescription={search ? `No products matched "${search}". Try searching by barcode, brand, or formula.` : "Start building your pharmacy catalog by adding your first product."}
+        emptyAction={
+          <Button onClick={openAdd} size="sm" className="h-9 rounded-xl text-xs gap-1.5 font-medium shadow-xs">
+            <Plus className="h-3.5 w-3.5" /> Add Product
           </Button>
-          <Button size="sm" variant="outline" disabled={page >= totalPages || isLoading} onClick={() => setPage((p) => p + 1)}>
-            Next
-          </Button>
-        </div>
-      </div>
+        }
+        page={page}
+        totalPages={totalPages}
+        totalCount={total}
+        onPageChange={(p) => setPage(p)}
+        itemLabel="products"
+      />
 
       <Dialog open={importOpen} onOpenChange={(v) => { if (!v) { setImportRows([]); } setImportOpen(v); }}>
         <DialogContent className="max-w-xl">
@@ -823,9 +925,60 @@ export default function Products() {
                 <p className="text-[11px] text-text-secondary">Products are created for this branch&apos;s catalog.</p>
               </div>
             )}
-            <div className="space-y-1">
-              <Label>Pack Size (units per pack)</Label>
-              <Input type="number" min="1" value={form.packSize} onChange={(e) => setForm({ ...form, packSize: e.target.value })} placeholder="e.g. 10" />
+            {/* Multi-Unit Packaging Hierarchy */}
+            <div className="border border-border/80 rounded-lg p-3 space-y-3 bg-surface-2/40">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <Package className="h-4 w-4 text-accent" />
+                  <Label className="text-xs font-semibold text-text-primary">Packaging Hierarchy (Multi-Unit)</Label>
+                </div>
+                <span className="text-[10px] text-text-secondary">Box &rarr; Strip &rarr; Tablet</span>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div className="space-y-1">
+                  <Label className="text-[10px] text-text-secondary">Base Unit (Smallest)</Label>
+                  <Input
+                    value={form.baseUnit}
+                    onChange={(e) => setForm({ ...form, baseUnit: e.target.value.toUpperCase() })}
+                    placeholder="TABLET"
+                    className="h-8 text-xs font-mono uppercase"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[10px] text-text-secondary">Outer Package Unit</Label>
+                  <Input
+                    value={form.packageUnit}
+                    onChange={(e) => setForm({ ...form, packageUnit: e.target.value.toUpperCase() })}
+                    placeholder="BOX"
+                    className="h-8 text-xs font-mono uppercase"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[10px] text-text-secondary">Units / Box</Label>
+                  <Input
+                    type="number"
+                    min="1"
+                    value={form.unitsPerPack}
+                    onChange={(e) => setForm({ ...form, unitsPerPack: e.target.value, packSize: e.target.value })}
+                    placeholder="30"
+                    className="h-8 text-xs font-mono"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label className="text-[10px] text-text-secondary">Strips / Box</Label>
+                  <Input
+                    type="number"
+                    min="1"
+                    value={form.stripsPerPack}
+                    onChange={(e) => setForm({ ...form, stripsPerPack: e.target.value })}
+                    placeholder="3"
+                    className="h-8 text-xs font-mono"
+                  />
+                </div>
+              </div>
+              <p className="text-[10px] text-text-secondary">
+                Enables POS dispensing by full box, individual strip, or single tablet with automatic inventory deduction.
+              </p>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1">

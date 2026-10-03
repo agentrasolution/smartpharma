@@ -14,6 +14,8 @@ interface StatCardProps {
   delay?: number;
   href?: string;
   onClick?: () => void;
+  color?: "default" | "accent" | "success" | "warning" | "danger" | "purple";
+  className?: string;
 }
 
 function useCountUp(end: number, duration = 500) {
@@ -39,17 +41,38 @@ function useCountUp(end: number, duration = 500) {
   return count;
 }
 
-export default function StatCard({ title, value, icon, trend, subtitle, loading, delay = 0, href, onClick }: StatCardProps) {
+export default function StatCard({
+  title,
+  value,
+  icon,
+  trend,
+  subtitle,
+  loading,
+  delay = 0,
+  href,
+  onClick,
+  color = "default",
+  className,
+}: StatCardProps) {
   const numValue = typeof value === "number" ? value : 0;
-  const isCurrency = title.toLowerCase().includes("revenue") || title.toLowerCase().includes("arrear");
+  const isCurrency = typeof value === "number" && (title.toLowerCase().includes("revenue") || title.toLowerCase().includes("arrear") || title.toLowerCase().includes("cost") || title.toLowerCase().includes("profit") || title.toLowerCase().includes("value"));
   const animatedValue = useCountUp(numValue, 500);
   const isClickable = !!(href || onClick);
 
+  const colorStyles = {
+    default: { iconBg: "bg-accent/10 text-accent group-hover:bg-accent/15", border: "group-hover:border-accent/30", bar: "bg-accent/30 group-hover:bg-accent" },
+    accent: { iconBg: "bg-accent/10 text-accent group-hover:bg-accent/15", border: "group-hover:border-accent/30", bar: "bg-accent/30 group-hover:bg-accent" },
+    success: { iconBg: "bg-success/10 text-success group-hover:bg-success/15", border: "group-hover:border-success/30", bar: "bg-success/30 group-hover:bg-success" },
+    warning: { iconBg: "bg-warning/10 text-warning group-hover:bg-warning/15", border: "group-hover:border-warning/30", bar: "bg-warning/30 group-hover:bg-warning" },
+    danger: { iconBg: "bg-danger/10 text-danger group-hover:bg-danger/15", border: "group-hover:border-danger/30", bar: "bg-danger/30 group-hover:bg-danger" },
+    purple: { iconBg: "bg-purple-500/10 text-purple-600 group-hover:bg-purple-500/15", border: "group-hover:border-purple-500/30", bar: "bg-purple-500/30 group-hover:bg-purple-500" },
+  }[color];
+
   if (loading) {
     return (
-      <div className="rounded-xl border border-border bg-surface p-4 space-y-2.5">
-        <div className="h-3 w-20 bg-surface-2 rounded animate-pulse" />
-        <div className="h-6 w-28 bg-surface-2 rounded animate-pulse" />
+      <div className={`rounded-2xl border border-border/80 bg-surface p-5 space-y-3 ${className || ""}`}>
+        <div className="h-3 w-20 bg-surface-2 rounded-md animate-pulse" />
+        <div className="h-7 w-28 bg-surface-2 rounded-md animate-pulse" />
       </div>
     );
   }
@@ -59,33 +82,33 @@ export default function StatCard({ title, value, icon, trend, subtitle, loading,
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.35, ease: "easeOut" }}
-      whileHover={isClickable ? { y: -2, scale: 1.01 } : { y: -1 }}
-      whileTap={isClickable ? { scale: 0.98 } : undefined}
+      whileHover={isClickable ? { y: -2 } : undefined}
+      whileTap={isClickable ? { scale: 0.99 } : undefined}
       onClick={onClick}
-      className={`group rounded-xl border border-border bg-surface p-4 relative overflow-hidden transition-all duration-200 ${
-        isClickable ? "cursor-pointer hover:shadow-md hover:border-accent/30" : "hover:shadow-sm"
-      }`}
+      className={`group rounded-2xl border border-border/80 bg-surface p-5 relative overflow-hidden transition-all duration-200 shadow-xs ${
+        isClickable ? `cursor-pointer hover:shadow-md ${colorStyles.border}` : "hover:shadow-sm"
+      } ${className || ""}`}
     >
-      <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-accent/20 group-hover:bg-accent transition-colors duration-200" />
+      <span className={`absolute left-0 top-0 bottom-0 w-1 ${colorStyles.bar} transition-colors duration-200`} />
       <div className="flex items-start justify-between">
         <div className="space-y-2">
-          <p className="text-[11px] font-medium text-text-secondary tracking-wide uppercase">{title}</p>
+          <p className="text-[11px] font-semibold text-text-secondary tracking-wider uppercase">{title}</p>
           <div className="flex items-baseline gap-1.5">
-            <p className="text-xl font-bold text-text-primary tabular-nums tracking-tight">
-              {isCurrency ? formatCurrency(animatedValue) : animatedValue.toLocaleString()}
+            <p className="text-2xl font-bold text-text-primary tabular-nums tracking-tight font-mono">
+              {typeof value === "string" ? value : isCurrency ? formatCurrency(animatedValue) : animatedValue.toLocaleString()}
             </p>
             {typeof value === "number" && value !== animatedValue && (
               <span className="text-[9px] text-text-secondary animate-pulse">...</span>
             )}
           </div>
-          {subtitle && <p className="text-[10px] text-text-secondary">{subtitle}</p>}
+          {subtitle && <p className="text-[11px] text-text-secondary">{subtitle}</p>}
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-accent/10 flex items-center justify-center text-accent group-hover:scale-105 group-hover:bg-accent/15 transition-all duration-200">
+          <div className={`h-10 w-10 rounded-xl ${colorStyles.iconBg} flex items-center justify-center transition-all duration-200`}>
             {icon}
           </div>
           {isClickable && (
-            <ArrowRight className="h-3.5 w-3.5 text-text-secondary/40 group-hover:text-accent group-hover:translate-x-0.5 transition-all duration-200" />
+            <ArrowRight className="h-4 w-4 text-text-secondary/40 group-hover:text-accent group-hover:translate-x-0.5 transition-all duration-200" />
           )}
         </div>
       </div>
@@ -94,12 +117,12 @@ export default function StatCard({ title, value, icon, trend, subtitle, loading,
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: delay + 0.2 }}
-          className="mt-3 flex items-center gap-1 text-[10px]"
+          className="mt-3.5 flex items-center gap-1.5 text-[11px] pt-3 border-t border-border/50"
         >
           {trend.positive ? (
-            <TrendingUp className="h-3 w-3 text-success" />
+            <TrendingUp className="h-3.5 w-3.5 text-success" />
           ) : (
-            <TrendingDown className="h-3 w-3 text-danger" />
+            <TrendingDown className="h-3.5 w-3.5 text-danger" />
           )}
           <span className={trend.positive ? "font-semibold text-success" : "font-semibold text-danger"}>
             {trend.value}%

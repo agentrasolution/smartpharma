@@ -312,6 +312,7 @@ export type BatchWhereInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterListRelationFilter
   saleItems?: Prisma.SaleItemListRelationFilter
   transferItems?: Prisma.StockTransferItemListRelationFilter
+  supplierReturnItems?: Prisma.SupplierReturnItemListRelationFilter
 }
 
 export type BatchOrderByWithRelationInput = {
@@ -338,6 +339,7 @@ export type BatchOrderByWithRelationInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterOrderByRelationAggregateInput
   saleItems?: Prisma.SaleItemOrderByRelationAggregateInput
   transferItems?: Prisma.StockTransferItemOrderByRelationAggregateInput
+  supplierReturnItems?: Prisma.SupplierReturnItemOrderByRelationAggregateInput
 }
 
 export type BatchWhereUniqueInput = Prisma.AtLeast<{
@@ -368,6 +370,7 @@ export type BatchWhereUniqueInput = Prisma.AtLeast<{
   controlledRegisters?: Prisma.ControlledDrugRegisterListRelationFilter
   saleItems?: Prisma.SaleItemListRelationFilter
   transferItems?: Prisma.StockTransferItemListRelationFilter
+  supplierReturnItems?: Prisma.SupplierReturnItemListRelationFilter
 }, "id" | "branchId_productId_batchNumber">
 
 export type BatchOrderByWithAggregationInput = {
@@ -436,6 +439,7 @@ export type BatchCreateInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutBatchInput
 }
 
 export type BatchUncheckedCreateInput = {
@@ -460,6 +464,7 @@ export type BatchUncheckedCreateInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutBatchInput
 }
 
 export type BatchUpdateInput = {
@@ -484,6 +489,7 @@ export type BatchUpdateInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchUncheckedUpdateInput = {
@@ -508,6 +514,7 @@ export type BatchUncheckedUpdateInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchCreateManyInput = {
@@ -829,6 +836,22 @@ export type BatchUpdateOneWithoutTransferItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.BatchUpdateToOneWithWhereWithoutTransferItemsInput, Prisma.BatchUpdateWithoutTransferItemsInput>, Prisma.BatchUncheckedUpdateWithoutTransferItemsInput>
 }
 
+export type BatchCreateNestedOneWithoutSupplierReturnItemsInput = {
+  create?: Prisma.XOR<Prisma.BatchCreateWithoutSupplierReturnItemsInput, Prisma.BatchUncheckedCreateWithoutSupplierReturnItemsInput>
+  connectOrCreate?: Prisma.BatchCreateOrConnectWithoutSupplierReturnItemsInput
+  connect?: Prisma.BatchWhereUniqueInput
+}
+
+export type BatchUpdateOneWithoutSupplierReturnItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.BatchCreateWithoutSupplierReturnItemsInput, Prisma.BatchUncheckedCreateWithoutSupplierReturnItemsInput>
+  connectOrCreate?: Prisma.BatchCreateOrConnectWithoutSupplierReturnItemsInput
+  upsert?: Prisma.BatchUpsertWithoutSupplierReturnItemsInput
+  disconnect?: Prisma.BatchWhereInput | boolean
+  delete?: Prisma.BatchWhereInput | boolean
+  connect?: Prisma.BatchWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BatchUpdateToOneWithWhereWithoutSupplierReturnItemsInput, Prisma.BatchUpdateWithoutSupplierReturnItemsInput>, Prisma.BatchUncheckedUpdateWithoutSupplierReturnItemsInput>
+}
+
 export type BatchCreateWithoutBranchInput = {
   id?: string
   pharmacyId: string
@@ -850,6 +873,7 @@ export type BatchCreateWithoutBranchInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutBatchInput
 }
 
 export type BatchUncheckedCreateWithoutBranchInput = {
@@ -873,6 +897,7 @@ export type BatchUncheckedCreateWithoutBranchInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutBatchInput
 }
 
 export type BatchCreateOrConnectWithoutBranchInput = {
@@ -943,6 +968,7 @@ export type BatchCreateWithoutProductInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutBatchInput
 }
 
 export type BatchUncheckedCreateWithoutProductInput = {
@@ -966,6 +992,7 @@ export type BatchUncheckedCreateWithoutProductInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutBatchInput
 }
 
 export type BatchCreateOrConnectWithoutProductInput = {
@@ -1015,6 +1042,7 @@ export type BatchCreateWithoutSaleItemsInput = {
   dispenseRecords?: Prisma.DispenseRecordCreateNestedManyWithoutBatchInput
   controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutBatchInput
 }
 
 export type BatchUncheckedCreateWithoutSaleItemsInput = {
@@ -1038,6 +1066,7 @@ export type BatchUncheckedCreateWithoutSaleItemsInput = {
   dispenseRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutBatchInput
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutBatchInput
 }
 
 export type BatchCreateOrConnectWithoutSaleItemsInput = {
@@ -1077,6 +1106,7 @@ export type BatchUpdateWithoutSaleItemsInput = {
   dispenseRecords?: Prisma.DispenseRecordUpdateManyWithoutBatchNestedInput
   controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchUncheckedUpdateWithoutSaleItemsInput = {
@@ -1100,6 +1130,7 @@ export type BatchUncheckedUpdateWithoutSaleItemsInput = {
   dispenseRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutBatchNestedInput
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchCreateWithoutMovementsInput = {
@@ -1123,6 +1154,7 @@ export type BatchCreateWithoutMovementsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutBatchInput
 }
 
 export type BatchUncheckedCreateWithoutMovementsInput = {
@@ -1146,6 +1178,7 @@ export type BatchUncheckedCreateWithoutMovementsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutBatchInput
 }
 
 export type BatchCreateOrConnectWithoutMovementsInput = {
@@ -1185,6 +1218,7 @@ export type BatchUpdateWithoutMovementsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchUncheckedUpdateWithoutMovementsInput = {
@@ -1208,6 +1242,7 @@ export type BatchUncheckedUpdateWithoutMovementsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchCreateWithoutPurchaseInvoiceItemsInput = {
@@ -1231,6 +1266,7 @@ export type BatchCreateWithoutPurchaseInvoiceItemsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutBatchInput
 }
 
 export type BatchUncheckedCreateWithoutPurchaseInvoiceItemsInput = {
@@ -1254,6 +1290,7 @@ export type BatchUncheckedCreateWithoutPurchaseInvoiceItemsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutBatchInput
 }
 
 export type BatchCreateOrConnectWithoutPurchaseInvoiceItemsInput = {
@@ -1293,6 +1330,7 @@ export type BatchUpdateWithoutPurchaseInvoiceItemsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchUncheckedUpdateWithoutPurchaseInvoiceItemsInput = {
@@ -1316,6 +1354,7 @@ export type BatchUncheckedUpdateWithoutPurchaseInvoiceItemsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchCreateWithoutDispenseRecordsInput = {
@@ -1339,6 +1378,7 @@ export type BatchCreateWithoutDispenseRecordsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutBatchInput
 }
 
 export type BatchUncheckedCreateWithoutDispenseRecordsInput = {
@@ -1362,6 +1402,7 @@ export type BatchUncheckedCreateWithoutDispenseRecordsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutBatchInput
 }
 
 export type BatchCreateOrConnectWithoutDispenseRecordsInput = {
@@ -1401,6 +1442,7 @@ export type BatchUpdateWithoutDispenseRecordsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchUncheckedUpdateWithoutDispenseRecordsInput = {
@@ -1424,6 +1466,7 @@ export type BatchUncheckedUpdateWithoutDispenseRecordsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchCreateWithoutControlledRegistersInput = {
@@ -1447,6 +1490,7 @@ export type BatchCreateWithoutControlledRegistersInput = {
   dispenseRecords?: Prisma.DispenseRecordCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutBatchInput
 }
 
 export type BatchUncheckedCreateWithoutControlledRegistersInput = {
@@ -1470,6 +1514,7 @@ export type BatchUncheckedCreateWithoutControlledRegistersInput = {
   dispenseRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutBatchInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutSourceBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutBatchInput
 }
 
 export type BatchCreateOrConnectWithoutControlledRegistersInput = {
@@ -1509,6 +1554,7 @@ export type BatchUpdateWithoutControlledRegistersInput = {
   dispenseRecords?: Prisma.DispenseRecordUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchUncheckedUpdateWithoutControlledRegistersInput = {
@@ -1532,6 +1578,7 @@ export type BatchUncheckedUpdateWithoutControlledRegistersInput = {
   dispenseRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchCreateWithoutTransferItemsInput = {
@@ -1555,6 +1602,7 @@ export type BatchCreateWithoutTransferItemsInput = {
   dispenseRecords?: Prisma.DispenseRecordCreateNestedManyWithoutBatchInput
   controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemCreateNestedManyWithoutBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutBatchInput
 }
 
 export type BatchUncheckedCreateWithoutTransferItemsInput = {
@@ -1578,6 +1626,7 @@ export type BatchUncheckedCreateWithoutTransferItemsInput = {
   dispenseRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutBatchInput
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBatchInput
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutBatchInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutBatchInput
 }
 
 export type BatchCreateOrConnectWithoutTransferItemsInput = {
@@ -1617,6 +1666,7 @@ export type BatchUpdateWithoutTransferItemsInput = {
   dispenseRecords?: Prisma.DispenseRecordUpdateManyWithoutBatchNestedInput
   controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchUncheckedUpdateWithoutTransferItemsInput = {
@@ -1640,6 +1690,119 @@ export type BatchUncheckedUpdateWithoutTransferItemsInput = {
   dispenseRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutBatchNestedInput
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutBatchNestedInput
+}
+
+export type BatchCreateWithoutSupplierReturnItemsInput = {
+  id?: string
+  pharmacyId: string
+  batchNumber: string
+  expiryDate: Date | string
+  quantityInBaseUnits?: number
+  costPricePerUnit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePricePerUnit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: string
+  isRecalled?: boolean
+  recallReason?: string | null
+  gtin?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  product: Prisma.ProductCreateNestedOneWithoutBatchesInput
+  branch: Prisma.BranchCreateNestedOneWithoutBatchesInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutBatchInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutBatchInput
+  dispenseRecords?: Prisma.DispenseRecordCreateNestedManyWithoutBatchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutBatchInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutBatchInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutSourceBatchInput
+}
+
+export type BatchUncheckedCreateWithoutSupplierReturnItemsInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  productId: string
+  batchNumber: string
+  expiryDate: Date | string
+  quantityInBaseUnits?: number
+  costPricePerUnit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePricePerUnit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: string
+  isRecalled?: boolean
+  recallReason?: string | null
+  gtin?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutBatchInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutBatchInput
+  dispenseRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutBatchInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutBatchInput
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutBatchInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutSourceBatchInput
+}
+
+export type BatchCreateOrConnectWithoutSupplierReturnItemsInput = {
+  where: Prisma.BatchWhereUniqueInput
+  create: Prisma.XOR<Prisma.BatchCreateWithoutSupplierReturnItemsInput, Prisma.BatchUncheckedCreateWithoutSupplierReturnItemsInput>
+}
+
+export type BatchUpsertWithoutSupplierReturnItemsInput = {
+  update: Prisma.XOR<Prisma.BatchUpdateWithoutSupplierReturnItemsInput, Prisma.BatchUncheckedUpdateWithoutSupplierReturnItemsInput>
+  create: Prisma.XOR<Prisma.BatchCreateWithoutSupplierReturnItemsInput, Prisma.BatchUncheckedCreateWithoutSupplierReturnItemsInput>
+  where?: Prisma.BatchWhereInput
+}
+
+export type BatchUpdateToOneWithWhereWithoutSupplierReturnItemsInput = {
+  where?: Prisma.BatchWhereInput
+  data: Prisma.XOR<Prisma.BatchUpdateWithoutSupplierReturnItemsInput, Prisma.BatchUncheckedUpdateWithoutSupplierReturnItemsInput>
+}
+
+export type BatchUpdateWithoutSupplierReturnItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  batchNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quantityInBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
+  costPricePerUnit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePricePerUnit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  isRecalled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recallReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  product?: Prisma.ProductUpdateOneRequiredWithoutBatchesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutBatchesNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutBatchNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutBatchNestedInput
+  dispenseRecords?: Prisma.DispenseRecordUpdateManyWithoutBatchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBatchNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutBatchNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutSourceBatchNestedInput
+}
+
+export type BatchUncheckedUpdateWithoutSupplierReturnItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  batchNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  expiryDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  quantityInBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
+  costPricePerUnit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  salePricePerUnit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  isRecalled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  recallReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gtin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutBatchNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutBatchNestedInput
+  dispenseRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutBatchNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBatchNestedInput
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutBatchNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutSourceBatchNestedInput
 }
 
 export type BatchCreateManyBranchInput = {
@@ -1680,6 +1843,7 @@ export type BatchUpdateWithoutBranchInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchUncheckedUpdateWithoutBranchInput = {
@@ -1703,6 +1867,7 @@ export type BatchUncheckedUpdateWithoutBranchInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchUncheckedUpdateManyWithoutBranchInput = {
@@ -1760,6 +1925,7 @@ export type BatchUpdateWithoutProductInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchUncheckedUpdateWithoutProductInput = {
@@ -1783,6 +1949,7 @@ export type BatchUncheckedUpdateWithoutProductInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutBatchNestedInput
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutBatchNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutSourceBatchNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutBatchNestedInput
 }
 
 export type BatchUncheckedUpdateManyWithoutProductInput = {
@@ -1814,6 +1981,7 @@ export type BatchCountOutputType = {
   controlledRegisters: number
   saleItems: number
   transferItems: number
+  supplierReturnItems: number
 }
 
 export type BatchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1823,6 +1991,7 @@ export type BatchCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   controlledRegisters?: boolean | BatchCountOutputTypeCountControlledRegistersArgs
   saleItems?: boolean | BatchCountOutputTypeCountSaleItemsArgs
   transferItems?: boolean | BatchCountOutputTypeCountTransferItemsArgs
+  supplierReturnItems?: boolean | BatchCountOutputTypeCountSupplierReturnItemsArgs
 }
 
 /**
@@ -1877,6 +2046,13 @@ export type BatchCountOutputTypeCountTransferItemsArgs<ExtArgs extends runtime.T
   where?: Prisma.StockTransferItemWhereInput
 }
 
+/**
+ * BatchCountOutputType without action
+ */
+export type BatchCountOutputTypeCountSupplierReturnItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupplierReturnItemWhereInput
+}
+
 
 export type BatchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1902,6 +2078,7 @@ export type BatchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   controlledRegisters?: boolean | Prisma.Batch$controlledRegistersArgs<ExtArgs>
   saleItems?: boolean | Prisma.Batch$saleItemsArgs<ExtArgs>
   transferItems?: boolean | Prisma.Batch$transferItemsArgs<ExtArgs>
+  supplierReturnItems?: boolean | Prisma.Batch$supplierReturnItemsArgs<ExtArgs>
   _count?: boolean | Prisma.BatchCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["batch"]>
 
@@ -1973,6 +2150,7 @@ export type BatchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   controlledRegisters?: boolean | Prisma.Batch$controlledRegistersArgs<ExtArgs>
   saleItems?: boolean | Prisma.Batch$saleItemsArgs<ExtArgs>
   transferItems?: boolean | Prisma.Batch$transferItemsArgs<ExtArgs>
+  supplierReturnItems?: boolean | Prisma.Batch$supplierReturnItemsArgs<ExtArgs>
   _count?: boolean | Prisma.BatchCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BatchIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1995,6 +2173,7 @@ export type $BatchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     controlledRegisters: Prisma.$ControlledDrugRegisterPayload<ExtArgs>[]
     saleItems: Prisma.$SaleItemPayload<ExtArgs>[]
     transferItems: Prisma.$StockTransferItemPayload<ExtArgs>[]
+    supplierReturnItems: Prisma.$SupplierReturnItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2414,6 +2593,7 @@ export interface Prisma__BatchClient<T, Null = never, ExtArgs extends runtime.Ty
   controlledRegisters<T extends Prisma.Batch$controlledRegistersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Batch$controlledRegistersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ControlledDrugRegisterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   saleItems<T extends Prisma.Batch$saleItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Batch$saleItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SaleItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transferItems<T extends Prisma.Batch$transferItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Batch$transferItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockTransferItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supplierReturnItems<T extends Prisma.Batch$supplierReturnItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Batch$supplierReturnItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierReturnItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3000,6 +3180,30 @@ export type Batch$transferItemsArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.StockTransferItemScalarFieldEnum | Prisma.StockTransferItemScalarFieldEnum[]
+}
+
+/**
+ * Batch.supplierReturnItems
+ */
+export type Batch$supplierReturnItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierReturnItem
+   */
+  select?: Prisma.SupplierReturnItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplierReturnItem
+   */
+  omit?: Prisma.SupplierReturnItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierReturnItemInclude<ExtArgs> | null
+  where?: Prisma.SupplierReturnItemWhereInput
+  orderBy?: Prisma.SupplierReturnItemOrderByWithRelationInput | Prisma.SupplierReturnItemOrderByWithRelationInput[]
+  cursor?: Prisma.SupplierReturnItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupplierReturnItemScalarFieldEnum | Prisma.SupplierReturnItemScalarFieldEnum[]
 }
 
 /**

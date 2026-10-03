@@ -22,8 +22,96 @@ import {
 import { formatCurrency } from "@/lib/utils";
 import { setLastReceipt } from "@/lib/receiptStore";
 import { toast } from "sonner";
-import { Plus } from "lucide-react";
+import { Plus, Package } from "lucide-react";
+import PosShiftManager from "@/components/pos/PosShiftManager";
 import type { Product, PrinterConfig, ProductPrice } from "@/types";
+
+interface PackagingOption {
+  key: string;
+  label: string;
+  unitType: string;
+  conversionRatio: number;
+  salePrice: number;
+  description: string;
+}
+
+function getPackagingOptions(product: Product): PackagingOption[] {
+  const options: PackagingOption[] = [];
+  const baseUnit = product.baseUnit || "Tablet";
+  const packageUnit = product.packageUnit || "Box";
+  const unitsPerPack = product.unitsPerPack && product.unitsPerPack > 0 ? product.unitsPerPack : (product.pack_size || 1);
+  const stripsPerPack = product.stripsPerPack && product.stripsPerPack > 0 ? product.stripsPerPack : 1;
+
+  // 1. Standard / Full Box
+  options.push({
+    key: "unit-box",
+    label: `${packageUnit} (Full Pack)`,
+    unitType: packageUnit.toUpperCase(),
+    conversionRatio: unitsPerPack,
+    salePrice: product.sale_price,
+    description: `Contains ${unitsPerPack} ${baseUnit}s`,
+  });
+
+  // 2. Strip (if multi-strip pack)
+  if (stripsPerPack > 1) {
+    const unitsPerStrip = Math.max(1, Math.floor(unitsPerPack / stripsPerPack));
+    const customStrip = product.prices?.find(
+      (p) => (p.unitType?.toUpperCase() === "STRIP") || p.label.toLowerCase().includes("strip")
+    );
+    const stripPrice = customStrip?.salePrice && customStrip.salePrice > 0
+      ? customStrip.salePrice
+      : Math.round((product.sale_price / stripsPerPack) * 100) / 100;
+
+    options.push({
+      key: "unit-strip",
+      label: `Strip (1/${stripsPerPack} Pack)`,
+      unitType: "STRIP",
+      conversionRatio: unitsPerStrip,
+      salePrice: stripPrice,
+      description: `Contains ${unitsPerStrip} ${baseUnit}s`,
+    });
+  }
+
+  // 3. Single Tablet / Base Unit (if unitsPerPack > 1)
+  if (unitsPerPack > 1) {
+    const customUnit = product.prices?.find(
+      (p) => (p.unitType?.toUpperCase() === "TABLET" || p.unitType?.toUpperCase() === "UNIT") || p.label.toLowerCase().includes("unit") || p.label.toLowerCase().includes("tablet")
+    );
+    const unitPrice = customUnit?.salePrice && customUnit.salePrice > 0
+      ? customUnit.salePrice
+      : Math.round((product.sale_price / unitsPerPack) * 100) / 100;
+
+    options.push({
+      key: "unit-single",
+      label: `Single ${baseUnit}`,
+      unitType: baseUnit.toUpperCase(),
+      conversionRatio: 1,
+      salePrice: unitPrice,
+      description: `1 single ${baseUnit}`,
+    });
+  }
+
+  // 4. Any custom price tiers configured on product that aren't already included
+  if (product.prices && product.prices.length > 0) {
+    for (const p of product.prices) {
+      const isAlreadyIncluded = options.some(
+        (o) => o.label.toLowerCase() === p.label.toLowerCase() || (p.unitType && o.unitType === p.unitType.toUpperCase())
+      );
+      if (!isAlreadyIncluded) {
+        options.push({
+          key: `price-${p.id}`,
+          label: p.label || "Custom Price",
+          unitType: p.unitType || "UNIT",
+          conversionRatio: p.conversionRatio || 1,
+          salePrice: p.salePrice,
+          description: p.conversionRatio && p.conversionRatio > 1 ? `${p.conversionRatio} base units` : "Custom tier",
+        });
+      }
+    }
+  }
+
+  return options;
+}
 
 export default function POS() {
   const location = useLocation();
@@ -34,6 +122,12 @@ export default function POS() {
   const debouncedSearch = useDebounce(search, 200);
   const cart = useMultiSale();
   const queryClient = useQueryClient();
+
+  const { data: activeShift, isLoading: isShiftLoading } = useQuery({
+    queryKey: ["active-shift"],
+    queryFn: () => api.shifts.getActive(),
+    refetchInterval: 15000,
+  });
 
   const [pricePickerOpen, setPricePickerOpen] = useState(false);
   const [pendingProduct, setPendingProduct] = useState<Product | null>(null);
@@ -106,27 +200,34 @@ export default function POS() {
     return allProducts.data?.data ?? [];
   }, [debouncedSearch, products, allProducts.data]);
 
-  function addProductToCart(product: Product, salePrice: number) {
+  function addProductToCart(product: Product, salePrice: number, packagingUnit?: string, conversionRatio?: number) {
     if (product.stock_qty === 0) {
       setError(`${product.name} is out of stock`);
       return;
     }
-    cart.addItem({ ...product, sale_price: salePrice });
+    cart.addItem(
+      { ...product, sale_price: salePrice },
+      {
+        packagingUnit: packagingUnit || product.packageUnit || "UNIT",
+        conversionRatio: conversionRatio || 1,
+        unitPrice: salePrice,
+      }
+    );
   }
 
   function promptPriceTier(product: Product) {
-    const tiers = (product as any).prices as ProductPrice[] | undefined;
-    if (tiers && tiers.length > 0) {
+    const options = getPackagingOptions(product);
+    if (options.length > 1) {
       setPendingProduct(product);
       setPricePickerOpen(true);
     } else {
-      addProductToCart(product, product.sale_price);
+      addProductToCart(product, product.sale_price, product.packageUnit || "UNIT", product.unitsPerPack || 1);
     }
   }
 
-  function handleTierSelect(tierSalePrice: number) {
+  function handleTierSelect(opt: PackagingOption) {
     if (!pendingProduct) return;
-    addProductToCart(pendingProduct, tierSalePrice);
+    addProductToCart(pendingProduct, opt.salePrice, opt.unitType, opt.conversionRatio);
     setPendingProduct(null);
     setPricePickerOpen(false);
   }
@@ -134,22 +235,12 @@ export default function POS() {
   const handleBarcodeSubmit = async (value: string) => {
     const product = await api.products.getByBarcode(value);
     if (product) {
-      const existing = cart.items.find(i => i.productId === product.id);
-      if (existing) {
-        cart.incrementBy(product.id, product.pack_size);
-        return;
-      }
       promptPriceTier(product);
     } else {
       const found = displayProducts.find(
         (p: Product) => p.barcode === value || p.name.toLowerCase() === value.toLowerCase()
       );
       if (found) {
-        const existing = cart.items.find(i => i.productId === found.id);
-        if (existing) {
-          cart.incrementBy(found.id, found.pack_size);
-          return;
-        }
         promptPriceTier(found);
       }
     }
@@ -158,11 +249,6 @@ export default function POS() {
   const handleAddProduct = (product: Product) => {
     if (product.stock_qty === 0) {
       setError(`${product.name} is out of stock`);
-      return;
-    }
-    const existing = cart.items.find(i => i.productId === product.id);
-    if (existing) {
-      cart.incrementBy(product.id, product.pack_size);
       return;
     }
     promptPriceTier(product);
@@ -181,6 +267,11 @@ export default function POS() {
 
   const handleCheckout = async (amountPaid: number, discount: number, tenderData?: TenderPayload) => {
     setError("");
+    if (!activeShift) {
+      setError("Register is closed. Please open a shift before checking out.");
+      toast.error("Register is closed. Please open a shift before ringing up sales.");
+      return;
+    }
     try {
       const sale = await api.sales.create({
         customerId: cart.customerId,
@@ -189,6 +280,9 @@ export default function POS() {
           productName: item.productName,
           barcode: item.barcode,
           quantity: item.quantity,
+          packagingUnit: item.packagingUnit || "UNIT",
+          conversionRatio: item.conversionRatio || 1,
+          quantityBaseUnits: (item.quantityBaseUnits ?? (item.quantity * (item.conversionRatio || 1))),
           unitPrice: item.unitPrice,
           subtotal: item.subtotal,
           batchId: item.batchId,
@@ -211,6 +305,7 @@ export default function POS() {
       queryClient.invalidateQueries({ queryKey: ["dashboard-stats"] });
       queryClient.invalidateQueries({ queryKey: ["sales"] });
       queryClient.invalidateQueries({ queryKey: ["prescriptions"] });
+      queryClient.invalidateQueries({ queryKey: ["active-shift"] });
 
       let customerTotalArrears = 0;
       if (cart.customerId) {
@@ -287,12 +382,15 @@ export default function POS() {
           <span className="text-[9px] text-text-secondary/50 font-medium tracking-wider uppercase" style={{ WebkitAppRegion: "no-drag" } as React.CSSProperties}>Drag to move</span>
         </div>
       )}
-      <div className="flex justify-end shrink-0">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 shrink-0">
+        <div className="flex-1 min-w-0">
+          <PosShiftManager activeShift={activeShift} isLoading={isShiftLoading} />
+        </div>
         <button
           onClick={handleNewSale}
-          className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg text-xs font-medium bg-accent text-accent-foreground hover:bg-accent-hover transition-colors shrink-0"
+          className="inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-xl text-xs font-medium border border-border/80 bg-surface hover:bg-surface-2 text-text-primary transition-colors shrink-0 self-end sm:self-center shadow-xs"
         >
-          <Plus className="h-3.5 w-3.5" />
+          <Plus className="h-3.5 w-3.5 text-accent" />
           New Sale
         </button>
       </div>
@@ -355,29 +453,36 @@ export default function POS() {
       </div>
 
       <AlertDialog open={pricePickerOpen} onOpenChange={(v) => { if (!v) { setPendingProduct(null); setPricePickerOpen(false); } }}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-md">
           <AlertDialogHeader>
-            <AlertDialogTitle>Select Price Tier</AlertDialogTitle>
-            <AlertDialogDescription>
-              {pendingProduct?.name ?? "Product"} has multiple price tiers. Choose one to add to cart.
+            <AlertDialogTitle className="flex items-center gap-2 text-base">
+              <Package className="h-5 w-5 text-accent" />
+              Packaging & Price Hierarchy
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-xs">
+              Select dispensing unit for <span className="font-semibold text-text-primary">{pendingProduct?.name}</span>
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <div className="space-y-2 py-3 px-5">
-            <button
-              onClick={() => pendingProduct && handleTierSelect(pendingProduct.sale_price ?? 0)}
-              className="w-full text-left p-2.5 rounded-lg border border-border hover:border-accent/50 transition-colors flex items-center justify-between"
-            >
-              <span className="text-xs font-medium">Standard</span>
-              <span className="font-mono font-bold text-accent text-xs">{formatCurrency(pendingProduct?.sale_price ?? 0)}</span>
-            </button>
-            {pendingPrices?.map((tier) => (
+          <div className="space-y-2 py-3 px-1">
+            {pendingProduct && getPackagingOptions(pendingProduct).map((opt) => (
               <button
-                key={tier.id}
-                onClick={() => handleTierSelect(tier.salePrice)}
-                className="w-full text-left p-2.5 rounded-lg border border-border hover:border-accent/50 transition-colors flex items-center justify-between"
+                key={opt.key}
+                onClick={() => handleTierSelect(opt)}
+                className="w-full text-left p-3 rounded-lg border border-border hover:border-accent hover:bg-accent/5 transition-all flex items-center justify-between group"
               >
-                <span className="text-xs font-medium">{tier.label || "Untitled"}</span>
-                <span className="font-mono font-bold text-accent text-xs">{formatCurrency(tier.salePrice)}</span>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-text-primary group-hover:text-accent transition-colors">{opt.label}</span>
+                    <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-surface-2 text-text-secondary border border-border">
+                      {opt.unitType}
+                    </span>
+                  </div>
+                  <span className="text-[11px] text-text-secondary mt-0.5 block">{opt.description}</span>
+                </div>
+                <div className="text-right">
+                  <span className="font-mono font-bold text-accent text-sm">{formatCurrency(opt.salePrice)}</span>
+                  <span className="text-[10px] text-text-secondary block">per {opt.unitType.toLowerCase()}</span>
+                </div>
               </button>
             ))}
           </div>
@@ -387,7 +492,7 @@ export default function POS() {
         </AlertDialogContent>
       </AlertDialog>
 
-      {showPrintDialog && pendingPrintData && (
+      {showPrintDialog && Boolean(pendingPrintData) && (
         <PrintPreviewDialog
           open={showPrintDialog}
           onOpenChange={(v) => {

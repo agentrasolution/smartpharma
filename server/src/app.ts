@@ -27,6 +27,8 @@ import { aiInventoryRoutes } from "./modules/ai/inventory.routes";
 import { purchaseOrderRoutes } from "./modules/purchase-orders/purchase-order.routes";
 import { inventoryRoutes } from "./modules/inventory/inventory.routes";
 import { dispensingRoutes } from "./modules/dispensing/dispensing.routes";
+import { shiftsRoutes } from "./modules/shifts/shifts.routes";
+import { supplierReturnsRoutes } from "./modules/purchases/supplier-returns.routes";
 
 const app = express();
 
@@ -86,6 +88,10 @@ app.use("/api/prescriptions", dispensingRoutes);
 app.use("/api/dispensing", dispensingRoutes);
 app.use("/api/v1/prescriptions", dispensingRoutes);
 app.use("/api/v1/dispensing", dispensingRoutes);
+app.use("/api/shifts", shiftsRoutes);
+app.use("/api/v1/shifts", shiftsRoutes);
+app.use("/api/supplier-returns", supplierReturnsRoutes);
+app.use("/api/v1/supplier-returns", supplierReturnsRoutes);
 
 app.use(errorHandler);
 

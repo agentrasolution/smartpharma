@@ -28,6 +28,8 @@ export type AggregateSaleItem = {
 
 export type SaleItemAvgAggregateOutputType = {
   quantity: number | null
+  conversionRatio: number | null
+  quantityBaseUnits: number | null
   unitPrice: number | null
   subtotal: number | null
   unitCost: number | null
@@ -38,6 +40,8 @@ export type SaleItemAvgAggregateOutputType = {
 
 export type SaleItemSumAggregateOutputType = {
   quantity: number | null
+  conversionRatio: number | null
+  quantityBaseUnits: number | null
   unitPrice: number | null
   subtotal: number | null
   unitCost: number | null
@@ -53,6 +57,9 @@ export type SaleItemMinAggregateOutputType = {
   productName: string | null
   barcode: string | null
   quantity: number | null
+  packagingUnit: string | null
+  conversionRatio: number | null
+  quantityBaseUnits: number | null
   unitPrice: number | null
   subtotal: number | null
   unitCost: number | null
@@ -71,6 +78,9 @@ export type SaleItemMaxAggregateOutputType = {
   productName: string | null
   barcode: string | null
   quantity: number | null
+  packagingUnit: string | null
+  conversionRatio: number | null
+  quantityBaseUnits: number | null
   unitPrice: number | null
   subtotal: number | null
   unitCost: number | null
@@ -89,6 +99,9 @@ export type SaleItemCountAggregateOutputType = {
   productName: number
   barcode: number
   quantity: number
+  packagingUnit: number
+  conversionRatio: number
+  quantityBaseUnits: number
   unitPrice: number
   subtotal: number
   unitCost: number
@@ -104,6 +117,8 @@ export type SaleItemCountAggregateOutputType = {
 
 export type SaleItemAvgAggregateInputType = {
   quantity?: true
+  conversionRatio?: true
+  quantityBaseUnits?: true
   unitPrice?: true
   subtotal?: true
   unitCost?: true
@@ -114,6 +129,8 @@ export type SaleItemAvgAggregateInputType = {
 
 export type SaleItemSumAggregateInputType = {
   quantity?: true
+  conversionRatio?: true
+  quantityBaseUnits?: true
   unitPrice?: true
   subtotal?: true
   unitCost?: true
@@ -129,6 +146,9 @@ export type SaleItemMinAggregateInputType = {
   productName?: true
   barcode?: true
   quantity?: true
+  packagingUnit?: true
+  conversionRatio?: true
+  quantityBaseUnits?: true
   unitPrice?: true
   subtotal?: true
   unitCost?: true
@@ -147,6 +167,9 @@ export type SaleItemMaxAggregateInputType = {
   productName?: true
   barcode?: true
   quantity?: true
+  packagingUnit?: true
+  conversionRatio?: true
+  quantityBaseUnits?: true
   unitPrice?: true
   subtotal?: true
   unitCost?: true
@@ -165,6 +188,9 @@ export type SaleItemCountAggregateInputType = {
   productName?: true
   barcode?: true
   quantity?: true
+  packagingUnit?: true
+  conversionRatio?: true
+  quantityBaseUnits?: true
   unitPrice?: true
   subtotal?: true
   unitCost?: true
@@ -270,6 +296,9 @@ export type SaleItemGroupByOutputType = {
   productName: string
   barcode: string
   quantity: number
+  packagingUnit: string | null
+  conversionRatio: number
+  quantityBaseUnits: number
   unitPrice: number
   subtotal: number
   unitCost: number
@@ -311,6 +340,9 @@ export type SaleItemWhereInput = {
   productName?: Prisma.StringFilter<"SaleItem"> | string
   barcode?: Prisma.StringFilter<"SaleItem"> | string
   quantity?: Prisma.IntFilter<"SaleItem"> | number
+  packagingUnit?: Prisma.StringNullableFilter<"SaleItem"> | string | null
+  conversionRatio?: Prisma.IntFilter<"SaleItem"> | number
+  quantityBaseUnits?: Prisma.IntFilter<"SaleItem"> | number
   unitPrice?: Prisma.FloatFilter<"SaleItem"> | number
   subtotal?: Prisma.FloatFilter<"SaleItem"> | number
   unitCost?: Prisma.FloatFilter<"SaleItem"> | number
@@ -332,6 +364,9 @@ export type SaleItemOrderByWithRelationInput = {
   productName?: Prisma.SortOrder
   barcode?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  packagingUnit?: Prisma.SortOrderInput | Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
+  quantityBaseUnits?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
@@ -356,6 +391,9 @@ export type SaleItemWhereUniqueInput = Prisma.AtLeast<{
   productName?: Prisma.StringFilter<"SaleItem"> | string
   barcode?: Prisma.StringFilter<"SaleItem"> | string
   quantity?: Prisma.IntFilter<"SaleItem"> | number
+  packagingUnit?: Prisma.StringNullableFilter<"SaleItem"> | string | null
+  conversionRatio?: Prisma.IntFilter<"SaleItem"> | number
+  quantityBaseUnits?: Prisma.IntFilter<"SaleItem"> | number
   unitPrice?: Prisma.FloatFilter<"SaleItem"> | number
   subtotal?: Prisma.FloatFilter<"SaleItem"> | number
   unitCost?: Prisma.FloatFilter<"SaleItem"> | number
@@ -377,6 +415,9 @@ export type SaleItemOrderByWithAggregationInput = {
   productName?: Prisma.SortOrder
   barcode?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  packagingUnit?: Prisma.SortOrderInput | Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
+  quantityBaseUnits?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
@@ -403,6 +444,9 @@ export type SaleItemScalarWhereWithAggregatesInput = {
   productName?: Prisma.StringWithAggregatesFilter<"SaleItem"> | string
   barcode?: Prisma.StringWithAggregatesFilter<"SaleItem"> | string
   quantity?: Prisma.IntWithAggregatesFilter<"SaleItem"> | number
+  packagingUnit?: Prisma.StringNullableWithAggregatesFilter<"SaleItem"> | string | null
+  conversionRatio?: Prisma.IntWithAggregatesFilter<"SaleItem"> | number
+  quantityBaseUnits?: Prisma.IntWithAggregatesFilter<"SaleItem"> | number
   unitPrice?: Prisma.FloatWithAggregatesFilter<"SaleItem"> | number
   subtotal?: Prisma.FloatWithAggregatesFilter<"SaleItem"> | number
   unitCost?: Prisma.FloatWithAggregatesFilter<"SaleItem"> | number
@@ -419,6 +463,9 @@ export type SaleItemCreateInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -439,6 +486,9 @@ export type SaleItemUncheckedCreateInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -455,6 +505,9 @@ export type SaleItemUpdateInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -475,6 +528,9 @@ export type SaleItemUncheckedUpdateInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -493,6 +549,9 @@ export type SaleItemCreateManyInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -509,6 +568,9 @@ export type SaleItemUpdateManyMutationInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -526,6 +588,9 @@ export type SaleItemUncheckedUpdateManyInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -554,6 +619,9 @@ export type SaleItemCountOrderByAggregateInput = {
   productName?: Prisma.SortOrder
   barcode?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  packagingUnit?: Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
+  quantityBaseUnits?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
@@ -567,6 +635,8 @@ export type SaleItemCountOrderByAggregateInput = {
 
 export type SaleItemAvgOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
+  quantityBaseUnits?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
@@ -582,6 +652,9 @@ export type SaleItemMaxOrderByAggregateInput = {
   productName?: Prisma.SortOrder
   barcode?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  packagingUnit?: Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
+  quantityBaseUnits?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
@@ -600,6 +673,9 @@ export type SaleItemMinOrderByAggregateInput = {
   productName?: Prisma.SortOrder
   barcode?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  packagingUnit?: Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
+  quantityBaseUnits?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
@@ -613,6 +689,8 @@ export type SaleItemMinOrderByAggregateInput = {
 
 export type SaleItemSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
+  quantityBaseUnits?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
@@ -752,6 +830,9 @@ export type SaleItemCreateWithoutProductInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -770,6 +851,9 @@ export type SaleItemUncheckedCreateWithoutProductInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -817,6 +901,9 @@ export type SaleItemScalarWhereInput = {
   productName?: Prisma.StringFilter<"SaleItem"> | string
   barcode?: Prisma.StringFilter<"SaleItem"> | string
   quantity?: Prisma.IntFilter<"SaleItem"> | number
+  packagingUnit?: Prisma.StringNullableFilter<"SaleItem"> | string | null
+  conversionRatio?: Prisma.IntFilter<"SaleItem"> | number
+  quantityBaseUnits?: Prisma.IntFilter<"SaleItem"> | number
   unitPrice?: Prisma.FloatFilter<"SaleItem"> | number
   subtotal?: Prisma.FloatFilter<"SaleItem"> | number
   unitCost?: Prisma.FloatFilter<"SaleItem"> | number
@@ -833,6 +920,9 @@ export type SaleItemCreateWithoutSaleInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -851,6 +941,9 @@ export type SaleItemUncheckedCreateWithoutSaleInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -893,6 +986,9 @@ export type SaleItemCreateWithoutBatchInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -912,6 +1008,9 @@ export type SaleItemUncheckedCreateWithoutBatchInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -954,6 +1053,9 @@ export type SaleItemCreateManyProductInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -970,6 +1072,9 @@ export type SaleItemUpdateWithoutProductInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -988,6 +1093,9 @@ export type SaleItemUncheckedUpdateWithoutProductInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1005,6 +1113,9 @@ export type SaleItemUncheckedUpdateManyWithoutProductInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1022,6 +1133,9 @@ export type SaleItemCreateManySaleInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -1038,6 +1152,9 @@ export type SaleItemUpdateWithoutSaleInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1056,6 +1173,9 @@ export type SaleItemUncheckedUpdateWithoutSaleInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1073,6 +1193,9 @@ export type SaleItemUncheckedUpdateManyWithoutSaleInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1091,6 +1214,9 @@ export type SaleItemCreateManyBatchInput = {
   productName: string
   barcode: string
   quantity?: number
+  packagingUnit?: string | null
+  conversionRatio?: number
+  quantityBaseUnits?: number
   unitPrice?: number
   subtotal?: number
   unitCost?: number
@@ -1106,6 +1232,9 @@ export type SaleItemUpdateWithoutBatchInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1125,6 +1254,9 @@ export type SaleItemUncheckedUpdateWithoutBatchInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1142,6 +1274,9 @@ export type SaleItemUncheckedUpdateManyWithoutBatchInput = {
   productName?: Prisma.StringFieldUpdateOperationsInput | string
   barcode?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  packagingUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
+  quantityBaseUnits?: Prisma.IntFieldUpdateOperationsInput | number
   unitPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subtotal?: Prisma.FloatFieldUpdateOperationsInput | number
   unitCost?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -1161,6 +1296,9 @@ export type SaleItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   productName?: boolean
   barcode?: boolean
   quantity?: boolean
+  packagingUnit?: boolean
+  conversionRatio?: boolean
+  quantityBaseUnits?: boolean
   unitPrice?: boolean
   subtotal?: boolean
   unitCost?: boolean
@@ -1182,6 +1320,9 @@ export type SaleItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   productName?: boolean
   barcode?: boolean
   quantity?: boolean
+  packagingUnit?: boolean
+  conversionRatio?: boolean
+  quantityBaseUnits?: boolean
   unitPrice?: boolean
   subtotal?: boolean
   unitCost?: boolean
@@ -1203,6 +1344,9 @@ export type SaleItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   productName?: boolean
   barcode?: boolean
   quantity?: boolean
+  packagingUnit?: boolean
+  conversionRatio?: boolean
+  quantityBaseUnits?: boolean
   unitPrice?: boolean
   subtotal?: boolean
   unitCost?: boolean
@@ -1224,6 +1368,9 @@ export type SaleItemSelectScalar = {
   productName?: boolean
   barcode?: boolean
   quantity?: boolean
+  packagingUnit?: boolean
+  conversionRatio?: boolean
+  quantityBaseUnits?: boolean
   unitPrice?: boolean
   subtotal?: boolean
   unitCost?: boolean
@@ -1235,7 +1382,7 @@ export type SaleItemSelectScalar = {
   expiryDate?: boolean
 }
 
-export type SaleItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "saleId" | "productId" | "productName" | "barcode" | "quantity" | "unitPrice" | "subtotal" | "unitCost" | "cogs" | "vatRate" | "vatAmount" | "batchId" | "batchNumber" | "expiryDate", ExtArgs["result"]["saleItem"]>
+export type SaleItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "saleId" | "productId" | "productName" | "barcode" | "quantity" | "packagingUnit" | "conversionRatio" | "quantityBaseUnits" | "unitPrice" | "subtotal" | "unitCost" | "cogs" | "vatRate" | "vatAmount" | "batchId" | "batchNumber" | "expiryDate", ExtArgs["result"]["saleItem"]>
 export type SaleItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sale?: boolean | Prisma.SaleDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -1266,6 +1413,9 @@ export type $SaleItemPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     productName: string
     barcode: string
     quantity: number
+    packagingUnit: string | null
+    conversionRatio: number
+    quantityBaseUnits: number
     unitPrice: number
     subtotal: number
     unitCost: number
@@ -1707,6 +1857,9 @@ export interface SaleItemFieldRefs {
   readonly productName: Prisma.FieldRef<"SaleItem", 'String'>
   readonly barcode: Prisma.FieldRef<"SaleItem", 'String'>
   readonly quantity: Prisma.FieldRef<"SaleItem", 'Int'>
+  readonly packagingUnit: Prisma.FieldRef<"SaleItem", 'String'>
+  readonly conversionRatio: Prisma.FieldRef<"SaleItem", 'Int'>
+  readonly quantityBaseUnits: Prisma.FieldRef<"SaleItem", 'Int'>
   readonly unitPrice: Prisma.FieldRef<"SaleItem", 'Float'>
   readonly subtotal: Prisma.FieldRef<"SaleItem", 'Float'>
   readonly unitCost: Prisma.FieldRef<"SaleItem", 'Float'>

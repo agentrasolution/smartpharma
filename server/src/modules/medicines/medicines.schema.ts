@@ -4,6 +4,8 @@ export const priceTierSchema = z.object({
   label: z.string().optional().default("Standard"),
   purchasePrice: z.number(),
   salePrice: z.number().optional(),
+  unitType: z.string().optional().default("UNIT"),
+  conversionRatio: z.number().int().positive().optional().default(1),
 });
 
 export const createProductSchema = z.object({
@@ -27,6 +29,10 @@ export const createProductSchema = z.object({
       },
       z.number().int().min(0).optional().default(1)
     ),
+  baseUnit: z.string().optional().default("TABLET"),
+  packageUnit: z.string().optional().default("BOX"),
+  unitsPerPack: z.number().int().positive().optional().default(1),
+  stripsPerPack: z.number().int().positive().optional().default(1),
   prices: z.array(priceTierSchema).optional(),
   branchId: z.string().optional(),
 });

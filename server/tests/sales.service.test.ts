@@ -39,6 +39,10 @@ const { prismaMock } = vi.hoisted(() => {
     arrear: {
       create: vi.fn(),
     },
+    posShift: {
+      findFirst: vi.fn().mockResolvedValue(null),
+      update: vi.fn().mockResolvedValue({}),
+    },
     $transaction: vi.fn((cb: (tx: any) => Promise<any>) => cb(prismaMock)),
   };
   return { prismaMock };
@@ -346,6 +350,101 @@ describe("salesService (Pillar F: POS & Sales Operations)", () => {
           amountPaid: 50,
           balanceDue: 100,
           status: "pending",
+        }),
+      })
+    );
+  });
+
+  it("handles multi-unit packaging sales by converting to base units for batch and stock deduction", async () => {
+    prismaMock.sale.create.mockResolvedValue({
+      id: "2609-000005",
+      total: 60,
+      amountPaid: 60,
+      paymentMethod: "CASH",
+    });
+
+    prismaMock.batch.findFirst.mockResolvedValue({
+      id: "batch-multi-1",
+      batchNumber: "BN-STRIP-99",
+      expiryDate: new Date("2027-06-01"),
+      costPricePerUnit: 1.5,
+      quantityInBaseUnits: 100,
+    });
+
+    prismaMock.sale.findUnique.mockResolvedValue({
+      id: "2609-000005",
+      total: 60,
+      amountPaid: 60,
+      paymentMethod: "CASH",
+    });
+
+    // Selling 2 STRIPS, each strip contains 10 tablets (conversionRatio = 10) => total base units = 20
+    await salesService.create(
+      {
+        subtotal: 60,
+        discount: 0,
+        total: 60,
+        amountPaid: 60,
+        paymentMethod: "CASH",
+        items: [
+          {
+            productId: "prod-strip-1",
+            productName: "Panadol Extra 500mg",
+            barcode: "628100123456",
+            quantity: 2,
+            packagingUnit: "STRIP",
+            conversionRatio: 10,
+            quantityBaseUnits: 20,
+            unitPrice: 30,
+            subtotal: 60,
+            batchId: "batch-multi-1",
+          },
+        ],
+      },
+      scope
+    );
+
+    // Verify batch quantity was decremented by 20 base units (100 - 20 = 80)
+    expect(prismaMock.batch.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: "batch-multi-1" },
+        data: expect.objectContaining({
+          quantityInBaseUnits: 80,
+        }),
+      })
+    );
+
+    // Verify stock movement delta is -20
+    expect(prismaMock.stockMovement.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          productId: "prod-strip-1",
+          batchId: "batch-multi-1",
+          movementType: "SALE",
+          quantityDelta: -20,
+        }),
+      })
+    );
+
+    // Verify product stock was decremented by 20 base units
+    expect(prismaMock.product.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: "prod-strip-1" },
+        data: expect.objectContaining({
+          stockQty: { decrement: 20 },
+        }),
+      })
+    );
+
+    // Verify sale item saved packaging metadata
+    expect(prismaMock.saleItem.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          productId: "prod-strip-1",
+          quantity: 2,
+          packagingUnit: "STRIP",
+          conversionRatio: 10,
+          quantityBaseUnits: 20,
         }),
       })
     );

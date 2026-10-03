@@ -119,15 +119,33 @@ export function useMultiSale() {
   }, [updateActive, subtotal, discount]);
 
   const addItem = useCallback(
-    (product: { id: string; name: string; barcode: string; sale_price: number; pack_size?: number }) => {
+    (
+      product: { id: string; name: string; barcode: string; sale_price: number; pack_size?: number },
+      packagingOpts?: {
+        packagingUnit?: string;
+        conversionRatio?: number;
+        unitPrice?: number;
+      }
+    ) => {
+      const packagingUnit = packagingOpts?.packagingUnit || "UNIT";
+      const conversionRatio = packagingOpts?.conversionRatio && packagingOpts.conversionRatio > 0 ? packagingOpts.conversionRatio : 1;
+      const unitPrice = packagingOpts?.unitPrice != null ? packagingOpts.unitPrice : product.sale_price;
+
       updateActive((s) => {
-        const existing = s.items.find((i) => i.productId === product.id);
+        const existing = s.items.find(
+          (i) => i.productId === product.id && (i.packagingUnit || "UNIT") === packagingUnit
+        );
         if (existing) {
           return {
             ...s,
             items: s.items.map((i) =>
-              i.productId === product.id
-                ? { ...i, quantity: i.quantity + 1, subtotal: (i.quantity + 1) * i.unitPrice }
+              i.id === existing.id
+                ? {
+                    ...i,
+                    quantity: i.quantity + 1,
+                    quantityBaseUnits: (i.quantity + 1) * (i.conversionRatio || 1),
+                    subtotal: (i.quantity + 1) * i.unitPrice,
+                  }
                 : i
             ),
           };
@@ -142,8 +160,11 @@ export function useMultiSale() {
               productName: product.name,
               barcode: product.barcode,
               quantity: 1,
-              unitPrice: product.sale_price,
-              subtotal: product.sale_price,
+              packagingUnit,
+              conversionRatio,
+              quantityBaseUnits: conversionRatio,
+              unitPrice,
+              subtotal: unitPrice,
               packSize: product.pack_size ?? 1,
             },
           ],
@@ -154,12 +175,17 @@ export function useMultiSale() {
   );
 
   const incrementBy = useCallback(
-    (productId: string, amount: number) => {
+    (idOrProductId: string, amount: number) => {
       updateActive((s) => ({
         ...s,
         items: s.items.map((i) =>
-          i.productId === productId
-            ? { ...i, quantity: i.quantity + amount, subtotal: (i.quantity + amount) * i.unitPrice }
+          i.id === idOrProductId || i.productId === idOrProductId
+            ? {
+                ...i,
+                quantity: i.quantity + amount,
+                quantityBaseUnits: (i.quantity + amount) * (i.conversionRatio || 1),
+                subtotal: (i.quantity + amount) * i.unitPrice,
+              }
             : i
         ),
       }));
@@ -167,27 +193,37 @@ export function useMultiSale() {
     [updateActive]
   );
 
-  const updateQuantity = useCallback(
-    (productId: string, quantity: number) => {
-      if (quantity <= 0) {
-        removeItem(productId);
-        return;
-      }
+  const removeItem = useCallback(
+    (idOrProductId: string) => {
       updateActive((s) => ({
         ...s,
-        items: s.items.map((i) =>
-          i.productId === productId ? { ...i, quantity, subtotal: quantity * i.unitPrice } : i
-        ),
+        items: s.items.filter((i) => i.id !== idOrProductId && i.productId !== idOrProductId),
       }));
     },
     [updateActive]
   );
 
-  const removeItem = useCallback(
-    (productId: string) => {
-      updateActive((s) => ({ ...s, items: s.items.filter((i) => i.productId !== productId) }));
+  const updateQuantity = useCallback(
+    (idOrProductId: string, quantity: number) => {
+      if (quantity <= 0) {
+        removeItem(idOrProductId);
+        return;
+      }
+      updateActive((s) => ({
+        ...s,
+        items: s.items.map((i) =>
+          i.id === idOrProductId || i.productId === idOrProductId
+            ? {
+                ...i,
+                quantity,
+                quantityBaseUnits: quantity * (i.conversionRatio || 1),
+                subtotal: quantity * i.unitPrice,
+              }
+            : i
+        ),
+      }));
     },
-    [updateActive]
+    [updateActive, removeItem]
   );
 
   const setCustomer = useCallback(

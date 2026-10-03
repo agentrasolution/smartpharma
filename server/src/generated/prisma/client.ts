@@ -271,3 +271,23 @@ export type StockTransfer = Prisma.StockTransferModel
  * 
  */
 export type StockTransferItem = Prisma.StockTransferItemModel
+/**
+ * Model PosShift
+ * 
+ */
+export type PosShift = Prisma.PosShiftModel
+/**
+ * Model CashDrop
+ * 
+ */
+export type CashDrop = Prisma.CashDropModel
+/**
+ * Model SupplierReturn
+ * 
+ */
+export type SupplierReturn = Prisma.SupplierReturnModel
+/**
+ * Model SupplierReturnItem
+ * 
+ */
+export type SupplierReturnItem = Prisma.SupplierReturnItemModel

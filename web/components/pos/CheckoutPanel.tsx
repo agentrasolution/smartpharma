@@ -196,17 +196,43 @@ export default function CheckoutPanel({
 
       <ScrollArea className="flex-1 -mx-4 px-4">
         {items.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-xs text-text-secondary py-16">
-            <ShoppingCart className="h-10 w-10 text-border mb-3" />
-            <p className="font-medium">Cart is empty</p>
-            <p className="text-[11px] mt-0.5">Scan barcode or search products to begin sale</p>
+          <div className="flex flex-col items-center justify-center h-full text-xs text-text-secondary py-10 px-2 text-center">
+            <div className="h-12 w-12 rounded-2xl bg-surface-2 border border-border/80 flex items-center justify-center mb-3 text-text-secondary/60 shadow-xs">
+              <ShoppingCart className="h-6 w-6 stroke-[1.5]" />
+            </div>
+            <p className="font-semibold text-text-primary text-sm">Cart is empty</p>
+            <p className="text-[11px] text-text-secondary mt-1 max-w-[200px] leading-relaxed">
+              Scan barcode or select medicines from catalog to ring up a sale.
+            </p>
+
+            {/* Keyboard shortcut pills */}
+            <div className="mt-5 w-full max-w-[240px] space-y-1.5 pt-3 border-t border-border/60">
+              <div className="flex items-center justify-between text-[11px] px-2.5 py-1.5 rounded-lg bg-surface-2/60 border border-border/60">
+                <span className="text-text-secondary font-medium">Search Drug</span>
+                <kbd className="px-1.5 py-0.5 rounded font-mono text-[10px] font-semibold bg-surface border border-border/80 text-text-primary shadow-2xs">
+                  F2
+                </kbd>
+              </div>
+              <div className="flex items-center justify-between text-[11px] px-2.5 py-1.5 rounded-lg bg-surface-2/60 border border-border/60">
+                <span className="text-text-secondary font-medium">Quick Cash</span>
+                <kbd className="px-1.5 py-0.5 rounded font-mono text-[10px] font-semibold bg-surface border border-border/80 text-text-primary shadow-2xs">
+                  F9
+                </kbd>
+              </div>
+              <div className="flex items-center justify-between text-[11px] px-2.5 py-1.5 rounded-lg bg-surface-2/60 border border-border/60">
+                <span className="text-text-secondary font-medium">Clear Cart</span>
+                <kbd className="px-1.5 py-0.5 rounded font-mono text-[10px] font-semibold bg-surface border border-border/80 text-text-primary shadow-2xs">
+                  ESC
+                </kbd>
+              </div>
+            </div>
           </div>
         ) : (
           <div>
             {items.map((item) => (
               <CartItem
-                key={item.productId}
-                item={item}
+                key={(item as any).id || `${item.productId}-${item.packagingUnit || 'UNIT'}`}
+                item={item as any}
                 onUpdateQuantity={onUpdateQuantity}
                 onIncrementBy={onIncrementBy}
                 onRemove={onRemoveItem}

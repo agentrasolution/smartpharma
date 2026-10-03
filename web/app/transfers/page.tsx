@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { PortalNav } from "@/components/portal-nav";
 import {
   ArrowLeftRight, Send, PackageCheck, XCircle, Search,
   RefreshCw, Plus, Tag, ChevronDown, ChevronUp,
@@ -274,10 +273,7 @@ export default function TransfersPage() {
   const receivedCount = transfers.filter((t) => t.status === "RECEIVED").length;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <PortalNav />
-
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="space-y-6">
         {/* Header Banner */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-surface p-6 rounded-2xl border border-border shadow-sm">
           <div>
@@ -731,7 +727,6 @@ export default function TransfersPage() {
             </div>
           </div>
         )}
-      </main>
 
       {/* =============================================================== */}
       {/* MODAL: NEW TRANSFER                                             */}

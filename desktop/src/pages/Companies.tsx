@@ -4,6 +4,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Building2, Phone, Package, Search, Plus, Pencil, Trash2, Download, LayoutGrid, List } from "lucide-react";
 import PageHeader from "@/components/shared/PageHeader";
 import DataTable from "@/components/shared/DataTable";
+import StatCard from "@/components/shared/StatCard";
+import EmptyState from "@/components/shared/EmptyState";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -79,94 +81,192 @@ export default function Companies() {
     setOpen(true);
   }
 
+  const totalProductsCount = companies.reduce((acc: number, c: Company) => acc + (c.product_count || 0), 0);
+  const totalDirectContacts = companies.filter((c: Company) => c.phone || c.second_number).length;
+
   return (
-    <div>
-      <PageHeader title="Companies" description="Manage pharmaceutical companies" action={{ label: "Add Company", onClick: openAdd }} />
-      <div className="flex items-center gap-2 mb-6">
+    <div className="space-y-6">
+      <PageHeader
+        title="Pharmaceutical Companies"
+        description="Manage manufacturing brands, corporate contacts, and registered drug portfolios."
+        badge={
+          <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-accent/10 text-accent font-semibold border border-accent/20">
+            {companies.length} Companies
+          </span>
+        }
+        action={{ label: "Add Company", onClick: openAdd, icon: <Plus className="h-3.5 w-3.5" /> }}
+      />
+
+      {/* Metric Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <StatCard
+          title="Total Manufacturers"
+          value={companies.length}
+          icon={<Building2 className="h-5 w-5" />}
+          color="accent"
+          loading={isLoading}
+          subtitle="Registered pharma brands"
+        />
+        <StatCard
+          title="Active Direct Contacts"
+          value={totalDirectContacts}
+          icon={<Phone className="h-5 w-5" />}
+          color="purple"
+          loading={isLoading}
+          subtitle="Verified corporate lines"
+        />
+        <StatCard
+          title="Associated Products"
+          value={totalProductsCount}
+          icon={<Package className="h-5 w-5" />}
+          color="success"
+          loading={isLoading}
+          subtitle="Catalog formulations mapped"
+        />
+      </div>
+
+      {/* Toolbar */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-surface p-2.5 rounded-2xl border border-border/80 shadow-xs">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
-          <Input autoFocus placeholder="Search companies..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
-        </div>
-        <Button variant="outline" size="sm" onClick={() => downloadCSV(`companies_${new Date().toISOString().split("T")[0]}.csv`, ["Name","Company Contact","Contact #2","Address","Products"], filtered.map((c: Company) => [c.name, c.phone, c.second_number||"", c.address, c.product_count||0]))}>
-          <Download className="h-4 w-4 mr-1" /> CSV
-        </Button>
-        <Button variant="outline" size="sm" onClick={() => downloadPDF(`companies_${new Date().toISOString().split("T")[0]}.pdf`, "Companies List", ["Name","Company Contact","Contact #2","Address","Products"], filtered.map((c: Company) => [c.name, c.phone, c.second_number||"", c.address, c.product_count||0]))}>
-          <Download className="h-4 w-4 mr-1" /> PDF
-        </Button>
-        <div className="flex items-center border border-border rounded-lg overflow-hidden">
-          <button onClick={() => setViewMode("grid")} className={cn("p-2 transition-colors", viewMode === "grid" ? "bg-accent text-white" : "text-text-secondary hover:bg-surface-2")}>
-            <LayoutGrid className="h-4 w-4" />
-          </button>
-          <button onClick={() => setViewMode("list")} className={cn("p-2 transition-colors", viewMode === "list" ? "bg-accent text-white" : "text-text-secondary hover:bg-surface-2")}>
-            <List className="h-4 w-4" />
-          </button>
-        </div>
-      </div>
-      {viewMode === "list" ? (
-        <div className="rounded-xl border border-border">
-          <DataTable
-            columns={[
-              { key: "name", header: "Name", cell: (c: Company) => <span className="font-medium text-text-primary">{c.name}</span> },
-              { key: "phone", header: "Contact", cell: (c: Company) => <span className="font-mono text-[11px]">{c.phone}</span> },
-              { key: "second_number", header: "Contact #2", cell: (c: Company) => <span className="font-mono text-[11px] text-text-secondary">{c.second_number || "\u2014"}</span> },
-              { key: "product_count", header: "Products", cell: (c: Company) => <span className="font-mono">{c.product_count ?? 0}</span> },
-              {
-                key: "actions", header: "", cell: (c: Company) => (
-                  <div className="flex items-center gap-1 justify-end">
-                    <button onClick={() => openEdit(c)} className="h-7 w-7 rounded-md flex items-center justify-center text-text-secondary hover:text-accent hover:bg-accent/5 transition-colors" title="Edit">
-                      <Pencil className="h-3.5 w-3.5" />
-                    </button>
-                    <button onClick={() => setDeleteId(c.id)} className="h-7 w-7 rounded-md flex items-center justify-center text-text-secondary hover:text-danger hover:bg-danger/5 transition-colors" title="Delete">
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                ),
-              },
-            ]}
-            data={filtered}
-            loading={isLoading}
-            keyExtractor={(c: Company) => c.id}
-            emptyMessage="No companies found"
+          <Input
+            placeholder="Search company or phone..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9 h-9 rounded-xl text-xs bg-surface-2/40 border-border/80 focus:bg-surface"
           />
         </div>
+
+        <div className="flex items-center gap-1.5 flex-wrap sm:flex-nowrap">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
+            onClick={() => downloadCSV(`companies_${new Date().toISOString().split("T")[0]}.csv`, ["Name","Company Contact","Contact #2","Address","Products"], filtered.map((c: Company) => [c.name, c.phone, c.second_number||"", c.address, c.product_count||0]))}
+          >
+            <Download className="h-3.5 w-3.5" /> CSV
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
+            onClick={() => downloadPDF(`companies_${new Date().toISOString().split("T")[0]}.pdf`, "Companies List", ["Name","Company Contact","Contact #2","Address","Products"], filtered.map((c: Company) => [c.name, c.phone, c.second_number||"", c.address, c.product_count||0]))}
+          >
+            <Download className="h-3.5 w-3.5" /> PDF
+          </Button>
+
+          <div className="flex items-center border border-border/80 rounded-xl overflow-hidden bg-surface-2/40 p-0.5">
+            <button
+              onClick={() => setViewMode("grid")}
+              className={cn("p-1.5 rounded-lg transition-colors", viewMode === "grid" ? "bg-accent text-white shadow-xs" : "text-text-secondary hover:text-text-primary")}
+              title="Grid View"
+            >
+              <LayoutGrid className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => setViewMode("list")}
+              className={cn("p-1.5 rounded-lg transition-colors", viewMode === "list" ? "bg-accent text-white shadow-xs" : "text-text-secondary hover:text-text-primary")}
+              title="List View"
+            >
+              <List className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {viewMode === "list" ? (
+        <DataTable
+          columns={[
+            { key: "name", header: "Name", cell: (c: Company) => <span className="font-semibold text-text-primary">{c.name}</span> },
+            { key: "phone", header: "Contact", cell: (c: Company) => <span className="font-mono text-xs text-text-secondary">{c.phone}</span> },
+            { key: "second_number", header: "Contact #2", cell: (c: Company) => <span className="font-mono text-xs text-text-secondary">{c.second_number || "—"}</span> },
+            { key: "product_count", header: "Products", cell: (c: Company) => <span className="font-mono text-xs">{c.product_count ?? 0}</span> },
+            {
+              key: "actions", header: "", cell: (c: Company) => (
+                <div className="flex items-center gap-1 justify-end">
+                  <button onClick={() => openEdit(c)} className="h-7 w-7 rounded-lg flex items-center justify-center text-text-secondary hover:text-accent hover:bg-accent/5 transition-colors" title="Edit">
+                    <Pencil className="h-3.5 w-3.5" />
+                  </button>
+                  <button onClick={() => setDeleteId(c.id)} className="h-7 w-7 rounded-lg flex items-center justify-center text-text-secondary hover:text-danger hover:bg-danger/5 transition-colors" title="Delete">
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              ),
+            },
+          ]}
+          data={filtered}
+          loading={isLoading}
+          keyExtractor={(c: Company) => c.id}
+          emptyTitle="No companies found"
+          emptyDescription={search ? `No companies match "${search}".` : "Add manufacturing companies and brands to map catalog products."}
+          emptyAction={
+            <Button onClick={openAdd} size="sm" className="h-9 rounded-xl text-xs gap-1.5 font-medium shadow-xs">
+              <Plus className="h-3.5 w-3.5" /> Add Company
+            </Button>
+          }
+        />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {isLoading ? (
-          Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-24 rounded-xl" />)
-        ) : filtered.length === 0 ? (
-          <div className="col-span-full text-center py-12 text-sm text-text-secondary">No companies found</div>
-        ) : (
-          filtered.map((comp: Company) => (
-            <Card key={comp.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-5">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-start gap-3 min-w-0 flex-1">
-                    <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                      <Building2 className="h-5 w-5 text-accent" />
-                    </div>
-                    <div className="min-w-0">
-                      <h3 className="font-medium text-text-primary truncate">{comp.name}</h3>
-                      <div className="space-y-1 mt-2">
-                        <div className="flex items-center gap-1 text-xs text-text-secondary"><Phone className="h-3 w-3 shrink-0" />{comp.phone}</div>
-                        {comp.second_number && <div className="flex items-center gap-1 text-xs text-text-secondary"><Phone className="h-3 w-3 shrink-0" />{comp.second_number}</div>}
-                        <div className="flex items-center gap-1 text-xs text-text-secondary"><Package className="h-3 w-3 shrink-0" />{comp.product_count ?? 0} products</div>
+        <div>
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-36 rounded-2xl" />)}
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="rounded-2xl border border-border/80 bg-surface p-8 shadow-xs">
+              <EmptyState
+                title="No companies found"
+                description={search ? `No companies match "${search}". Try adjusting your search query.` : "Register your pharmaceutical manufacturing companies to organize products."}
+                icon={<Building2 className="h-6 w-6 text-accent" />}
+                action={
+                  <Button onClick={openAdd} size="sm" className="h-9 rounded-xl text-xs gap-1.5 font-medium shadow-xs">
+                    <Plus className="h-3.5 w-3.5" /> Add First Company
+                  </Button>
+                }
+              />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filtered.map((comp: Company) => (
+                <div key={comp.id} className="group rounded-2xl border border-border/80 bg-surface p-5 shadow-xs hover:shadow-md hover:border-accent/30 transition-all duration-200">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start gap-3 min-w-0 flex-1">
+                      <div className="h-10 w-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
+                        <Building2 className="h-5 w-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-semibold text-text-primary truncate text-sm">{comp.name}</h3>
+                        <div className="space-y-1.5 mt-2.5">
+                          <div className="flex items-center gap-1.5 text-xs text-text-secondary">
+                            <Phone className="h-3 w-3 shrink-0 text-text-secondary/70" />
+                            <span className="font-mono">{comp.phone}</span>
+                          </div>
+                          {comp.second_number && (
+                            <div className="flex items-center gap-1.5 text-xs text-text-secondary">
+                              <Phone className="h-3 w-3 shrink-0 text-text-secondary/70" />
+                              <span className="font-mono">{comp.second_number}</span>
+                            </div>
+                          )}
+                          <div className="flex items-center gap-1.5 text-xs text-text-secondary">
+                            <Package className="h-3 w-3 shrink-0 text-text-secondary/70" />
+                            <span>{comp.product_count ?? 0} products supplied</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-1 shrink-0">
-                    <button onClick={() => openEdit(comp)} className="h-7 w-7 rounded-md flex items-center justify-center text-text-secondary hover:text-accent hover:bg-accent/5 transition-colors" title="Edit">
-                      <Pencil className="h-3.5 w-3.5" />
-                    </button>
-                    <button onClick={() => setDeleteId(comp.id)} className="h-7 w-7 rounded-md flex items-center justify-center text-text-secondary hover:text-danger hover:bg-danger/5 transition-colors" title="Delete">
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
+                    <div className="flex items-center gap-0.5 shrink-0">
+                      <button onClick={() => openEdit(comp)} className="h-7 w-7 rounded-lg flex items-center justify-center text-text-secondary hover:text-accent hover:bg-accent/5 transition-colors" title="Edit">
+                        <Pencil className="h-3.5 w-3.5" />
+                      </button>
+                      <button onClick={() => setDeleteId(comp.id)} className="h-7 w-7 rounded-lg flex items-center justify-center text-text-secondary hover:text-danger hover:bg-danger/5 transition-colors" title="Delete">
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          ))
-        )}
-      </div>
+              ))}
+            </div>
+          )}
+        </div>
       )}
 
       <Dialog open={open} onOpenChange={(v) => { if (!v) { setEditingId(null); } setOpen(v); }}>

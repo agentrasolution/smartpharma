@@ -282,6 +282,7 @@ export type UserWhereInput = {
   roleRef?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
   branch?: Prisma.XOR<Prisma.BranchNullableScalarRelationFilter, Prisma.BranchWhereInput> | null
   authTokens?: Prisma.AuthTokenListRelationFilter
+  posShifts?: Prisma.PosShiftListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -306,6 +307,7 @@ export type UserOrderByWithRelationInput = {
   roleRef?: Prisma.RoleOrderByWithRelationInput
   branch?: Prisma.BranchOrderByWithRelationInput
   authTokens?: Prisma.AuthTokenOrderByRelationAggregateInput
+  posShifts?: Prisma.PosShiftOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -333,6 +335,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   roleRef?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
   branch?: Prisma.XOR<Prisma.BranchNullableScalarRelationFilter, Prisma.BranchWhereInput> | null
   authTokens?: Prisma.AuthTokenListRelationFilter
+  posShifts?: Prisma.PosShiftListRelationFilter
 }, "id" | "username">
 
 export type UserOrderByWithAggregationInput = {
@@ -400,6 +403,7 @@ export type UserCreateInput = {
   roleRef?: Prisma.RoleCreateNestedOneWithoutUsersInput
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
   authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+  posShifts?: Prisma.PosShiftCreateNestedManyWithoutCashierInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -421,6 +425,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+  posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutCashierInput
 }
 
 export type UserUpdateInput = {
@@ -442,6 +447,7 @@ export type UserUpdateInput = {
   roleRef?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
   authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+  posShifts?: Prisma.PosShiftUpdateManyWithoutCashierNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -463,6 +469,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+  posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutCashierNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -737,6 +744,20 @@ export type UserUncheckedUpdateManyWithoutRoleRefNestedInput = {
   deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
+export type UserCreateNestedOneWithoutPosShiftsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPosShiftsInput, Prisma.UserUncheckedCreateWithoutPosShiftsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPosShiftsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPosShiftsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPosShiftsInput, Prisma.UserUncheckedCreateWithoutPosShiftsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPosShiftsInput
+  upsert?: Prisma.UserUpsertWithoutPosShiftsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPosShiftsInput, Prisma.UserUpdateWithoutPosShiftsInput>, Prisma.UserUncheckedUpdateWithoutPosShiftsInput>
+}
+
 export type UserCreateWithoutPharmacyInput = {
   id?: string
   username: string
@@ -755,6 +776,7 @@ export type UserCreateWithoutPharmacyInput = {
   roleRef?: Prisma.RoleCreateNestedOneWithoutUsersInput
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
   authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+  posShifts?: Prisma.PosShiftCreateNestedManyWithoutCashierInput
 }
 
 export type UserUncheckedCreateWithoutPharmacyInput = {
@@ -775,6 +797,7 @@ export type UserUncheckedCreateWithoutPharmacyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+  posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutCashierInput
 }
 
 export type UserCreateOrConnectWithoutPharmacyInput = {
@@ -844,6 +867,7 @@ export type UserCreateWithoutBranchInput = {
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutUsersInput
   roleRef?: Prisma.RoleCreateNestedOneWithoutUsersInput
   authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+  posShifts?: Prisma.PosShiftCreateNestedManyWithoutCashierInput
 }
 
 export type UserUncheckedCreateWithoutBranchInput = {
@@ -864,6 +888,7 @@ export type UserUncheckedCreateWithoutBranchInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+  posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutCashierInput
 }
 
 export type UserCreateOrConnectWithoutBranchInput = {
@@ -910,6 +935,7 @@ export type UserCreateWithoutAuthTokensInput = {
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutUsersInput
   roleRef?: Prisma.RoleCreateNestedOneWithoutUsersInput
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
+  posShifts?: Prisma.PosShiftCreateNestedManyWithoutCashierInput
 }
 
 export type UserUncheckedCreateWithoutAuthTokensInput = {
@@ -930,6 +956,7 @@ export type UserUncheckedCreateWithoutAuthTokensInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutCashierInput
 }
 
 export type UserCreateOrConnectWithoutAuthTokensInput = {
@@ -966,6 +993,7 @@ export type UserUpdateWithoutAuthTokensInput = {
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutUsersNestedInput
   roleRef?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
+  posShifts?: Prisma.PosShiftUpdateManyWithoutCashierNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuthTokensInput = {
@@ -986,6 +1014,7 @@ export type UserUncheckedUpdateWithoutAuthTokensInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutCashierNestedInput
 }
 
 export type UserCreateWithoutRoleRefInput = {
@@ -1006,6 +1035,7 @@ export type UserCreateWithoutRoleRefInput = {
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutUsersInput
   branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
   authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+  posShifts?: Prisma.PosShiftCreateNestedManyWithoutCashierInput
 }
 
 export type UserUncheckedCreateWithoutRoleRefInput = {
@@ -1026,6 +1056,7 @@ export type UserUncheckedCreateWithoutRoleRefInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+  posShifts?: Prisma.PosShiftUncheckedCreateNestedManyWithoutCashierInput
 }
 
 export type UserCreateOrConnectWithoutRoleRefInput = {
@@ -1052,6 +1083,106 @@ export type UserUpdateWithWhereUniqueWithoutRoleRefInput = {
 export type UserUpdateManyWithWhereWithoutRoleRefInput = {
   where: Prisma.UserScalarWhereInput
   data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutRoleRefInput>
+}
+
+export type UserCreateWithoutPosShiftsInput = {
+  id?: string
+  username: string
+  passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
+  role?: string
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutUsersInput
+  roleRef?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  branch?: Prisma.BranchCreateNestedOneWithoutUsersInput
+  authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPosShiftsInput = {
+  id?: string
+  pharmacyId: string
+  username: string
+  passwordHash: string
+  name?: string
+  phone?: string
+  email?: string
+  role?: string
+  roleId?: string | null
+  branchId?: string | null
+  jobRole?: string
+  isActive?: boolean
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPosShiftsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPosShiftsInput, Prisma.UserUncheckedCreateWithoutPosShiftsInput>
+}
+
+export type UserUpsertWithoutPosShiftsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPosShiftsInput, Prisma.UserUncheckedUpdateWithoutPosShiftsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPosShiftsInput, Prisma.UserUncheckedCreateWithoutPosShiftsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPosShiftsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPosShiftsInput, Prisma.UserUncheckedUpdateWithoutPosShiftsInput>
+}
+
+export type UserUpdateWithoutPosShiftsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutUsersNestedInput
+  roleRef?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
+  authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPosShiftsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  roleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  branchId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobRole?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyPharmacyInput = {
@@ -1091,6 +1222,7 @@ export type UserUpdateWithoutPharmacyInput = {
   roleRef?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
   authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+  posShifts?: Prisma.PosShiftUpdateManyWithoutCashierNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPharmacyInput = {
@@ -1111,6 +1243,7 @@ export type UserUncheckedUpdateWithoutPharmacyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+  posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutCashierNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutPharmacyInput = {
@@ -1169,6 +1302,7 @@ export type UserUpdateWithoutBranchInput = {
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutUsersNestedInput
   roleRef?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+  posShifts?: Prisma.PosShiftUpdateManyWithoutCashierNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBranchInput = {
@@ -1189,6 +1323,7 @@ export type UserUncheckedUpdateWithoutBranchInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+  posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutCashierNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutBranchInput = {
@@ -1247,6 +1382,7 @@ export type UserUpdateWithoutRoleRefInput = {
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutUsersNestedInput
   branch?: Prisma.BranchUpdateOneWithoutUsersNestedInput
   authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+  posShifts?: Prisma.PosShiftUpdateManyWithoutCashierNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleRefInput = {
@@ -1267,6 +1403,7 @@ export type UserUncheckedUpdateWithoutRoleRefInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+  posShifts?: Prisma.PosShiftUncheckedUpdateManyWithoutCashierNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutRoleRefInput = {
@@ -1295,10 +1432,12 @@ export type UserUncheckedUpdateManyWithoutRoleRefInput = {
 
 export type UserCountOutputType = {
   authTokens: number
+  posShifts: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   authTokens?: boolean | UserCountOutputTypeCountAuthTokensArgs
+  posShifts?: boolean | UserCountOutputTypeCountPosShiftsArgs
 }
 
 /**
@@ -1316,6 +1455,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  */
 export type UserCountOutputTypeCountAuthTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AuthTokenWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPosShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PosShiftWhereInput
 }
 
 
@@ -1341,6 +1487,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   roleRef?: boolean | Prisma.User$roleRefArgs<ExtArgs>
   branch?: boolean | Prisma.User$branchArgs<ExtArgs>
   authTokens?: boolean | Prisma.User$authTokensArgs<ExtArgs>
+  posShifts?: boolean | Prisma.User$posShiftsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1416,6 +1563,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   roleRef?: boolean | Prisma.User$roleRefArgs<ExtArgs>
   branch?: boolean | Prisma.User$branchArgs<ExtArgs>
   authTokens?: boolean | Prisma.User$authTokensArgs<ExtArgs>
+  posShifts?: boolean | Prisma.User$posShiftsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1436,6 +1584,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     roleRef: Prisma.$RolePayload<ExtArgs> | null
     branch: Prisma.$BranchPayload<ExtArgs> | null
     authTokens: Prisma.$AuthTokenPayload<ExtArgs>[]
+    posShifts: Prisma.$PosShiftPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1853,6 +2002,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   roleRef<T extends Prisma.User$roleRefArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$roleRefArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   branch<T extends Prisma.User$branchArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$branchArgs<ExtArgs>>): Prisma.Prisma__BranchClient<runtime.Types.Result.GetResult<Prisma.$BranchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   authTokens<T extends Prisma.User$authTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$authTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  posShifts<T extends Prisma.User$posShiftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$posShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PosShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2359,6 +2509,30 @@ export type User$authTokensArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.AuthTokenScalarFieldEnum | Prisma.AuthTokenScalarFieldEnum[]
+}
+
+/**
+ * User.posShifts
+ */
+export type User$posShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PosShift
+   */
+  select?: Prisma.PosShiftSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PosShift
+   */
+  omit?: Prisma.PosShiftOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PosShiftInclude<ExtArgs> | null
+  where?: Prisma.PosShiftWhereInput
+  orderBy?: Prisma.PosShiftOrderByWithRelationInput | Prisma.PosShiftOrderByWithRelationInput[]
+  cursor?: Prisma.PosShiftWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PosShiftScalarFieldEnum | Prisma.PosShiftScalarFieldEnum[]
 }
 
 /**

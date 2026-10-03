@@ -78,16 +78,18 @@ export default function Topbar() {
   return (
     <header className="h-14 border-b border-border bg-surface/70 backdrop-blur-lg sticky top-0 z-20 flex-shrink-0">
       <div className="flex items-center justify-between h-full px-6">
-        {/* Page Title & Breadcrumb */}
+        {/* Breadcrumb / Active Page Context */}
         <div className="flex items-center gap-6">
           <motion.div
             key={pathname}
             initial={{ opacity: 0, x: -4 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.15 }}
+            className="flex items-center gap-2 text-xs"
           >
-            <h1 className="text-sm font-semibold text-text-primary tracking-tight leading-tight">{page.title}</h1>
-            <p className="text-[11px] text-text-secondary leading-none mt-0.5">{page.subtitle}</p>
+            <span className="font-medium text-text-secondary/70">SmartPharma</span>
+            <span className="text-text-secondary/40 font-mono">/</span>
+            <span className="font-semibold text-text-primary">{page.title}</span>
           </motion.div>
 
           {!isPlatform && <GlobalSearch />}

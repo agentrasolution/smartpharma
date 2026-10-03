@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
-import { PortalNav } from "@/components/portal-nav";
 import { api } from "@/lib/api";
 import { formatCurrency, formatDate, cn } from "@/lib/utils";
 import type {
@@ -320,8 +319,7 @@ export default function PurchasesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-text-primary">
-      <PortalNav />
+    <div className="space-y-6">
 
       {/* Toast Alert */}
       <AnimatePresence>

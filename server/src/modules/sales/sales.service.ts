@@ -46,6 +46,19 @@ export const salesService = {
       creditAmount = data.total - data.amountPaid;
     }
 
+    // Look up active open shift for this cashier / branch
+    const activeShift = prisma.posShift
+      ? await prisma.posShift.findFirst({
+          where: {
+            pharmacyId: scope.pharmacyId,
+            branchId: scope.branchId!,
+            status: "OPEN",
+            ...(data.cashierId ? { cashierId: data.cashierId } : {}),
+          },
+          orderBy: { openedAt: "desc" },
+        })
+      : null;
+
     return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       const sale = await tx.sale.create({
         data: {
@@ -67,9 +80,23 @@ export const salesService = {
           prescriptionNumber: data.prescriptionNumber ?? null,
           cashierId: data.cashierId ?? null,
           cashierName: data.cashierName ?? null,
+          shiftId: activeShift ? activeShift.id : null,
           notes: data.notes ?? "",
         },
       });
+
+      if (activeShift) {
+        await tx.posShift.update({
+          where: { id: activeShift.id },
+          data: {
+            totalCashSales: { increment: cashAmount },
+            totalCardSales: { increment: cardAmount },
+            totalCreditSales: { increment: creditAmount },
+            totalSalesCount: { increment: 1 },
+            expectedCash: { increment: cashAmount },
+          },
+        });
+      }
 
       let totalCogs = 0;
       let totalVat = 0;
@@ -79,6 +106,12 @@ export const salesService = {
         let allocatedBatchNumber: string | null = item.batchNumber ?? null;
         let allocatedExpiry: Date | null = item.expiryDate ? new Date(item.expiryDate) : null;
         let itemUnitCost = 0;
+
+        const conversionRatio = item.conversionRatio && item.conversionRatio > 0 ? item.conversionRatio : 1;
+        const packagingUnit = item.packagingUnit || "UNIT";
+        const quantityBaseUnits = item.quantityBaseUnits && item.quantityBaseUnits > 0
+          ? item.quantityBaseUnits
+          : item.quantity * conversionRatio;
 
         // ----------------------------------------------------------------
         // Specific batch selection or FEFO batch deduction
@@ -96,7 +129,7 @@ export const salesService = {
             allocatedBatchNumber = specificBatch.batchNumber;
             allocatedExpiry = specificBatch.expiryDate;
             itemUnitCost = Number(specificBatch.costPricePerUnit);
-            const newQty = Math.max(0, specificBatch.quantityInBaseUnits - item.quantity);
+            const newQty = Math.max(0, specificBatch.quantityInBaseUnits - quantityBaseUnits);
             await tx.batch.update({
               where: { id: specificBatch.id },
               data: {
@@ -112,7 +145,7 @@ export const salesService = {
                 productId: item.productId,
                 batchId: specificBatch.id,
                 movementType: "SALE",
-                quantityDelta: -item.quantity,
+                quantityDelta: -quantityBaseUnits,
                 balanceAfter: newQty,
                 unitCost: specificBatch.costPricePerUnit,
                 referenceNumber: sale.id,
@@ -133,7 +166,7 @@ export const salesService = {
           });
 
           if (activeBatches > 0) {
-            const allocations = await batchService.allocateFefo(tx, scope, item.productId, item.quantity, {
+            const allocations = await batchService.allocateFefo(tx, scope, item.productId, quantityBaseUnits, {
               movementType: "SALE",
               referenceNumber: sale.id,
             });
@@ -170,8 +203,8 @@ export const salesService = {
                 productId: item.productId,
                 batchId: null,
                 movementType: "SALE",
-                quantityDelta: -item.quantity,
-                balanceAfter: Math.max(0, (currentStockAgg._sum.quantityInBaseUnits ?? 0) - item.quantity),
+                quantityDelta: -quantityBaseUnits,
+                balanceAfter: Math.max(0, (currentStockAgg._sum.quantityInBaseUnits ?? 0) - quantityBaseUnits),
                 unitCost: 0,
                 referenceNumber: sale.id,
               },
@@ -182,7 +215,7 @@ export const salesService = {
         // Keep product.stockQty in sync
         const currentProd = await tx.product.update({
           where: { id: item.productId },
-          data: { stockQty: { decrement: item.quantity } },
+          data: { stockQty: { decrement: quantityBaseUnits } },
           select: { purchasePrice: true, category: true },
         });
 
@@ -193,7 +226,7 @@ export const salesService = {
           itemUnitCost = 0;
         }
 
-        const lineCogs = Math.round(itemUnitCost * item.quantity * 100) / 100;
+        const lineCogs = Math.round(itemUnitCost * quantityBaseUnits * 100) / 100;
         totalCogs += lineCogs;
 
         // Check category VAT rate
@@ -216,6 +249,9 @@ export const salesService = {
             productName: item.productName,
             barcode: item.barcode,
             quantity: item.quantity,
+            packagingUnit,
+            conversionRatio,
+            quantityBaseUnits,
             unitPrice: item.unitPrice,
             subtotal: item.subtotal,
             unitCost: itemUnitCost,

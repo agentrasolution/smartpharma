@@ -1,6 +1,6 @@
 "use client";
 
-import { generateReceiptHTML, generateReturnReceiptHTML } from "./receiptGenerator";
+import { generateReceiptHTML, generateReturnReceiptHTML, generateXReportHTML, generateZReportHTML, printHtml } from "./receiptGenerator";
 import type { PrinterConfig } from "@/types";
 
 export function initWebPolyfill() {
@@ -13,6 +13,26 @@ export function initWebPolyfill() {
 
   window.generateReturnReceiptHTML = async (returnData: unknown, sale: unknown, paperSize?: string) => {
     return generateReturnReceiptHTML(returnData, sale, paperSize || "thermal");
+  };
+
+  window.generateXReportHTML = async (report: unknown) => {
+    return generateXReportHTML(report);
+  };
+
+  window.generateZReportHTML = async (report: unknown) => {
+    return generateZReportHTML(report);
+  };
+
+  window.printXReport = async (report: unknown) => {
+    const res = generateXReportHTML(report);
+    if (!res.success || !res.html) return { success: false, error: res.error || "Failed to generate X-Report" };
+    return printHtml(res.html);
+  };
+
+  window.printZReport = async (report: unknown) => {
+    const res = generateZReportHTML(report);
+    if (!res.success || !res.html) return { success: false, error: res.error || "Failed to generate Z-Report" };
+    return printHtml(res.html);
   };
 
   // Web printing via hidden iframe

@@ -16,9 +16,11 @@ import type {
   Prescription, ControlledDrugRegister, SubstitutionSuggestionResult,
   ChronicMedication, ChronicMedicationInput, RefillQueueItem, CustomerStatement,
   StockTransfer, CreateTransferInput, BranchPriceOverride, BranchPriceOverrideInput, CrossBranchStockResponse,
-  MarginReport, LossReport, StockValuation, ProfitAndLoss,
   DrugMasterProduct, DrugMasterDetail, DrugMasterSearchParams, DrugMasterSearchResult,
   DrugMasterUpdateInput, BulkImportRow, BulkImportResult, ExpiryScanResult,
+  PosShift, CashDrop, XReportData, ZReportData,
+  MarginReport, LossReport, StockValuation, ProfitAndLoss,
+  SupplierReturn, ReturnCandidate, CreateSupplierReturnInput, ApproveSupplierReturnInput,
 } from "@/types";
 import type { BackupResult, BackupEntry, GDriveConfig } from "@/types/electron";
 
@@ -36,7 +38,7 @@ export class ApiError extends Error {
 function getApiUrl(): string {
   const cfg = window.appConfig?.serverUrl?.trim();
   if (cfg) return cfg;
-  return import.meta.env.VITE_API_URL?.trim() || "http://localhost:3001";
+  return process.env.NEXT_PUBLIC_API_URL?.trim() || "http://localhost:3001";
 }
 
 function getToken(): string | null {
@@ -591,6 +593,58 @@ const api = {
       if (params?.dateTo) qs.set("dateTo", params.dateTo);
       return fetchJson("GET", `/api/v1/prescriptions/controlled-register${qs.toString() ? `?${qs}` : ""}`);
     },
+  },
+  shifts: {
+    getActive: (): Promise<PosShift | null> => fetchJson("GET", "/api/shifts/active"),
+    open: (data: { openingCash: number; notes?: string }): Promise<PosShift> =>
+      fetchJson("POST", "/api/shifts/open", data),
+    drop: (data: { shiftId: string; type: "DROP" | "PAYOUT" | "FLOAT_ADD"; amount: number; reason: string }): Promise<CashDrop> =>
+      fetchJson("POST", "/api/shifts/drop", data),
+    getXReport: (shiftId: string): Promise<XReportData> =>
+      fetchJson("GET", `/api/shifts/${shiftId}/x-report`),
+    close: (data: { shiftId: string; actualCash: number; closingNotes?: string }): Promise<ZReportData> =>
+      fetchJson("POST", `/api/shifts/${data.shiftId}/close`, data),
+    list: (params?: { page?: number; pageSize?: number; status?: string; cashierId?: string; from?: string; to?: string }): Promise<{ data: PosShift[]; total: number; page: number; pageSize: number; totalPages: number }> => {
+      const qs = new URLSearchParams();
+      if (params?.page) qs.set("page", String(params.page));
+      if (params?.pageSize) qs.set("pageSize", String(params.pageSize));
+      if (params?.status) qs.set("status", params.status);
+      if (params?.cashierId) qs.set("cashierId", params.cashierId);
+      if (params?.from) qs.set("from", params.from);
+      if (params?.to) qs.set("to", params.to);
+      return fetchJson("GET", `/api/shifts${qs.toString() ? `?${qs}` : ""}`);
+    },
+    getById: (shiftId: string): Promise<PosShift> =>
+      fetchJson("GET", `/api/shifts/${shiftId}`),
+  },
+  supplierReturns: {
+    list: (params?: { page?: number; pageSize?: number; status?: string; distributorId?: string; branchId?: string; reason?: string; search?: string; from?: string; to?: string }): Promise<{ data: SupplierReturn[]; total: number; page: number; pageSize: number; totalPages: number }> => {
+      const qs = new URLSearchParams();
+      if (params?.page) qs.set("page", String(params.page));
+      if (params?.pageSize) qs.set("pageSize", String(params.pageSize));
+      if (params?.status) qs.set("status", params.status);
+      if (params?.distributorId) qs.set("distributorId", params.distributorId);
+      if (params?.branchId) qs.set("branchId", params.branchId);
+      if (params?.reason) qs.set("reason", params.reason);
+      if (params?.search) qs.set("search", params.search);
+      if (params?.from) qs.set("from", params.from);
+      if (params?.to) qs.set("to", params.to);
+      return fetchJson("GET", `/api/supplier-returns${qs.toString() ? `?${qs}` : ""}`);
+    },
+    getCandidates: (distributorId?: string, days = 90): Promise<ReturnCandidate[]> => {
+      const qs = new URLSearchParams();
+      if (distributorId) qs.set("distributorId", distributorId);
+      if (days) qs.set("days", String(days));
+      return fetchJson("GET", `/api/supplier-returns/candidates${qs.toString() ? `?${qs}` : ""}`);
+    },
+    getById: (id: string): Promise<SupplierReturn> =>
+      fetchJson("GET", `/api/supplier-returns/${id}`),
+    create: (data: CreateSupplierReturnInput): Promise<SupplierReturn> =>
+      fetchJson("POST", "/api/supplier-returns", data),
+    approve: (id: string, data?: ApproveSupplierReturnInput): Promise<SupplierReturn> =>
+      fetchJson("POST", `/api/supplier-returns/${id}/approve`, data || {}),
+    reject: (id: string, reason: string): Promise<SupplierReturn> =>
+      fetchJson("POST", `/api/supplier-returns/${id}/reject`, { reason }),
   },
 };
 export { api };

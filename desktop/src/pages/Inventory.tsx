@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import PageHeader from "@/components/shared/PageHeader";
 import DataTable from "@/components/shared/DataTable";
+import StatCard from "@/components/shared/StatCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -60,22 +61,22 @@ function daysUntilExpiry(dateStr: string): number {
 
 function expiryBadge(dateStr: string) {
   const days = daysUntilExpiry(dateStr);
-  if (days < 0) return <Badge className="bg-red-100 text-red-700 border-red-200">Expired</Badge>;
-  if (days <= 30) return <Badge className="bg-red-100 text-red-700 border-red-200">{days}d</Badge>;
-  if (days <= 90) return <Badge className="bg-amber-100 text-amber-700 border-amber-200">{days}d</Badge>;
-  return <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200">{days}d</Badge>;
+  if (days < 0) return <Badge variant="outline" className="bg-danger/10 text-danger border-danger/30 font-mono text-[11px] font-semibold">Expired</Badge>;
+  if (days <= 30) return <Badge variant="outline" className="bg-danger/10 text-danger border-danger/30 font-mono text-[11px] font-semibold">{days}d left</Badge>;
+  if (days <= 90) return <Badge variant="outline" className="bg-warning/10 text-warning border-warning/30 font-mono text-[11px] font-semibold">{days}d left</Badge>;
+  return <Badge variant="outline" className="bg-success/10 text-success border-success/30 font-mono text-[11px] font-semibold">{days}d</Badge>;
 }
 
 function statusBadge(status: string, isRecalled: boolean) {
-  if (isRecalled) return <Badge className="bg-red-100 text-red-700 border-red-200">Recalled</Badge>;
+  if (isRecalled) return <Badge variant="outline" className="bg-danger/10 text-danger border-danger/30 font-semibold text-[11px]">Recalled</Badge>;
   const map: Record<string, string> = {
-    ACTIVE: "bg-emerald-100 text-emerald-700 border-emerald-200",
-    DEPLETED: "bg-slate-100 text-slate-500 border-slate-200",
-    QUARANTINED: "bg-orange-100 text-orange-700 border-orange-200",
-    RECALLED: "bg-red-100 text-red-700 border-red-200",
-    EXPIRED: "bg-red-100 text-red-700 border-red-200",
+    ACTIVE: "bg-success/10 text-success border-success/30",
+    DEPLETED: "bg-surface-2 text-text-secondary border-border/80",
+    QUARANTINED: "bg-warning/10 text-warning border-warning/30",
+    RECALLED: "bg-danger/10 text-danger border-danger/30",
+    EXPIRED: "bg-danger/10 text-danger border-danger/30",
   };
-  return <Badge className={map[status] ?? "bg-slate-100 text-slate-500"}>{status}</Badge>;
+  return <Badge variant="outline" className={`font-semibold text-[11px] ${map[status] ?? "bg-surface-2 text-text-secondary border-border/80"}`}>{status}</Badge>;
 }
 
 function movementIcon(type: string) {
@@ -322,10 +323,15 @@ export default function Inventory() {
   const totalUnits = batches.filter((b) => b.status === "ACTIVE").reduce((s, b) => s + b.quantityInBaseUnits, 0);
 
   return (
-    <div className="p-6 space-y-5">
+    <div className="space-y-6">
       <PageHeader
-        title="Inventory — Batch Management"
-        description="FEFO stock tracking · Batch lifecycle · Expiry alerts · Movement ledger"
+        title="Batch & Inventory Management"
+        description="FEFO lot tracking, shelf-life lifecycle, expiry alarms, and audit movement ledger."
+        badge={
+          <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-accent/10 text-accent font-semibold border border-accent/20">
+            {activeBatches} Active Batches
+          </span>
+        }
         actions={
           <div className="flex items-center gap-2">
             <Button
@@ -333,12 +339,16 @@ export default function Inventory() {
               size="sm"
               onClick={() => scanMutation.mutate()}
               disabled={scanMutation.isPending}
-              className="gap-1.5"
+              className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
             >
               <RefreshCw className={`h-3.5 w-3.5 ${scanMutation.isPending ? "animate-spin" : ""}`} />
               Run Expiry Scan
             </Button>
-            <Button size="sm" className="gap-1.5" onClick={() => setReceiveOpen(true)}>
+            <Button
+              size="sm"
+              className="h-9 rounded-xl text-xs gap-1.5 font-medium shadow-xs"
+              onClick={() => setReceiveOpen(true)}
+            >
               <Plus className="h-3.5 w-3.5" />
               Receive Batch
             </Button>
@@ -346,73 +356,95 @@ export default function Inventory() {
         }
       />
 
-      {/* ---- Summary cards ---- */}
-      <div className="grid grid-cols-4 gap-4">
-        {[
-          { label: "Active Batches", value: activeBatches, icon: <Layers className="h-4 w-4 text-emerald-600" />, color: "text-emerald-600" },
-          { label: "Near Expiry (90d)", value: nearExpiry, icon: <Clock className="h-4 w-4 text-amber-600" />, color: "text-amber-600" },
-          { label: "Recalled", value: recalledBatches, icon: <Ban className="h-4 w-4 text-red-600" />, color: "text-red-600" },
-          { label: "Total Active Units", value: totalUnits.toLocaleString(), icon: <Package className="h-4 w-4 text-blue-600" />, color: "text-blue-600" },
-        ].map((s) => (
-          <Card key={s.label} className="border-border">
-            <CardContent className="p-4 flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-surface-2">{s.icon}</div>
-              <div>
-                <p className="text-xs text-text-secondary">{s.label}</p>
-                <p className={`text-xl font-bold ${s.color}`}>{s.value}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+      {/* ---- Summary StatCards ---- */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard
+          title="Active Batches"
+          value={activeBatches}
+          icon={<Layers className="h-5 w-5" />}
+          color="success"
+          subtitle="In-circulation batches"
+        />
+        <StatCard
+          title="Near Expiry (90d)"
+          value={nearExpiry}
+          icon={<Clock className="h-5 w-5" />}
+          color="warning"
+          subtitle="Expiring within 90 days"
+        />
+        <StatCard
+          title="Recalled / Hold"
+          value={recalledBatches}
+          icon={<Ban className="h-5 w-5" />}
+          color="danger"
+          subtitle="Flagged or quarantined"
+        />
+        <StatCard
+          title="Total Active Units"
+          value={totalUnits}
+          icon={<Package className="h-5 w-5" />}
+          color="accent"
+          subtitle="Base units inventory"
+        />
       </div>
 
       {/* ---- Near-expiry alert banner ---- */}
       {nearExpiry > 0 && (
-        <div className="flex items-center gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
-          <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0" />
-          <p className="text-sm text-amber-800">
-            <span className="font-semibold">{nearExpiry} batch{nearExpiry > 1 ? "es" : ""}</span> expiring within 90 days.
-            Review them in the <button className="underline font-medium" onClick={() => setTab("expiring")}>Near Expiry</button> tab.
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-warning/30 bg-warning/5 p-4 text-xs shadow-xs">
+          <div className="flex items-center gap-2.5">
+            <AlertTriangle className="h-4 w-4 text-warning shrink-0" />
+            <p className="text-text-primary">
+              <strong className="text-warning font-semibold">{nearExpiry} batch{nearExpiry > 1 ? "es" : ""}</strong> expiring within 90 days.
+              Review lots for prioritized FEFO dispensing or vendor return.
+            </p>
+          </div>
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-8 rounded-xl text-xs border-warning/30 hover:bg-warning/10 shrink-0"
+            onClick={() => setTab("expiring")}
+          >
+            Review Expiring Lots
+          </Button>
         </div>
       )}
 
       {/* ---- Tabs ---- */}
-      <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="bg-surface-2">
-          <TabsTrigger value="batches" className="gap-1.5 text-xs">
+      <Tabs value={tab} onValueChange={setTab} className="space-y-4">
+        <TabsList className="bg-surface-2/80 p-1 rounded-xl border border-border/80">
+          <TabsTrigger value="batches" className="gap-1.5 text-xs rounded-lg">
             <Layers className="h-3.5 w-3.5" /> Batches
           </TabsTrigger>
-          <TabsTrigger value="expiring" className="gap-1.5 text-xs">
+          <TabsTrigger value="expiring" className="gap-1.5 text-xs rounded-lg">
             <AlertTriangle className="h-3.5 w-3.5" />
             Near Expiry
             {nearExpiry > 0 && (
-              <span className="ml-1 inline-flex items-center justify-center rounded-full bg-amber-500 text-white text-[10px] font-bold w-4 h-4">
+              <span className="ml-1 inline-flex items-center justify-center rounded-full bg-amber-500 text-white text-[10px] font-bold px-1.5 py-0.2">
                 {nearExpiry > 99 ? "99+" : nearExpiry}
               </span>
             )}
           </TabsTrigger>
-          <TabsTrigger value="movements" className="gap-1.5 text-xs">
+          <TabsTrigger value="movements" className="gap-1.5 text-xs rounded-lg">
             <Activity className="h-3.5 w-3.5" /> Movement Ledger
           </TabsTrigger>
         </TabsList>
 
         {/* ---- Batches Tab ---- */}
-        <TabsContent value="batches" className="mt-4 space-y-3">
-          <div className="flex items-center gap-3">
-            <div className="relative flex-1 max-w-xs">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-text-secondary" />
+        <TabsContent value="batches" className="space-y-4 mt-0">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-surface p-2.5 rounded-2xl border border-border/80 shadow-xs">
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
               <Input
-                className="pl-8 h-8 text-sm"
-                placeholder="Search batch, product, GTIN…"
+                className="pl-9 h-9 rounded-xl text-xs bg-surface-2/40 border-border/80 focus:bg-surface"
+                placeholder="Search batch number, product, GTIN…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <Filter className="h-3.5 w-3.5 text-text-secondary" />
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="h-8 w-36 text-xs">
+                <SelectTrigger className="h-9 w-36 rounded-xl text-xs border-border/80">
                   <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
@@ -423,15 +455,23 @@ export default function Inventory() {
                   <SelectItem value="QUARANTINED">Quarantined</SelectItem>
                 </SelectContent>
               </Select>
+              <span className="text-xs text-text-secondary ml-2 font-mono">
+                {filtered.length} batch{filtered.length !== 1 ? "es" : ""}
+              </span>
             </div>
-            <span className="text-xs text-text-secondary ml-auto">{filtered.length} batch{filtered.length !== 1 ? "es" : ""}</span>
           </div>
 
           <DataTable<Batch>
             loading={batchLoading}
             data={filtered}
             keyExtractor={(b) => b.id}
-            emptyMessage="No batches found. Receive a batch to get started."
+            emptyTitle="No inventory batches found"
+            emptyDescription={search ? `No batches matched "${search}".` : "Receive a new batch to register stock into the inventory."}
+            emptyAction={
+              <Button onClick={() => setReceiveOpen(true)} size="sm" className="h-9 rounded-xl text-xs gap-1.5 font-medium shadow-xs">
+                <Plus className="h-3.5 w-3.5" /> Receive First Batch
+              </Button>
+            }
             columns={[
               {
                 key: "product",
@@ -567,30 +607,18 @@ export default function Inventory() {
         </TabsContent>
 
         {/* ---- Movement Ledger Tab ---- */}
-        <TabsContent value="movements" className="mt-4 space-y-3">
-          <div className="flex items-center justify-between">
-            <p className="text-xs text-text-secondary">
-              {movementsMeta.total.toLocaleString()} total movements · Page {movementsMeta.page} of {movementsMeta.pages}
-            </p>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline" size="sm" className="h-7 text-xs"
-                disabled={movementPage <= 1}
-                onClick={() => setMovementPage((p) => Math.max(1, p - 1))}
-              >← Prev</Button>
-              <Button
-                variant="outline" size="sm" className="h-7 text-xs"
-                disabled={movementPage >= movementsMeta.pages}
-                onClick={() => setMovementPage((p) => p + 1)}
-              >Next →</Button>
-            </div>
-          </div>
-
+        <TabsContent value="movements" className="space-y-4 mt-0">
           <DataTable<Movement>
             loading={movementsLoading}
             data={movements}
             keyExtractor={(m) => m.id}
-            emptyMessage="No stock movements recorded yet."
+            emptyTitle="No stock movements recorded"
+            emptyDescription="Stock receipts, adjustments, returns, and dispensing events will be recorded here in real-time."
+            page={movementPage}
+            totalPages={movementsMeta.pages}
+            totalCount={movementsMeta.total}
+            onPageChange={setMovementPage}
+            itemLabel="movements"
             columns={[
               {
                 key: "type",

@@ -29,11 +29,13 @@ export type AggregateProductPrice = {
 export type ProductPriceAvgAggregateOutputType = {
   purchasePrice: number | null
   salePrice: number | null
+  conversionRatio: number | null
 }
 
 export type ProductPriceSumAggregateOutputType = {
   purchasePrice: number | null
   salePrice: number | null
+  conversionRatio: number | null
 }
 
 export type ProductPriceMinAggregateOutputType = {
@@ -42,6 +44,8 @@ export type ProductPriceMinAggregateOutputType = {
   label: string | null
   purchasePrice: number | null
   salePrice: number | null
+  unitType: string | null
+  conversionRatio: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,6 +56,8 @@ export type ProductPriceMaxAggregateOutputType = {
   label: string | null
   purchasePrice: number | null
   salePrice: number | null
+  unitType: string | null
+  conversionRatio: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +68,8 @@ export type ProductPriceCountAggregateOutputType = {
   label: number
   purchasePrice: number
   salePrice: number
+  unitType: number
+  conversionRatio: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -71,11 +79,13 @@ export type ProductPriceCountAggregateOutputType = {
 export type ProductPriceAvgAggregateInputType = {
   purchasePrice?: true
   salePrice?: true
+  conversionRatio?: true
 }
 
 export type ProductPriceSumAggregateInputType = {
   purchasePrice?: true
   salePrice?: true
+  conversionRatio?: true
 }
 
 export type ProductPriceMinAggregateInputType = {
@@ -84,6 +94,8 @@ export type ProductPriceMinAggregateInputType = {
   label?: true
   purchasePrice?: true
   salePrice?: true
+  unitType?: true
+  conversionRatio?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +106,8 @@ export type ProductPriceMaxAggregateInputType = {
   label?: true
   purchasePrice?: true
   salePrice?: true
+  unitType?: true
+  conversionRatio?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -104,6 +118,8 @@ export type ProductPriceCountAggregateInputType = {
   label?: true
   purchasePrice?: true
   salePrice?: true
+  unitType?: true
+  conversionRatio?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -201,6 +217,8 @@ export type ProductPriceGroupByOutputType = {
   label: string
   purchasePrice: number
   salePrice: number
+  unitType: string | null
+  conversionRatio: number
   createdAt: Date
   updatedAt: Date
   _count: ProductPriceCountAggregateOutputType | null
@@ -234,6 +252,8 @@ export type ProductPriceWhereInput = {
   label?: Prisma.StringFilter<"ProductPrice"> | string
   purchasePrice?: Prisma.FloatFilter<"ProductPrice"> | number
   salePrice?: Prisma.FloatFilter<"ProductPrice"> | number
+  unitType?: Prisma.StringNullableFilter<"ProductPrice"> | string | null
+  conversionRatio?: Prisma.IntFilter<"ProductPrice"> | number
   createdAt?: Prisma.DateTimeFilter<"ProductPrice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProductPrice"> | Date | string
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
@@ -245,6 +265,8 @@ export type ProductPriceOrderByWithRelationInput = {
   label?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   salePrice?: Prisma.SortOrder
+  unitType?: Prisma.SortOrderInput | Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   product?: Prisma.ProductOrderByWithRelationInput
@@ -259,6 +281,8 @@ export type ProductPriceWhereUniqueInput = Prisma.AtLeast<{
   label?: Prisma.StringFilter<"ProductPrice"> | string
   purchasePrice?: Prisma.FloatFilter<"ProductPrice"> | number
   salePrice?: Prisma.FloatFilter<"ProductPrice"> | number
+  unitType?: Prisma.StringNullableFilter<"ProductPrice"> | string | null
+  conversionRatio?: Prisma.IntFilter<"ProductPrice"> | number
   createdAt?: Prisma.DateTimeFilter<"ProductPrice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProductPrice"> | Date | string
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
@@ -270,6 +294,8 @@ export type ProductPriceOrderByWithAggregationInput = {
   label?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   salePrice?: Prisma.SortOrder
+  unitType?: Prisma.SortOrderInput | Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProductPriceCountOrderByAggregateInput
@@ -288,6 +314,8 @@ export type ProductPriceScalarWhereWithAggregatesInput = {
   label?: Prisma.StringWithAggregatesFilter<"ProductPrice"> | string
   purchasePrice?: Prisma.FloatWithAggregatesFilter<"ProductPrice"> | number
   salePrice?: Prisma.FloatWithAggregatesFilter<"ProductPrice"> | number
+  unitType?: Prisma.StringNullableWithAggregatesFilter<"ProductPrice"> | string | null
+  conversionRatio?: Prisma.IntWithAggregatesFilter<"ProductPrice"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProductPrice"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ProductPrice"> | Date | string
 }
@@ -297,6 +325,8 @@ export type ProductPriceCreateInput = {
   label?: string
   purchasePrice?: number
   salePrice?: number
+  unitType?: string | null
+  conversionRatio?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   product: Prisma.ProductCreateNestedOneWithoutPricesInput
@@ -308,6 +338,8 @@ export type ProductPriceUncheckedCreateInput = {
   label?: string
   purchasePrice?: number
   salePrice?: number
+  unitType?: string | null
+  conversionRatio?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -317,6 +349,8 @@ export type ProductPriceUpdateInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   product?: Prisma.ProductUpdateOneRequiredWithoutPricesNestedInput
@@ -328,6 +362,8 @@ export type ProductPriceUncheckedUpdateInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -338,6 +374,8 @@ export type ProductPriceCreateManyInput = {
   label?: string
   purchasePrice?: number
   salePrice?: number
+  unitType?: string | null
+  conversionRatio?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -347,6 +385,8 @@ export type ProductPriceUpdateManyMutationInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -357,6 +397,8 @@ export type ProductPriceUncheckedUpdateManyInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -377,6 +419,8 @@ export type ProductPriceCountOrderByAggregateInput = {
   label?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   salePrice?: Prisma.SortOrder
+  unitType?: Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -384,6 +428,7 @@ export type ProductPriceCountOrderByAggregateInput = {
 export type ProductPriceAvgOrderByAggregateInput = {
   purchasePrice?: Prisma.SortOrder
   salePrice?: Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
 }
 
 export type ProductPriceMaxOrderByAggregateInput = {
@@ -392,6 +437,8 @@ export type ProductPriceMaxOrderByAggregateInput = {
   label?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   salePrice?: Prisma.SortOrder
+  unitType?: Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -402,6 +449,8 @@ export type ProductPriceMinOrderByAggregateInput = {
   label?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   salePrice?: Prisma.SortOrder
+  unitType?: Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -409,6 +458,7 @@ export type ProductPriceMinOrderByAggregateInput = {
 export type ProductPriceSumOrderByAggregateInput = {
   purchasePrice?: Prisma.SortOrder
   salePrice?: Prisma.SortOrder
+  conversionRatio?: Prisma.SortOrder
 }
 
 export type ProductPriceCreateNestedManyWithoutProductInput = {
@@ -458,6 +508,8 @@ export type ProductPriceCreateWithoutProductInput = {
   label?: string
   purchasePrice?: number
   salePrice?: number
+  unitType?: string | null
+  conversionRatio?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -467,6 +519,8 @@ export type ProductPriceUncheckedCreateWithoutProductInput = {
   label?: string
   purchasePrice?: number
   salePrice?: number
+  unitType?: string | null
+  conversionRatio?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -506,6 +560,8 @@ export type ProductPriceScalarWhereInput = {
   label?: Prisma.StringFilter<"ProductPrice"> | string
   purchasePrice?: Prisma.FloatFilter<"ProductPrice"> | number
   salePrice?: Prisma.FloatFilter<"ProductPrice"> | number
+  unitType?: Prisma.StringNullableFilter<"ProductPrice"> | string | null
+  conversionRatio?: Prisma.IntFilter<"ProductPrice"> | number
   createdAt?: Prisma.DateTimeFilter<"ProductPrice"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProductPrice"> | Date | string
 }
@@ -515,6 +571,8 @@ export type ProductPriceCreateManyProductInput = {
   label?: string
   purchasePrice?: number
   salePrice?: number
+  unitType?: string | null
+  conversionRatio?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -524,6 +582,8 @@ export type ProductPriceUpdateWithoutProductInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -533,6 +593,8 @@ export type ProductPriceUncheckedUpdateWithoutProductInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -542,6 +604,8 @@ export type ProductPriceUncheckedUpdateManyWithoutProductInput = {
   label?: Prisma.StringFieldUpdateOperationsInput | string
   purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
   salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  unitType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  conversionRatio?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -554,6 +618,8 @@ export type ProductPriceSelect<ExtArgs extends runtime.Types.Extensions.Internal
   label?: boolean
   purchasePrice?: boolean
   salePrice?: boolean
+  unitType?: boolean
+  conversionRatio?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -565,6 +631,8 @@ export type ProductPriceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   label?: boolean
   purchasePrice?: boolean
   salePrice?: boolean
+  unitType?: boolean
+  conversionRatio?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -576,6 +644,8 @@ export type ProductPriceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   label?: boolean
   purchasePrice?: boolean
   salePrice?: boolean
+  unitType?: boolean
+  conversionRatio?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
@@ -587,11 +657,13 @@ export type ProductPriceSelectScalar = {
   label?: boolean
   purchasePrice?: boolean
   salePrice?: boolean
+  unitType?: boolean
+  conversionRatio?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProductPriceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "label" | "purchasePrice" | "salePrice" | "createdAt" | "updatedAt", ExtArgs["result"]["productPrice"]>
+export type ProductPriceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productId" | "label" | "purchasePrice" | "salePrice" | "unitType" | "conversionRatio" | "createdAt" | "updatedAt", ExtArgs["result"]["productPrice"]>
 export type ProductPriceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
 }
@@ -613,6 +685,8 @@ export type $ProductPricePayload<ExtArgs extends runtime.Types.Extensions.Intern
     label: string
     purchasePrice: number
     salePrice: number
+    unitType: string | null
+    conversionRatio: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["productPrice"]>
@@ -1044,6 +1118,8 @@ export interface ProductPriceFieldRefs {
   readonly label: Prisma.FieldRef<"ProductPrice", 'String'>
   readonly purchasePrice: Prisma.FieldRef<"ProductPrice", 'Float'>
   readonly salePrice: Prisma.FieldRef<"ProductPrice", 'Float'>
+  readonly unitType: Prisma.FieldRef<"ProductPrice", 'String'>
+  readonly conversionRatio: Prisma.FieldRef<"ProductPrice", 'Int'>
   readonly createdAt: Prisma.FieldRef<"ProductPrice", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ProductPrice", 'DateTime'>
 }

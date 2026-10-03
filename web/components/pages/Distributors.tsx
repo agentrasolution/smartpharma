@@ -9,6 +9,8 @@ import {
 } from "lucide-react";
 import PageHeader from "@/components/shared/PageHeader";
 import DataTable from "@/components/shared/DataTable";
+import StatCard from "@/components/shared/StatCard";
+import EmptyState from "@/components/shared/EmptyState";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -131,105 +133,216 @@ export default function Distributors() {
     setPaymentModalOpen(true);
   }
 
+  const totalLinkedCompanies = new Set(distributors.map((d: Distributor) => d.company_name).filter(Boolean)).size;
+  const totalSourcedProducts = distributors.reduce((acc: number, d: Distributor) => acc + (d.product_count || 0), 0);
+
   return (
-    <div>
-      <PageHeader title="Distributors" description="Manage your supplier network and Accounts Payable ledgers" action={{ label: "Add Distributor", onClick: openAdd }} />
-      <div className="flex items-center gap-2 mb-6">
+    <div className="space-y-6">
+      <PageHeader
+        title="Distributors & Vendors"
+        description="Manage your supplier network, wholesale vendor profiles, and Accounts Payable ledgers."
+        badge={
+          <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-accent/10 text-accent font-semibold border border-accent/20">
+            {distributors.length} Vendors
+          </span>
+        }
+        action={{ label: "Add Distributor", onClick: openAdd, icon: <Plus className="h-3.5 w-3.5" /> }}
+      />
+
+      {/* Metric Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <StatCard
+          title="Total Distributors"
+          value={distributors.length}
+          icon={<Factory className="h-5 w-5" />}
+          color="accent"
+          loading={isLoading}
+          subtitle="Registered vendor partners"
+        />
+        <StatCard
+          title="Linked Manufacturers"
+          value={totalLinkedCompanies}
+          icon={<Building2 className="h-5 w-5" />}
+          color="purple"
+          loading={isLoading}
+          subtitle="Pharma companies supplied"
+        />
+        <StatCard
+          title="Sourced Catalog Items"
+          value={totalSourcedProducts}
+          icon={<Package className="h-5 w-5" />}
+          color="success"
+          loading={isLoading}
+          subtitle="Total product SKUs supplied"
+        />
+      </div>
+
+      {/* Toolbar */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-surface p-2.5 rounded-2xl border border-border/80 shadow-xs">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
-          <Input autoFocus placeholder="Search distributors..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+          <Input
+            placeholder="Search distributor or phone..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9 h-9 rounded-xl text-xs bg-surface-2/40 border-border/80 focus:bg-surface"
+          />
         </div>
-        <Button variant="outline" size="sm" onClick={() => downloadCSV(`distributors_${new Date().toISOString().split("T")[0]}.csv`, ["Name","Contact Number","Company","Products"], filtered.map((d: Distributor) => [d.name, d.phone, d.company_name||"", d.product_count||0]))}>
-          <Download className="h-4 w-4 mr-1" /> CSV
-        </Button>
-        <Button variant="outline" size="sm" onClick={() => downloadPDF(`distributors_${new Date().toISOString().split("T")[0]}.pdf`, "Distributors List", ["Name","Contact Number","Company","Products"], filtered.map((d: Distributor) => [d.name, d.phone, d.company_name||"", d.product_count||0]))}>
-          <Download className="h-4 w-4 mr-1" /> PDF
-        </Button>
-        <div className="flex items-center border border-border rounded-lg overflow-hidden">
-          <button onClick={() => setViewMode("grid")} className={cn("p-2 transition-colors", viewMode === "grid" ? "bg-accent text-white" : "text-text-secondary hover:bg-surface-2")}>
-            <LayoutGrid className="h-4 w-4" />
-          </button>
-          <button onClick={() => setViewMode("list")} className={cn("p-2 transition-colors", viewMode === "list" ? "bg-accent text-white" : "text-text-secondary hover:bg-surface-2")}>
-            <List className="h-4 w-4" />
-          </button>
+
+        <div className="flex items-center gap-1.5 flex-wrap sm:flex-nowrap">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
+            onClick={() => downloadCSV(`distributors_${new Date().toISOString().split("T")[0]}.csv`, ["Name","Contact Number","Company","Products"], filtered.map((d: Distributor) => [d.name, d.phone, d.company_name||"", d.product_count||0]))}
+          >
+            <Download className="h-3.5 w-3.5" /> CSV
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2"
+            onClick={() => downloadPDF(`distributors_${new Date().toISOString().split("T")[0]}.pdf`, "Distributors List", ["Name","Contact Number","Company","Products"], filtered.map((d: Distributor) => [d.name, d.phone, d.company_name||"", d.product_count||0]))}
+          >
+            <Download className="h-3.5 w-3.5" /> PDF
+          </Button>
+
+          <div className="flex items-center border border-border/80 rounded-xl overflow-hidden bg-surface-2/40 p-0.5">
+            <button
+              onClick={() => setViewMode("grid")}
+              className={cn("p-1.5 rounded-lg transition-colors", viewMode === "grid" ? "bg-accent text-white shadow-xs" : "text-text-secondary hover:text-text-primary")}
+              title="Grid View"
+            >
+              <LayoutGrid className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => setViewMode("list")}
+              className={cn("p-1.5 rounded-lg transition-colors", viewMode === "list" ? "bg-accent text-white shadow-xs" : "text-text-secondary hover:text-text-primary")}
+              title="List View"
+            >
+              <List className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
 
       {viewMode === "list" ? (
-        <div className="rounded-xl border border-border">
-          <DataTable
-            columns={[
-              { key: "name", header: "Name", cell: (d: Distributor) => <span className="font-medium text-text-primary">{d.name}</span> },
-              { key: "phone", header: "Contact", cell: (d: Distributor) => <span className="font-mono text-[11px]">{d.phone}</span> },
-              { key: "company_name", header: "Company", cell: (d: Distributor) => <span className="text-text-secondary">{d.company_name || "—"}</span> },
-              { key: "product_count", header: "Products", cell: (d: Distributor) => <span className="font-mono">{d.product_count ?? 0}</span> },
-              {
-                key: "actions", header: "", cell: (d: Distributor) => (
-                  <div className="flex items-center gap-1 justify-end">
-                    <button onClick={() => openLedger(d)} className="h-7 px-2 rounded-md flex items-center gap-1 text-xs text-accent hover:bg-accent/10 transition-colors" title="View Ledger & Statement">
-                      <Receipt className="h-3.5 w-3.5" />
-                      <span>Ledger</span>
-                    </button>
-                    <button onClick={() => openEdit(d)} className="h-7 w-7 rounded-md flex items-center justify-center text-text-secondary hover:text-accent hover:bg-accent/5 transition-colors" title="Edit">
-                      <Pencil className="h-3.5 w-3.5" />
-                    </button>
-                    <button onClick={() => setDeleteId(d.id)} className="h-7 w-7 rounded-md flex items-center justify-center text-text-secondary hover:text-danger hover:bg-danger/5 transition-colors" title="Delete">
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                ),
-              },
-            ]}
-            data={filtered}
-            loading={isLoading}
-            keyExtractor={(d: Distributor) => d.id}
-            emptyMessage="No distributors found"
-          />
-        </div>
+        <DataTable
+          columns={[
+            { key: "name", header: "Name", cell: (d: Distributor) => <span className="font-semibold text-text-primary">{d.name}</span> },
+            { key: "phone", header: "Contact", cell: (d: Distributor) => <span className="font-mono text-xs text-text-secondary">{d.phone}</span> },
+            { key: "company_name", header: "Company", cell: (d: Distributor) => <span className="text-text-secondary text-xs">{d.company_name || "—"}</span> },
+            { key: "product_count", header: "Products", cell: (d: Distributor) => <span className="font-mono text-xs">{d.product_count ?? 0}</span> },
+            {
+              key: "actions", header: "", cell: (d: Distributor) => (
+                <div className="flex items-center gap-1 justify-end">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => openLedger(d)}
+                    className="h-7 px-2.5 rounded-lg text-xs gap-1 border-accent/30 text-accent hover:bg-accent/10"
+                  >
+                    <Receipt className="h-3 w-3" />
+                    Ledger
+                  </Button>
+                  <button onClick={() => openEdit(d)} className="h-7 w-7 rounded-lg flex items-center justify-center text-text-secondary hover:text-accent hover:bg-accent/5 transition-colors" title="Edit">
+                    <Pencil className="h-3.5 w-3.5" />
+                  </button>
+                  <button onClick={() => setDeleteId(d.id)} className="h-7 w-7 rounded-lg flex items-center justify-center text-text-secondary hover:text-danger hover:bg-danger/5 transition-colors" title="Delete">
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              ),
+            },
+          ]}
+          data={filtered}
+          loading={isLoading}
+          keyExtractor={(d: Distributor) => d.id}
+          emptyTitle="No distributors found"
+          emptyDescription={search ? `No distributors match "${search}".` : "Add wholesale distributors and vendors to manage payables and purchase shipments."}
+          emptyAction={
+            <Button onClick={openAdd} size="sm" className="h-9 rounded-xl text-xs gap-1.5 font-medium shadow-xs">
+              <Plus className="h-3.5 w-3.5" /> Add Distributor
+            </Button>
+          }
+        />
       ) : (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {isLoading ? (
-          Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-24 rounded-xl" />)
-        ) : filtered.length === 0 ? (
-          <div className="col-span-full text-center py-12 text-sm text-text-secondary">No distributors found</div>
-        ) : (
-          filtered.map((dist: Distributor) => (
-            <Card key={dist.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-5">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-start gap-3 min-w-0 flex-1">
-                    <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                      <Factory className="h-5 w-5 text-accent" />
-                    </div>
-                    <div className="min-w-0">
-                      <h3 className="font-medium text-text-primary truncate">{dist.name}</h3>
-                      <div className="space-y-1 mt-2">
-                        <div className="flex items-center gap-1 text-xs text-text-secondary"><Phone className="h-3 w-3 shrink-0" />{dist.phone}</div>
-                        {dist.company_name && <div className="flex items-center gap-1 text-xs text-text-secondary"><Building2 className="h-3 w-3 shrink-0" />{dist.company_name}</div>}
-                        <div className="flex items-center gap-1 text-xs text-text-secondary"><Package className="h-3 w-3 shrink-0" />{dist.product_count ?? 0} products</div>
+        <div>
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-44 rounded-2xl" />)}
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="rounded-2xl border border-border/80 bg-surface p-8 shadow-xs">
+              <EmptyState
+                title="No distributors found"
+                description={search ? `No distributors match "${search}". Try adjusting your search query.` : "Register your supply partners to track delivery history and running ledger balances."}
+                icon={<Factory className="h-6 w-6 text-accent" />}
+                action={
+                  <Button onClick={openAdd} size="sm" className="h-9 rounded-xl text-xs gap-1.5 font-medium shadow-xs">
+                    <Plus className="h-3.5 w-3.5" /> Add First Distributor
+                  </Button>
+                }
+              />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filtered.map((dist: Distributor) => (
+                <div key={dist.id} className="group rounded-2xl border border-border/80 bg-surface p-5 shadow-xs hover:shadow-md hover:border-accent/30 transition-all duration-200 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-start gap-3 min-w-0 flex-1">
+                        <div className="h-10 w-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
+                          <Factory className="h-5 w-5" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="font-semibold text-text-primary truncate text-sm">{dist.name}</h3>
+                          <div className="space-y-1.5 mt-2.5">
+                            <div className="flex items-center gap-1.5 text-xs text-text-secondary">
+                              <Phone className="h-3 w-3 shrink-0 text-text-secondary/70" />
+                              <span className="font-mono">{dist.phone}</span>
+                            </div>
+                            {dist.company_name && (
+                              <div className="flex items-center gap-1.5 text-xs text-text-secondary">
+                                <Building2 className="h-3 w-3 shrink-0 text-text-secondary/70" />
+                                <span className="truncate">{dist.company_name}</span>
+                              </div>
+                            )}
+                            <div className="flex items-center gap-1.5 text-xs text-text-secondary">
+                              <Package className="h-3 w-3 shrink-0 text-text-secondary/70" />
+                              <span>{dist.product_count ?? 0} products supplied</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-0.5 shrink-0">
+                        <button onClick={() => openEdit(dist)} className="h-7 w-7 rounded-lg flex items-center justify-center text-text-secondary hover:text-accent hover:bg-accent/5 transition-colors" title="Edit">
+                          <Pencil className="h-3.5 w-3.5" />
+                        </button>
+                        <button onClick={() => setDeleteId(dist.id)} className="h-7 w-7 rounded-lg flex items-center justify-center text-text-secondary hover:text-danger hover:bg-danger/5 transition-colors" title="Delete">
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 shrink-0">
-                    <button onClick={() => openEdit(dist)} className="h-7 w-7 rounded-md flex items-center justify-center text-text-secondary hover:text-accent hover:bg-accent/5 transition-colors" title="Edit">
-                      <Pencil className="h-3.5 w-3.5" />
-                    </button>
-                    <button onClick={() => setDeleteId(dist.id)} className="h-7 w-7 rounded-md flex items-center justify-center text-text-secondary hover:text-danger hover:bg-danger/5 transition-colors" title="Delete">
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
+
+                  <div className="mt-4 pt-3 border-t border-border/60">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => openLedger(dist)}
+                      className="w-full text-xs font-medium gap-1.5 h-8 rounded-xl border-accent/30 text-accent hover:bg-accent/10"
+                    >
+                      <Receipt className="h-3.5 w-3.5" />
+                      View Statement & Ledger
+                    </Button>
                   </div>
                 </div>
-                <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
-                  <Button variant="outline" size="sm" onClick={() => openLedger(dist)} className="w-full text-xs font-medium gap-1.5 h-8">
-                    <Receipt className="h-3.5 w-3.5 text-accent" />
-                    View Statement & Ledger
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))
-        )}
-      </div>)}
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Add / Edit Distributor Dialog */}
       <Dialog open={open} onOpenChange={(v) => { if (!v) { setEditingId(null); } setOpen(v); }}>

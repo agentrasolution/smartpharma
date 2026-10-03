@@ -89,6 +89,12 @@ export const returnsService = {
           },
         });
 
+        const matchingSaleItem = sale.items.find((si) => si.productId === item.productId);
+        const conversionRatio = matchingSaleItem?.conversionRatio && matchingSaleItem.conversionRatio > 0
+          ? matchingSaleItem.conversionRatio
+          : 1;
+        const returnBaseUnits = item.quantity * conversionRatio;
+
         // ------------------------------------------------------------------
         // RETURN_IN: restore units to the latest-expiry batch (LIFO on return)
         // This keeps FEFO ordering intact for future sales.
@@ -105,7 +111,7 @@ export const returnsService = {
         });
 
         if (targetBatch) {
-          const newQty = targetBatch.quantityInBaseUnits + item.quantity;
+          const newQty = targetBatch.quantityInBaseUnits + returnBaseUnits;
 
           await tx.batch.update({
             where: { id: targetBatch.id },
@@ -133,7 +139,7 @@ export const returnsService = {
               productId: item.productId,
               batchId: targetBatch.id,
               movementType: "RETURN_IN",
-              quantityDelta: item.quantity,
+              quantityDelta: returnBaseUnits,
               balanceAfter: (allActiveBatches._sum.quantityInBaseUnits ?? 0),
               unitCost: targetBatch.costPricePerUnit,
               referenceNumber: sale.id,
@@ -149,7 +155,7 @@ export const returnsService = {
               productId: item.productId,
               batchId: null,
               movementType: "RETURN_IN",
-              quantityDelta: item.quantity,
+              quantityDelta: returnBaseUnits,
               balanceAfter: 0, // unknown without batch
               unitCost: 0,
               referenceNumber: sale.id,
@@ -161,7 +167,7 @@ export const returnsService = {
         // Keep legacy stockQty in sync
         await tx.product.update({
           where: { id: item.productId },
-          data: { stockQty: { increment: item.quantity } },
+          data: { stockQty: { increment: returnBaseUnits } },
         });
       }
 

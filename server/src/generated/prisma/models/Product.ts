@@ -34,6 +34,7 @@ export type ProductAvgAggregateOutputType = {
   packSize: number | null
   publicPrice: runtime.Decimal | null
   unitsPerPack: number | null
+  stripsPerPack: number | null
   active: number | null
 }
 
@@ -45,6 +46,7 @@ export type ProductSumAggregateOutputType = {
   packSize: number | null
   publicPrice: runtime.Decimal | null
   unitsPerPack: number | null
+  stripsPerPack: number | null
   active: number | null
 }
 
@@ -77,6 +79,7 @@ export type ProductMinAggregateOutputType = {
   baseUnit: string | null
   packageUnit: string | null
   unitsPerPack: number | null
+  stripsPerPack: number | null
   active: number | null
   createdAt: Date | null
 }
@@ -110,6 +113,7 @@ export type ProductMaxAggregateOutputType = {
   baseUnit: string | null
   packageUnit: string | null
   unitsPerPack: number | null
+  stripsPerPack: number | null
   active: number | null
   createdAt: Date | null
 }
@@ -143,6 +147,7 @@ export type ProductCountAggregateOutputType = {
   baseUnit: number
   packageUnit: number
   unitsPerPack: number
+  stripsPerPack: number
   active: number
   createdAt: number
   _all: number
@@ -157,6 +162,7 @@ export type ProductAvgAggregateInputType = {
   packSize?: true
   publicPrice?: true
   unitsPerPack?: true
+  stripsPerPack?: true
   active?: true
 }
 
@@ -168,6 +174,7 @@ export type ProductSumAggregateInputType = {
   packSize?: true
   publicPrice?: true
   unitsPerPack?: true
+  stripsPerPack?: true
   active?: true
 }
 
@@ -200,6 +207,7 @@ export type ProductMinAggregateInputType = {
   baseUnit?: true
   packageUnit?: true
   unitsPerPack?: true
+  stripsPerPack?: true
   active?: true
   createdAt?: true
 }
@@ -233,6 +241,7 @@ export type ProductMaxAggregateInputType = {
   baseUnit?: true
   packageUnit?: true
   unitsPerPack?: true
+  stripsPerPack?: true
   active?: true
   createdAt?: true
 }
@@ -266,6 +275,7 @@ export type ProductCountAggregateInputType = {
   baseUnit?: true
   packageUnit?: true
   unitsPerPack?: true
+  stripsPerPack?: true
   active?: true
   createdAt?: true
   _all?: true
@@ -386,6 +396,7 @@ export type ProductGroupByOutputType = {
   baseUnit: string
   packageUnit: string
   unitsPerPack: number
+  stripsPerPack: number
   active: number
   createdAt: Date
   _count: ProductCountAggregateOutputType | null
@@ -442,6 +453,7 @@ export type ProductWhereInput = {
   baseUnit?: Prisma.StringFilter<"Product"> | string
   packageUnit?: Prisma.StringFilter<"Product"> | string
   unitsPerPack?: Prisma.IntFilter<"Product"> | number
+  stripsPerPack?: Prisma.IntFilter<"Product"> | number
   active?: Prisma.IntFilter<"Product"> | number
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
@@ -464,6 +476,7 @@ export type ProductWhereInput = {
   chronicMedications?: Prisma.ChronicMedicationListRelationFilter
   transferItems?: Prisma.StockTransferItemListRelationFilter
   branchPriceOverrides?: Prisma.BranchPriceOverrideListRelationFilter
+  supplierReturnItems?: Prisma.SupplierReturnItemListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -495,6 +508,7 @@ export type ProductOrderByWithRelationInput = {
   baseUnit?: Prisma.SortOrder
   packageUnit?: Prisma.SortOrder
   unitsPerPack?: Prisma.SortOrder
+  stripsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   pharmacy?: Prisma.PharmacyOrderByWithRelationInput
@@ -517,6 +531,7 @@ export type ProductOrderByWithRelationInput = {
   chronicMedications?: Prisma.ChronicMedicationOrderByRelationAggregateInput
   transferItems?: Prisma.StockTransferItemOrderByRelationAggregateInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideOrderByRelationAggregateInput
+  supplierReturnItems?: Prisma.SupplierReturnItemOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -552,6 +567,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   baseUnit?: Prisma.StringFilter<"Product"> | string
   packageUnit?: Prisma.StringFilter<"Product"> | string
   unitsPerPack?: Prisma.IntFilter<"Product"> | number
+  stripsPerPack?: Prisma.IntFilter<"Product"> | number
   active?: Prisma.IntFilter<"Product"> | number
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   pharmacy?: Prisma.XOR<Prisma.PharmacyScalarRelationFilter, Prisma.PharmacyWhereInput>
@@ -574,6 +590,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   chronicMedications?: Prisma.ChronicMedicationListRelationFilter
   transferItems?: Prisma.StockTransferItemListRelationFilter
   branchPriceOverrides?: Prisma.BranchPriceOverrideListRelationFilter
+  supplierReturnItems?: Prisma.SupplierReturnItemListRelationFilter
 }, "id" | "branchId_barcode">
 
 export type ProductOrderByWithAggregationInput = {
@@ -605,6 +622,7 @@ export type ProductOrderByWithAggregationInput = {
   baseUnit?: Prisma.SortOrder
   packageUnit?: Prisma.SortOrder
   unitsPerPack?: Prisma.SortOrder
+  stripsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
@@ -646,6 +664,7 @@ export type ProductScalarWhereWithAggregatesInput = {
   baseUnit?: Prisma.StringWithAggregatesFilter<"Product"> | string
   packageUnit?: Prisma.StringWithAggregatesFilter<"Product"> | string
   unitsPerPack?: Prisma.IntWithAggregatesFilter<"Product"> | number
+  stripsPerPack?: Prisma.IntWithAggregatesFilter<"Product"> | number
   active?: Prisma.IntWithAggregatesFilter<"Product"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
 }
@@ -676,6 +695,7 @@ export type ProductCreateInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -698,6 +718,7 @@ export type ProductCreateInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -729,6 +750,7 @@ export type ProductUncheckedCreateInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -748,6 +770,7 @@ export type ProductUncheckedCreateInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -776,6 +799,7 @@ export type ProductUpdateInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -798,6 +822,7 @@ export type ProductUpdateInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -829,6 +854,7 @@ export type ProductUncheckedUpdateInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -848,6 +874,7 @@ export type ProductUncheckedUpdateInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -879,6 +906,7 @@ export type ProductCreateManyInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
 }
@@ -909,6 +937,7 @@ export type ProductUpdateManyMutationInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -942,6 +971,7 @@ export type ProductUncheckedUpdateManyInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -995,6 +1025,7 @@ export type ProductCountOrderByAggregateInput = {
   baseUnit?: Prisma.SortOrder
   packageUnit?: Prisma.SortOrder
   unitsPerPack?: Prisma.SortOrder
+  stripsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -1007,6 +1038,7 @@ export type ProductAvgOrderByAggregateInput = {
   packSize?: Prisma.SortOrder
   publicPrice?: Prisma.SortOrder
   unitsPerPack?: Prisma.SortOrder
+  stripsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
 }
 
@@ -1039,6 +1071,7 @@ export type ProductMaxOrderByAggregateInput = {
   baseUnit?: Prisma.SortOrder
   packageUnit?: Prisma.SortOrder
   unitsPerPack?: Prisma.SortOrder
+  stripsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -1072,6 +1105,7 @@ export type ProductMinOrderByAggregateInput = {
   baseUnit?: Prisma.SortOrder
   packageUnit?: Prisma.SortOrder
   unitsPerPack?: Prisma.SortOrder
+  stripsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -1084,6 +1118,7 @@ export type ProductSumOrderByAggregateInput = {
   packSize?: Prisma.SortOrder
   publicPrice?: Prisma.SortOrder
   unitsPerPack?: Prisma.SortOrder
+  stripsPerPack?: Prisma.SortOrder
   active?: Prisma.SortOrder
 }
 
@@ -1470,6 +1505,20 @@ export type ProductUpdateOneRequiredWithoutTransferItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutTransferItemsInput, Prisma.ProductUpdateWithoutTransferItemsInput>, Prisma.ProductUncheckedUpdateWithoutTransferItemsInput>
 }
 
+export type ProductCreateNestedOneWithoutSupplierReturnItemsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutSupplierReturnItemsInput, Prisma.ProductUncheckedCreateWithoutSupplierReturnItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutSupplierReturnItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutSupplierReturnItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutSupplierReturnItemsInput, Prisma.ProductUncheckedCreateWithoutSupplierReturnItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutSupplierReturnItemsInput
+  upsert?: Prisma.ProductUpsertWithoutSupplierReturnItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutSupplierReturnItemsInput, Prisma.ProductUpdateWithoutSupplierReturnItemsInput>, Prisma.ProductUncheckedUpdateWithoutSupplierReturnItemsInput>
+}
+
 export type ProductCreateWithoutPharmacyInput = {
   id?: string
   barcode: string
@@ -1496,6 +1545,7 @@ export type ProductCreateWithoutPharmacyInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   branch: Prisma.BranchCreateNestedOneWithoutProductsInput
@@ -1517,6 +1567,7 @@ export type ProductCreateWithoutPharmacyInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutPharmacyInput = {
@@ -1547,6 +1598,7 @@ export type ProductUncheckedCreateWithoutPharmacyInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -1566,6 +1618,7 @@ export type ProductUncheckedCreateWithoutPharmacyInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutPharmacyInput = {
@@ -1626,6 +1679,7 @@ export type ProductScalarWhereInput = {
   baseUnit?: Prisma.StringFilter<"Product"> | string
   packageUnit?: Prisma.StringFilter<"Product"> | string
   unitsPerPack?: Prisma.IntFilter<"Product"> | number
+  stripsPerPack?: Prisma.IntFilter<"Product"> | number
   active?: Prisma.IntFilter<"Product"> | number
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
 }
@@ -1656,6 +1710,7 @@ export type ProductCreateWithoutDistributorConfigsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -1677,6 +1732,7 @@ export type ProductCreateWithoutDistributorConfigsInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutDistributorConfigsInput = {
@@ -1708,6 +1764,7 @@ export type ProductUncheckedCreateWithoutDistributorConfigsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -1726,6 +1783,7 @@ export type ProductUncheckedCreateWithoutDistributorConfigsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutDistributorConfigsInput = {
@@ -1770,6 +1828,7 @@ export type ProductUpdateWithoutDistributorConfigsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -1791,6 +1850,7 @@ export type ProductUpdateWithoutDistributorConfigsInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutDistributorConfigsInput = {
@@ -1822,6 +1882,7 @@ export type ProductUncheckedUpdateWithoutDistributorConfigsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -1840,6 +1901,7 @@ export type ProductUncheckedUpdateWithoutDistributorConfigsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutPurchaseOrderItemsInput = {
@@ -1868,6 +1930,7 @@ export type ProductCreateWithoutPurchaseOrderItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -1889,6 +1952,7 @@ export type ProductCreateWithoutPurchaseOrderItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutPurchaseOrderItemsInput = {
@@ -1920,6 +1984,7 @@ export type ProductUncheckedCreateWithoutPurchaseOrderItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -1938,6 +2003,7 @@ export type ProductUncheckedCreateWithoutPurchaseOrderItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutPurchaseOrderItemsInput = {
@@ -1982,6 +2048,7 @@ export type ProductUpdateWithoutPurchaseOrderItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -2003,6 +2070,7 @@ export type ProductUpdateWithoutPurchaseOrderItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutPurchaseOrderItemsInput = {
@@ -2034,6 +2102,7 @@ export type ProductUncheckedUpdateWithoutPurchaseOrderItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2052,6 +2121,7 @@ export type ProductUncheckedUpdateWithoutPurchaseOrderItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutRecommendationsInput = {
@@ -2080,6 +2150,7 @@ export type ProductCreateWithoutRecommendationsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -2101,6 +2172,7 @@ export type ProductCreateWithoutRecommendationsInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutRecommendationsInput = {
@@ -2132,6 +2204,7 @@ export type ProductUncheckedCreateWithoutRecommendationsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -2150,6 +2223,7 @@ export type ProductUncheckedCreateWithoutRecommendationsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutRecommendationsInput = {
@@ -2194,6 +2268,7 @@ export type ProductUpdateWithoutRecommendationsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -2215,6 +2290,7 @@ export type ProductUpdateWithoutRecommendationsInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutRecommendationsInput = {
@@ -2246,6 +2322,7 @@ export type ProductUncheckedUpdateWithoutRecommendationsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2264,6 +2341,7 @@ export type ProductUncheckedUpdateWithoutRecommendationsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutBranchInput = {
@@ -2292,6 +2370,7 @@ export type ProductCreateWithoutBranchInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -2313,6 +2392,7 @@ export type ProductCreateWithoutBranchInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutBranchInput = {
@@ -2343,6 +2423,7 @@ export type ProductUncheckedCreateWithoutBranchInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -2362,6 +2443,7 @@ export type ProductUncheckedCreateWithoutBranchInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutBranchInput = {
@@ -2416,6 +2498,7 @@ export type ProductCreateWithoutBarcodeLinkInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -2437,6 +2520,7 @@ export type ProductCreateWithoutBarcodeLinkInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutBarcodeLinkInput = {
@@ -2468,6 +2552,7 @@ export type ProductUncheckedCreateWithoutBarcodeLinkInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -2486,6 +2571,7 @@ export type ProductUncheckedCreateWithoutBarcodeLinkInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutBarcodeLinkInput = {
@@ -2530,6 +2616,7 @@ export type ProductUpdateWithoutBarcodeLinkInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -2551,6 +2638,7 @@ export type ProductUpdateWithoutBarcodeLinkInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutBarcodeLinkInput = {
@@ -2582,6 +2670,7 @@ export type ProductUncheckedUpdateWithoutBarcodeLinkInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2600,6 +2689,7 @@ export type ProductUncheckedUpdateWithoutBarcodeLinkInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutPricesInput = {
@@ -2628,6 +2718,7 @@ export type ProductCreateWithoutPricesInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -2649,6 +2740,7 @@ export type ProductCreateWithoutPricesInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutPricesInput = {
@@ -2680,6 +2772,7 @@ export type ProductUncheckedCreateWithoutPricesInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -2698,6 +2791,7 @@ export type ProductUncheckedCreateWithoutPricesInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutPricesInput = {
@@ -2742,6 +2836,7 @@ export type ProductUpdateWithoutPricesInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -2763,6 +2858,7 @@ export type ProductUpdateWithoutPricesInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutPricesInput = {
@@ -2794,6 +2890,7 @@ export type ProductUncheckedUpdateWithoutPricesInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -2812,6 +2909,7 @@ export type ProductUncheckedUpdateWithoutPricesInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutDistributorInput = {
@@ -2840,6 +2938,7 @@ export type ProductCreateWithoutDistributorInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -2861,6 +2960,7 @@ export type ProductCreateWithoutDistributorInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutDistributorInput = {
@@ -2891,6 +2991,7 @@ export type ProductUncheckedCreateWithoutDistributorInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -2910,6 +3011,7 @@ export type ProductUncheckedCreateWithoutDistributorInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutDistributorInput = {
@@ -2964,6 +3066,7 @@ export type ProductCreateWithoutChronicMedicationsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -2985,6 +3088,7 @@ export type ProductCreateWithoutChronicMedicationsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutChronicMedicationsInput = {
@@ -3016,6 +3120,7 @@ export type ProductUncheckedCreateWithoutChronicMedicationsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -3034,6 +3139,7 @@ export type ProductUncheckedCreateWithoutChronicMedicationsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutChronicMedicationsInput = {
@@ -3078,6 +3184,7 @@ export type ProductUpdateWithoutChronicMedicationsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -3099,6 +3206,7 @@ export type ProductUpdateWithoutChronicMedicationsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutChronicMedicationsInput = {
@@ -3130,6 +3238,7 @@ export type ProductUncheckedUpdateWithoutChronicMedicationsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -3148,6 +3257,7 @@ export type ProductUncheckedUpdateWithoutChronicMedicationsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutSaleItemsInput = {
@@ -3176,6 +3286,7 @@ export type ProductCreateWithoutSaleItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -3197,6 +3308,7 @@ export type ProductCreateWithoutSaleItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutSaleItemsInput = {
@@ -3228,6 +3340,7 @@ export type ProductUncheckedCreateWithoutSaleItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
@@ -3246,6 +3359,7 @@ export type ProductUncheckedCreateWithoutSaleItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutSaleItemsInput = {
@@ -3290,6 +3404,7 @@ export type ProductUpdateWithoutSaleItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -3311,6 +3426,7 @@ export type ProductUpdateWithoutSaleItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutSaleItemsInput = {
@@ -3342,6 +3458,7 @@ export type ProductUncheckedUpdateWithoutSaleItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
@@ -3360,6 +3477,7 @@ export type ProductUncheckedUpdateWithoutSaleItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutStockPurchasesInput = {
@@ -3388,6 +3506,7 @@ export type ProductCreateWithoutStockPurchasesInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -3409,6 +3528,7 @@ export type ProductCreateWithoutStockPurchasesInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutStockPurchasesInput = {
@@ -3440,6 +3560,7 @@ export type ProductUncheckedCreateWithoutStockPurchasesInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -3458,6 +3579,7 @@ export type ProductUncheckedCreateWithoutStockPurchasesInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutStockPurchasesInput = {
@@ -3502,6 +3624,7 @@ export type ProductUpdateWithoutStockPurchasesInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -3523,6 +3646,7 @@ export type ProductUpdateWithoutStockPurchasesInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutStockPurchasesInput = {
@@ -3554,6 +3678,7 @@ export type ProductUncheckedUpdateWithoutStockPurchasesInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -3572,6 +3697,7 @@ export type ProductUncheckedUpdateWithoutStockPurchasesInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutReturnItemsInput = {
@@ -3600,6 +3726,7 @@ export type ProductCreateWithoutReturnItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -3621,6 +3748,7 @@ export type ProductCreateWithoutReturnItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutReturnItemsInput = {
@@ -3652,6 +3780,7 @@ export type ProductUncheckedCreateWithoutReturnItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -3670,6 +3799,7 @@ export type ProductUncheckedCreateWithoutReturnItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutReturnItemsInput = {
@@ -3714,6 +3844,7 @@ export type ProductUpdateWithoutReturnItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -3735,6 +3866,7 @@ export type ProductUpdateWithoutReturnItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutReturnItemsInput = {
@@ -3766,6 +3898,7 @@ export type ProductUncheckedUpdateWithoutReturnItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -3784,6 +3917,7 @@ export type ProductUncheckedUpdateWithoutReturnItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutBatchesInput = {
@@ -3812,6 +3946,7 @@ export type ProductCreateWithoutBatchesInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -3833,6 +3968,7 @@ export type ProductCreateWithoutBatchesInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutBatchesInput = {
@@ -3864,6 +4000,7 @@ export type ProductUncheckedCreateWithoutBatchesInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -3882,6 +4019,7 @@ export type ProductUncheckedCreateWithoutBatchesInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutBatchesInput = {
@@ -3926,6 +4064,7 @@ export type ProductUpdateWithoutBatchesInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -3947,6 +4086,7 @@ export type ProductUpdateWithoutBatchesInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutBatchesInput = {
@@ -3978,6 +4118,7 @@ export type ProductUncheckedUpdateWithoutBatchesInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -3996,6 +4137,7 @@ export type ProductUncheckedUpdateWithoutBatchesInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutMovementsInput = {
@@ -4024,6 +4166,7 @@ export type ProductCreateWithoutMovementsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -4045,6 +4188,7 @@ export type ProductCreateWithoutMovementsInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutMovementsInput = {
@@ -4076,6 +4220,7 @@ export type ProductUncheckedCreateWithoutMovementsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -4094,6 +4239,7 @@ export type ProductUncheckedCreateWithoutMovementsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutMovementsInput = {
@@ -4138,6 +4284,7 @@ export type ProductUpdateWithoutMovementsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -4159,6 +4306,7 @@ export type ProductUpdateWithoutMovementsInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutMovementsInput = {
@@ -4190,6 +4338,7 @@ export type ProductUncheckedUpdateWithoutMovementsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -4208,6 +4357,7 @@ export type ProductUncheckedUpdateWithoutMovementsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutPurchaseInvoiceItemsInput = {
@@ -4236,6 +4386,7 @@ export type ProductCreateWithoutPurchaseInvoiceItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -4257,6 +4408,7 @@ export type ProductCreateWithoutPurchaseInvoiceItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutPurchaseInvoiceItemsInput = {
@@ -4288,6 +4440,7 @@ export type ProductUncheckedCreateWithoutPurchaseInvoiceItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -4306,6 +4459,7 @@ export type ProductUncheckedCreateWithoutPurchaseInvoiceItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutPurchaseInvoiceItemsInput = {
@@ -4350,6 +4504,7 @@ export type ProductUpdateWithoutPurchaseInvoiceItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -4371,6 +4526,7 @@ export type ProductUpdateWithoutPurchaseInvoiceItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutPurchaseInvoiceItemsInput = {
@@ -4402,6 +4558,7 @@ export type ProductUncheckedUpdateWithoutPurchaseInvoiceItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -4420,6 +4577,7 @@ export type ProductUncheckedUpdateWithoutPurchaseInvoiceItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutPrescriptionItemsInput = {
@@ -4448,6 +4606,7 @@ export type ProductCreateWithoutPrescriptionItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -4469,6 +4628,7 @@ export type ProductCreateWithoutPrescriptionItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutPrescriptionItemsInput = {
@@ -4500,6 +4660,7 @@ export type ProductUncheckedCreateWithoutPrescriptionItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -4518,6 +4679,7 @@ export type ProductUncheckedCreateWithoutPrescriptionItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutPrescriptionItemsInput = {
@@ -4562,6 +4724,7 @@ export type ProductUpdateWithoutPrescriptionItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -4583,6 +4746,7 @@ export type ProductUpdateWithoutPrescriptionItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutPrescriptionItemsInput = {
@@ -4614,6 +4778,7 @@ export type ProductUncheckedUpdateWithoutPrescriptionItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -4632,6 +4797,7 @@ export type ProductUncheckedUpdateWithoutPrescriptionItemsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutDispensedRecordsInput = {
@@ -4660,6 +4826,7 @@ export type ProductCreateWithoutDispensedRecordsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -4681,6 +4848,7 @@ export type ProductCreateWithoutDispensedRecordsInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutDispensedRecordsInput = {
@@ -4712,6 +4880,7 @@ export type ProductUncheckedCreateWithoutDispensedRecordsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -4730,6 +4899,7 @@ export type ProductUncheckedCreateWithoutDispensedRecordsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutDispensedRecordsInput = {
@@ -4774,6 +4944,7 @@ export type ProductUpdateWithoutDispensedRecordsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -4795,6 +4966,7 @@ export type ProductUpdateWithoutDispensedRecordsInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutDispensedRecordsInput = {
@@ -4826,6 +4998,7 @@ export type ProductUncheckedUpdateWithoutDispensedRecordsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -4844,6 +5017,7 @@ export type ProductUncheckedUpdateWithoutDispensedRecordsInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutControlledRegistersInput = {
@@ -4872,6 +5046,7 @@ export type ProductCreateWithoutControlledRegistersInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -4893,6 +5068,7 @@ export type ProductCreateWithoutControlledRegistersInput = {
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutControlledRegistersInput = {
@@ -4924,6 +5100,7 @@ export type ProductUncheckedCreateWithoutControlledRegistersInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -4942,6 +5119,7 @@ export type ProductUncheckedCreateWithoutControlledRegistersInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutControlledRegistersInput = {
@@ -4986,6 +5164,7 @@ export type ProductUpdateWithoutControlledRegistersInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -5007,6 +5186,7 @@ export type ProductUpdateWithoutControlledRegistersInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutControlledRegistersInput = {
@@ -5038,6 +5218,7 @@ export type ProductUncheckedUpdateWithoutControlledRegistersInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -5056,6 +5237,7 @@ export type ProductUncheckedUpdateWithoutControlledRegistersInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutBranchPriceOverridesInput = {
@@ -5084,6 +5266,7 @@ export type ProductCreateWithoutBranchPriceOverridesInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -5105,6 +5288,7 @@ export type ProductCreateWithoutBranchPriceOverridesInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutBranchPriceOverridesInput = {
@@ -5136,6 +5320,7 @@ export type ProductUncheckedCreateWithoutBranchPriceOverridesInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -5154,6 +5339,7 @@ export type ProductUncheckedCreateWithoutBranchPriceOverridesInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutBranchPriceOverridesInput = {
@@ -5198,6 +5384,7 @@ export type ProductUpdateWithoutBranchPriceOverridesInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -5219,6 +5406,7 @@ export type ProductUpdateWithoutBranchPriceOverridesInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutBranchPriceOverridesInput = {
@@ -5250,6 +5438,7 @@ export type ProductUncheckedUpdateWithoutBranchPriceOverridesInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -5268,6 +5457,7 @@ export type ProductUncheckedUpdateWithoutBranchPriceOverridesInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutTransferItemsInput = {
@@ -5296,6 +5486,7 @@ export type ProductCreateWithoutTransferItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
@@ -5317,6 +5508,7 @@ export type ProductCreateWithoutTransferItemsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
   chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutTransferItemsInput = {
@@ -5348,6 +5540,7 @@ export type ProductUncheckedCreateWithoutTransferItemsInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
   saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
@@ -5366,6 +5559,7 @@ export type ProductUncheckedCreateWithoutTransferItemsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
   chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutTransferItemsInput = {
@@ -5410,6 +5604,7 @@ export type ProductUpdateWithoutTransferItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -5431,6 +5626,7 @@ export type ProductUpdateWithoutTransferItemsInput = {
   controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutTransferItemsInput = {
@@ -5462,6 +5658,7 @@ export type ProductUncheckedUpdateWithoutTransferItemsInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -5479,6 +5676,227 @@ export type ProductUncheckedUpdateWithoutTransferItemsInput = {
   dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
   controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutSupplierReturnItemsInput = {
+  id?: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  stripsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutProductsInput
+  branch: Prisma.BranchCreateNestedOneWithoutProductsInput
+  distributor?: Prisma.DistributorCreateNestedOneWithoutProductsInput
+  saleItems?: Prisma.SaleItemCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutSupplierReturnItemsInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  barcode: string
+  name: string
+  company?: string
+  category?: string
+  location?: string
+  distributorId?: string | null
+  salePrice?: number
+  purchasePrice?: number
+  markupPercent?: number
+  stockQty?: number
+  expiry?: string | null
+  packSize?: number
+  nameEn?: string
+  nameAr?: string
+  genericName?: string
+  dosageForm?: string
+  strength?: string
+  sfdaCode?: string | null
+  isRx?: boolean
+  isControlled?: boolean
+  isPriceRegulated?: boolean
+  publicPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: string
+  packageUnit?: string
+  unitsPerPack?: number
+  stripsPerPack?: number
+  active?: number
+  createdAt?: Date | string
+  saleItems?: Prisma.SaleItemUncheckedCreateNestedManyWithoutProductInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedCreateNestedManyWithoutProductInput
+  returnItems?: Prisma.ReturnItemUncheckedCreateNestedManyWithoutProductInput
+  prices?: Prisma.ProductPriceUncheckedCreateNestedManyWithoutProductInput
+  barcodeLink?: Prisma.BarcodeUncheckedCreateNestedOneWithoutProductInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedCreateNestedManyWithoutProductInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedCreateNestedManyWithoutProductInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedCreateNestedManyWithoutProductInput
+  batches?: Prisma.BatchUncheckedCreateNestedManyWithoutProductInput
+  movements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutProductInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutProductInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedCreateNestedManyWithoutProductInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedCreateNestedManyWithoutDispensedProductInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedCreateNestedManyWithoutProductInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedCreateNestedManyWithoutProductInput
+  transferItems?: Prisma.StockTransferItemUncheckedCreateNestedManyWithoutProductInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutSupplierReturnItemsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutSupplierReturnItemsInput, Prisma.ProductUncheckedCreateWithoutSupplierReturnItemsInput>
+}
+
+export type ProductUpsertWithoutSupplierReturnItemsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutSupplierReturnItemsInput, Prisma.ProductUncheckedUpdateWithoutSupplierReturnItemsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutSupplierReturnItemsInput, Prisma.ProductUncheckedCreateWithoutSupplierReturnItemsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutSupplierReturnItemsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutSupplierReturnItemsInput, Prisma.ProductUncheckedUpdateWithoutSupplierReturnItemsInput>
+}
+
+export type ProductUpdateWithoutSupplierReturnItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
+  distributor?: Prisma.DistributorUpdateOneWithoutProductsNestedInput
+  saleItems?: Prisma.SaleItemUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
+  branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutSupplierReturnItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  barcode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  company?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  salePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  purchasePrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  markupPercent?: Prisma.FloatFieldUpdateOperationsInput | number
+  stockQty?: Prisma.IntFieldUpdateOperationsInput | number
+  expiry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  packSize?: Prisma.IntFieldUpdateOperationsInput | number
+  nameEn?: Prisma.StringFieldUpdateOperationsInput | string
+  nameAr?: Prisma.StringFieldUpdateOperationsInput | string
+  genericName?: Prisma.StringFieldUpdateOperationsInput | string
+  dosageForm?: Prisma.StringFieldUpdateOperationsInput | string
+  strength?: Prisma.StringFieldUpdateOperationsInput | string
+  sfdaCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isRx?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isControlled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPriceRegulated?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  publicPrice?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
+  unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  active?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  stockPurchases?: Prisma.StockPurchaseUncheckedUpdateManyWithoutProductNestedInput
+  returnItems?: Prisma.ReturnItemUncheckedUpdateManyWithoutProductNestedInput
+  prices?: Prisma.ProductPriceUncheckedUpdateManyWithoutProductNestedInput
+  barcodeLink?: Prisma.BarcodeUncheckedUpdateOneWithoutProductNestedInput
+  distributorConfigs?: Prisma.ProductDistributorConfigUncheckedUpdateManyWithoutProductNestedInput
+  purchaseOrderItems?: Prisma.PurchaseOrderItemUncheckedUpdateManyWithoutProductNestedInput
+  recommendations?: Prisma.AIInventoryRecommendationUncheckedUpdateManyWithoutProductNestedInput
+  batches?: Prisma.BatchUncheckedUpdateManyWithoutProductNestedInput
+  movements?: Prisma.StockMovementUncheckedUpdateManyWithoutProductNestedInput
+  purchaseInvoiceItems?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutProductNestedInput
+  prescriptionItems?: Prisma.PrescriptionItemUncheckedUpdateManyWithoutProductNestedInput
+  dispensedRecords?: Prisma.DispenseRecordUncheckedUpdateManyWithoutDispensedProductNestedInput
+  controlledRegisters?: Prisma.ControlledDrugRegisterUncheckedUpdateManyWithoutProductNestedInput
+  chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
+  transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
 }
 
@@ -5510,6 +5928,7 @@ export type ProductCreateManyPharmacyInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
 }
@@ -5540,6 +5959,7 @@ export type ProductUpdateWithoutPharmacyInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branch?: Prisma.BranchUpdateOneRequiredWithoutProductsNestedInput
@@ -5561,6 +5981,7 @@ export type ProductUpdateWithoutPharmacyInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutPharmacyInput = {
@@ -5591,6 +6012,7 @@ export type ProductUncheckedUpdateWithoutPharmacyInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -5610,6 +6032,7 @@ export type ProductUncheckedUpdateWithoutPharmacyInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutPharmacyInput = {
@@ -5640,6 +6063,7 @@ export type ProductUncheckedUpdateManyWithoutPharmacyInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -5672,6 +6096,7 @@ export type ProductCreateManyBranchInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
 }
@@ -5702,6 +6127,7 @@ export type ProductUpdateWithoutBranchInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -5723,6 +6149,7 @@ export type ProductUpdateWithoutBranchInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutBranchInput = {
@@ -5753,6 +6180,7 @@ export type ProductUncheckedUpdateWithoutBranchInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -5772,6 +6200,7 @@ export type ProductUncheckedUpdateWithoutBranchInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutBranchInput = {
@@ -5802,6 +6231,7 @@ export type ProductUncheckedUpdateManyWithoutBranchInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -5834,6 +6264,7 @@ export type ProductCreateManyDistributorInput = {
   baseUnit?: string
   packageUnit?: string
   unitsPerPack?: number
+  stripsPerPack?: number
   active?: number
   createdAt?: Date | string
 }
@@ -5864,6 +6295,7 @@ export type ProductUpdateWithoutDistributorInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutProductsNestedInput
@@ -5885,6 +6317,7 @@ export type ProductUpdateWithoutDistributorInput = {
   chronicMedications?: Prisma.ChronicMedicationUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutDistributorInput = {
@@ -5915,6 +6348,7 @@ export type ProductUncheckedUpdateWithoutDistributorInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   saleItems?: Prisma.SaleItemUncheckedUpdateManyWithoutProductNestedInput
@@ -5934,6 +6368,7 @@ export type ProductUncheckedUpdateWithoutDistributorInput = {
   chronicMedications?: Prisma.ChronicMedicationUncheckedUpdateManyWithoutProductNestedInput
   transferItems?: Prisma.StockTransferItemUncheckedUpdateManyWithoutProductNestedInput
   branchPriceOverrides?: Prisma.BranchPriceOverrideUncheckedUpdateManyWithoutProductNestedInput
+  supplierReturnItems?: Prisma.SupplierReturnItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutDistributorInput = {
@@ -5964,6 +6399,7 @@ export type ProductUncheckedUpdateManyWithoutDistributorInput = {
   baseUnit?: Prisma.StringFieldUpdateOperationsInput | string
   packageUnit?: Prisma.StringFieldUpdateOperationsInput | string
   unitsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
+  stripsPerPack?: Prisma.IntFieldUpdateOperationsInput | number
   active?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -5990,6 +6426,7 @@ export type ProductCountOutputType = {
   chronicMedications: number
   transferItems: number
   branchPriceOverrides: number
+  supplierReturnItems: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -6009,6 +6446,7 @@ export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   chronicMedications?: boolean | ProductCountOutputTypeCountChronicMedicationsArgs
   transferItems?: boolean | ProductCountOutputTypeCountTransferItemsArgs
   branchPriceOverrides?: boolean | ProductCountOutputTypeCountBranchPriceOverridesArgs
+  supplierReturnItems?: boolean | ProductCountOutputTypeCountSupplierReturnItemsArgs
 }
 
 /**
@@ -6133,6 +6571,13 @@ export type ProductCountOutputTypeCountBranchPriceOverridesArgs<ExtArgs extends 
   where?: Prisma.BranchPriceOverrideWhereInput
 }
 
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountSupplierReturnItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupplierReturnItemWhereInput
+}
+
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -6163,6 +6608,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   baseUnit?: boolean
   packageUnit?: boolean
   unitsPerPack?: boolean
+  stripsPerPack?: boolean
   active?: boolean
   createdAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
@@ -6185,6 +6631,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   chronicMedications?: boolean | Prisma.Product$chronicMedicationsArgs<ExtArgs>
   transferItems?: boolean | Prisma.Product$transferItemsArgs<ExtArgs>
   branchPriceOverrides?: boolean | Prisma.Product$branchPriceOverridesArgs<ExtArgs>
+  supplierReturnItems?: boolean | Prisma.Product$supplierReturnItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -6217,6 +6664,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   baseUnit?: boolean
   packageUnit?: boolean
   unitsPerPack?: boolean
+  stripsPerPack?: boolean
   active?: boolean
   createdAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
@@ -6253,6 +6701,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   baseUnit?: boolean
   packageUnit?: boolean
   unitsPerPack?: boolean
+  stripsPerPack?: boolean
   active?: boolean
   createdAt?: boolean
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
@@ -6289,11 +6738,12 @@ export type ProductSelectScalar = {
   baseUnit?: boolean
   packageUnit?: boolean
   unitsPerPack?: boolean
+  stripsPerPack?: boolean
   active?: boolean
   createdAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "barcode" | "name" | "company" | "category" | "location" | "distributorId" | "salePrice" | "purchasePrice" | "markupPercent" | "stockQty" | "expiry" | "packSize" | "nameEn" | "nameAr" | "genericName" | "dosageForm" | "strength" | "sfdaCode" | "isRx" | "isControlled" | "isPriceRegulated" | "publicPrice" | "baseUnit" | "packageUnit" | "unitsPerPack" | "active" | "createdAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pharmacyId" | "branchId" | "barcode" | "name" | "company" | "category" | "location" | "distributorId" | "salePrice" | "purchasePrice" | "markupPercent" | "stockQty" | "expiry" | "packSize" | "nameEn" | "nameAr" | "genericName" | "dosageForm" | "strength" | "sfdaCode" | "isRx" | "isControlled" | "isPriceRegulated" | "publicPrice" | "baseUnit" | "packageUnit" | "unitsPerPack" | "stripsPerPack" | "active" | "createdAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pharmacy?: boolean | Prisma.PharmacyDefaultArgs<ExtArgs>
   branch?: boolean | Prisma.BranchDefaultArgs<ExtArgs>
@@ -6315,6 +6765,7 @@ export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   chronicMedications?: boolean | Prisma.Product$chronicMedicationsArgs<ExtArgs>
   transferItems?: boolean | Prisma.Product$transferItemsArgs<ExtArgs>
   branchPriceOverrides?: boolean | Prisma.Product$branchPriceOverridesArgs<ExtArgs>
+  supplierReturnItems?: boolean | Prisma.Product$supplierReturnItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -6351,6 +6802,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     chronicMedications: Prisma.$ChronicMedicationPayload<ExtArgs>[]
     transferItems: Prisma.$StockTransferItemPayload<ExtArgs>[]
     branchPriceOverrides: Prisma.$BranchPriceOverridePayload<ExtArgs>[]
+    supplierReturnItems: Prisma.$SupplierReturnItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -6381,6 +6833,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     baseUnit: string
     packageUnit: string
     unitsPerPack: number
+    stripsPerPack: number
     active: number
     createdAt: Date
   }, ExtArgs["result"]["product"]>
@@ -6797,6 +7250,7 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   chronicMedications<T extends Prisma.Product$chronicMedicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$chronicMedicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChronicMedicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transferItems<T extends Prisma.Product$transferItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$transferItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockTransferItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   branchPriceOverrides<T extends Prisma.Product$branchPriceOverridesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$branchPriceOverridesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BranchPriceOverridePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supplierReturnItems<T extends Prisma.Product$supplierReturnItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$supplierReturnItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierReturnItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6854,6 +7308,7 @@ export interface ProductFieldRefs {
   readonly baseUnit: Prisma.FieldRef<"Product", 'String'>
   readonly packageUnit: Prisma.FieldRef<"Product", 'String'>
   readonly unitsPerPack: Prisma.FieldRef<"Product", 'Int'>
+  readonly stripsPerPack: Prisma.FieldRef<"Product", 'Int'>
   readonly active: Prisma.FieldRef<"Product", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
 }
@@ -7676,6 +8131,30 @@ export type Product$branchPriceOverridesArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.BranchPriceOverrideScalarFieldEnum | Prisma.BranchPriceOverrideScalarFieldEnum[]
+}
+
+/**
+ * Product.supplierReturnItems
+ */
+export type Product$supplierReturnItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierReturnItem
+   */
+  select?: Prisma.SupplierReturnItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplierReturnItem
+   */
+  omit?: Prisma.SupplierReturnItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierReturnItemInclude<ExtArgs> | null
+  where?: Prisma.SupplierReturnItemWhereInput
+  orderBy?: Prisma.SupplierReturnItemOrderByWithRelationInput | Prisma.SupplierReturnItemOrderByWithRelationInput[]
+  cursor?: Prisma.SupplierReturnItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupplierReturnItemScalarFieldEnum | Prisma.SupplierReturnItemScalarFieldEnum[]
 }
 
 /**

@@ -353,6 +353,7 @@ export type PurchaseInvoiceWhereInput = {
   distributor?: Prisma.XOR<Prisma.DistributorScalarRelationFilter, Prisma.DistributorWhereInput>
   items?: Prisma.PurchaseInvoiceItemListRelationFilter
   payments?: Prisma.DistributorPaymentListRelationFilter
+  supplierReturns?: Prisma.SupplierReturnListRelationFilter
 }
 
 export type PurchaseInvoiceOrderByWithRelationInput = {
@@ -380,6 +381,7 @@ export type PurchaseInvoiceOrderByWithRelationInput = {
   distributor?: Prisma.DistributorOrderByWithRelationInput
   items?: Prisma.PurchaseInvoiceItemOrderByRelationAggregateInput
   payments?: Prisma.DistributorPaymentOrderByRelationAggregateInput
+  supplierReturns?: Prisma.SupplierReturnOrderByRelationAggregateInput
 }
 
 export type PurchaseInvoiceWhereUniqueInput = Prisma.AtLeast<{
@@ -411,6 +413,7 @@ export type PurchaseInvoiceWhereUniqueInput = Prisma.AtLeast<{
   distributor?: Prisma.XOR<Prisma.DistributorScalarRelationFilter, Prisma.DistributorWhereInput>
   items?: Prisma.PurchaseInvoiceItemListRelationFilter
   payments?: Prisma.DistributorPaymentListRelationFilter
+  supplierReturns?: Prisma.SupplierReturnListRelationFilter
 }, "id" | "pharmacyId_distributorId_invoiceNumber">
 
 export type PurchaseInvoiceOrderByWithAggregationInput = {
@@ -487,6 +490,7 @@ export type PurchaseInvoiceCreateInput = {
   distributor: Prisma.DistributorCreateNestedOneWithoutPurchaseInvoicesInput
   items?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutInvoiceInput
   payments?: Prisma.DistributorPaymentCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceUncheckedCreateInput = {
@@ -511,6 +515,7 @@ export type PurchaseInvoiceUncheckedCreateInput = {
   updatedAt?: Date | string
   items?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
   payments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceUpdateInput = {
@@ -535,6 +540,7 @@ export type PurchaseInvoiceUpdateInput = {
   distributor?: Prisma.DistributorUpdateOneRequiredWithoutPurchaseInvoicesNestedInput
   items?: Prisma.PurchaseInvoiceItemUpdateManyWithoutInvoiceNestedInput
   payments?: Prisma.DistributorPaymentUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceUncheckedUpdateInput = {
@@ -559,6 +565,7 @@ export type PurchaseInvoiceUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
   payments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceCreateManyInput = {
@@ -890,6 +897,22 @@ export type PurchaseInvoiceUpdateOneWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PurchaseInvoiceUpdateToOneWithWhereWithoutPaymentsInput, Prisma.PurchaseInvoiceUpdateWithoutPaymentsInput>, Prisma.PurchaseInvoiceUncheckedUpdateWithoutPaymentsInput>
 }
 
+export type PurchaseInvoiceCreateNestedOneWithoutSupplierReturnsInput = {
+  create?: Prisma.XOR<Prisma.PurchaseInvoiceCreateWithoutSupplierReturnsInput, Prisma.PurchaseInvoiceUncheckedCreateWithoutSupplierReturnsInput>
+  connectOrCreate?: Prisma.PurchaseInvoiceCreateOrConnectWithoutSupplierReturnsInput
+  connect?: Prisma.PurchaseInvoiceWhereUniqueInput
+}
+
+export type PurchaseInvoiceUpdateOneWithoutSupplierReturnsNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseInvoiceCreateWithoutSupplierReturnsInput, Prisma.PurchaseInvoiceUncheckedCreateWithoutSupplierReturnsInput>
+  connectOrCreate?: Prisma.PurchaseInvoiceCreateOrConnectWithoutSupplierReturnsInput
+  upsert?: Prisma.PurchaseInvoiceUpsertWithoutSupplierReturnsInput
+  disconnect?: Prisma.PurchaseInvoiceWhereInput | boolean
+  delete?: Prisma.PurchaseInvoiceWhereInput | boolean
+  connect?: Prisma.PurchaseInvoiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PurchaseInvoiceUpdateToOneWithWhereWithoutSupplierReturnsInput, Prisma.PurchaseInvoiceUpdateWithoutSupplierReturnsInput>, Prisma.PurchaseInvoiceUncheckedUpdateWithoutSupplierReturnsInput>
+}
+
 export type PurchaseInvoiceCreateWithoutPharmacyInput = {
   id?: string
   invoiceNumber: string
@@ -911,6 +934,7 @@ export type PurchaseInvoiceCreateWithoutPharmacyInput = {
   distributor: Prisma.DistributorCreateNestedOneWithoutPurchaseInvoicesInput
   items?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutInvoiceInput
   payments?: Prisma.DistributorPaymentCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceUncheckedCreateWithoutPharmacyInput = {
@@ -934,6 +958,7 @@ export type PurchaseInvoiceUncheckedCreateWithoutPharmacyInput = {
   updatedAt?: Date | string
   items?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
   payments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceCreateOrConnectWithoutPharmacyInput = {
@@ -1008,6 +1033,7 @@ export type PurchaseInvoiceCreateWithoutBranchInput = {
   distributor: Prisma.DistributorCreateNestedOneWithoutPurchaseInvoicesInput
   items?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutInvoiceInput
   payments?: Prisma.DistributorPaymentCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceUncheckedCreateWithoutBranchInput = {
@@ -1031,6 +1057,7 @@ export type PurchaseInvoiceUncheckedCreateWithoutBranchInput = {
   updatedAt?: Date | string
   items?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
   payments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceCreateOrConnectWithoutBranchInput = {
@@ -1080,6 +1107,7 @@ export type PurchaseInvoiceCreateWithoutDistributorInput = {
   branch: Prisma.BranchCreateNestedOneWithoutPurchaseInvoicesInput
   items?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutInvoiceInput
   payments?: Prisma.DistributorPaymentCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceUncheckedCreateWithoutDistributorInput = {
@@ -1103,6 +1131,7 @@ export type PurchaseInvoiceUncheckedCreateWithoutDistributorInput = {
   updatedAt?: Date | string
   items?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
   payments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceCreateOrConnectWithoutDistributorInput = {
@@ -1152,6 +1181,7 @@ export type PurchaseInvoiceCreateWithoutItemsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutPurchaseInvoicesInput
   distributor: Prisma.DistributorCreateNestedOneWithoutPurchaseInvoicesInput
   payments?: Prisma.DistributorPaymentCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceUncheckedCreateWithoutItemsInput = {
@@ -1175,6 +1205,7 @@ export type PurchaseInvoiceUncheckedCreateWithoutItemsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   payments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceCreateOrConnectWithoutItemsInput = {
@@ -1214,6 +1245,7 @@ export type PurchaseInvoiceUpdateWithoutItemsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutPurchaseInvoicesNestedInput
   distributor?: Prisma.DistributorUpdateOneRequiredWithoutPurchaseInvoicesNestedInput
   payments?: Prisma.DistributorPaymentUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceUncheckedUpdateWithoutItemsInput = {
@@ -1237,6 +1269,7 @@ export type PurchaseInvoiceUncheckedUpdateWithoutItemsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceCreateWithoutPaymentsInput = {
@@ -1260,6 +1293,7 @@ export type PurchaseInvoiceCreateWithoutPaymentsInput = {
   branch: Prisma.BranchCreateNestedOneWithoutPurchaseInvoicesInput
   distributor: Prisma.DistributorCreateNestedOneWithoutPurchaseInvoicesInput
   items?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceUncheckedCreateWithoutPaymentsInput = {
@@ -1283,6 +1317,7 @@ export type PurchaseInvoiceUncheckedCreateWithoutPaymentsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type PurchaseInvoiceCreateOrConnectWithoutPaymentsInput = {
@@ -1322,6 +1357,7 @@ export type PurchaseInvoiceUpdateWithoutPaymentsInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutPurchaseInvoicesNestedInput
   distributor?: Prisma.DistributorUpdateOneRequiredWithoutPurchaseInvoicesNestedInput
   items?: Prisma.PurchaseInvoiceItemUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceUncheckedUpdateWithoutPaymentsInput = {
@@ -1345,6 +1381,119 @@ export type PurchaseInvoiceUncheckedUpdateWithoutPaymentsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutInvoiceNestedInput
+}
+
+export type PurchaseInvoiceCreateWithoutSupplierReturnsInput = {
+  id?: string
+  invoiceNumber: string
+  invoiceDate?: Date | string
+  dueDate?: Date | string | null
+  subtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  balanceDue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: string
+  paymentMethod?: string | null
+  notes?: string
+  receivedBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  pharmacy: Prisma.PharmacyCreateNestedOneWithoutPurchaseInvoicesInput
+  branch: Prisma.BranchCreateNestedOneWithoutPurchaseInvoicesInput
+  distributor: Prisma.DistributorCreateNestedOneWithoutPurchaseInvoicesInput
+  items?: Prisma.PurchaseInvoiceItemCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.DistributorPaymentCreateNestedManyWithoutInvoiceInput
+}
+
+export type PurchaseInvoiceUncheckedCreateWithoutSupplierReturnsInput = {
+  id?: string
+  pharmacyId: string
+  branchId: string
+  distributorId: string
+  invoiceNumber: string
+  invoiceDate?: Date | string
+  dueDate?: Date | string | null
+  subtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  balanceDue?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: string
+  paymentMethod?: string | null
+  notes?: string
+  receivedBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.PurchaseInvoiceItemUncheckedCreateNestedManyWithoutInvoiceInput
+  payments?: Prisma.DistributorPaymentUncheckedCreateNestedManyWithoutInvoiceInput
+}
+
+export type PurchaseInvoiceCreateOrConnectWithoutSupplierReturnsInput = {
+  where: Prisma.PurchaseInvoiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.PurchaseInvoiceCreateWithoutSupplierReturnsInput, Prisma.PurchaseInvoiceUncheckedCreateWithoutSupplierReturnsInput>
+}
+
+export type PurchaseInvoiceUpsertWithoutSupplierReturnsInput = {
+  update: Prisma.XOR<Prisma.PurchaseInvoiceUpdateWithoutSupplierReturnsInput, Prisma.PurchaseInvoiceUncheckedUpdateWithoutSupplierReturnsInput>
+  create: Prisma.XOR<Prisma.PurchaseInvoiceCreateWithoutSupplierReturnsInput, Prisma.PurchaseInvoiceUncheckedCreateWithoutSupplierReturnsInput>
+  where?: Prisma.PurchaseInvoiceWhereInput
+}
+
+export type PurchaseInvoiceUpdateToOneWithWhereWithoutSupplierReturnsInput = {
+  where?: Prisma.PurchaseInvoiceWhereInput
+  data: Prisma.XOR<Prisma.PurchaseInvoiceUpdateWithoutSupplierReturnsInput, Prisma.PurchaseInvoiceUncheckedUpdateWithoutSupplierReturnsInput>
+}
+
+export type PurchaseInvoiceUpdateWithoutSupplierReturnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  balanceDue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pharmacy?: Prisma.PharmacyUpdateOneRequiredWithoutPurchaseInvoicesNestedInput
+  branch?: Prisma.BranchUpdateOneRequiredWithoutPurchaseInvoicesNestedInput
+  distributor?: Prisma.DistributorUpdateOneRequiredWithoutPurchaseInvoicesNestedInput
+  items?: Prisma.PurchaseInvoiceItemUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.DistributorPaymentUpdateManyWithoutInvoiceNestedInput
+}
+
+export type PurchaseInvoiceUncheckedUpdateWithoutSupplierReturnsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  pharmacyId?: Prisma.StringFieldUpdateOperationsInput | string
+  branchId?: Prisma.StringFieldUpdateOperationsInput | string
+  distributorId?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  discount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  tax?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  totalAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  balanceDue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.StringFieldUpdateOperationsInput | string
+  receivedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
+  payments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceCreateManyPharmacyInput = {
@@ -1389,6 +1538,7 @@ export type PurchaseInvoiceUpdateWithoutPharmacyInput = {
   distributor?: Prisma.DistributorUpdateOneRequiredWithoutPurchaseInvoicesNestedInput
   items?: Prisma.PurchaseInvoiceItemUpdateManyWithoutInvoiceNestedInput
   payments?: Prisma.DistributorPaymentUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceUncheckedUpdateWithoutPharmacyInput = {
@@ -1412,6 +1562,7 @@ export type PurchaseInvoiceUncheckedUpdateWithoutPharmacyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
   payments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceUncheckedUpdateManyWithoutPharmacyInput = {
@@ -1477,6 +1628,7 @@ export type PurchaseInvoiceUpdateWithoutBranchInput = {
   distributor?: Prisma.DistributorUpdateOneRequiredWithoutPurchaseInvoicesNestedInput
   items?: Prisma.PurchaseInvoiceItemUpdateManyWithoutInvoiceNestedInput
   payments?: Prisma.DistributorPaymentUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceUncheckedUpdateWithoutBranchInput = {
@@ -1500,6 +1652,7 @@ export type PurchaseInvoiceUncheckedUpdateWithoutBranchInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
   payments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceUncheckedUpdateManyWithoutBranchInput = {
@@ -1565,6 +1718,7 @@ export type PurchaseInvoiceUpdateWithoutDistributorInput = {
   branch?: Prisma.BranchUpdateOneRequiredWithoutPurchaseInvoicesNestedInput
   items?: Prisma.PurchaseInvoiceItemUpdateManyWithoutInvoiceNestedInput
   payments?: Prisma.DistributorPaymentUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceUncheckedUpdateWithoutDistributorInput = {
@@ -1588,6 +1742,7 @@ export type PurchaseInvoiceUncheckedUpdateWithoutDistributorInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.PurchaseInvoiceItemUncheckedUpdateManyWithoutInvoiceNestedInput
   payments?: Prisma.DistributorPaymentUncheckedUpdateManyWithoutInvoiceNestedInput
+  supplierReturns?: Prisma.SupplierReturnUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type PurchaseInvoiceUncheckedUpdateManyWithoutDistributorInput = {
@@ -1619,11 +1774,13 @@ export type PurchaseInvoiceUncheckedUpdateManyWithoutDistributorInput = {
 export type PurchaseInvoiceCountOutputType = {
   items: number
   payments: number
+  supplierReturns: number
 }
 
 export type PurchaseInvoiceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | PurchaseInvoiceCountOutputTypeCountItemsArgs
   payments?: boolean | PurchaseInvoiceCountOutputTypeCountPaymentsArgs
+  supplierReturns?: boolean | PurchaseInvoiceCountOutputTypeCountSupplierReturnsArgs
 }
 
 /**
@@ -1648,6 +1805,13 @@ export type PurchaseInvoiceCountOutputTypeCountItemsArgs<ExtArgs extends runtime
  */
 export type PurchaseInvoiceCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.DistributorPaymentWhereInput
+}
+
+/**
+ * PurchaseInvoiceCountOutputType without action
+ */
+export type PurchaseInvoiceCountOutputTypeCountSupplierReturnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupplierReturnWhereInput
 }
 
 
@@ -1676,6 +1840,7 @@ export type PurchaseInvoiceSelect<ExtArgs extends runtime.Types.Extensions.Inter
   distributor?: boolean | Prisma.DistributorDefaultArgs<ExtArgs>
   items?: boolean | Prisma.PurchaseInvoice$itemsArgs<ExtArgs>
   payments?: boolean | Prisma.PurchaseInvoice$paymentsArgs<ExtArgs>
+  supplierReturns?: boolean | Prisma.PurchaseInvoice$supplierReturnsArgs<ExtArgs>
   _count?: boolean | Prisma.PurchaseInvoiceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseInvoice"]>
 
@@ -1758,6 +1923,7 @@ export type PurchaseInvoiceInclude<ExtArgs extends runtime.Types.Extensions.Inte
   distributor?: boolean | Prisma.DistributorDefaultArgs<ExtArgs>
   items?: boolean | Prisma.PurchaseInvoice$itemsArgs<ExtArgs>
   payments?: boolean | Prisma.PurchaseInvoice$paymentsArgs<ExtArgs>
+  supplierReturns?: boolean | Prisma.PurchaseInvoice$supplierReturnsArgs<ExtArgs>
   _count?: boolean | Prisma.PurchaseInvoiceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PurchaseInvoiceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1779,6 +1945,7 @@ export type $PurchaseInvoicePayload<ExtArgs extends runtime.Types.Extensions.Int
     distributor: Prisma.$DistributorPayload<ExtArgs>
     items: Prisma.$PurchaseInvoiceItemPayload<ExtArgs>[]
     payments: Prisma.$DistributorPaymentPayload<ExtArgs>[]
+    supplierReturns: Prisma.$SupplierReturnPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2199,6 +2366,7 @@ export interface Prisma__PurchaseInvoiceClient<T, Null = never, ExtArgs extends 
   distributor<T extends Prisma.DistributorDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DistributorDefaultArgs<ExtArgs>>): Prisma.Prisma__DistributorClient<runtime.Types.Result.GetResult<Prisma.$DistributorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.PurchaseInvoice$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseInvoice$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseInvoiceItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.PurchaseInvoice$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseInvoice$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DistributorPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supplierReturns<T extends Prisma.PurchaseInvoice$supplierReturnsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseInvoice$supplierReturnsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierReturnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2693,6 +2861,30 @@ export type PurchaseInvoice$paymentsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.DistributorPaymentScalarFieldEnum | Prisma.DistributorPaymentScalarFieldEnum[]
+}
+
+/**
+ * PurchaseInvoice.supplierReturns
+ */
+export type PurchaseInvoice$supplierReturnsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierReturn
+   */
+  select?: Prisma.SupplierReturnSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupplierReturn
+   */
+  omit?: Prisma.SupplierReturnOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierReturnInclude<ExtArgs> | null
+  where?: Prisma.SupplierReturnWhereInput
+  orderBy?: Prisma.SupplierReturnOrderByWithRelationInput | Prisma.SupplierReturnOrderByWithRelationInput[]
+  cursor?: Prisma.SupplierReturnWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupplierReturnScalarFieldEnum | Prisma.SupplierReturnScalarFieldEnum[]
 }
 
 /**

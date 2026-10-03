@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DataTable from "@/components/shared/DataTable";
+import StatCard from "@/components/shared/StatCard";
 import { formatCurrency, formatDateTime } from "@/lib/utils";
 import { api } from "@/lib/api";
 import type { MarginReportItem, LossItem, StockValuationCategory, StockValuationBranch } from "@/types";
@@ -202,37 +203,37 @@ export default function Reports() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <PageHeader
-          title="Costing & Reports"
-          description="Real-time COGS, profit & loss statement, gross margin analytics, and stock valuation"
-        />
-        <div className="flex flex-wrap items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleExportCsv("sales_cogs")}
-            disabled={isExporting}
-            className="flex items-center gap-1.5 text-xs font-medium"
-          >
-            <FileSpreadsheet className="h-4 w-4 text-emerald-500" />
-            Export COGS Ledger
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleExportCsv("pnl")}
-            disabled={isExporting}
-            className="flex items-center gap-1.5 text-xs font-medium"
-          >
-            <Download className="h-4 w-4 text-primary" />
-            Export P&L
-          </Button>
-        </div>
-      </div>
+      <PageHeader
+        title="Financial Costing & Reports"
+        description="Real-time COGS, profit & loss statement, gross margin analytics, and stock valuation."
+        actions={
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleExportCsv("sales_cogs")}
+              disabled={isExporting}
+              className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2 font-medium"
+            >
+              <FileSpreadsheet className="h-4 w-4 text-success" />
+              Export COGS Ledger
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleExportCsv("pnl")}
+              disabled={isExporting}
+              className="h-9 rounded-xl text-xs gap-1.5 border-border/80 hover:bg-surface-2 font-medium"
+            >
+              <Download className="h-4 w-4 text-accent" />
+              Export P&L
+            </Button>
+          </div>
+        }
+      />
 
       {/* Global Filter Bar */}
-      <div className="p-4 rounded-xl border border-border bg-card/60 backdrop-blur-sm flex flex-wrap items-center justify-between gap-4">
+      <div className="p-3 rounded-2xl border border-border/80 bg-surface shadow-xs flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4 text-text-secondary" />
@@ -241,7 +242,7 @@ export default function Reports() {
               type="date"
               value={dateRange.from}
               onChange={(e) => setDateRange((prev) => ({ ...prev, from: e.target.value }))}
-              className="h-8 w-36 text-xs"
+              className="h-9 w-36 text-xs rounded-xl border-border/80 bg-surface-2/40"
             />
           </div>
           <div className="flex items-center gap-2">
@@ -250,7 +251,7 @@ export default function Reports() {
               type="date"
               value={dateRange.to}
               onChange={(e) => setDateRange((prev) => ({ ...prev, to: e.target.value }))}
-              className="h-8 w-36 text-xs"
+              className="h-9 w-36 text-xs rounded-xl border-border/80 bg-surface-2/40"
             />
           </div>
           {branches.length > 1 && (
@@ -259,7 +260,7 @@ export default function Reports() {
               <select
                 value={selectedBranchId}
                 onChange={(e) => setSelectedBranchId(e.target.value)}
-                className="h-8 rounded-md border border-input bg-background px-2.5 text-xs focus:ring-1 focus:ring-primary outline-none"
+                className="h-9 rounded-xl border border-border/80 bg-surface-2/40 px-3 text-xs outline-none focus:ring-1 focus:ring-accent"
               >
                 <option value="">All Branches</option>
                 {branches.map((b) => (
@@ -280,99 +281,55 @@ export default function Reports() {
             refetchLosses();
             refetchValuation();
           }}
-          className="h-8 text-xs text-text-secondary hover:text-text-primary"
+          className="h-9 rounded-xl text-xs gap-1.5 text-text-secondary hover:text-text-primary"
         >
-          <RefreshCw className="h-3.5 w-3.5 mr-1" />
+          <RefreshCw className="h-3.5 w-3.5" />
           Refresh
         </Button>
       </div>
 
       {/* Executive KPI Overview */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <Card className="border-border">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-text-secondary uppercase tracking-wider">
-              Net Sales Revenue
-            </CardTitle>
-            <DollarSign className="h-4 w-4 text-primary" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold font-mono">
-              {pnlLoading ? "—" : formatCurrency(pnl?.salesRevenue.netSales ?? 0)}
-            </div>
-            <p className="text-xs text-text-secondary mt-1">
-              Gross: {formatCurrency(pnl?.salesRevenue.grossSales ?? 0)}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-border">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-text-secondary uppercase tracking-wider">
-              Total COGS
-            </CardTitle>
-            <Scale className="h-4 w-4 text-amber-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold font-mono text-amber-500">
-              {pnlLoading ? "—" : formatCurrency(pnl?.costOfGoodsSold.totalCogs ?? 0)}
-            </div>
-            <p className="text-xs text-text-secondary mt-1">Locked-in batch purchase costs</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-border">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-text-secondary uppercase tracking-wider">
-              Gross Profit ($)
-            </CardTitle>
-            <TrendingUp className="h-4 w-4 text-emerald-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold font-mono text-emerald-500">
-              {pnlLoading ? "—" : formatCurrency(pnl?.costOfGoodsSold.grossProfit ?? 0)}
-            </div>
-            <p className="text-xs font-bold text-emerald-600 mt-1">
-              Margin: {pnl?.costOfGoodsSold.grossMarginPercent ?? 0}%
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-border">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-text-secondary uppercase tracking-wider">
-              Net Operating Profit
-            </CardTitle>
-            <Percent className="h-4 w-4 text-blue-500" />
-          </CardHeader>
-          <CardContent>
-            <div className={`text-2xl font-bold font-mono ${
-              (pnl?.netProfit.netOperatingProfit ?? 0) >= 0 ? "text-blue-500" : "text-rose-500"
-            }`}>
-              {pnlLoading ? "—" : formatCurrency(pnl?.netProfit.netOperatingProfit ?? 0)}
-            </div>
-            <p className="text-xs text-text-secondary mt-1">
-              EBITDA ({pnl?.netProfit.netProfitMarginPercent ?? 0}%)
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-border">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-medium text-text-secondary uppercase tracking-wider">
-              Net VAT Position
-            </CardTitle>
-            <Receipt className="h-4 w-4 text-purple-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold font-mono text-purple-400">
-              {pnlLoading ? "—" : formatCurrency(pnl?.taxAndVat.netVatPayable ?? 0)}
-            </div>
-            <p className="text-xs text-text-secondary mt-1">
-              Collected: {formatCurrency(pnl?.taxAndVat.vatCollectedOnSales ?? 0)}
-            </p>
-          </CardContent>
-        </Card>
+        <StatCard
+          title="Net Sales Revenue"
+          value={pnl?.salesRevenue.netSales ?? 0}
+          icon={<DollarSign className="h-5 w-5" />}
+          color="accent"
+          loading={pnlLoading}
+          subtitle={`Gross: ${formatCurrency(pnl?.salesRevenue.grossSales ?? 0)}`}
+        />
+        <StatCard
+          title="Total COGS"
+          value={pnl?.costOfGoodsSold.totalCogs ?? 0}
+          icon={<Scale className="h-5 w-5" />}
+          color="warning"
+          loading={pnlLoading}
+          subtitle="Locked purchase costs"
+        />
+        <StatCard
+          title="Gross Profit"
+          value={pnl?.costOfGoodsSold.grossProfit ?? 0}
+          icon={<TrendingUp className="h-5 w-5" />}
+          color="success"
+          loading={pnlLoading}
+          subtitle={`Gross Margin: ${pnl?.costOfGoodsSold.grossMarginPercent ?? 0}%`}
+        />
+        <StatCard
+          title="Operating Profit"
+          value={pnl?.netProfit.netOperatingProfit ?? 0}
+          icon={<Percent className="h-5 w-5" />}
+          color={(pnl?.netProfit.netOperatingProfit ?? 0) >= 0 ? "accent" : "danger"}
+          loading={pnlLoading}
+          subtitle={`EBITDA: ${pnl?.netProfit.netProfitMarginPercent ?? 0}%`}
+        />
+        <StatCard
+          title="Net VAT Position"
+          value={pnl?.taxAndVat.netVatPayable ?? 0}
+          icon={<Receipt className="h-5 w-5" />}
+          color="purple"
+          loading={pnlLoading}
+          subtitle={`Collected: ${formatCurrency(pnl?.taxAndVat.vatCollectedOnSales ?? 0)}`}
+        />
       </div>
 
       {/* Main Reporting Tabs */}
@@ -401,7 +358,7 @@ export default function Reports() {
             <div>
               <h3 className="text-lg font-semibold text-text-primary">Profit and Loss Statement</h3>
               <p className="text-xs text-text-secondary">
-                Period: {pnl?.period.startDate} to {pnl?.period.endDate}
+                Period: {pnl?.period.startDate || dateRange.from} to {pnl?.period.endDate || dateRange.to}
               </p>
             </div>
             <Button
@@ -465,7 +422,7 @@ export default function Reports() {
                   {pnl?.operatingExpenses.byCategory.length === 0 ? (
                     <div className="text-xs text-text-secondary italic py-2">No operating expenses logged in this period.</div>
                   ) : (
-                    pnl?.operatingExpenses.byCategory.map((cat, idx) => (
+                    pnl?.operatingExpenses.byCategory.map((cat: { category: string; amount: number }, idx: number) => (
                       <div key={idx} className="flex justify-between py-1 border-b border-border/40 text-xs">
                         <span className="text-text-secondary">{cat.category}</span>
                         <span className="font-mono font-medium">{formatCurrency(cat.amount)}</span>
@@ -745,7 +702,7 @@ export default function Reports() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border/40">
-                      {valuation?.byCategory.map((cat: StockValuationCategory, idx) => (
+                      {valuation?.byCategory.map((cat: StockValuationCategory, idx: number) => (
                         <tr key={idx} className="hover:bg-muted/20">
                           <td className="py-2 px-3 font-medium text-text-primary">{cat.category}</td>
                           <td className="py-2 px-3 text-right font-mono">{cat.units}</td>
@@ -779,7 +736,7 @@ export default function Reports() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-border/40">
-                      {valuation?.byBranch.map((br: StockValuationBranch, idx) => (
+                      {valuation?.byBranch.map((br: StockValuationBranch, idx: number) => (
                         <tr key={idx} className="hover:bg-muted/20">
                           <td className="py-2 px-3 font-medium text-text-primary">{br.branchName}</td>
                           <td className="py-2 px-3 text-right font-mono">{br.units}</td>

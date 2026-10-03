@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
-import { PortalNav } from "@/components/portal-nav";
 import { api } from "@/lib/api";
 import { formatCurrency, formatDate, cn } from "@/lib/utils";
 import type {
@@ -361,10 +360,7 @@ export default function PrescriptionsPage() {
   const fullyDispensedCount = prescriptions.filter((r) => r.status === "FULLY_DISPENSED").length;
 
   return (
-    <div className="min-h-screen bg-background text-text-primary flex flex-col">
-      <PortalNav />
-
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="space-y-6">
         {/* Top Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -1608,7 +1604,6 @@ export default function PrescriptionsPage() {
             </div>
           )}
         </AnimatePresence>
-      </main>
     </div>
   );
 }
